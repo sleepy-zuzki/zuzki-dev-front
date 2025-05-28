@@ -1,0 +1,41 @@
+<header class="border-b border-sleepy-light-border dark:border-sleepy-dark-border">
+  <nav class="container mx-auto flex items-center justify-between h-16 px-0 md:px-4" id='navbar' role="navigation">
+    <app-link class="logo flex items-center text-xl font-medium select-none" routerLink="/" routerLinkActiveClass="" variant="nav">
+      <fa-icon [icon]="faCode" class="mr-2 text-sleepy-accent" size="2xl"></fa-icon>
+      <span class="text-2xl font-bold">Sleepy Zuzki</span>
+    </app-link>
+
+    <div class="flex items-center gap-8">
+      <ul class="hidden md:flex items-center gap-8">
+        <li><app-link routerLink="/about" variant="nav">Sobre Mi</app-link></li>
+        <li><app-link routerLink="/works" variant="nav">Trabajos</app-link></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <app-theme-toggle class="hidden md:block"></app-theme-toggle>
+<!--        <app-button ariaLabel="Cambiar idioma" variant="secondary">-->
+<!--          🌐-->
+<!--        </app-button>-->
+        <app-button (click)="openMobileMenu()" ariaLabel="Menú móvil" class="pr-10 md:hidden" variant="secondary">
+          ☰
+        </app-button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Diálogo para el menú móvil -->
+<dialog #mobileMenuDialog class="flex flex-col flex-wrap justify-between bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary">
+  <div>
+    <div class="flex justify-between items-center mb-4 border-b border-b-sleepy-light-border dark:border-b-sleepy-dark-border">
+      <h2 class="text-xl font-bold">Menú</h2>
+      <button (click)="closeMobileMenu()" aria-label="Cerrar menú" class="p-2">✖</button>
+    </div>
+    <ul class="flex flex-col gap-4">
+      <li><app-link (click)="closeMobileMenu()" routerLink="/about" variant="nav">Sobre Mi</app-link></li>
+      <li><app-link (click)="closeMobileMenu()" routerLink="/works" variant="nav">Trabajos</app-link></li>
+    </ul>
+  </div>
+
+  <app-theme-toggle class="align-end"></app-theme-toggle>
+</dialog>

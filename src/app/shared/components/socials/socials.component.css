@@ -1,0 +1,33 @@
+.social {
+  width: 20%;
+  padding:  10px;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.social__twitter {
+  color: #000000;
+  background: #ffffff;
+  box-shadow: var(--wa-shadow-l);
+}
+
+.social__youtube {
+  color: #ff0000;
+  background: #ffffff;
+  box-shadow: var(--wa-shadow-l);
+}
+
+.social__discord {
+  color: #5865f2;
+  background: #ffffff;
+  box-shadow: var(--wa-shadow-l);
+}
+
+.social__twitch {
+  color: #9146ff;
+  background: #ffffff;
+  box-shadow: var(--wa-shadow-l);
+}

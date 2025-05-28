@@ -1,0 +1,7 @@
+<app-header></app-header>
+
+<main [ngClass]="{'container min-h-screen mx-auto max-w-[1000px] p-0 md:p-4': !isWorkDetailsPage}" class="">
+  <router-outlet />
+</main>
+
+<app-footer></app-footer>

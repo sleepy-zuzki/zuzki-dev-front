@@ -1,0 +1,8 @@
+.badges {
+  @apply flex flex-wrap gap-3;
+}
+
+.badge {
+  @apply bg-sleepy-light-bg-surface dark:bg-sleepy-dark-bg-surface;
+  @apply px-4 py-2 rounded-xl;
+}

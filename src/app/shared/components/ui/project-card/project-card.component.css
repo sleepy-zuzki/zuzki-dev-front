@@ -1,0 +1,75 @@
+/* Estilos base para el componente host */
+:host {
+  @apply block;
+  @apply border-sleepy-light-border dark:border-sleepy-dark-border;
+  @apply border rounded-lg transition duration-300 ease-in;
+  @apply hover:border-sleepy-accent hover:scale-105 hover:text-sleepy-accent;
+}
+
+:host(:hover) {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilos específicos para la variante alargada */
+:host(.project-card-elongated) {
+  /* Utiliza el ancho completo del contenedor padre */
+  width: 100%;
+}
+
+/* Estilos específicos para la variante cuadrada */
+:host(.project-card-square) {
+  @apply min-w-[176px];
+  height: auto;
+
+  @apply cursor-pointer;
+}
+
+/* Estilos para el texto */
+h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Ajustes para las imágenes */
+.card-content img {
+  @apply object-cover;
+}
+
+:host(.project-card-square) .card-content img {
+  width: 100%;
+}
+
+.card-content {
+  @apply flex rounded-lg;
+
+  .card-body {
+    @apply w-full flex flex-col justify-between;
+  }
+
+  &:has(.elongated) {
+    .card-body {
+      @apply px-4 py-2;
+    }
+
+    img {
+      @apply rounded-l-[0.45rem];
+    }
+  }
+
+  &:has(.square) {
+    @apply flex-wrap;
+    .card-body {
+      @apply p-4;
+    }
+
+    img {
+      @apply rounded-t-[0.45rem];
+    }
+  }
+
+  img {
+    @apply object-cover;
+  }
+}

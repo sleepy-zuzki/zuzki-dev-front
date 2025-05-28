@@ -1,0 +1,26 @@
+/* Estilos específicos para el HeaderComponent si son necesarios */
+/* Por ahora puede estar vacío ya que usas Tailwind */
+
+dialog {
+  @apply m-0 p-4 rounded shadow-lg backdrop:bg-black/50 w-64 max-w-full right-0 max-h-none h-screen;
+  transition:
+  translate 0.2s ease-out,
+  display 0.2s ease-in-out allow-discrete;
+
+  &[open] {
+    animation: side-nav-appear 0.2s ease-out;
+
+    translate: 0 0;
+    scale: 1;
+
+    @starting-style {
+      translate: -100% 0;
+      scale: 1;
+    }
+  }
+
+  &:not([open]) {
+    translate: -100% 0;
+    scale: 1;
+  }
+}
