@@ -25,6 +25,7 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/robots.txt",
+              "src/sitemap.xml",
               {
                 "glob": "**/*",
                 "input": "public"
