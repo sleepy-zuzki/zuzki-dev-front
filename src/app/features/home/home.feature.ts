@@ -74,7 +74,7 @@ export class HomeFeatureComponent {
       "url": "https://zuzki.dev",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://cdn.zuzki.dev/logo_sleepy_zuzki.png"
+        "url": "https://cdn.zuzki.dev/large_zuzki_christmas_c4ace767dc.jpg"
       },
       "sameAs": [
         "https://x.com/sleepy_zuzki",
