@@ -7,8 +7,6 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Overlay } from '@core/models/overlay.model';
-import { GithubDataApiService } from '@services/github-data-api.service';
-import { LayoutModel } from '@core/models/layout.model';
 import { OverlayService } from '@services/overlay.service';
 import { FontAwesomeModule, IconDefinition } from '@fortawesome/angular-fontawesome';
 import { faCode } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
@@ -35,12 +33,9 @@ const customImageConfig: ImageConfig = {
   standalone: true,
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  /** Referencia al elemento del cajón lateral (drawer). */
+export class AppComponent implements OnDestroy {
   @ViewChild('drawer') drawer?: ElementRef;
-  /** Título de la aplicación. */
   title: string = 'Sleepy Zuzki';
-  /** Señal que contiene la lista de overlays disponibles. */
   readonly overlays: Signal<Overlay[]>;
   readonly faCode: IconDefinition = faCode;
   isWorkDetailsPage: boolean = false;
@@ -69,36 +64,6 @@ export class AppComponent {
   ngOnDestroy() {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
-    }
-  }
-
-  /**
-   * Abre el cajón lateral.
-   */
-  openDrawer(): void {
-    if (this.drawer) {
-      this.drawer.nativeElement.open = true;
-    }
-  }
-
-  /**
-   * Cierra el cajón lateral.
-   */
-  closeDrawer(): void {
-    if (this.drawer) {
-      this.drawer.nativeElement.open = false;
-    }
-  }
-
-  /**
-   * Cambia el layout actual del overlay seleccionado.
-   * @param layout_id El ID del layout a establecer como actual.
-   */
-  changeLayout(layout_id: string): void {
-    const reqLayout: LayoutModel | undefined = this.overlayService.overlayLayouts().find((layout: LayoutModel) => layout.id === layout_id);
-    if (reqLayout) {
-      this.overlayService.setCurrentLayout(reqLayout);
-      this.closeDrawer();
     }
   }
 }

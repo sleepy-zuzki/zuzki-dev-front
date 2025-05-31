@@ -9,6 +9,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { ContactFormComponent } from '@components/forms/contact-form/contact-form.component';
 import { DOCUMENT, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { OverlayApiService } from '@services/overlay-api.service';
+import { StructuredDataComponent } from '@components/structured-data/structured-data.component';
 
 @Component({
   selector: 'app-home-feature',
@@ -19,7 +20,8 @@ import { OverlayApiService } from '@services/overlay-api.service';
     ProjectCardComponent,
     FormsModule,
     ContactFormComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    StructuredDataComponent
   ],
   templateUrl: './home.feature.html',
   styleUrl: './home.feature.css',
@@ -33,6 +35,55 @@ export class HomeFeatureComponent {
   technologies: string[] = ['Javascript', 'React', 'Node.js', 'Express', 'HTML5', 'CSS3', 'MongoDB', 'PostgreSQL', 'Git', 'AWS', 'Docker', 'Webpack'];
   projects: Signal<Overlay[]>;
   windowWidth: number = 0;
+
+  schema: Record<string, any>[] = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Sleepy Zuzki",
+      "alternateName": "Zuzki",
+      "url": "https://zuzki.dev",
+      "sameAs": [
+        "https://x.com/sleepy_zuzki",
+        "https://twitter.com/sleepy_zuzki",
+        "https://twitch.tv/sleepy_zuzki",
+        "https://youtube.com/@sleepy_zuzki",
+        "https://github.com/sleepy-zuzki"
+      ],
+      "image": "https://cdn.zuzki.dev/large_zuzki_christmas_c4ace767dc.jpg",
+      "description": "VTuber and creative technologist.",
+      "jobTitle": "Streamer / Developer"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Zuzki Dev",
+      "url": "https://zuzki.dev",
+      "inLanguage": "es",
+      "description": "Portafolio de Sleepy Zuzki, desarrollador y VTuber.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://zuzki.dev/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Sleepy Zuzki",
+      "url": "https://zuzki.dev",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cdn.zuzki.dev/logo_sleepy_zuzki.png"
+      },
+      "sameAs": [
+        "https://x.com/sleepy_zuzki",
+        "https://twitch.tv/sleepy_zuzki",
+        "https://youtube.com/@sleepy_zuzki"
+      ]
+    }
+  ];
+
 
   constructor(
     private overlayApiService: OverlayApiService,
