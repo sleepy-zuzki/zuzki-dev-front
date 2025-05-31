@@ -43,6 +43,7 @@ export class HomeFeatureComponent {
       "name": "Sleepy Zuzki",
       "alternateName": "Zuzki",
       "url": "https://zuzki.dev",
+      "dateModified": new Date(document.lastModified).toISOString(),
       "sameAs": [
         "https://x.com/sleepy_zuzki",
         "https://twitter.com/sleepy_zuzki",
@@ -61,6 +62,7 @@ export class HomeFeatureComponent {
       "url": "https://zuzki.dev",
       "inLanguage": "es",
       "description": "Portafolio de Sleepy Zuzki, desarrollador y VTuber.",
+      "dateModified": new Date(document.lastModified).toISOString(),
       "potentialAction": {
         "@type": "SearchAction",
         "target": "https://zuzki.dev/search?q={search_term_string}",
@@ -72,6 +74,7 @@ export class HomeFeatureComponent {
       "@type": "Organization",
       "name": "Sleepy Zuzki",
       "url": "https://zuzki.dev",
+      "dateModified": new Date(document.lastModified).toISOString(),
       "logo": {
         "@type": "ImageObject",
         "url": "https://cdn.zuzki.dev/large_zuzki_christmas_c4ace767dc.jpg"

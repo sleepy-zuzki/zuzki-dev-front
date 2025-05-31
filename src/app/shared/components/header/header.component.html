@@ -1,7 +1,9 @@
 <header class="border-b border-sleepy-light-border dark:border-sleepy-dark-border">
   <nav class="container mx-auto flex items-center justify-between h-16 px-0 md:px-4" id='navbar' role="navigation">
     <app-link class="logo flex items-center text-xl font-medium select-none" routerLink="/" routerLinkActiveClass="" variant="nav">
-      <fa-icon [icon]="faCode" class="mr-2 text-sleepy-accent" size="2xl"></fa-icon>
+      @if (faCode) {
+        <fa-icon [icon]="faCode" class="mr-2 text-sleepy-accent" size="2xl"></fa-icon>
+      }
       <span class="text-2xl font-bold">Sleepy Zuzki</span>
     </app-link>
 

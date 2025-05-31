@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { faGithub, faTwitch, faXTwitter } from '@awesome.me/kit-6cba0026a3/icons/classic/brands';
 import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
@@ -14,10 +14,21 @@ import { faArrowUpRightFromSquare } from '@awesome.me/kit-6cba0026a3/icons/duoto
 })
 export class FooterComponent {
   currentYear: number = new Date().getFullYear();
+  lastUpdated?: Date;
 
   readonly faGithub: IconDefinition = faGithub;
   readonly faXTwitter: IconDefinition = faXTwitter;
   readonly faTwitch: IconDefinition = faTwitch;
 
   protected readonly externalIcon = faArrowUpRightFromSquare;
+
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    // Inicializar FontAwesome sólo en el navegador
+    if (isPlatformBrowser(this.platformId)) {
+      this.lastUpdated = new Date(document.lastModified);
+    }
+  }
 }

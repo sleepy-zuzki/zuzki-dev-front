@@ -10,8 +10,10 @@ import { LocalStorageService } from '@services/local-storage.service';
   standalone: true,
   template: `
     <app-button variant="secondary" ariaLabel="Alternar tema" (callback)="toggleDarkMode()">
-      <fa-icon [icon]="faMoon" class="dark:hidden"></fa-icon>
-      <fa-icon [icon]="faSun" class="hidden dark:block"></fa-icon>
+      @if (faMoon && faSun) {
+        <fa-icon [icon]="faMoon" class="dark:hidden"></fa-icon>
+        <fa-icon [icon]="faSun" class="hidden dark:block"></fa-icon>
+      }
     </app-button>
   `,
   imports: [
@@ -21,8 +23,8 @@ import { LocalStorageService } from '@services/local-storage.service';
   styles: []
 })
 export class ThemeToggleComponent {
-  protected readonly faMoon: IconDefinition = faMoon;
-  protected readonly faSun: IconDefinition = faSun;
+  protected readonly faMoon?: IconDefinition;
+  protected readonly faSun?: IconDefinition;
   private isDarkMode: boolean = false;
 
   constructor(
@@ -32,12 +34,16 @@ export class ThemeToggleComponent {
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.checkInitialMode();
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.faMoon = faMoon;
+      this.faSun = faSun;
+    }
   }
 
   checkInitialMode(): void {
-    const isDarkModeStored: string | null = this.localStorageService.getItem('darkMode');
-
     if (isPlatformBrowser(this.platformId)) {
+      const isDarkModeStored: string | null = this.localStorageService.getItem('darkMode');
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (isDarkModeStored === 'true' || (!isDarkModeStored && prefersDarkScheme)) {
         this.setDarkMode(true);

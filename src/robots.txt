@@ -1,2 +1,8 @@
 User-agent: *
 Disallow:
+
+User-agent: *
+Allow: /
+
+Sitemap: https://zuzki.dev/sitemap.xml
+
