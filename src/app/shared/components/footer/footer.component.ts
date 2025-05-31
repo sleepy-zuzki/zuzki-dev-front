@@ -1,5 +1,5 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, PLATFORM_ID, DOCUMENT } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { faGithub, faTwitch, faXTwitter } from '@awesome.me/kit-6cba0026a3/icons/classic/brands';
 import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';

@@ -1,5 +1,5 @@
-import { Component, ViewChild, ElementRef, Inject, PLATFORM_ID, AfterViewInit } from '@angular/core';
-import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Component, ViewChild, ElementRef, Inject, PLATFORM_ID, AfterViewInit, DOCUMENT } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
 import { faCode } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';

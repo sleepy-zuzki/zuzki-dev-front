@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, HostListener, Inject, PLATFORM_ID, Signal } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, HostListener, Inject, PLATFORM_ID, Signal, DOCUMENT } from '@angular/core';
 import { ButtonComponent, ProjectCardComponent } from '@components/ui';
 import { BadgeComponent } from '@components/ui/badge/badge.component';
 import { Overlay } from '@core/models/overlay.model';
@@ -7,7 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ContactFormComponent } from '@components/forms/contact-form/contact-form.component';
-import { DOCUMENT, isPlatformBrowser, NgOptimizedImage } from '@angular/common';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { OverlayApiService } from '@services/overlay-api.service';
 import { StructuredDataComponent } from '@components/structured-data/structured-data.component';
 

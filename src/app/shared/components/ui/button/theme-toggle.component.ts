@@ -1,8 +1,8 @@
-import { Component, Inject, Renderer2, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, Renderer2, PLATFORM_ID, DOCUMENT } from '@angular/core';
 import { ButtonComponent } from '@components/ui/button/button.component';
 import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
 import { faMoon, faSun } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { LocalStorageService } from '@services/local-storage.service';
 
 @Component({
