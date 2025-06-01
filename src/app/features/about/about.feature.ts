@@ -1,8 +1,7 @@
-import { Component, effect, HostListener, Signal } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
+import { Component, DOCUMENT, effect, HostListener, Inject, PLATFORM_ID, Signal } from '@angular/core';
+import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { ProjectCardComponent } from '@components/ui';
 import { Overlay } from '@core/models/overlay.model';
-import { GithubDataApiService } from '@services/github-data-api.service';
 import { OverlayApiService } from '@services/overlay-api.service';
 
 @Component({
@@ -20,9 +19,13 @@ export class AboutFeatureComponent {
 
   constructor (
     private overlayApiService: OverlayApiService,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.projects = this.overlayApiService.data;
-    this.windowWidth = window.innerWidth;
+    if (isPlatformBrowser(this.platformId)) {
+      this.windowWidth = window.innerWidth;
+    }
 
     effect(() => {
       if (this.projects().length === 0) {
@@ -33,6 +36,8 @@ export class AboutFeatureComponent {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    this.windowWidth = window.innerWidth;
+    if (isPlatformBrowser(this.platformId)) {
+      this.windowWidth = window.innerWidth;
+    }
   }
 }
