@@ -68,6 +68,14 @@ p, span, a, label, input, button {
   @apply text-sleepy-light-text-secondary dark:text-sleepy-dark-text-secondary;
 }
 
+.text-primary {
+  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
+}
+
+.text-accent {
+  @apply text-sleepy-light-text-onAccent dark:text-sleepy-dark-text-onAccent;
+}
+
 /* Links (solo para enlaces que no usan el componente app-link) */
 a:not(app-link a) {
   @apply text-sleepy-light-text-secondary dark:text-sleepy-dark-text-secondary;

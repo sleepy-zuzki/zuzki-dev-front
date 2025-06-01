@@ -8,7 +8,9 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
   imports: [FormsModule, CommonModule],
   template: `
     <div class="textarea-wrapper">
-      <label *ngIf="label" class="textarea-label">{{ label }}</label>
+      @if(label) {
+        <label class="textarea-label text-primary">{{ label }}</label>
+      }
       <textarea
         [placeholder]="placeholder"
         [disabled]="disabled"
@@ -16,7 +18,10 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
         [(ngModel)]="value"
         (ngModelChange)="onValueChange($event)"
         class="textarea-field"></textarea>
-      <small *ngIf="helperText" class="textarea-helper">{{ helperText }}</small>
+
+      @if (helperText) {
+        <small class="textarea-helper">{{ helperText }}</small>
+      }
     </div>
   `,
   styles: [`
@@ -25,8 +30,7 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
     }
 
     .textarea-label {
-      @apply text-sm text-sleepy-light-text-secondary;
-      @apply dark:text-sleepy-dark-text-secondary;
+      @apply text-sm;
     }
 
     .textarea-field {
@@ -44,14 +48,14 @@ import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/f
     }
 
     .textarea-field:disabled {
-      @apply bg-sleepy-light-bg-surface text-sleepy-light-text-secondary;
+      @apply bg-sleepy-light-bg-surface text-sleepy-light-text-primary;
       @apply opacity-70 cursor-not-allowed;
-      @apply dark:bg-sleepy-dark-bg-surface dark:text-sleepy-dark-text-secondary;
+      @apply dark:bg-sleepy-dark-bg-surface dark:text-sleepy-dark-text-primary;
     }
 
     .textarea-helper {
-      @apply text-xs text-sleepy-light-text-secondary mt-1;
-      @apply dark:text-sleepy-dark-text-secondary;
+      @apply text-xs text-sleepy-light-text-primary mt-1;
+      @apply dark:text-sleepy-dark-text-primary;
     }
   `],
   providers: [
