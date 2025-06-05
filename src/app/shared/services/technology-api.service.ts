@@ -5,6 +5,7 @@ import { TechnologyModel } from '@core/models/technology.model';
 import { Technology } from '@core/interfaces/technology.interface';
 import { LoadState } from '@core/enums/load-state.enum';
 import { BaseApiService } from './base-api.service';
+import { ApiService } from '@core/services/api.service';
 
 /**
  * Servicio para obtener y gestionar tecnologías desde la API
@@ -13,7 +14,10 @@ import { BaseApiService } from './base-api.service';
   providedIn: 'root'
 })
 export class TechnologyApiService extends BaseApiService<TechnologyModel> {
-  constructor(http: HttpClient) {
+  constructor(
+    http: HttpClient,
+    private apiService: ApiService
+  ) {
     super(http);
   }
 
@@ -29,7 +33,7 @@ export class TechnologyApiService extends BaseApiService<TechnologyModel> {
 
     this.startLoading();
 
-    this.http.get<Technology[]>('tecnologies', { params })
+    this.apiService.getFromGithub<Technology[]>('technologies')
       .pipe(
         map((response: Technology[]): TechnologyModel[] =>
           response.map((data: Technology) => new TechnologyModel(data))

@@ -5,6 +5,7 @@ import { Social } from '@core/models/social.model';
 import { Social as ISocial } from '@core/interfaces/social.interface';
 import { BaseApiService } from './base-api.service';
 import { LoadState } from '@core/enums/load-state.enum';
+import { ApiService } from '@core/services/api.service';
 
 /**
  * Servicio para obtener y gestionar redes sociales desde la API
@@ -13,7 +14,10 @@ import { LoadState } from '@core/enums/load-state.enum';
   providedIn: 'root'
 })
 export class SocialApiService extends BaseApiService<Social> {
-  constructor(http: HttpClient) {
+  constructor(
+    http: HttpClient,
+    private apiService: ApiService
+  ) {
     super(http);
   }
 
@@ -31,7 +35,7 @@ export class SocialApiService extends BaseApiService<Social> {
 
     this.startLoading();
 
-    const observable: Observable<Social[]> = this.http.get<ISocial[]>('socials', { params }).pipe(
+    const observable: Observable<Social[]> = this.apiService.getFromGithub<ISocial[]>('socials').pipe(
       map((response: ISocial[]): Social[] =>
         response.map((data: ISocial) => new Social(data))
       ),

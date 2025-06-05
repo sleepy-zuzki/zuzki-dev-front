@@ -10,6 +10,7 @@ import { CreatorApiService } from './creator-api.service';
 import { LayoutApiService } from './layout-api.service';
 import { Creator } from '@core/models/creator.model';
 import { LayoutModel } from '@core/models/layout.model';
+import { ApiService } from '@core/services/api.service';
 
 /**
  * Servicio para obtener y gestionar overlays desde la API
@@ -21,7 +22,8 @@ export class OverlayApiService extends BaseApiService<Overlay> {
   constructor(
     http: HttpClient,
     private creatorApiService: CreatorApiService,
-    private layoutApiService: LayoutApiService
+    private layoutApiService: LayoutApiService,
+    private apiService: ApiService
   ) {
     super(http);
   }
@@ -96,7 +98,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
    * @private
    */
   private fetchRawOverlays(params?: HttpParams): Observable<Overlay[]> {
-    return this.http.get<IOverlay[]>('overlays', { params }).pipe(
+    return this.apiService.getFromGithub<IOverlay[]>('overlays').pipe(
       map((response: IOverlay[]): Overlay[] => {
         const creators: Creator[] = this.creatorApiService.data();
         return response
@@ -123,7 +125,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
    * @private
    */
   private loadOverlaysWithFullData(params?: HttpParams): Observable<Overlay[]> {
-    return this.http.get<IOverlay[]>('overlays', { params }).pipe(
+    return this.apiService.getFromGithub<IOverlay[]>('overlays').pipe(
       map((response: IOverlay[]): Overlay[] => {
         const creators: Creator[] = this.creatorApiService.data();
         const layouts: LayoutModel[] = this.layoutApiService.data();

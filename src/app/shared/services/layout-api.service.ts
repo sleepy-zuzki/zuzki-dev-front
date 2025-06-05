@@ -7,6 +7,7 @@ import { LayoutStatus } from '@core/enums/layout.enum';
 import { LoadState } from '@core/enums/load-state.enum';
 import { BaseApiService } from './base-api.service';
 import { Overlay } from '@core/models/overlay.model';
+import { ApiService } from '@core/services/api.service';
 
 /**
  * Servicio para obtener y gestionar layouts desde la API
@@ -15,7 +16,10 @@ import { Overlay } from '@core/models/overlay.model';
   providedIn: 'root'
 })
 export class LayoutApiService extends BaseApiService<LayoutModel> {
-  constructor(http: HttpClient) {
+  constructor(
+    http: HttpClient,
+    private apiService: ApiService
+  ) {
     super(http);
   }
 
@@ -38,7 +42,7 @@ export class LayoutApiService extends BaseApiService<LayoutModel> {
 
     this.startLoading();
 
-    const observable: Observable<LayoutModel[]> = this.http.get<Layout[]>('layouts', { params }).pipe(
+    const observable: Observable<LayoutModel[]> = this.apiService.getFromGithub<Layout[]>('layouts').pipe(
       map((response: Layout[]): LayoutModel[] => {
         return response
           .filter((data: Layout) => data.status === LayoutStatus.ACTIVO)

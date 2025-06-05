@@ -3,13 +3,13 @@ import { ButtonComponent, ProjectCardComponent } from '@components/ui';
 import { BadgeComponent } from '@components/ui/badge/badge.component';
 import { Overlay } from '@core/models/overlay.model';
 import { FormGroup, FormsModule } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { ContactFormComponent } from '@components/forms/contact-form/contact-form.component';
 import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { OverlayApiService } from '@services/overlay-api.service';
 import { StructuredDataComponent } from '@components/structured-data/structured-data.component';
+import { ApiService } from '@core/services/api.service';
 
 @Component({
   selector: 'app-home-feature',
@@ -90,8 +90,8 @@ export class HomeFeatureComponent {
 
   constructor(
     private overlayApiService: OverlayApiService,
-    private http: HttpClient,
     private toast: HotToastService,
+    private apiService: ApiService,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -119,16 +119,10 @@ export class HomeFeatureComponent {
   }
 
   onSubmit(form: FormGroup) {
-    const url = "https://hook.us2.make.com/zl0p2vv4190wklivjadktnec326qzqs6";
+    const endpoint = "zl0p2vv4190wklivjadktnec326qzqs6";
     const values = form.value;
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    }
-
-    this.http.post(url, values, httpOptions)
+    this.apiService.postToMake<any>(endpoint, values)
     .pipe(
       catchError(error => {
         console.error(error);
@@ -144,7 +138,6 @@ export class HomeFeatureComponent {
         console.error('Error en la suscripción:', err);
         // Podrías mostrar un mensaje de error al usuario aquí
       }
-
     });
   }
 }

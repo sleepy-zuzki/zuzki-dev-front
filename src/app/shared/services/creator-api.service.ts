@@ -7,6 +7,7 @@ import { LoadState } from '@core/enums/load-state.enum';
 import { BaseApiService } from './base-api.service';
 import { SocialApiService } from './social-api.service';
 import { Social } from '@core/models/social.model';
+import { ApiService } from '@core/services/api.service';
 
 /**
  * Servicio para obtener y gestionar creadores desde la API
@@ -17,7 +18,8 @@ import { Social } from '@core/models/social.model';
 export class CreatorApiService extends BaseApiService<Creator> {
   constructor(
     http: HttpClient,
-    private socialApiService: SocialApiService
+    private socialApiService: SocialApiService,
+    private apiService: ApiService
   ) {
     super(http);
   }
@@ -64,7 +66,7 @@ export class CreatorApiService extends BaseApiService<Creator> {
    * @private
    */
   private loadCreators(params?: HttpParams): Observable<Creator[]> {
-    return this.http.get<ICreator[]>('creators', { params }).pipe(
+    return this.apiService.getFromGithub<ICreator[]>('creators').pipe(
       map((response: ICreator[]): Creator[] => {
         const socials: Social[] = this.socialApiService.data();
         return response.map((data: ICreator) => new Creator(data, socials));

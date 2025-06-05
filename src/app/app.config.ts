@@ -7,10 +7,11 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { provideCloudflareLoader } from '@angular/common';
 import { GithubDataInterceptor } from '@core/interceptors/github-data.interceptor';
+import { MakeInterceptor } from '@core/interceptors/make.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withFetch(), withInterceptors([GithubDataInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([GithubDataInterceptor, MakeInterceptor])),
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
