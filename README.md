@@ -1,59 +1,97 @@
 # ZuzkiDevFront
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.12.
+Frontend para el **portafolio de Zuzki**, construido con Angular 20 y renderizado del lado del servidor (SSR). La aplicación se ejecuta en un Worker de Cloudflare y utiliza Tailwind CSS para los estilos. El desarrollo se gestiona con **pnpm**.
 
-## Development server
+## Requisitos
 
-To start a local development server, run:
+- Node.js **20.x** (consulta `package.json`)
+- npm **9.x**
+- [pnpm](https://pnpm.io) – gestor de paquetes utilizado
+
+## Instalación
+
+Instala las dependencias con pnpm:
+
+```bash
+pnpm install
+```
+
+Configura el endpoint de la API en `src/environments/environment.ts` (y `.development.ts`) antes de ejecutar la aplicación.
+
+## Desarrollo
+
+Para levantar el servidor de desarrollo de Angular:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Visita `http://localhost:4200/` para ver la app. El servidor se recarga al modificar archivos.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Para desarrollo SSR en Cloudflare Workers ejecuta:
 
 ```bash
-ng generate component component-name
+pnpm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Este comando compila la aplicación y la sirve con `wrangler pages dev`.
+
+## Compilación para Producción
+
+Genera una compilación de producción y prepara el Worker de Cloudflare:
 
 ```bash
-ng generate --help
+pnpm run build
 ```
 
-## Building
+Los archivos procesados se colocan en `dist/cloudflare`.
 
-To build the project run:
+## Observación de Builds
+
+Ejecuta el compilador en modo observación:
 
 ```bash
-ng build
+pnpm run watch
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Pruebas
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Las pruebas unitarias se ejecutan con Karma:
 
 ```bash
-ng test
+pnpm run test
 ```
 
-## Running end-to-end tests
+## Despliegue
 
-For end-to-end (e2e) testing, run:
+Despliega el worker en Cloudflare Pages:
 
 ```bash
-ng e2e
+pnpm run deploy
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Estructura del Proyecto
 
-## Additional Resources
+```
+src/
+ ├── app/            # módulos core, features y shared
+ ├── environments/   # archivos de entorno
+ ├── main.ts         # arranque en navegador
+ ├── main.server.ts  # arranque para servidor
+ └── server.ts       # manejador para Cloudflare
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Utilidades como `src/utils/sitemap-generator.ts` ayudan a generar un sitemap dinámico. Las fuentes y archivos estáticos se encuentran en el directorio `public/`.
+
+## Scripts Disponibles
+
+- `pnpm start` – compila y ejecuta con `wrangler pages dev`
+- `pnpm run build` – compilación de producción y preparación del worker
+- `pnpm run watch` – compila en modo observación
+- `pnpm run test` – ejecuta pruebas unitarias
+- `pnpm run deploy` – despliega en Cloudflare Pages
+- `pnpm run cf-typegen` – actualiza las definiciones de tipos de Cloudflare
+
+## Lecturas Adicionales
+
+Para opciones y comandos de Angular CLI, consulta la [documentación de Angular CLI](https://angular.dev/tools/cli).
