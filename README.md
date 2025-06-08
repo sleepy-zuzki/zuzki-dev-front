@@ -73,15 +73,26 @@ pnpm run deploy
 ## Estructura del Proyecto
 
 ```
-src/
- ├── app/            # módulos core, features y shared
- ├── environments/   # archivos de entorno
- ├── main.ts         # arranque en navegador
- ├── main.server.ts  # arranque para servidor
- └── server.ts       # manejador para Cloudflare
+/
+├── src/
+│   ├── app/                  # Código principal de la aplicación
+│   │   ├── core/             # Servicios e interceptores esenciales
+│   │   ├── features/         # Módulos de características (home, about, works)
+│   │   ├── pages/            # Componentes de página principales
+│   │   ├── shared/           # Componentes y utilidades compartidas
+│   │   └── worker/           # Código específico para Cloudflare Workers
+│   ├── assets/               # Recursos estáticos procesados por Angular
+│   ├── environments/         # Configuración de entornos
+│   ├── utils/                # Utilidades generales (ej: generador de sitemap)
+│   ├── main.ts               # Punto de entrada para navegador
+│   ├── main.server.ts        # Punto de entrada para SSR
+│   └── server.ts             # Manejador para Cloudflare Workers
+├── public/                   # Archivos estáticos servidos directamente
+├── tools/                    # Scripts y herramientas de desarrollo
+└── ... archivos de configuración (angular.json, tsconfig.json, etc.)
 ```
 
-Utilidades como `src/utils/sitemap-generator.ts` ayudan a generar un sitemap dinámico. Las fuentes y archivos estáticos se encuentran en el directorio `public/`.
+Cada carpeta principal contiene su propio archivo README.md con información específica sobre su propósito y estructura.
 
 ## Scripts Disponibles
 
@@ -91,6 +102,7 @@ Utilidades como `src/utils/sitemap-generator.ts` ayudan a generar un sitemap din
 - `pnpm run test` – ejecuta pruebas unitarias
 - `pnpm run deploy` – despliega en Cloudflare Pages
 - `pnpm run cf-typegen` – actualiza las definiciones de tipos de Cloudflare
+- `pnpm run process` – ejecuta scripts de post-procesamiento (copy-files.mjs)
 
 ## Lecturas Adicionales
 
