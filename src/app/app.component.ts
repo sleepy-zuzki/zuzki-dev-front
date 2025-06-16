@@ -3,11 +3,13 @@ import {
   ElementRef,
   Signal,
   ViewChild,
-  OnDestroy
+  OnDestroy,
+  OnInit
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Overlay } from '@core/models/overlay.model';
 import { OverlayService } from '@services/overlay.service';
+import { SeoService } from '@core/services/seo.service';
 import { FontAwesomeModule, IconDefinition } from '@fortawesome/angular-fontawesome';
 import { faCode } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
 import { HeaderComponent } from '@components/header/header.component';
@@ -33,7 +35,7 @@ const customImageConfig: ImageConfig = {
   standalone: true,
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('drawer') drawer?: ElementRef;
   title: string = 'Sleepy Zuzki';
   readonly overlays: Signal<Overlay[]>;
@@ -49,7 +51,8 @@ export class AppComponent implements OnDestroy {
   constructor (
     readonly overlayApiService: OverlayApiService,
     readonly overlayService: OverlayService,
-    private router: Router
+    private router: Router,
+    private seoService: SeoService
   ) {
     this.overlays = this.overlayApiService.data;
     this.routerSubscription = this.router.events.pipe(
@@ -59,6 +62,11 @@ export class AppComponent implements OnDestroy {
       this.isWorkDetailsPage = event.urlAfterRedirects.includes('/works/') &&
         !event.urlAfterRedirects.endsWith('/works');
     });
+  }
+
+  ngOnInit() {
+    // Inicializar el servicio SEO para la actualización automática de metadatos
+    this.seoService.init();
   }
 
   ngOnDestroy() {

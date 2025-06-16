@@ -1,5 +1,4 @@
 import {
-  HttpContext,
   HttpEvent,
   HttpHandlerFn,
   HttpHeaders,
@@ -7,7 +6,7 @@ import {
   HttpRequest
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { environment } from '@env/environment';
 import { API_TYPE, ApiType } from '../tokens/api-type.token';
 
 /**
