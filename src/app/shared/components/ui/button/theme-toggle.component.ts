@@ -64,7 +64,9 @@ export class ThemeToggleComponent {
   }
 
   toggleDarkMode(): void {
-    this.themeBroadcastChannel?.postMessage(!this.isDarkMode);
+    const newDarkMode: boolean  = !this.isDarkMode;
+    this.setDarkMode(newDarkMode);
+    this.themeBroadcastChannel?.postMessage(newDarkMode);
   }
 
   setDarkMode(isDarkMode: boolean): void {
