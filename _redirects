@@ -1,0 +1,17 @@
+# Redirecciones permanentes para mejorar SEO
+
+# Redirigir todas las variantes con www a no-www (manteniendo la ruta y parámetros)
+https://www.zuzki.dev/* https://zuzki.dev/:splat 301!
+http://www.zuzki.dev/* https://zuzki.dev/:splat 301!
+
+# Redirigir HTTP a HTTPS (aunque esto también debería configurarse en Cloudflare)
+http://zuzki.dev/* https://zuzki.dev/:splat 301!
+
+# Asegurar que no hay barras diagonales al final de las URLs (canonical)
+https://zuzki.dev/*/ https://zuzki.dev/:splat 301!
+
+# Redirigir index.html explícito a la raíz
+https://zuzki.dev/index.html https://zuzki.dev/ 301!
+
+# Mantener las URLs en minúsculas (opcional, pero recomendado)
+/* /:splat 301! Language=regex Header=X-Forwarded-Request=[A-Z]
