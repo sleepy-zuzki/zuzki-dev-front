@@ -37,6 +37,15 @@ export const routes: Routes = [
     loadComponent: () => import('@pages/home.page').then(m => m.HomePage)
   },
   {
+    path: '404',
+    title: 'Página no encontrada - Error 404',
+    data: {
+      description: "La página que estás buscando no existe o ha sido movida. Regresa al inicio para continuar explorando el portafolio de Sleepy Zuzki.",
+      keywords: ["error 404", "página no encontrada", "sleepy zuzki"],
+    },
+    loadComponent: () => import('@pages/not-found.page').then(m => m.NotFoundPage)
+  },
+  {
     path: '**',
     title: 'Página no encontrada - Error 404',
     data: {

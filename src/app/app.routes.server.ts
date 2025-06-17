@@ -12,11 +12,17 @@ export const serverRoutes: ServerRoute[] = [
     path: 'works/:id',
     renderMode: RenderMode.Client,
   },
-  { path: '',
+  {
+    path: '',
+    renderMode: RenderMode.Server,
+  },
+  {
+    path: '404',
     renderMode: RenderMode.Server,
   },
   {
     path: '**',
-    renderMode: RenderMode.Prerender,
+    renderMode: RenderMode.Server,
+    status: 404
   }
 ];
