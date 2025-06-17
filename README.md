@@ -3,7 +3,7 @@
 Frontend para el **portafolio de Zuzki**, construido con Angular 20 y renderizado del lado del servidor (SSR). La aplicación se ejecuta en un Worker de Cloudflare y utiliza Tailwind CSS para los estilos. El desarrollo se gestiona con **pnpm**.
 
 ## Licensing
-- **Code:** MIT License – see [LICENSE](./LICENSE)
+- **Code:** MIT License – see [LICENSE](./LICENSE) (with [translations](./LICENSE.TRANSLATIONS.md))
 - **Art & Media:** CC BY-NC 4.0 – see [LICENSE-ASSETS.md](./LICENSE-ASSETS.md)
 
 ## Requisitos
