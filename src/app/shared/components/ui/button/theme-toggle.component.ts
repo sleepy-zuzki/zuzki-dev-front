@@ -26,6 +26,7 @@ export class ThemeToggleComponent {
   protected readonly faMoon?: IconDefinition;
   protected readonly faSun?: IconDefinition;
   private isDarkMode: boolean = false;
+  themeBroadcastChannel: BroadcastChannel | null = null;
 
   constructor(
     private renderer: Renderer2,
@@ -36,8 +37,17 @@ export class ThemeToggleComponent {
     this.checkInitialMode();
 
     if (isPlatformBrowser(this.platformId)) {
+      this.themeBroadcastChannel = new BroadcastChannel('theme');
       this.faMoon = faMoon;
       this.faSun = faSun;
+
+      this.themeBroadcastChannel.onmessage = (event: MessageEvent<boolean> ) => {
+        if (typeof event.data === 'boolean') {
+          this.setDarkMode(event.data);
+        } else {
+          this.checkInitialMode();
+        }
+      }
     }
   }
 
@@ -54,7 +64,7 @@ export class ThemeToggleComponent {
   }
 
   toggleDarkMode(): void {
-    this.setDarkMode(!this.isDarkMode);
+    this.themeBroadcastChannel?.postMessage(!this.isDarkMode);
   }
 
   setDarkMode(isDarkMode: boolean): void {
