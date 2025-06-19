@@ -24,3 +24,50 @@ dialog {
     scale: 1;
   }
 }
+
+.banner {
+  @apply block w-full text-center text-gray-950 py-1 bg-amber-500;
+
+  text-decoration: none;
+}
+
+.live-animation {
+  position: relative;
+}
+
+.live-animation > span {
+  position: absolute;
+  top: 5px;
+  left: -15px;
+
+  display: block;
+  width: 10px;
+  height: 10px;
+  opacity: 0.8;
+  border-radius: 50%;
+  border: 1px solid red;
+  background-color: red;
+  animation: icon-pulse 3s ease-out infinite;
+  animation-delay: calc(1s * var(--delay));
+}
+
+@keyframes banner-appear {
+  from {
+    opacity: 0;
+    transform: translate(-100%, 0);
+  }
+}
+
+@keyframes banner-disappear {
+  from {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes icon-pulse {
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}

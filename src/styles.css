@@ -78,7 +78,7 @@ p, span, a, label, input, button {
 
 /* Links (solo para enlaces que no usan el componente app-link) */
 a:not(app-link a) {
-  @apply text-sleepy-light-text-secondary dark:text-sleepy-dark-text-secondary;
+  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
   @apply hover:text-sleepy-accent hover:underline focus:outline-none focus:ring-2;
   @apply focus:ring-sleepy-accent;
   transition: color 0.2s;
