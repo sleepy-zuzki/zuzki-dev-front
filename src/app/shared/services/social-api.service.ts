@@ -35,7 +35,7 @@ export class SocialApiService extends BaseApiService<Social> {
 
     this.startLoading();
 
-    const observable: Observable<Social[]> = this.apiService.getFromGithub<ISocial[]>('socials').pipe(
+    const observable: Observable<Social[]> = this.apiService.getFromWorker<ISocial[]>('github/socials').pipe(
       map((response: ISocial[]): Social[] =>
         response.map((data: ISocial) => new Social(data))
       ),

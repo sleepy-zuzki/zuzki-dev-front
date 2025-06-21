@@ -16,6 +16,7 @@ import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesom
   ],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.css',
+  standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ContactFormComponent {

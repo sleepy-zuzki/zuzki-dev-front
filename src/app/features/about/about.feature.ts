@@ -11,6 +11,7 @@ import { OverlayApiService } from '@services/overlay-api.service';
     ProjectCardComponent
   ],
   templateUrl: './about.feature.html',
+  standalone: true,
   styleUrl: './about.feature.css'
 })
 export class AboutFeatureComponent {

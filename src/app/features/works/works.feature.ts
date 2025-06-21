@@ -11,6 +11,7 @@ import { OverlayApiService } from '@services/overlay-api.service';
     RouterLink
   ],
   templateUrl: './works.feature.html',
+  standalone: true,
   styleUrl: './works.feature.css'
 })
 export class WorksFeature {

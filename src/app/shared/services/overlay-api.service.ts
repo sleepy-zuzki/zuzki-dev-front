@@ -98,7 +98,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
    * @private
    */
   private fetchRawOverlays(params?: HttpParams): Observable<Overlay[]> {
-    return this.apiService.getFromGithub<IOverlay[]>('overlays').pipe(
+    return this.apiService.getFromWorker<IOverlay[]>('github/overlays').pipe(
       map((response: IOverlay[]): Overlay[] => {
         const creators: Creator[] = this.creatorApiService.data();
         return response
@@ -125,7 +125,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
    * @private
    */
   private loadOverlaysWithFullData(params?: HttpParams): Observable<Overlay[]> {
-    return this.apiService.getFromGithub<IOverlay[]>('overlays').pipe(
+    return this.apiService.getFromWorker<IOverlay[]>('github/overlays').pipe(
       map((response: IOverlay[]): Overlay[] => {
         const creators: Creator[] = this.creatorApiService.data();
         const layouts: LayoutModel[] = this.layoutApiService.data();

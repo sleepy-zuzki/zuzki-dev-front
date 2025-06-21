@@ -42,7 +42,7 @@ export class LayoutApiService extends BaseApiService<LayoutModel> {
 
     this.startLoading();
 
-    const observable: Observable<LayoutModel[]> = this.apiService.getFromGithub<Layout[]>('layouts').pipe(
+    const observable: Observable<LayoutModel[]> = this.apiService.getFromWorker<Layout[]>('github/layouts').pipe(
       map((response: Layout[]): LayoutModel[] => {
         return response
           .filter((data: Layout) => data.status === LayoutStatus.ACTIVO)

@@ -18,15 +18,15 @@ import { API_TYPE, ApiType } from '../tokens/api-type.token';
  * @param next El siguiente manejador en la cadena de interceptores.
  * @returns Un Observable del evento HTTP.
  */
-export const GithubDataInterceptor: HttpInterceptorFn = (
+export const WorkerDataInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> => {
   // Obtener el tipo de API del contexto de la solicitud
-  const apiType = req.context.get(API_TYPE);
+  const apiType: ApiType = req.context.get(API_TYPE);
 
   // Solo procesar si el tipo de API es GitHub y la URL no es absoluta
-  if (apiType === ApiType.GITHUB && !req.url.startsWith('http') && !req.url.startsWith('https')) {
+  if (apiType === ApiType.WORKER && !req.url.startsWith('http') && !req.url.startsWith('https')) {
     // Cabeceras estándar para las peticiones a la API de GitHub
     const headers: HttpHeaders = new HttpHeaders({
       'Accept': 'application/json',
@@ -34,7 +34,7 @@ export const GithubDataInterceptor: HttpInterceptorFn = (
     });
 
     // Construir la URL completa anteponiendo la URL base de GitHub desde el environment
-    const url: string = `${environment.githubApiUrl}/${req.url}`;
+    const url: string = `${environment.workerUrl}/${req.url}`;
 
     // Clonar la solicitud original con la nueva URL y cabeceras
     const newRequest: HttpRequest<unknown> = req.clone({ url, headers });

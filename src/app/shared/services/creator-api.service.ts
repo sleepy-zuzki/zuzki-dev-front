@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, finalize, map, of, switchMap, tap, catchError } from 'rxjs';
+import { Observable, map, of, switchMap, tap, catchError } from 'rxjs';
 import { Creator } from '@core/models/creator.model';
 import { Creator as ICreator } from '@core/interfaces/creator.interface';
 import { LoadState } from '@core/enums/load-state.enum';
@@ -66,7 +66,7 @@ export class CreatorApiService extends BaseApiService<Creator> {
    * @private
    */
   private loadCreators(params?: HttpParams): Observable<Creator[]> {
-    return this.apiService.getFromGithub<ICreator[]>('creators').pipe(
+    return this.apiService.getFromWorker<ICreator[]>('github/creators').pipe(
       map((response: ICreator[]): Creator[] => {
         const socials: Social[] = this.socialApiService.data();
         return response.map((data: ICreator) => new Creator(data, socials));

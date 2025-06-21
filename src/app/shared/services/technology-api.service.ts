@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, catchError, map, tap } from 'rxjs';
+import { catchError, map, tap } from 'rxjs';
 import { TechnologyModel } from '@core/models/technology.model';
 import { Technology } from '@core/interfaces/technology.interface';
 import { LoadState } from '@core/enums/load-state.enum';
@@ -33,7 +33,7 @@ export class TechnologyApiService extends BaseApiService<TechnologyModel> {
 
     this.startLoading();
 
-    this.apiService.getFromGithub<Technology[]>('technologies')
+    this.apiService.getFromWorker<Technology[]>('github/technologies')
       .pipe(
         map((response: Technology[]): TechnologyModel[] =>
           response.map((data: Technology) => new TechnologyModel(data))

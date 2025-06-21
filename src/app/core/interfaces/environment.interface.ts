@@ -1,5 +1,5 @@
 export interface Environment {
   production: boolean;
-  githubApiUrl: string;
+  workerUrl: string;
   makeApiUrl: string;
 }

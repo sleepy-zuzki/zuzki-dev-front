@@ -14,6 +14,7 @@ import { OverlayApiService } from '@services/overlay-api.service';
     ButtonComponent
   ],
   templateUrl: './work-details.component.html',
+  standalone: true,
   styleUrl: './work-details.component.css'
 })
 export class WorkDetailsComponent implements AfterViewInit {

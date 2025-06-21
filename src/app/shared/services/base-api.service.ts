@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, MonoTypeOperatorFunction, Observable, catchError, finalize, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, MonoTypeOperatorFunction, Observable, finalize, of } from 'rxjs';
 import { LoadState } from '@core/enums/load-state.enum';
 import { ErrorMessage } from '@core/interfaces/error-message.interface';
 import { toSignal } from '@angular/core/rxjs-interop';

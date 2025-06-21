@@ -29,6 +29,16 @@ dialog {
   @apply block w-full text-center text-gray-950 py-1 bg-amber-500;
 
   text-decoration: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: all 0.5s ease-in-out;
+}
+
+.banner.appear {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
 .live-animation {
@@ -49,20 +59,6 @@ dialog {
   background-color: red;
   animation: icon-pulse 3s ease-out infinite;
   animation-delay: calc(1s * var(--delay));
-}
-
-@keyframes banner-appear {
-  from {
-    opacity: 0;
-    transform: translate(-100%, 0);
-  }
-}
-
-@keyframes banner-disappear {
-  from {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
 }
 
 @keyframes icon-pulse {
