@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
-import { faCode } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { featherCode } from '@ng-icons/feather-icons';
 import { ButtonComponent } from '@components/ui/button/button.component';
 import { ThemeToggleComponent } from '@components/ui/button/theme-toggle.component';
 import { LinkComponent } from '@components/ui/link/link.component';
@@ -25,16 +25,16 @@ import { YoutubeStream, TwitchStream } from '@core/interfaces/streaming.interfac
   imports: [
     CommonModule,
     RouterModule,
-    FaIconComponent,
+    NgIconComponent,
     ButtonComponent,
     ThemeToggleComponent,
     LinkComponent
   ],
+  providers: [provideIcons({ featherCode })],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements AfterViewInit {
-  faCode?: IconDefinition;
   isLive: boolean = false;
 
   // Referencia a los elementos html
@@ -46,12 +46,7 @@ export class HeaderComponent implements AfterViewInit {
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    // Inicializar FontAwesome sólo en el navegador
-    if (isPlatformBrowser(this.platformId)) {
-      this.faCode = faCode;
-    }
-  }
+  ) {}
 
   /**
    * Lifecycle hook que se ejecuta cuando la vista ha sido inicializada

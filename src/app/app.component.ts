@@ -10,8 +10,6 @@ import { RouterOutlet } from '@angular/router';
 import { Overlay } from '@core/models/overlay.model';
 import { OverlayService } from '@services/overlay.service';
 import { SeoService } from '@core/services/seo.service';
-import { FontAwesomeModule, IconDefinition } from '@fortawesome/angular-fontawesome';
-import { faCode } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
 import { HeaderComponent } from '@components/header/header.component';
 import { FooterComponent } from '@components/footer/footer.component';
 import { IMAGE_CONFIG, ImageConfig, NgClass } from '@angular/common';
@@ -27,7 +25,7 @@ const customImageConfig: ImageConfig = {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FontAwesomeModule, HeaderComponent, FooterComponent, NgClass],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent, NgClass],
   providers: [
     {provide: IMAGE_CONFIG, useValue: customImageConfig}
   ],
@@ -39,7 +37,6 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('drawer') drawer?: ElementRef;
   title: string = 'Sleepy Zuzki';
   readonly overlays: Signal<Overlay[]>;
-  readonly faCode: IconDefinition = faCode;
   isWorkDetailsPage: boolean = false;
   private readonly routerSubscription: Subscription;
 

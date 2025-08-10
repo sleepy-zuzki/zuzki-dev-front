@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ButtonComponent } from './button/button.component';
-import { InputComponent } from './input.component';
-import { CheckboxComponent } from './checkbox.component';
-import { SelectComponent } from './select.component';
-import { CardComponent } from './card.component';
-import { ToggleComponent } from './toggle.component';
+import { InputComponent } from './input/input.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
+import { SelectComponent } from './select/select.component';
+import { CardComponent } from './card/card.component';
+import { ToggleComponent } from './toggle/toggle.component';
 
 @Component({
   selector: 'app-controls-grid',

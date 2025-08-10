@@ -9,7 +9,7 @@
 
       @if (name && name.invalid && (name.dirty || name.touched)) {
         <div class="text-red-500">
-          <fa-icon [icon]="faCircleExclamation"/> El nombre no es valido
+          <ng-icon name="featherAlertCircle" /> El nombre no es valido
         </div>
       }
     </div>
@@ -22,7 +22,7 @@
 
       @if (email && email.invalid && (email.dirty || email.touched)) {
         <div class="text-red-500">
-          <fa-icon [icon]="faCircleExclamation"/> El correo no es valido
+          <ng-icon name="featherAlertCircle" /> El correo no es valido
         </div>
       }
     </div>
@@ -37,7 +37,7 @@
 
       @if (message && message.invalid && (message.dirty || message.touched)) {
         <div class="text-red-500">
-          <fa-icon [icon]="faCircleExclamation"/> El mensaje es requerido
+          <ng-icon name="featherAlertCircle" /> El mensaje es requerido
         </div>
       }
     </div>

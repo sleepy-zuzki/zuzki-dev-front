@@ -1,7 +1,7 @@
 import { Component, Inject, Renderer2, PLATFORM_ID, DOCUMENT } from '@angular/core';
 import { ButtonComponent } from '@components/ui/button/button.component';
-import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
-import { faMoon, faSun } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { featherMoon, featherSun } from '@ng-icons/feather-icons';
 import { isPlatformBrowser } from '@angular/common';
 import { LocalStorageService } from '@services/local-storage.service';
 
@@ -10,21 +10,18 @@ import { LocalStorageService } from '@services/local-storage.service';
   standalone: true,
   template: `
     <app-button variant="secondary" ariaLabel="Alternar tema" (callback)="toggleDarkMode()">
-      @if (faMoon && faSun) {
-        <fa-icon [icon]="faMoon" class="dark:hidden"></fa-icon>
-        <fa-icon [icon]="faSun" class="hidden dark:block"></fa-icon>
-      }
+      <ng-icon name="featherMoon" class="dark:hidden"></ng-icon>
+      <ng-icon name="featherSun" class="hidden dark:block"></ng-icon>
     </app-button>
   `,
   imports: [
     ButtonComponent,
-    FaIconComponent
+    NgIconComponent
   ],
+  providers: [provideIcons({ featherMoon, featherSun })],
   styles: []
 })
 export class ThemeToggleComponent {
-  protected readonly faMoon?: IconDefinition;
-  protected readonly faSun?: IconDefinition;
   private isDarkMode: boolean = false;
   themeBroadcastChannel: BroadcastChannel | null = null;
 
@@ -38,8 +35,6 @@ export class ThemeToggleComponent {
 
     if (isPlatformBrowser(this.platformId)) {
       this.themeBroadcastChannel = new BroadcastChannel('theme');
-      this.faMoon = faMoon;
-      this.faSun = faSun;
 
       this.themeBroadcastChannel.onmessage = (event: MessageEvent<boolean> ) => {
         if (typeof event.data === 'boolean') {

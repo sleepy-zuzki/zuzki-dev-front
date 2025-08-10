@@ -12,7 +12,6 @@ features/
 │   ├── components/        # Componentes específicos de home
 │   ├── services/          # Servicios específicos 
 │   └── models/            # Modelos de datos específicos
-├── about/                 # Funcionalidad de página sobre mí
 └── works/                 # Funcionalidad de portafolio de trabajos
 ```
 

@@ -15,9 +15,7 @@
   </a>
   <nav class="container mx-auto flex items-center justify-between h-16 px-0 md:px-4" id='navbar' role="navigation">
     <app-link class="logo flex items-center text-xl font-medium select-none" routerLink="/" routerLinkActiveClass="" variant="nav">
-      @if (faCode) {
-        <fa-icon [icon]="faCode" class="mr-2 text-sleepy-accent" size="2xl"></fa-icon>
-      }
+      <ng-icon name="featherCode" class="mr-2 text-sleepy-accent w-7 h-7"></ng-icon>
       <span class="text-2xl font-bold">Sleepy Zuzki</span>
     </app-link>
 

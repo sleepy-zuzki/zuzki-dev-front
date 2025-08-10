@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, HostBinding, Input } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { ButtonComponent } from '@components/ui';
+import { LinkButtonComponent } from '@components/ui/button/link-button.component';
 import { Overlay } from '@core/models/overlay.model';
 
 @Component({
@@ -8,7 +8,7 @@ import { Overlay } from '@core/models/overlay.model';
   standalone: true,
   imports: [
     CommonModule,
-    ButtonComponent,
+    LinkButtonComponent,
     NgOptimizedImage
   ],
   templateUrl: './project-card.component.html',

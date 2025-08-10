@@ -35,12 +35,15 @@ importers:
       '@angular/ssr':
         specifier: ^20.0.0
         version: 20.0.0(j2hkd3r66ohu25fivt36zpovku)
-      '@awesome.me/kit-6cba0026a3':
-        specifier: ^1.0.4
-        version: 1.0.7
-      '@fortawesome/angular-fontawesome':
-        specifier: ^1.0.0
-        version: 1.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))
+      '@ng-icons/bootstrap-icons':
+        specifier: ^32.1.0
+        version: 32.1.0
+      '@ng-icons/core':
+        specifier: ^32.1.0
+        version: 32.1.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
+      '@ng-icons/feather-icons':
+        specifier: ^32.1.0
+        version: 32.1.0
       '@ngneat/overview':
         specifier: 6.1.1
         version: 6.1.1(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))
@@ -280,10 +283,6 @@ packages:
     peerDependenciesMeta:
       '@angular/platform-server':
         optional: true
-
-  '@awesome.me/kit-6cba0026a3@1.0.7':
-    resolution: {integrity: sha512-QOR5ItIkDxRqk0qELe26TZenYuVjrTXTn7pPNd0qmmHogeWVOVx+gLdwXQunJ81VePZ1lTDEjF9bmYVMXWN4QA==}
-    engines: {node: '>=16'}
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -713,19 +712,6 @@ packages:
   '@fastify/busboy@2.1.1':
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
-
-  '@fortawesome/angular-fontawesome@1.0.0':
-    resolution: {integrity: sha512-EC2fYuXIuw2ld1kzJi+zysWus6OeGGfLQtbh0hW9zyyq5aBo8ZJkcJKBsVQ8E6Mg7nHyTWaXn+sdcXTPDWz+UQ==}
-    peerDependencies:
-      '@angular/core': ^19.0.0
-
-  '@fortawesome/fontawesome-common-types@6.7.2':
-    resolution: {integrity: sha512-Zs+YeHUC5fkt7Mg1l6XTniei3k4bwG/yo3iFUtZWd/pMx9g3fdvkSK9E0FOC+++phXOka78uJcYb8JaFkW52Xg==}
-    engines: {node: '>=6'}
-
-  '@fortawesome/fontawesome-svg-core@6.7.2':
-    resolution: {integrity: sha512-yxtOBWDrdi5DD5o1pmVdq3WMCvnobT0LU6R8RyyVXPvFRd2o79/0NCuQoCjNTeZz9EzA9xS3JxNWfv54RIHFEA==}
-    engines: {node: '>=6'}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -1172,6 +1158,19 @@ packages:
   '@napi-rs/nice@1.0.1':
     resolution: {integrity: sha512-zM0mVWSXE0a0h9aKACLwKmD6nHcRiKrPpCfvaKqG1CqDEyjEawId0ocXxVzPMCAm6kkWr2P025msfxXEnt8UGQ==}
     engines: {node: '>= 10'}
+
+  '@ng-icons/bootstrap-icons@32.1.0':
+    resolution: {integrity: sha512-qAJhGT/vhYt1h5nc26kZ6sbbCnIFO47ssuwGj8S3VsMOVE2F5JM3biRzx1TXyihBfSgI7BkejDhlhBOhUVK8qw==}
+
+  '@ng-icons/core@32.1.0':
+    resolution: {integrity: sha512-QMZSJIZYFg6THQKL9cQDEf7IbBcALcM09wCBmlIf0slmozRWcNJR25T9huiXy9/15OH1APegaRW+606e9bsOIg==}
+    peerDependencies:
+      '@angular/common': '>=20.0.0'
+      '@angular/core': '>=20.0.0'
+      rxjs: ^6.5.3 || ^7.4.0
+
+  '@ng-icons/feather-icons@32.1.0':
+    resolution: {integrity: sha512-r6qMBBkhp0mT4EBwM9ABQMmd0gU0GhpQDPZw14XP1kOldB8UfQMuAwIpSPgXk1yTf7aY5lZpBY5nU87cHv/4fg==}
 
   '@ngneat/overview@6.1.1':
     resolution: {integrity: sha512-31gsEbSbLWTD/LD8KtUS2Qv+GVQS2pK00S9ZBP+pv2ZF1NIfwHjXs8fey8TQN1QuKPLa510YYN3rEwyP57UCfw==}
@@ -3696,10 +3695,6 @@ snapshots:
     optionalDependencies:
       '@angular/platform-server': 20.0.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/compiler@20.0.0)(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.0.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
 
-  '@awesome.me/kit-6cba0026a3@1.0.7':
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 6.7.2
-
   '@babel/code-frame@7.27.1':
     dependencies:
       '@babel/helper-validator-identifier': 7.27.1
@@ -3993,18 +3988,6 @@ snapshots:
     optional: true
 
   '@fastify/busboy@2.1.1': {}
-
-  '@fortawesome/angular-fontawesome@1.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))':
-    dependencies:
-      '@angular/core': 20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)
-      '@fortawesome/fontawesome-svg-core': 6.7.2
-      tslib: 2.8.1
-
-  '@fortawesome/fontawesome-common-types@6.7.2': {}
-
-  '@fortawesome/fontawesome-svg-core@6.7.2':
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 6.7.2
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
@@ -4362,6 +4345,21 @@ snapshots:
       '@napi-rs/nice-win32-ia32-msvc': 1.0.1
       '@napi-rs/nice-win32-x64-msvc': 1.0.1
     optional: true
+
+  '@ng-icons/bootstrap-icons@32.1.0':
+    dependencies:
+      tslib: 2.8.1
+
+  '@ng-icons/core@32.1.0(@angular/common@20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)':
+    dependencies:
+      '@angular/common': 20.0.0(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2)
+      '@angular/core': 20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1)
+      rxjs: 7.8.2
+      tslib: 2.8.1
+
+  '@ng-icons/feather-icons@32.1.0':
+    dependencies:
+      tslib: 2.8.1
 
   '@ngneat/overview@6.1.1(@angular/core@20.0.0(@angular/compiler@20.0.0)(rxjs@7.8.2)(zone.js@0.15.1))':
     dependencies:

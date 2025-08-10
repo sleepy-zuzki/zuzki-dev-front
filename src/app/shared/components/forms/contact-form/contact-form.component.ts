@@ -1,8 +1,10 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonComponent, InputComponent, TextareaComponent } from '@components/ui';
-import { faCircleExclamation } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
-import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
+import { ButtonComponent } from '@components/ui/button/button.component';
+import { InputComponent } from '@components/ui/input/input.component';
+import { TextareaComponent } from '@components/ui/textarea/textarea.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { featherAlertCircle } from '@ng-icons/feather-icons';
 
 @Component({
   selector: 'app-contact-form',
@@ -12,16 +14,15 @@ import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesom
     InputComponent,
     ReactiveFormsModule,
     TextareaComponent,
-    FaIconComponent
+    NgIconComponent
   ],
+  providers: [provideIcons({ featherAlertCircle })],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.css',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ContactFormComponent {
-  faCircleExclamation: IconDefinition = faCircleExclamation;
-
   @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
 
   contact = {

@@ -1,15 +1,6 @@
 import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
-    path: 'about',
-    title: 'Acerca de Sleepy Zuzki - Desarrollo Web y Streaming',
-    data: {
-      description: "Sleepy Zuzki, ingeniero de software, comparte su enfoque en experiencias accesibles y visuales. Descubre habilidades clave y vision para proyectos creativos.",
-      keywords: ["sleepy zuzki", "ingeniero de software", "experiencias accesibles", "perfil profesional"],
-    },
-    loadComponent: () => import('@pages/about.page').then(m => m.AboutPage)
-  },
-  {
     path: 'works',
     title: 'Proyectos de Sleepy Zuzki - Soluciones Interactivas',
     data: {

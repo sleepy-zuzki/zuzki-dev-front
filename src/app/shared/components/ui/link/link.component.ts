@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
-import { faArrowUpRightFromSquare } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { featherExternalLink } from '@ng-icons/feather-icons';
 
 @Component({
   selector: 'app-link',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, FaIconComponent],
+  imports: [CommonModule, RouterLink, RouterLinkActive, NgIconComponent],
+  providers: [provideIcons({ featherExternalLink })],
   template: `
     <a
       [ngClass]="linkClasses"
@@ -18,13 +19,14 @@ import { faArrowUpRightFromSquare } from '@awesome.me/kit-6cba0026a3/icons/duoto
       [attr.rel]="isExternal ? 'noopener noreferrer' : null"
       [attr.aria-label]="ariaLabel">
       <ng-content></ng-content>
-      <fa-icon
-        *ngIf="isExternal && showExternalIcon"
-        [icon]="externalIcon"
-        class="external-icon ml-1 text-xs"
-        [ngClass]="{'opacity-70': disabled}"
-        aria-hidden="true">
-      </fa-icon>
+      @if (isExternal && showExternalIcon) {
+        <ng-icon
+          name="featherExternalLink"
+          class="external-icon ml-1 text-xs"
+          [ngClass]="{'opacity-70': disabled}"
+          aria-hidden="true">
+        </ng-icon>
+      }
     </a>
   `,
   styles: [`
@@ -83,8 +85,6 @@ export class LinkComponent implements OnInit {
   @Input() ariaLabel: string = '';
   @Input() showExternalIcon: boolean = true;
 
-  externalIcon: IconDefinition = faArrowUpRightFromSquare;
-
   get isExternal(): boolean {
     if (this.routerLink) return false;
 
@@ -100,9 +100,9 @@ export class LinkComponent implements OnInit {
   get linkClasses(): string {
     const classes = [
       this.variant === 'internal' ? 'link-internal' : '',
-      this.variant === 'external' || this.isExternal ? 'link-external' : '',
+      (this.variant === 'external' || this.isExternal) ? 'link-external' : '',
       this.variant === 'nav' ? 'link-nav' : '',
-      this.variant === 'nav' && this.routerLinkActiveClass ? 'link-nav-animation' : '',
+      (this.variant === 'nav' && this.routerLinkActiveClass) ? 'link-nav-animation' : '',
       this.disabled ? 'link-disabled' : '',
       'cursor-pointer',
     ];
