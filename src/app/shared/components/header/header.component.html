@@ -1,4 +1,4 @@
-<header class="border-b border-sleepy-light-border dark:border-sleepy-dark-border">
+<header class="border-b bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary border-sleepy-light-border dark:border-sleepy-dark-border">
   <a class="banner"
      #banner
      href="https://twitch.tv/sleepy_zuzki"
@@ -13,6 +13,7 @@
       Zuzki esta en vivo, ven a verlo
     </span>
   </a>
+
   <nav class="container mx-auto flex items-center justify-between h-16 px-0 md:px-4" id='navbar' role="navigation">
     <app-link class="logo flex items-center text-xl font-medium select-none" routerLink="/" routerLinkActiveClass="" variant="nav">
       <ng-icon name="featherCode" class="mr-2 text-sleepy-accent w-7 h-7"></ng-icon>
@@ -29,9 +30,9 @@
 <!--        <app-button ariaLabel="Cambiar idioma" variant="secondary">-->
 <!--          🌐-->
 <!--        </app-button>-->
-        <app-button (click)="openMobileMenu()" ariaLabel="Menú móvil" class="pr-10 md:hidden" variant="secondary">
+        <app-action-button (click)="openMobileMenu()" ariaLabel="Menú móvil" class="pr-10 md:hidden" variant="secondary">
           ☰
-        </app-button>
+        </app-action-button>
       </div>
     </div>
   </nav>

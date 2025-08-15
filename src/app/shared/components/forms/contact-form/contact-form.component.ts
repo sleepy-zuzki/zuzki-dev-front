@@ -1,18 +1,18 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonComponent, InputComponent, TextareaComponent } from '@ui';
+import { ActionButtonComponent, InputComponent, TextareaComponent } from '@ui';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { featherAlertCircle } from '@ng-icons/feather-icons';
 
 @Component({
   selector: 'app-contact-form',
   imports: [
-    ButtonComponent,
     FormsModule,
     InputComponent,
     ReactiveFormsModule,
     TextareaComponent,
-    NgIconComponent
+    NgIconComponent,
+    ActionButtonComponent
   ],
   providers: [provideIcons({ featherAlertCircle })],
   templateUrl: './contact-form.component.html',

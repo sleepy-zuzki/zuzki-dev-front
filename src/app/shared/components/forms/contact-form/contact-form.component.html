@@ -37,11 +37,11 @@
 
       @if (message && message.invalid && (message.dirty || message.touched)) {
         <div class="text-red-500">
-          <ng-icon name="featherAlertCircle" /> El mensaje es requerido
+          <ng-icon name="featherAlertCircle"></ng-icon> El mensaje es requerido
         </div>
       }
     </div>
 
-    <app-button class="w-full md:w-1/3" type="submit">Enviar</app-button>
+    <app-action-button class="w-full md:w-1/3" type="submit">Enviar</app-action-button>
   </div>
 </form>

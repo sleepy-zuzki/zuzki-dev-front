@@ -12,7 +12,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { featherCode } from '@ng-icons/feather-icons';
-import { ButtonComponent, ThemeToggleComponent, LinkComponent } from '@ui';
+import { ThemeToggleComponent, LinkComponent, ActionButtonComponent } from '@ui';
 import { ApiService } from '@core/services/api.service';
 import { Observable, forkJoin } from 'rxjs';
 import { YoutubeStream, TwitchStream } from '@core/interfaces/streaming.interface';
@@ -24,9 +24,9 @@ import { YoutubeStream, TwitchStream } from '@core/interfaces/streaming.interfac
     CommonModule,
     RouterModule,
     NgIconComponent,
-    ButtonComponent,
     ThemeToggleComponent,
-    LinkComponent
+    LinkComponent,
+    ActionButtonComponent
   ],
   providers: [provideIcons({ featherCode })],
   templateUrl: './header.component.html',
