@@ -25,7 +25,7 @@ export class ThemeToggleComponent {
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
     private localStorageService: LocalStorageService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.checkInitialMode();
 

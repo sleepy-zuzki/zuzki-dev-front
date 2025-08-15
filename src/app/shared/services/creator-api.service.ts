@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map, of, switchMap, tap, catchError } from 'rxjs';
 import { Creator } from '@core/models/creator.model';
 import { Creator as ICreator } from '@core/interfaces/creator.interface';
@@ -44,9 +44,9 @@ export class CreatorApiService extends BaseApiService<Creator> {
 
     const observable: Observable<Creator[]> = availableSocials.length === 0
       ? this.socialApiService.fetchSocials(params, false).pipe(
-          switchMap(() => this.loadCreators(params))
+          switchMap(() => this.loadCreators())
         )
-      : this.loadCreators(params);
+      : this.loadCreators();
 
     const finalObservable: Observable<Creator[]> = observable.pipe(
       this.getFinishLoadingOperator()
@@ -66,7 +66,7 @@ export class CreatorApiService extends BaseApiService<Creator> {
    * @returns Observable con los creadores obtenidos
    * @private
    */
-  private loadCreators(params?: HttpParams): Observable<Creator[]> {
+  private loadCreators(): Observable<Creator[]> {
     return this.apiService.getFromWorker<ICreator[]>('github/creators').pipe(
       map((response: ICreator[]): Creator[] => {
         const socials: Social[] = this.socialApiService.data();

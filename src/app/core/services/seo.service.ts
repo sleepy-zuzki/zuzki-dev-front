@@ -47,7 +47,7 @@ export class SeoService {
    * Actualiza los meta tags de descripción y palabras clave
    * @param data Datos SEO de la ruta actual
    */
-  private updateMetaTags(data: any): void {
+  private updateMetaTags(data: SEOData & { title?: string }): void {
     // Actualizar título si está disponible
     if (data.title) {
       this.title.setTitle(data.title);

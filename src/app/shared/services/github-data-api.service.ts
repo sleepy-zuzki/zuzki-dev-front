@@ -167,9 +167,8 @@ export class GithubDataApiService {
   /**
    * Obtiene las tecnologías
    * Delega al servicio específico de tecnologías
-   * @param params Parámetros HTTP opcionales
    */
-  fetchTechnologies(params?: HttpParams): void {
-    this.technologyApiService.fetchTechnologies(params);
+  fetchTechnologies(): void {
+    this.technologyApiService.fetchTechnologies();
   }
 }

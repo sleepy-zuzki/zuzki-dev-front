@@ -78,11 +78,11 @@ export class OverlayApiService extends BaseApiService<Overlay> {
     const availableLayouts: LayoutModel[] = this.layoutApiService.data();
 
     const observable: Observable<Overlay[]> = availableLayouts.length === 0
-      ? this.fetchRawOverlays(params).pipe(
+      ? this.fetchRawOverlays().pipe(
           switchMap(() => this.layoutApiService.fetchLayouts(params, false, this.dataSubject.getValue())),
-          switchMap(() => this.loadOverlaysWithFullData(params))
+          switchMap(() => this.loadOverlaysWithFullData())
         )
-      : this.loadOverlaysWithFullData(params);
+      : this.loadOverlaysWithFullData();
 
     if (autoSubscribe) {
       observable.subscribe();
@@ -98,7 +98,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
    * @returns Observable con los overlays obtenidos (sin layouts completos)
    * @private
    */
-  private fetchRawOverlays(params?: HttpParams): Observable<Overlay[]> {
+  private fetchRawOverlays(): Observable<Overlay[]> {
     return this.apiService.getFromWorker<IOverlay[]>('github/overlays').pipe(
       map((response: IOverlay[]): Overlay[] => {
         const creators: Creator[] = this.creatorApiService.data();
@@ -125,7 +125,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
    * @returns Observable con los overlays obtenidos (con layouts completos)
    * @private
    */
-  private loadOverlaysWithFullData(params?: HttpParams): Observable<Overlay[]> {
+  private loadOverlaysWithFullData(): Observable<Overlay[]> {
     return this.apiService.getFromWorker<IOverlay[]>('github/overlays').pipe(
       map((response: IOverlay[]): Overlay[] => {
         const creators: Creator[] = this.creatorApiService.data();

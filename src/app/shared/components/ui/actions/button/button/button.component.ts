@@ -15,7 +15,7 @@ export class ButtonComponent {
   @Input() disabled: boolean = false;
   @Input() ariaLabel: string = '';
   @Input() variant: 'primary' | 'secondary' = 'primary';
-  @Input() routerLink: string | any[] | null = null;
+  @Input() routerLink: string | unknown[] | null = null;
   @Input() routerLinkActiveClass: string = 'active';
   @Input() href: string | null = null;
   @Output() callback: EventEmitter<unknown> = new EventEmitter<unknown>();

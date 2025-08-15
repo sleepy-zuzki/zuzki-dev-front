@@ -35,7 +35,7 @@ export class HomeFeatureComponent {
   projects: Signal<Overlay[]>;
   windowWidth: number = 0;
 
-  schema: Record<string, any>[] = [
+  schema: Record<string, unknown>[] = [
     {
       "@context": "https://schema.org",
       "@type": "Person",
@@ -92,7 +92,7 @@ export class HomeFeatureComponent {
     private toast: HotToastService,
     private apiService: ApiService,
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.projects = this.overlayApiService.data;
     if (isPlatformBrowser(this.platformId)) {
@@ -110,8 +110,8 @@ export class HomeFeatureComponent {
     });
   }
 
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  @HostListener('window:resize')
+  onResize(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.windowWidth = window.innerWidth;
     }
@@ -121,7 +121,7 @@ export class HomeFeatureComponent {
     const endpoint = "zl0p2vv4190wklivjadktnec326qzqs6";
     const values = form.value;
 
-    this.apiService.postToMake<any>(endpoint, values)
+    this.apiService.postToMake<unknown>(endpoint, values)
     .pipe(
       catchError(error => {
         console.error(error);
@@ -129,7 +129,7 @@ export class HomeFeatureComponent {
       })
     )
     .subscribe({
-      next: data => {
+      next: () => {
         this.toast.show('Tu mensaje ha sido enviado correctamente. Gracias por contactarnos.');
       },
       error: err => {

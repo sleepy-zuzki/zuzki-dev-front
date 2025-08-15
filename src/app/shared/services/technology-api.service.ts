@@ -25,9 +25,8 @@ export class TechnologyApiService extends BaseApiService<TechnologyModel> {
   /**
    * Obtiene las tecnologías
    * Evita iniciar una nueva carga si los datos ya están cargados o en proceso de carga.
-   * @param params Parámetros HTTP opcionales
    */
-  fetchTechnologies(params?: HttpParams): void {
+  fetchTechnologies(): void {
     if (!this.canStartFetch()) {
       return;
     }

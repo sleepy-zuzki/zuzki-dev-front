@@ -18,7 +18,7 @@ export class FooterComponent {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: object
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.lastUpdated = new Date(document.lastModified);

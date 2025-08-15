@@ -12,7 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class LinkButtonComponent {
   @Input() ariaLabel: string = '';
   @Input() variant: 'primary' | 'secondary' = 'primary';
-  @Input() routerLink: string | any[] | null = null;
+  @Input() routerLink: string | unknown[] | null = null;
   @Input() routerLinkActiveClass: string = 'active';
   @Input() href: string | null = null;
 }

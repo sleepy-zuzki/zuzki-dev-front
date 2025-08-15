@@ -5,8 +5,8 @@ import { LocalStorageService } from '@services/local-storage.service';
 
 describe('ThemeToggleComponent (a11y)', () => {
   const localStorageMock = {
-    getItem: (_key: string) => null,
-    setItem: (_key: string, _value: string) => {}
+    getItem: (key: string) => { void key; return null; },
+    setItem: (key: string, value: string) => { void key; void value; }
   };
 
   beforeEach(async () => {

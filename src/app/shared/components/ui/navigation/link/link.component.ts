@@ -15,7 +15,7 @@ import { featherExternalLink } from '@ng-icons/feather-icons';
 })
 export class LinkComponent implements OnInit {
   @Input() href: string = '';
-  @Input() routerLink: string | any[] | null = null;
+  @Input() routerLink: string | unknown[] | null = null;
   @Input() routerLinkActiveClass: string = 'active';
   @Input() variant: 'internal' | 'external' | 'nav' = 'internal';
   @Input() target: '_blank' | '_self' | '_parent' | '_top' = '_self';

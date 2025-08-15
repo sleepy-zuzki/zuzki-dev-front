@@ -43,7 +43,7 @@ export class HeaderComponent implements AfterViewInit {
     private apiService: ApiService,
     private renderer: Renderer2,
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   /**

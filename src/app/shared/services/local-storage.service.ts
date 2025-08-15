@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class LocalStorageService {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   /**
    * Obtiene un item del localStorage verificando que estemos en un navegador

@@ -7,11 +7,11 @@ import { isPlatformBrowser } from '@angular/common';
   standalone: true
 })
 export class StructuredDataComponent implements OnInit {
-  @Input() schema!: Record<string, any> | Record<string, any>[];
+  @Input() schema!: Record<string, unknown> | Record<string, unknown>[];
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: object
   ) {}
 
   ngOnInit(): void {
