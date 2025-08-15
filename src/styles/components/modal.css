@@ -1,10 +1,8 @@
 /* CSS */
-@utility {
-  @layer components {
-    .modal-surface {
-      @apply rounded-md shadow-md;
-      background: var(--surface);
-      color: var(--surface-contrast);
-    }
+@layer components {
+  .modal-surface {
+    @apply rounded-md shadow-md;
+    background: var(--surface);
+    color: var(--surface-contrast);
   }
 }

@@ -1,14 +1,20 @@
 /* CSS */
 /* Ajustes base mínimos (no dependientes de utilidades) */
-html, body {
-  height: 100%;
-}
 
-img, svg, video {
-  display: block;
-  max-width: 100%;
-}
+@layer base {
+  html, body {
+    @apply bg-white h-full;
+  }
 
-button {
-  font: inherit;
+  img, svg, video {
+    @apply block max-w-full;
+  }
+
+  button {
+    @apply text-inherit;
+  }
+
+  a {
+    @apply no-underline;
+  }
 }
