@@ -33,7 +33,7 @@ export class CreatorApiService extends BaseApiService<Creator> {
    * @param autoSubscribe Si es true, autogestiona la suscripción
    * @returns Observable con los creadores obtenidos
    */
-  fetchCreators(params?: HttpParams, autoSubscribe: boolean = true): Observable<Creator[]> {
+  fetchCreators(autoSubscribe: boolean = true): Observable<Creator[]> {
     if (!this.canStartFetch()) {
       return of(this.dataSubject.getValue());
     }
@@ -43,7 +43,7 @@ export class CreatorApiService extends BaseApiService<Creator> {
     const availableSocials: Social[] = this.socialApiService.data();
 
     const observable: Observable<Creator[]> = availableSocials.length === 0
-      ? this.socialApiService.fetchSocials(params, false).pipe(
+      ? this.socialApiService.fetchSocials(false).pipe(
           switchMap(() => this.loadCreators())
         )
       : this.loadCreators();

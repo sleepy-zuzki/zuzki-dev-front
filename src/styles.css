@@ -1,30 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Paleta Sleepy - tokens base (en OKLCH) */
+  --color-sleepy-accent: oklch(70% 0.21 55);
+  --color-sleepy-accent-hover: oklch(66% 0.19 55);
+
+  /* Modo claro */
+  --color-sleepy-light-bg-primary: oklch(99% 0 0);
+  --color-sleepy-light-bg-surface: oklch(95% 0.03 70);
+  --color-sleepy-light-text-primary: oklch(27% 0.05 60);
+  --color-sleepy-light-text-secondary: oklch(65% 0.08 60);
+  --color-sleepy-light-border: oklch(92% 0.02 70);
+  --color-sleepy-light-text-onAccent: oklch(100% 0 0);
+
+  /* Modo oscuro */
+  --color-sleepy-dark-bg-primary: oklch(20% 0.05 60);
+  --color-sleepy-dark-bg-surface: oklch(34% 0.06 60);
+  --color-sleepy-dark-bg-input: oklch(28% 0.05 60);
+  --color-sleepy-dark-text-primary: oklch(100% 0 0);
+  --color-sleepy-dark-text-secondary: oklch(80% 0.04 70);
+  --color-sleepy-dark-border: oklch(34% 0.06 60);
+  --color-sleepy-dark-border-input: oklch(45% 0.08 60);
+  --color-sleepy-dark-text-onAccent: oklch(100% 0 0);
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-  /* Variables de color actualizadas a la nueva paleta */
-  --color-sleepy-accent: #ec8013;
-  --color-sleepy-accent-hover: #d4881c;
-
-  /* Modo claro */
-  --color-bg-primary-light: #fcfaf8;
-  --color-bg-surface-light: #f3ede7;
-  --color-text-primary-light: #1b140d;
-  --color-text-secondary-light: #9a734c;
-  --color-border-light: #e7dbcf;
-
-  /* Modo oscuro */
-  --color-bg-primary-dark: #221a11;
-  --color-bg-surface-dark: #483623;
-  --color-bg-input-dark: #332619;
-  --color-text-primary-dark: #ffffff;
-  --color-text-secondary-dark: #c9ad92;
-  --color-border-dark: #483623;
-  --color-border-input-dark: #674d32;
 
   /* Variables para el toggler */
   --toggler-scale: 1;
@@ -37,8 +39,6 @@
 
 * {
   scroll-behavior: smooth;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-  font-size: 16px;
 }
 
 html,
@@ -46,76 +46,7 @@ body {
   padding: 0;
   margin: 0;
   min-height: 100vh;
-
-  /* Nuevos tokens de color */
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-  @apply bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary;
-}
-
-/* Estilos de tipografía base */
-h1, h2, h3, h4, h5, h6 {
-  @apply font-medium;
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-}
-
-p, span, a, label, input, button {
-  @apply font-normal;
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-}
-
-/* Texto secundario */
-.text-secondary {
-  @apply text-sleepy-light-text-secondary dark:text-sleepy-dark-text-secondary;
-}
-
-.text-primary {
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-}
-
-.text-accent {
-  @apply text-sleepy-light-text-onAccent dark:text-sleepy-dark-text-onAccent;
-}
-
-/* Links (solo para enlaces que no usan el componente app-link) */
-a:not(app-link a) {
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-  @apply hover:text-sleepy-accent hover:underline focus:outline-none focus:ring-2;
-  @apply focus:ring-sleepy-accent;
-  transition: color 0.2s;
-}
-
-/* === Superficies generales === */
-.bg-surface {
-  @apply bg-sleepy-light-bg-surface dark:bg-sleepy-dark-bg-surface;
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-  @apply border-sleepy-light-border dark:border-sleepy-dark-border;
-}
-
-/* === Utilidades de color de fondo === */
-.bg-primary {
-  @apply bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary;
-}
-
-.bg-accent {
-  @apply bg-sleepy-accent text-sleepy-light-text-onAccent dark:text-sleepy-dark-text-onAccent;
-}
-
-/* === Utilidades para bordes === */
-.border-default {
-  @apply border border-sleepy-light-border dark:border-sleepy-dark-border;
-}
-
-.border-input {
-  @apply border border-sleepy-light-border dark:border-sleepy-dark-border-input;
-}
-
-/* === Utilidades para sombras === */
-.shadow-sleepy {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.dark .shadow-sleepy {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.18);
+  font-size: 16px;
 }
 
 @font-face {

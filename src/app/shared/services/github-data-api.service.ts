@@ -128,10 +128,9 @@ export class GithubDataApiService {
    * @returns Observable con las redes sociales obtenidas
    */
   fetchSocials(
-    params?: HttpParams,
     autoSubscribe: boolean = true
   ): Observable<Social[]> {
-    return this.socialApiService.fetchSocials(params, autoSubscribe);
+    return this.socialApiService.fetchSocials(autoSubscribe);
   }
 
   /**
@@ -142,10 +141,9 @@ export class GithubDataApiService {
    * @returns Observable con los creadores obtenidos
    */
   fetchCreators(
-    params?: HttpParams,
     autoSubscribe: boolean = true
   ): Observable<Creator[]> {
-    return this.creatorApiService.fetchCreators(params, autoSubscribe);
+    return this.creatorApiService.fetchCreators(autoSubscribe);
   }
 
   /**

@@ -29,7 +29,7 @@ export class SocialApiService extends BaseApiService<Social> {
    * @param autoSubscribe Si es true, autogestiona la suscripción
    * @returns Observable con las redes sociales obtenidas
    */
-  fetchSocials(params?: HttpParams, autoSubscribe: boolean = true): Observable<Social[]> {
+  fetchSocials(autoSubscribe: boolean = true): Observable<Social[]> {
     if (!this.canStartFetch()) {
       return of(this.dataSubject.getValue());
     }

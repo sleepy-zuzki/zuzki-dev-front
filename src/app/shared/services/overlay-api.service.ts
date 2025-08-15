@@ -46,7 +46,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
 
     if (availableCreators.length === 0) {
       // Si no hay creadores, cargarlos primero
-      this.creatorApiService.fetchCreators(params, false)
+      this.creatorApiService.fetchCreators(false)
         .pipe(
           switchMap(() => this.fetchOverlaysWithLayouts(params, true)),
           this.getFinishLoadingOperator()
