@@ -1,8 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonComponent } from '@components/ui/button/button.component';
-import { InputComponent } from '@components/ui/input/input.component';
-import { TextareaComponent } from '@components/ui/textarea/textarea.component';
+import { ButtonComponent, InputComponent, TextareaComponent } from '@ui';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { featherAlertCircle } from '@ng-icons/feather-icons';
 

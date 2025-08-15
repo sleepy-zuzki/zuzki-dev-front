@@ -1,0 +1,16 @@
+<div class="textarea-wrapper">
+  @if(label) {
+    <label class="textarea-label text-primary">{{ label }}</label>
+  }
+  <textarea
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [rows]="rows"
+    [(ngModel)]="value"
+    (ngModelChange)="onValueChange($event)"
+    class="textarea-field"></textarea>
+
+  @if (helperText) {
+    <small class="textarea-helper">{{ helperText }}</small>
+  }
+</div>

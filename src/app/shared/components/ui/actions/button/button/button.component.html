@@ -1,0 +1,19 @@
+@if (routerLink || href) {
+  <app-link-button
+    [routerLink]="routerLink"
+    [routerLinkActiveClass]="routerLinkActiveClass"
+    [variant]="variant"
+    [href]="href"
+    [ariaLabel]="ariaLabel">
+    <ng-content/>
+  </app-link-button>
+} @else {
+  <app-action-button
+    [variant]="variant"
+    [disabled]="disabled"
+    [type]="type"
+    [ariaLabel]="ariaLabel"
+    (click)="emitCallback($event)">
+    <ng-content/>
+  </app-action-button>
+}

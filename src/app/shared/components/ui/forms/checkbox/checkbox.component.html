@@ -1,0 +1,16 @@
+<div class="checkbox-wrapper">
+  <input
+    type="checkbox"
+    class="checkbox-input"
+    [id]="id"
+    [checked]="checked"
+    [disabled]="disabled"
+    [attr.aria-checked]="checked"
+    [attr.aria-disabled]="disabled ? true : null"
+    (change)="onCheckboxChange($event)" />
+  <label [for]="id" class="checkbox-label" [ngClass]="{'disabled': disabled}">
+    <span class="checkbox-custom"></span>
+    <span *ngIf="label" class="checkbox-text">{{ label }}</span>
+    <ng-content></ng-content>
+  </label>
+</div>

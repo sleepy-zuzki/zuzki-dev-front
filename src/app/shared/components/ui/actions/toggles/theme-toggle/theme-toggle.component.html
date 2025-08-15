@@ -1,0 +1,10 @@
+<app-action-button
+  variant="secondary"
+  [ariaLabel]="isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+  (callback)="toggleDarkMode()">
+  @if (isDarkMode) {
+    <ng-icon name="featherSun"></ng-icon>
+  } @else {
+    <ng-icon name="featherMoon"></ng-icon>
+  }
+</app-action-button>

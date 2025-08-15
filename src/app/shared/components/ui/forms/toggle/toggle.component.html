@@ -1,0 +1,20 @@
+<div class="toggle-wrapper" [ngClass]="{'disabled': disabled}">
+  <input
+    type="checkbox"
+    class="toggle-input"
+    [id]="id"
+    [checked]="checked"
+    [disabled]="disabled"
+    [attr.role]="'switch'"
+    [attr.aria-checked]="checked"
+    (keydown.space)="onToggleKeydown($event)"
+    (keydown.enter)="onToggleKeydown($event)"
+    (change)="onToggleChange($event)"/>
+  <label [for]="id" class="toggle-label">
+    <div class="toggle-track">
+      <div class="toggle-thumb"></div>
+    </div>
+    <span *ngIf="label" class="toggle-text">{{ label }}</span>
+    <ng-content></ng-content>
+  </label>
+</div>

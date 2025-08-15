@@ -1,0 +1,18 @@
+<a
+  [ngClass]="linkClasses"
+  [href]="!routerLink ? href : null"
+  [routerLink]="routerLink"
+  [routerLinkActive]="routerLinkActiveClass"
+  [target]="target"
+  [attr.rel]="isExternal ? 'noopener noreferrer' : null"
+  [attr.aria-label]="ariaLabel">
+  <ng-content></ng-content>
+  @if (isExternal && showExternalIcon) {
+    <ng-icon
+      name="featherExternalLink"
+      class="ml-1 text-xs"
+      [ngClass]="{'opacity-70': disabled}"
+      aria-hidden="true">
+    </ng-icon>
+  }
+</a>

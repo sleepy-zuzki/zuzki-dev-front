@@ -1,0 +1,13 @@
+<div class="input-wrapper">
+  @if (label && name) {
+    <label for="name" class="input-label">{{ label }}</label>
+  }
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [name]="name"
+    [(ngModel)]="value"
+    (ngModelChange)="onValueChange($event)"
+    class="input-field" />
+</div>

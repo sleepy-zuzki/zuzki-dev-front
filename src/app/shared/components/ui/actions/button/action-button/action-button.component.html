@@ -1,0 +1,10 @@
+<button
+  [class]="variant === 'primary' ? 'btn-primary' : 'btn-secondary'"
+  [disabled]="disabled"
+  [type]="type"
+  [attr.aria-label]="ariaLabel"
+  (click)="emitCallback($event)">
+  <ng-content select="button-text">
+    <ng-content/>
+  </ng-content>
+</button>

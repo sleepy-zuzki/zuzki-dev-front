@@ -1,11 +1,12 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, HostBinding, Input } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, HostBinding, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { LinkButtonComponent } from '@components/ui/button/link-button.component';
+import { LinkButtonComponent } from '@ui';
 import { Overlay } from '@core/models/overlay.model';
 
 @Component({
   selector: 'app-project-card',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     LinkButtonComponent,
