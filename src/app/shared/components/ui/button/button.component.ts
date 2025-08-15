@@ -14,9 +14,7 @@ import { LinkButtonComponent } from './link-button.component';
         [variant]="variant"
         [href]="href"
         [ariaLabel]="ariaLabel">
-        <ng-content select="button-text">
-          <ng-content/>
-        </ng-content>
+        <ng-content/>
       </app-link-button>
     } @else {
       <app-action-button
@@ -25,9 +23,7 @@ import { LinkButtonComponent } from './link-button.component';
         [type]="type"
         [ariaLabel]="ariaLabel"
         (click)="emitCallback($event)">
-        <ng-content select="button-text">
-          <ng-content/>
-        </ng-content>
+        <ng-content/>
       </app-action-button>
     }
   `,

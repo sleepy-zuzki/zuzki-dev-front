@@ -22,7 +22,7 @@ import { featherExternalLink } from '@ng-icons/feather-icons';
       @if (isExternal && showExternalIcon) {
         <ng-icon
           name="featherExternalLink"
-          class="external-icon ml-1 text-xs"
+          class="ml-1 text-xs"
           [ngClass]="{'opacity-70': disabled}"
           aria-hidden="true">
         </ng-icon>
@@ -53,7 +53,6 @@ import { featherExternalLink } from '@ng-icons/feather-icons';
       @apply hover:text-sleepy-accent;
       @apply after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5;
       @apply after:bg-sleepy-accent after:transition-all after:duration-300;
-
     }
 
     .link-nav-animation {

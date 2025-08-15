@@ -1,28 +1,31 @@
 import { Component, Inject, Renderer2, PLATFORM_ID, DOCUMENT } from '@angular/core';
-import { ButtonComponent } from '@components/ui/button/button.component';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { featherMoon, featherSun } from '@ng-icons/feather-icons';
 import { isPlatformBrowser } from '@angular/common';
 import { LocalStorageService } from '@services/local-storage.service';
+import { ActionButtonComponent } from '@components/ui/button/action-button.component';
 
 @Component({
   selector: 'app-theme-toggle',
   standalone: true,
   template: `
-    <app-button variant="secondary" ariaLabel="Alternar tema" (callback)="toggleDarkMode()">
-      <ng-icon name="featherMoon" class="dark:hidden"></ng-icon>
-      <ng-icon name="featherSun" class="hidden dark:block"></ng-icon>
-    </app-button>
+    <app-action-button variant="secondary" ariaLabel="Alternar tema" (callback)="toggleDarkMode()">
+      @if (isDarkMode) {
+        <ng-icon name="featherSun"></ng-icon>
+      } @else {
+        <ng-icon name="featherMoon"></ng-icon>
+      }
+    </app-action-button>
   `,
   imports: [
-    ButtonComponent,
+    ActionButtonComponent,
     NgIconComponent
   ],
   providers: [provideIcons({ featherMoon, featherSun })],
   styles: []
 })
 export class ThemeToggleComponent {
-  private isDarkMode: boolean = false;
+  public isDarkMode: boolean = false;
   themeBroadcastChannel: BroadcastChannel | null = null;
 
   constructor(
