@@ -1,11 +1,19 @@
 /* CSS */
 /* Registra clases utilitarias con @utility; ubícalas en la layer adecuada si lo necesitas */
-@layer components {
-  .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors
-           px-4 py-2 select-none;
-  }
+@utility btn-sm {
+  @apply px-3 py-1.5 text-sm rounded-[--radius-sm];
+}
 
+@utility btn-lg {
+  @apply px-5 py-3 text-base rounded-[--radius-lg];
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors
+  px-4 py-2 select-none;
+}
+
+@layer components {
   .btn-primary {
     @apply btn text-[--color-brand-foreground];
     background: var(--color-brand);
@@ -26,7 +34,4 @@
   .btn-ghost {
     @apply btn bg-transparent text-[--surface-contrast];
   }
-
-  .btn-sm { @apply px-3 py-1.5 text-sm rounded-[--radius-sm]; }
-  .btn-lg { @apply px-5 py-3 text-base rounded-[--radius-lg]; }
 }
