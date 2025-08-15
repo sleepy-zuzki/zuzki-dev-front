@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, map, of, switchMap, tap, catchError } from 'rxjs';
 import { Creator } from '@core/models/creator.model';
 import { Creator as ICreator } from '@core/interfaces/creator.interface';

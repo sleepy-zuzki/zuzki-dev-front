@@ -30,6 +30,7 @@
     "@angular/platform-server": "^20.1.7",
     "@angular/router": "^20.1.7",
     "@angular/ssr": "^20.1.6",
+    "@eslint/js": "^9.33.0",
     "@ng-icons/bootstrap-icons": "^32.1.0",
     "@ng-icons/core": "^32.1.0",
     "@ng-icons/feather-icons": "^32.1.0",
@@ -39,7 +40,8 @@
     "normalize.css": "^8.0.1",
     "postcss": "^8.5.6",
     "rxjs": "~7.8.2",
-    "tslib": "^2.8.1"
+    "tslib": "^2.8.1",
+    "typescript-eslint": "^8.39.1"
   },
   "devDependencies": {
     "@angular/build": "^20.1.6",
