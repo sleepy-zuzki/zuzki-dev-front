@@ -1,0 +1,14 @@
+/* CSS */
+/* Ajustes base mínimos (no dependientes de utilidades) */
+html, body {
+  height: 100%;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+}

@@ -1,0 +1,22 @@
+/* CSS */
+@import "tailwindcss";
+
+/* Orden recomendado: tokens → base → animaciones → utilities → components → overrides */
+@import "./theme.css";
+@import "./base.css";
+@import "./animations.css";
+
+/* Utilities (recetas reutilizables) */
+@import "./utilities/buttons.css";
+@import "./utilities/forms.css";
+@import "./utilities/layout.css";
+@import "./utilities/helpers.css";
+@import "./utilities/typography.css";
+
+/* Componentes globales (si de verdad deben ser globales) */
+@import "./components/card.css";
+@import "./components/modal.css";
+@import "./components/navbar.css";
+
+/* Overrides finales (usar con moderación) */
+@import "./overrides.css";

@@ -1,0 +1,6 @@
+/* CSS */
+/* Evitar si es posible; último recurso para ajustes específicos */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+}

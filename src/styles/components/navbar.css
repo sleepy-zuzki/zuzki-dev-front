@@ -1,0 +1,57 @@
+/* CSS */
+@utility {
+  @layer components {
+    .navbar {
+      @apply w-full sticky top-0 z-50 border-b border-black/10;
+      background: color-mix(in oklch, var(--surface), black 2%);
+      color: var(--surface-contrast);
+      backdrop-filter: saturate(180%) blur(6px);
+    }
+
+    .navbar-inner {
+      @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+      @apply h-14 flex items-center justify-between gap-3;
+    }
+
+    .navbar-brand {
+      @apply inline-flex items-center gap-2 font-semibold;
+    }
+
+    .navbar-actions {
+      @apply hidden md:flex items-center gap-2;
+    }
+
+    .navbar-menu {
+      @apply fixed md:static inset-x-0 top-14 md:top-auto md:inset-auto;
+      @apply md:flex md:items-center md:gap-2;
+      @apply hidden;
+      background: color-mix(in oklch, var(--surface), black 2%);
+      border-top: 1px solid rgba(0,0,0,.06);
+    }
+
+    .navbar-item {
+      @apply block md:inline-block px-4 py-3 md:px-3 md:py-2 rounded-md
+             text-sm font-medium transition-colors;
+      @apply hover:bg-black/5;
+    }
+
+    .navbar-item.active {
+      @apply bg-black/10;
+      color: var(--color-brand);
+    }
+
+    /* Toggle para móviles */
+    .navbar-toggle {
+      @apply md:hidden inline-flex items-center justify-center size-9 rounded-md
+             border border-black/10;
+      @apply hover:bg-black/5;
+    }
+
+    /* Estado abierto del menú en móvil */
+    .navbar-open .navbar-menu { @apply block; }
+
+    /* Variantes de altura */
+    .navbar-lg .navbar-inner { @apply h-16; }
+    .navbar-sm .navbar-inner { @apply h-12; }
+  }
+}

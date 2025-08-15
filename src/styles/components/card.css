@@ -1,0 +1,43 @@
+/* CSS */
+@utility {
+  @layer components {
+    .card {
+      @apply rounded-md shadow-md overflow-hidden;
+      background: var(--surface);
+      color: var(--surface-contrast);
+    }
+
+    .card-bordered { @apply border border-black/10; }
+    .card-hover { @apply transition-shadow; }
+    .card-hover:hover { box-shadow: var(--shadow-md); }
+
+    .card-header {
+      @apply px-4 py-3 flex items-center gap-2;
+      background: color-mix(in oklch, var(--surface), black 3%);
+    }
+
+    .card-title { @apply text-base font-semibold; }
+    .card-subtitle { @apply text-sm text-black/60; }
+
+    .card-media { @apply block w-full; } /* imágenes/videos arriba */
+    .card-content { @apply px-4 py-3; }
+    .card-footer {
+      @apply px-4 py-3 flex items-center gap-2;
+      background: color-mix(in oklch, var(--surface), black 2%);
+    }
+
+    /* Variantes de padding y densidad */
+    .card-compact .card-header,
+    .card-compact .card-content,
+    .card-compact .card-footer { @apply px-3 py-2; }
+
+    .card-spacious .card-header,
+    .card-spacious .card-content,
+    .card-spacious .card-footer { @apply px-6 py-4; }
+
+    /* Variantes de énfasis */
+    .card-accent {
+      border-inline-start: 4px solid var(--color-brand);
+    }
+  }
+}

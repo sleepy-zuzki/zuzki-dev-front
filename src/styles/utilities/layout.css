@@ -1,0 +1,9 @@
+/* CSS */
+@utility {
+  @layer utilities {
+    .container-app { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+    .stack-sm { @apply grid gap-2; }
+    .stack-md { @apply grid gap-4; }
+    .stack-lg { @apply grid gap-6; }
+  }
+}
