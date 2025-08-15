@@ -22,6 +22,8 @@
     ],
     "baseUrl": "./src",
     "paths": {
+      "@root/*": ["*"],
+      "@src/*": ["app/*"],
       "@components/*": ["app/shared/components/*"],
       "@directives/*": ["app/shared/directives/*"],
       "@services/*": ["app/shared/services/*"],
@@ -31,6 +33,7 @@
       "@features/*": ["app/features/*"],
       "@pages/*": ["app/pages/*"],
       "@env/*": ["environments/*"],
+      "@ui": ["app/shared/components/ui/index.ts"]
     }
   },
   "angularCompilerOptions": {

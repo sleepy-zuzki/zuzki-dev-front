@@ -5,7 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { OverlayService } from '@services/overlay.service';
 import { ActivatedRoute } from '@angular/router';
 import { LayoutModel } from '@core/models/layout.model';
-import { ButtonComponent } from '@components/ui/button/button.component';
+import { ButtonComponent } from '@ui';
 import { OverlayApiService } from '@services/overlay-api.service';
 
 @Component({

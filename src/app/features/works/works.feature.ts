@@ -1,5 +1,5 @@
 import { Component, effect, Signal } from '@angular/core';
-import { ProjectCardComponent } from '@components/ui/project-card/project-card.component';
+import { ProjectCardComponent } from '@ui';
 import { Overlay } from '@core/models/overlay.model';
 import { RouterLink } from '@angular/router';
 import { OverlayApiService } from '@services/overlay-api.service';

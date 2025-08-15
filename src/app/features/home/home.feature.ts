@@ -1,7 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, HostListener, Inject, PLATFORM_ID, Signal, DOCUMENT } from '@angular/core';
-import { LinkButtonComponent } from '@components/ui/button/link-button.component';
-import { ProjectCardComponent } from '@components/ui/project-card/project-card.component';
-import { BadgeComponent } from '@components/ui/badge/badge.component';
+import { LinkButtonComponent, ProjectCardComponent, BadgeComponent } from '@ui';
 import { Overlay } from '@core/models/overlay.model';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';

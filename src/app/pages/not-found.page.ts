@@ -1,5 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { LinkButtonComponent } from '@components/ui/button/link-button.component';
+import { LinkButtonComponent } from '@ui';
 
 @Component({
   selector: 'app-not-found',

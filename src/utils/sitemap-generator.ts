@@ -1,7 +1,7 @@
 /**
  * Utility for generating dynamic sitemap.xml
  */
-import { SitemapRoute } from '../app/core/interfaces/sitemap.interface';
+import { SitemapRoute } from '@core/interfaces/sitemap.interface';
 
 /**
  * Genera el contenido XML del sitemap basado en las rutas proporcionadas
