@@ -16,7 +16,6 @@ import { featherAlertCircle } from '@ng-icons/feather-icons';
   ],
   providers: [provideIcons({ featherAlertCircle })],
   templateUrl: './contact-form.component.html',
-  styleUrl: './contact-form.component.css',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

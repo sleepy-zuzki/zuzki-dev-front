@@ -9,8 +9,7 @@ import { bootstrapGithub, bootstrapTwitch, bootstrapTwitterX } from '@ng-icons/b
   standalone: true,
   imports: [CommonModule, RouterModule, NgIconComponent],
   providers: [provideIcons({ bootstrapGithub, bootstrapTwitch, bootstrapTwitterX })],
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  templateUrl: './footer.component.html'
 })
 export class FooterComponent {
   currentYear: number = new Date().getFullYear();
