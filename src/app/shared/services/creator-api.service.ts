@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, map, of, switchMap, tap, catchError } from 'rxjs';
 import { Creator } from '@core/models/creator.model';
 import { Creator as ICreator } from '@core/interfaces/creator.interface';
@@ -8,6 +8,7 @@ import { BaseApiService } from './base-api.service';
 import { SocialApiService } from './social-api.service';
 import { Social } from '@core/models/social.model';
 import { ApiService } from '@core/services/api.service';
+import { ApiError } from '@core/interfaces/api-error.interface';
 
 /**
  * Servicio para obtener y gestionar creadores desde la API
@@ -75,7 +76,7 @@ export class CreatorApiService extends BaseApiService<Creator> {
         this.dataSubject.next(creators);
         this.stateSubject.next(LoadState.LOADED);
       }),
-      catchError((error: any) => this.handleError<Creator[]>(
+      catchError((error: ApiError) => this.handleError<Creator[]>(
         error,
         'Error fetching creators',
         []

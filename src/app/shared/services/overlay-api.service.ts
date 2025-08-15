@@ -11,6 +11,7 @@ import { LayoutApiService } from './layout-api.service';
 import { Creator } from '@core/models/creator.model';
 import { LayoutModel } from '@core/models/layout.model';
 import { ApiService } from '@core/services/api.service';
+import { ApiError } from '@core/interfaces/api-error.interface';
 
 /**
  * Servicio para obtener y gestionar overlays desde la API
@@ -110,7 +111,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
       tap((overlays: Overlay[]) => {
         this.dataSubject.next(overlays);
       }),
-      catchError((error: any) => this.handleError<Overlay[]>(
+      catchError((error: ApiError) => this.handleError<Overlay[]>(
         error,
         'Error fetching raw overlays',
         []
@@ -137,7 +138,7 @@ export class OverlayApiService extends BaseApiService<Overlay> {
         this.dataSubject.next(overlays);
         this.stateSubject.next(LoadState.LOADED);
       }),
-      catchError((error: any) => this.handleError<Overlay[]>(
+      catchError((error: ApiError) => this.handleError<Overlay[]>(
         error,
         'Error fetching overlays with full data',
         this.dataSubject.getValue()

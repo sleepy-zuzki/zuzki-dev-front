@@ -7,7 +7,7 @@ import { LayoutModel } from '@core/models/layout.model';
 import { TechnologyModel } from '@core/models/technology.model';
 import { LoadState } from '@core/enums/load-state.enum';
 import { ErrorMessage } from '@core/interfaces/error-message.interface';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SocialApiService } from './social-api.service';
 import { CreatorApiService } from './creator-api.service';
 import { LayoutApiService } from './layout-api.service';
@@ -15,7 +15,7 @@ import { TechnologyApiService } from './technology-api.service';
 import { OverlayApiService } from './overlay-api.service';
 
 /**
- * Servicio fachada para acceder a todos los datos de la API
+ * Servicio fachado para acceder a todos los datos de la API
  * Delega las responsabilidades específicas a servicios dedicados para cada entidad
  */
 @Injectable({

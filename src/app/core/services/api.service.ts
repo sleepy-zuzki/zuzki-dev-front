@@ -2,6 +2,7 @@ import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_TYPE, ApiType } from '../tokens/api-type.token';
+import { ApiBody } from '@core/interfaces/api-body.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class ApiService {
    * @param body Cuerpo de la petición
    * @returns Observable con la respuesta
    */
-  public postToWorker<T>(endpoint: string, body: any): Observable<T> {
+  public postToWorker<T>(endpoint: string, body: ApiBody): Observable<T> {
     return this.http.post<T>(endpoint, body, {
       context: new HttpContext().set(API_TYPE, ApiType.WORKER)
     });
@@ -49,7 +50,7 @@ export class ApiService {
    * @param body Cuerpo de la petición
    * @returns Observable con la respuesta
    */
-  public postToMake<T>(endpoint: string, body: any): Observable<T> {
+  public postToMake<T>(endpoint: string, body: ApiBody): Observable<T> {
     return this.http.post<T>(endpoint, body, {
       context: new HttpContext().set(API_TYPE, ApiType.MAKE)
     });

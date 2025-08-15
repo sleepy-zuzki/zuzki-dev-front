@@ -6,6 +6,7 @@ import { Social as ISocial } from '@core/interfaces/social.interface';
 import { BaseApiService } from './base-api.service';
 import { LoadState } from '@core/enums/load-state.enum';
 import { ApiService } from '@core/services/api.service';
+import { ApiError } from '@core/interfaces/api-error.interface';
 
 /**
  * Servicio para obtener y gestionar redes sociales desde la API
@@ -43,7 +44,7 @@ export class SocialApiService extends BaseApiService<Social> {
         this.dataSubject.next(socials);
         this.stateSubject.next(LoadState.LOADED);
       }),
-      catchError((error: any) => this.handleError<Social[]>(
+      catchError((error: ApiError) => this.handleError<Social[]>(
         error,
         'Error fetching socials',
         []

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs';
 import { TechnologyModel } from '@core/models/technology.model';
 import { Technology } from '@core/interfaces/technology.interface';
 import { LoadState } from '@core/enums/load-state.enum';
 import { BaseApiService } from './base-api.service';
 import { ApiService } from '@core/services/api.service';
+import { ApiError } from '@core/interfaces/api-error.interface';
 
 /**
  * Servicio para obtener y gestionar tecnologías desde la API
@@ -42,7 +43,7 @@ export class TechnologyApiService extends BaseApiService<TechnologyModel> {
           this.dataSubject.next(technologies);
           this.stateSubject.next(LoadState.LOADED);
         }),
-        catchError((error: any) => this.handleError<TechnologyModel[]>(
+        catchError((error: ApiError) => this.handleError<TechnologyModel[]>(
           error,
           'Error fetching technologies',
           []

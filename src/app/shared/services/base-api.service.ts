@@ -5,6 +5,7 @@ import { LoadState } from '@core/enums/load-state.enum';
 import { ErrorMessage } from '@core/interfaces/error-message.interface';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Signal } from '@angular/core';
+import { ApiError } from '@core/interfaces/api-error.interface';
 
 /**
  * Servicio base que implementa funcionalidad común para todos los servicios API
@@ -62,7 +63,7 @@ export abstract class BaseApiService<T> {
    * @returns Observable con los datos por defecto
    */
   protected handleError<D>(
-    error: any,
+    error: ApiError,
     logMessage: string,
     fallbackData: D
   ): Observable<D> {

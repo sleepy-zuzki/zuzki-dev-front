@@ -8,6 +8,7 @@ import { LoadState } from '@core/enums/load-state.enum';
 import { BaseApiService } from './base-api.service';
 import { Overlay } from '@core/models/overlay.model';
 import { ApiService } from '@core/services/api.service';
+import { ApiError } from '@core/interfaces/api-error.interface';
 
 /**
  * Servicio para obtener y gestionar layouts desde la API
@@ -52,7 +53,7 @@ export class LayoutApiService extends BaseApiService<LayoutModel> {
         this.dataSubject.next(layouts);
         this.stateSubject.next(LoadState.LOADED);
       }),
-      catchError((error: any) => this.handleError<LayoutModel[]>(
+      catchError((error: ApiError) => this.handleError<LayoutModel[]>(
         error,
         'Error fetching layouts',
         []
