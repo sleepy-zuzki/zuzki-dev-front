@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
-import { ActionButtonComponent } from './action-button.component';
-import { LinkButtonComponent } from './link-button.component';
+import { ActionButtonComponent, LinkButtonComponent } from '@ui';
 
 @Component({
   selector: 'app-button',

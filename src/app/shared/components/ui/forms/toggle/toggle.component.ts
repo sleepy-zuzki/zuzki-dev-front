@@ -25,10 +25,11 @@ export class ToggleComponent {
     this.checkedChange.emit(this.checked);
   }
 
-  onToggleKeydown(event: KeyboardEvent): void {
+  onToggleKeydown(event: KeyboardEvent | Event): void {
     if (this.disabled) return;
-    if (event.key === ' ' || event.key === 'Enter') {
-      event.preventDefault();
+    const e = event as KeyboardEvent;
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
       this.checked = !this.checked;
       this.checkedChange.emit(this.checked);
     }

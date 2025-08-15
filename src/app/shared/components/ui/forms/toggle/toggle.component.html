@@ -14,7 +14,9 @@
     <div class="toggle-track">
       <div class="toggle-thumb"></div>
     </div>
-    <span *ngIf="label" class="toggle-text">{{ label }}</span>
+    @if (label) {
+      <span class="toggle-text">{{ label }}</span>
+    }
     <ng-content></ng-content>
   </label>
 </div>
