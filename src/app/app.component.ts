@@ -30,8 +30,7 @@ const customImageConfig: ImageConfig = {
     {provide: IMAGE_CONFIG, useValue: customImageConfig}
   ],
   templateUrl: './app.component.html',
-  standalone: true,
-  styleUrl: './app.component.css'
+  standalone: true
 })
 export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('drawer') drawer?: ElementRef;
