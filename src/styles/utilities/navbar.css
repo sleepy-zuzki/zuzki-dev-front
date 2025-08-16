@@ -1,0 +1,4 @@
+@utility header {
+  @apply border border-b-sleepy-light-border dark:border-b-sleepy-dark-border shadow-2xl;
+  @apply bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary;
+}

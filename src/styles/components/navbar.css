@@ -1,55 +1,66 @@
-/* CSS */
+
 @layer components {
+  header {
+      @apply header item-sticky;
+  }
+
   .navbar {
-    @apply w-full sticky top-0 z-50 border-b border-black/10;
-    background: color-mix(in oklch, var(--surface), black 2%);
-    color: var(--surface-contrast);
-    backdrop-filter: saturate(180%) blur(6px);
-  }
-
-  .navbar-inner {
-    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
-    @apply h-14 flex items-center justify-between gap-3;
-  }
-
-  .navbar-brand {
-    @apply inline-flex items-center gap-2 font-semibold;
-  }
-
-  .navbar-actions {
-    @apply hidden md:flex items-center gap-2;
+    @apply max-w-[1500px] mx-auto flex items-center justify-between h-16 px-0 md:px-4;
   }
 
   .navbar-menu {
-    @apply fixed md:static inset-x-0 top-14 md:top-auto md:inset-auto;
-    @apply md:flex md:items-center md:gap-2;
-    @apply hidden;
-    background: color-mix(in oklch, var(--surface), black 2%);
-    border-top: 1px solid rgba(0,0,0,.06);
+    @apply flex items-center gap-8;
   }
 
-  .navbar-item {
-    @apply block md:inline-block px-4 py-3 md:px-3 md:py-2 rounded-md
-    text-sm font-medium transition-colors;
-    @apply hover:bg-black/5;
+  .navbar-menu-container {
+    @apply flex items-center text-xl font-medium select-none gap-4;
   }
+}
 
-  .navbar-item.active {
-    @apply bg-black/10;
-    color: var(--color-brand);
+@layer components {
+  .banner {
+    @apply block w-full text-center text-gray-950 py-1 bg-amber-500;
+    @apply opacity-0 visibility-hidden transform -translate-y-full;
+    @apply transition-all duration-500;
   }
+}
 
-  /* Toggle para móviles */
-  .navbar-toggle {
-    @apply md:hidden inline-flex items-center justify-center size-9 rounded-md
-    border border-black/10;
-    @apply hover:bg-black/5;
+@layer components {
+  .live-animation {
+    @apply relative;
+
+    > span {
+      @apply absolute top-[7px] -left-4 block w-2.5 h-2.5 rounded-full;
+      @apply  bg-red-500 border border-red-500;
+      @apply animate-ping;
+      animation-duration: 3s;
+      animation-delay: calc(1s * var(--delay));
+    }
   }
+}
 
-  /* Estado abierto del menú en móvil */
-  .navbar-open .navbar-menu { @apply block; }
+@layer components {
+  dialog {
+    @apply m-0 p-4 rounded shadow-lg backdrop:bg-black/50 w-64 max-w-full right-0 max-h-none h-screen;
+    transition:
+      translate 0.2s ease-out,
+      display 0.2s ease-in-out allow-discrete;
 
-  /* Variantes de altura */
-  .navbar-lg .navbar-inner { @apply h-16; }
-  .navbar-sm .navbar-inner { @apply h-12; }
+    &[open] {
+      animation: side-nav-appear 0.2s ease-out;
+
+      translate: 0 0;
+      scale: 1;
+
+      @starting-style {
+        translate: -100% 0;
+        scale: 1;
+      }
+    }
+
+    &:not([open]) {
+      translate: -100% 0;
+      scale: 1;
+    }
+  }
 }

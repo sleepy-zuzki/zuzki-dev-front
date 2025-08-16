@@ -1,6 +1,6 @@
 /* CSS */
 @import "tailwindcss";
-
+@import "normalize.css/normalize.css" layer(base);
 /* Orden recomendado: tokens → base → animaciones → utilities → components → overrides */
 @import "./theme.css";
 @import "./base.css";
@@ -12,11 +12,17 @@
 @import "./utilities/layout.css";
 @import "./utilities/helpers.css";
 @import "./utilities/typography.css";
+@import "./utilities/links.css";
+@import "./utilities/navbar.css";
 
 /* Componentes globales (si de verdad deben ser globales) */
 @import "./components/card.css";
 @import "./components/modal.css";
 @import "./components/navbar.css";
+@import "./components/link.css";
+@import "./components/buttons.css";
 
 /* Overrides finales (usar con moderación) */
 @import "./overrides.css";
+
+@custom-variant dark (&:where(.dark, .dark *));

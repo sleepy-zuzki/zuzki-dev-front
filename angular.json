@@ -30,7 +30,6 @@
               "src/_routes.json"
             ],
             "styles": [
-              "node_modules/normalize.css/normalize.css",
               "@ngxpert/hot-toast/styles.css",
               "src/styles.css"
             ],
@@ -98,7 +97,6 @@
               }
             ],
             "styles": [
-              "node_modules/normalize.css/normalize.css",
               "@ngxpert/hot-toast/styles.css",
               "src/styles.css"
             ],

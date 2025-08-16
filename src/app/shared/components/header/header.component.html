@@ -1,4 +1,5 @@
-<header class="border-b bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary border-sleepy-light-border dark:border-sleepy-dark-border">
+<script src="header.component.ts"></script>
+<header>
   <a class="banner"
      #banner
      href="https://twitch.tv/sleepy_zuzki"
@@ -14,27 +15,30 @@
     </span>
   </a>
 
-  <nav class="container mx-auto flex items-center justify-between h-16 px-0 md:px-4" id='navbar' role="navigation">
-    <app-link class="logo flex items-center text-xl font-medium select-none" routerLink="/" routerLinkActiveClass="" variant="nav">
-      <ng-icon name="featherCode" class="mr-2 text-sleepy-accent w-7 h-7"></ng-icon>
-      <span class="text-2xl font-bold">Sleepy Zuzki</span>
-    </app-link>
+  <nav id='navbar' role="navigation" class="navbar">
+    <section id="navbar-brand" class="navbar-brand">
+      <a class="link-internal" routerLink="/">
+        <ng-icon name="featherCode"></ng-icon>
+        <span class="text-2xl font-bold ms-4">Sleepy Zuzki</span>
+      </a>
+    </section>
 
-    <div class="flex items-center gap-8">
-      <ul class="hidden md:flex items-center gap-8">
-        <li><app-link routerLink="/works" variant="nav">Trabajos</app-link></li>
+    <section id="navbar-menu" class="navbar-menu-container">
+      <ul class="navbar-menu">
+        <li class="navbar-item">
+          <a href="#about" class="link-nav" >Sobre Mí</a>
+          <a routerLink="/works" class="link-nav" >Trabajos</a>
+          <a href="#contact" class="link-nav" >Contacto</a>
+        </li>
       </ul>
 
-      <div class="flex items-center gap-3">
+      <section class="flex items-center gap-3">
         <app-theme-toggle class="hidden md:block"></app-theme-toggle>
-<!--        <app-button ariaLabel="Cambiar idioma" variant="secondary">-->
-<!--          🌐-->
-<!--        </app-button>-->
         <app-action-button (click)="openMobileMenu()" ariaLabel="Menú móvil" class="pr-10 md:hidden" variant="secondary">
           ☰
         </app-action-button>
-      </div>
-    </div>
+      </section>
+    </section>
   </nav>
 </header>
 

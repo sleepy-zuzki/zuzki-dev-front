@@ -1,18 +1,36 @@
-<a
-  [ngClass]="linkClasses"
-  [href]="!routerLink ? href : null"
-  [routerLink]="routerLink"
-  [routerLinkActive]="routerLinkActiveClass"
-  [target]="target"
-  [attr.rel]="isExternal ? 'noopener noreferrer' : null"
-  [attr.aria-label]="ariaLabel">
-  <ng-content></ng-content>
-  @if (isExternal && showExternalIcon) {
-    <ng-icon
-      name="featherExternalLink"
-      class="ml-1 text-xs"
-      [ngClass]="{'opacity-70': disabled}"
-      aria-hidden="true">
-    </ng-icon>
+@if (routerLink) {
+  <a
+    [ngClass]="linkClasses"
+    [routerLink]="routerLink"
+    [routerLinkActive]="routerLinkActiveClass"
+    [target]="target"
+    [attr.aria-label]="ariaLabel">
+    <ng-content></ng-content>
+  </a>
+} @else {
+  @if (isExternal) {
+    <a
+      [ngClass]="linkClasses"
+      [href]="href"
+      [target]="target"
+      rel="noopener noreferrer"
+      [attr.aria-label]="ariaLabel">
+      <ng-content></ng-content>
+      @if (showExternalIcon) {
+        <ng-icon
+          name="featherExternalLink"
+          class="ml-1 text-xs"
+          [ngClass]="{'opacity-70': disabled}">
+        </ng-icon>
+      }
+    </a>
+  } @else {
+    <a
+      [ngClass]="linkClasses"
+      [href]="href"
+      [target]="target"
+      [attr.aria-label]="ariaLabel">
+      <ng-content></ng-content>
+    </a>
   }
-</a>
+}

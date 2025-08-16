@@ -3,7 +3,7 @@
 
 @layer base {
   html, body {
-    @apply bg-white h-full;
+    @apply bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary h-full w-full;
   }
 
   img, svg, video {
@@ -14,7 +14,17 @@
     @apply text-inherit;
   }
 
+  h1, h2, h3, h4, h5, h6,
+  p, span,
+  ul, ol, li,
+  blockquote, pre, code, hr,
+  table, th, td,
+  figure, figcaption,
+  a, button {
+    @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
+  }
+
   a {
-    @apply no-underline;
+    @apply no-underline cursor-pointer;
   }
 }

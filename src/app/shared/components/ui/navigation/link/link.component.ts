@@ -49,13 +49,11 @@ export class LinkComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Si no se ha especificado una variante y es un enlace externo,
-    // establecemos la variante como 'external'
     if (this.variant === 'internal' && this.isExternal) {
       this.variant = 'external';
     }
 
-    // Si es un enlace externo, establecemos target="_blank" por defecto
+    debugger;
     if (this.isExternal && this.target === '_self') {
       this.target = '_blank';
     }

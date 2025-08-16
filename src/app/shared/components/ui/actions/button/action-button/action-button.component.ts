@@ -4,8 +4,7 @@ import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from 
   selector: 'app-action-button',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './action-button.component.html',
-  styleUrls: ['./action-button.component.css'],
+  templateUrl: './action-button.component.html'
 })
 export class ActionButtonComponent {
   @Input() type: 'button' | 'submit' | 'reset' = 'button';

@@ -10,28 +10,5 @@
 
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors
-  px-4 py-2 select-none;
-}
-
-@layer components {
-  .btn-primary {
-    @apply btn text-[--color-brand-foreground];
-    background: var(--color-brand);
-  }
-
-  .btn-primary:hover {
-    background: color-mix(in oklch, var(--color-brand), black 10%);
-  }
-
-  .btn-secondary {
-    @apply btn bg-[--surface] text-[--surface-contrast] border border-black/10;
-  }
-
-  .btn-secondary:hover {
-    @apply border-black/20;
-  }
-
-  .btn-ghost {
-    @apply btn bg-transparent text-[--surface-contrast];
-  }
+  px-4 py-2 select-none w-full text-center cursor-pointer;
 }

@@ -29,8 +29,7 @@ import { YoutubeStream, TwitchStream } from '@core/interfaces/streaming.interfac
     ActionButtonComponent
   ],
   providers: [provideIcons({ featherCode })],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements AfterViewInit {
   isLive: boolean = false;
