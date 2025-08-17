@@ -1,10 +1,28 @@
 <a
   [routerLink]="routerLink"
   [routerLinkActive]="routerLinkActiveClass"
-  [class]="btnClass"
+  [class]="(btnClass || '') + ' ' + (sizeClass || '')"
+  [ngClass]="responsiveSizeClasses"
   [attr.href]="href || null"
   [attr.aria-label]="ariaLabel">
-  <ng-content select="button-text">
-    <ng-content/>
-  </ng-content>
+  <span
+    [ngClass]="{
+    'inline-flex items-center': true,
+    'order-1': iconPosition !== 'right',
+    'order-2': iconPosition === 'right'
+    }">
+    <ng-content select="[btn-icon]"></ng-content>
+  </span>
+  <span
+    [ngClass]="{
+    'order-1': iconPosition === 'right',
+    'order-2': iconPosition !== 'right'
+    }">
+    <ng-content select="button-text">
+      <ng-content></ng-content>
+    </ng-content>
+  </span>
+
+  <!-- Safelist de clases responsivas para Tailwind (no visible) -->
+  <span class="hidden sm:btn-sm sm:btn-md sm:btn-lg sm:btn-xl md:btn-sm md:btn-md md:btn-lg md:btn-xl lg:btn-sm lg:btn-md lg:btn-lg lg:btn-xl xl:btn-sm xl:btn-md xl:btn-lg xl:btn-xl"></span>
 </a>

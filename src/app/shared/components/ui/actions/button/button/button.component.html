@@ -4,7 +4,10 @@
     [routerLinkActiveClass]="routerLinkActiveClass"
     [variant]="variant"
     [href]="href"
-    [ariaLabel]="ariaLabel">
+    [ariaLabel]="ariaLabel"
+    [iconPosition]="iconPosition"
+    [size]="size"
+    [responsiveSize]="responsiveSize">
     <ng-content/>
   </app-link-button>
 } @else {
@@ -13,6 +16,9 @@
     [disabled]="disabled"
     [type]="type"
     [ariaLabel]="ariaLabel"
+    [iconPosition]="iconPosition"
+    [size]="size"
+    [responsiveSize]="responsiveSize"
     (click)="emitCallback($event)">
     <ng-content/>
   </app-action-button>

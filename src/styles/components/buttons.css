@@ -21,6 +21,11 @@
     @apply btn btn-variant-link;
   }
 
+  /* Contraste: blanco en claro, negro en oscuro */
+  .btn-contrast {
+    @apply btn btn-variant-contrast;
+  }
+
   /* Estilo para anchor: sin subrayado por defecto salvo .btn-link */
   a:is(.btn-primary, .btn-secondary, .btn-outline, .btn-ghost) {
     @apply btn-anchor-reset btn-anchor-primary-text;
@@ -31,7 +36,8 @@
   .btn-secondary:focus-visible,
   .btn-outline:focus-visible,
   .btn-ghost:focus-visible,
-  .btn-link:focus-visible {
+  .btn-link:focus-visible,
+  .btn-contrast:focus-visible {
     @apply btn-focus-visible;
   }
 }

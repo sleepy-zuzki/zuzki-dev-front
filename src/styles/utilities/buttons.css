@@ -4,8 +4,16 @@
   @apply px-3 py-1.5 text-sm rounded-[--radius-sm];
 }
 
+@utility btn-md {
+  @apply px-4 py-2 text-sm md:text-base rounded-[--radius-md];
+}
+
 @utility btn-lg {
   @apply px-5 py-3 text-base rounded-[--radius-lg];
+}
+
+@utility btn-xl {
+  @apply px-6 py-3.5 text-lg rounded-[--radius-xl];
 }
 
 /* Base del botón */
@@ -36,6 +44,12 @@
 
 @utility btn-variant-link {
   @apply bg-transparent text-sleepy-accent p-0 hover:underline underline-offset-4 disabled:opacity-70;
+}
+
+/* Variante contraste: blanco en claro, negro en oscuro */
+@utility btn-variant-contrast {
+  @apply bg-white text-black border border-sleepy-light-border hover:bg-sleepy-light-border disabled:opacity-70;
+  @apply dark:bg-black dark:text-white dark:border-sleepy-dark-border dark:hover:bg-sleepy-dark-border;
 }
 
 /* Accesibilidad: focus visible consistente */

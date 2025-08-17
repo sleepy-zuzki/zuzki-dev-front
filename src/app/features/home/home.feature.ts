@@ -9,6 +9,8 @@ import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
 import { OverlayApiService } from '@services/overlay-api.service';
 import { StructuredDataComponent } from '@components/structured-data/structured-data.component';
 import { ApiService } from '@core/services/api.service';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { featherMail } from '@ng-icons/feather-icons';
 
 @Component({
   selector: 'app-home-feature',
@@ -21,8 +23,10 @@ import { ApiService } from '@core/services/api.service';
     ContactFormComponent,
     NgOptimizedImage,
     StructuredDataComponent,
-    ActionButtonComponent
+    ActionButtonComponent,
+    NgIcon
   ],
+  providers: [provideIcons({featherMail})],
   templateUrl: './home.feature.html'
 })
 /**
