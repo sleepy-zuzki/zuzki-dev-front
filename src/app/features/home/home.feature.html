@@ -1,16 +1,7 @@
-<section class="flex flex-col gap-10" id="landing">
-  <section class="flex gap-0 lg:gap-10 flex-wrap lg:flex-nowrap" id="introduction">
-    <img alt="Zuzki Trabajando, Arte realizado por @pixelhorn"
-         class="w-[460px] h-[479px]"
-         height="479"
-         ngSrc="/https://cdn.zuzki.dev/images/zuzki-icon/zuzki-icon-460.webp"
-         placeholder
-         priority
-         width="460"
-    />
-
-    <div class="flex flex-row flex-wrap gap-5">
-      <div class="w-full text-5xl">
+<section class="flex flex-col gap-10 max-w-[1400px] mx-auto" id="landing">
+  <section class="grid lg:grid-cols-2 gap-12 items-center" id="introduction">
+    <div class="gap-5">
+      <div class="w-full text-4xl">
         <h1>De mis Delirios a la Vida</h1>
       </div>
       <div class="w-full">
@@ -20,10 +11,23 @@
       </div>
       <div class="w-full self-end">
         <app-link-button ariaLabel="Explora Mis Trabajos" routerLink="/works">
-          <button-text>Explora Mis Trabajos</button-text>
+          Explora Mis Trabajos
         </app-link-button>
+
+        <app-action-button type="button" ariaLabel="Contactar">
+          Contactar
+        </app-action-button>
       </div>
     </div>
+
+    <img alt="Zuzki Trabajando, Arte realizado por @pixelhorn"
+         class="w-[500px] rounded-lg"
+         height="858"
+         width="500"
+         ngSrc="/https://cdn.zuzki.dev/public/images/sleepy_zuzki_full_body.jpg"
+         placeholder
+         priority
+    />
   </section>
 
   <section id="about-me">

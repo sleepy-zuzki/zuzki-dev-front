@@ -1,5 +1,5 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, HostListener, Inject, PLATFORM_ID, Signal, DOCUMENT } from '@angular/core';
-import { LinkButtonComponent, ProjectCardComponent, BadgeComponent } from '@ui';
+import { Component, effect, HostListener, Inject, PLATFORM_ID, Signal, DOCUMENT } from '@angular/core';
+import { LinkButtonComponent, ProjectCardComponent, BadgeComponent, ActionButtonComponent } from '@ui';
 import { Overlay } from '@core/models/overlay.model';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { catchError, throwError } from 'rxjs';
@@ -20,11 +20,10 @@ import { ApiService } from '@core/services/api.service';
     FormsModule,
     ContactFormComponent,
     NgOptimizedImage,
-    StructuredDataComponent
+    StructuredDataComponent,
+    ActionButtonComponent
   ],
-  templateUrl: './home.feature.html',
-  styleUrl: './home.feature.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  templateUrl: './home.feature.html'
 })
 /**
  * Componente que representa la característica de la página de inicio (Home Page) de la aplicación.
