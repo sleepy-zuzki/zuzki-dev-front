@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * @param overlayApiService Servicio para interactuar con la API de datos.
    * @param overlayService Servicio para gestionar el estado de los overlays y layouts.
    * @param router
+   * @param seoService
    */
   constructor (
     readonly overlayApiService: OverlayApiService,
