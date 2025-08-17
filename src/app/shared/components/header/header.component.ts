@@ -11,6 +11,7 @@ import {
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { bootstrapCodeSlash } from '@ng-icons/bootstrap-icons';
 import { featherCode } from '@ng-icons/feather-icons';
 import { ThemeToggleComponent, LinkComponent, ActionButtonComponent, InternalLinkComponent } from '@ui';
 import { ApiService } from '@core/services/api.service';
@@ -29,7 +30,7 @@ import { YoutubeStream, TwitchStream } from '@core/interfaces/streaming.interfac
     ActionButtonComponent,
     InternalLinkComponent
   ],
-  providers: [provideIcons({ featherCode })],
+  providers: [provideIcons({ featherCode, bootstrapCodeSlash })],
   templateUrl: './header.component.html'
 })
 export class HeaderComponent implements AfterViewInit {

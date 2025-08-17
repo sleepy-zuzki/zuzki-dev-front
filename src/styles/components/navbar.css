@@ -1,7 +1,7 @@
 
 @layer components {
   header {
-      @apply header item-sticky;
+      @apply header item-sticky z-40;
   }
 
   .navbar {

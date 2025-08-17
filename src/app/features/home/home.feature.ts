@@ -10,7 +10,7 @@ import { OverlayApiService } from '@services/overlay-api.service';
 import { StructuredDataComponent } from '@components/structured-data/structured-data.component';
 import { ApiService } from '@core/services/api.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { featherMail } from '@ng-icons/feather-icons';
+import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
 
 @Component({
   selector: 'app-home-feature',
@@ -26,7 +26,7 @@ import { featherMail } from '@ng-icons/feather-icons';
     ActionButtonComponent,
     NgIcon
   ],
-  providers: [provideIcons({featherMail})],
+  providers: [provideIcons({featherMail, featherArrowRight, featherZap})],
   templateUrl: './home.feature.html'
 })
 /**
