@@ -26,15 +26,24 @@
     <section id="navbar-menu" class="navbar-menu-container">
       <ul class="navbar-menu">
         <li class="navbar-item">
-          <a href="#about" class="navbar-item link-nav" >Sobre Mí</a>
+          <app-internal-link href="#about" class="navbar-item link-nav">
+            Sobre Mí
+          </app-internal-link>
         </li>
 
         <li>
-          <a routerLink="/works" class="navbar-item link-nav" >Trabajos</a>
+          <app-internal-link
+            routerLink="/works"
+            routerLinkActive=""
+            class="navbar-item link-nav">
+            Trabajos
+          </app-internal-link>
         </li>
 
         <li>
-          <a href="#contact" class="navbar-item link-nav" >Contacto</a>
+          <app-internal-link href="#contact" class="navbar-item link-nav">
+            Contacto
+          </app-internal-link>
         </li>
       </ul>
 

@@ -9,7 +9,6 @@ import { InternalLinkComponent } from './internal-link.component';
   standalone: true,
   imports: [CommonModule, NavLinkComponent, ExternalLinkComponent, InternalLinkComponent],
   templateUrl: './link.component.html',
-  styleUrls: ['./link.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class LinkComponent implements OnInit {

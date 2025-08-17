@@ -12,7 +12,7 @@ import { OverlayService } from '@services/overlay.service';
 import { SeoService } from '@core/services/seo.service';
 import { HeaderComponent } from '@components/header/header.component';
 import { FooterComponent } from '@components/footer/footer.component';
-import { IMAGE_CONFIG, ImageConfig, NgClass } from '@angular/common';
+import { IMAGE_CONFIG, ImageConfig } from '@angular/common';
 import { Router, NavigationEnd, Event as RouterEvent } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -25,7 +25,7 @@ const customImageConfig: ImageConfig = {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, NgClass],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   providers: [
     {provide: IMAGE_CONFIG, useValue: customImageConfig}
   ],
