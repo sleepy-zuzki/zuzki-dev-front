@@ -1,57 +1,60 @@
-<section class="flex flex-col gap-10 max-w-[1400px] mx-auto" id="landing">
-  <section class="grid lg:grid-cols-2 gap-12 items-center" id="introduction">
-    <div class="space-y-8">
-      <div class="space-y-4">
-        <div class="inline-flex items-center rounded-full border px-3 py-1 text-sm transition-colors border-gray-700 bg-gray-800 text-gray-300">
-          <span class="mr-2 h-4 w-4 text-[#E67E22]">
-            <ng-icon name="featherZap"></ng-icon>
-          </span>
-          Disponible para proyectos
+<section id="landing" class="container flex flex-col gap-10 mx-auto">
+  <section class="py-20 lg:py-32" id="introduction">
+    <div class="container mx-auto px-4">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-8">
+          <div class="space-y-4">
+            <div class="inline-flex items-center rounded-full border px-3 py-1 text-sm transition-colors border-gray-700 bg-gray-800 text-gray-300">
+              <span class="mr-2 h-4 w-4 text-[#E67E22]">
+                <ng-icon name="featherZap"></ng-icon>
+              </span>
+              Disponible para proyectos
+            </div>
+
+            <h1 class="text-4xl lg:text-6xl font-bold tracking-tight">
+              De mis
+              <span class="bg-gradient-to-r from-[#E67E22] to-[#F39C12] bg-clip-text text-transparent">
+                Delirios
+              </span>
+              a la Vida
+            </h1>
+
+            <p class="text-xl max-w-lg transition-colors text-gray-400">
+              Hola, soy Zuzki, un Ingeniero de Software apasionado por crear soluciones creativas.
+              Al explorar mi trabajo podrás ver de lo que soy capaz.
+              ¡Espero te guste y podamos realizar algo juntos pronto!
+            </p>
+          </div>
+
+          <div class="flex gap-4 w-full">
+            <app-link-button ariaLabel="Explora Mis Trabajos" routerLink="/works" iconPosition="right">
+              <ng-icon name="featherArrowRight" btn-icon></ng-icon>
+              Explora Mis Trabajos
+            </app-link-button>
+
+            <app-action-button type="button" ariaLabel="Contactar" variant="contrast">
+              <ng-icon name="featherMail" btn-icon></ng-icon>
+              Contactar
+            </app-action-button>
+          </div>
         </div>
 
-        <h1 class="text-4xl font-bold">
-          De mis
-          <span class="bg-gradient-to-r from-[#E67E22] to-[#F39C12] bg-clip-text text-transparent">
-            Delirios
-          </span>
-          a la Vida
-        </h1>
+        <div class="relative">
+          <div class="relative z-10">
+            <img alt="Zuzki Trabajando, Arte realizado por @pixelhorn"
+                 class="w-[500px] rounded-2xl shadow-2xl"
+                 height="858"
+                 width="500"
+                 ngSrc="/https://cdn.zuzki.dev/public/images/sleepy_zuzki_full_body.jpg"
+                 placeholder
+                 priority
+            />
+          </div>
 
-        <p class="text-xl max-w-lg transition-colors text-gray-400">
-          Hola, soy Zuzki, un Ingeniero de Software apasionado por crear soluciones creativas.
-          Al explorar mi trabajo podrás ver de lo que soy capaz.
-          ¡Espero te guste y podamos realizar algo juntos pronto!
-        </p>
-      </div>
-
-      <div class="flex gap-4 w-full">
-        <app-link-button ariaLabel="Explora Mis Trabajos" routerLink="/works" iconPosition="right">
-          <ng-icon name="featherArrowRight" btn-icon></ng-icon>
-          Explora Mis Trabajos
-        </app-link-button>
-
-        <app-action-button type="button" ariaLabel="Contactar" variant="contrast">
-          <ng-icon name="featherMail" btn-icon></ng-icon>
-          Contactar
-        </app-action-button>
+          <div class="absolute inset-0 bg-gradient-to-r from-[#E67E22]/20 to-[#F39C12]/10 rounded-2xl blur-3xl transform scale-110"></div>
+        </div>
       </div>
     </div>
-
-    <div class="relative">
-      <div class="relative z-10">
-        <img alt="Zuzki Trabajando, Arte realizado por @pixelhorn"
-             class="w-[500px] rounded-2xl shadow-2xl"
-             height="858"
-             width="500"
-             ngSrc="/https://cdn.zuzki.dev/public/images/sleepy_zuzki_full_body.jpg"
-             placeholder
-             priority
-        />
-      </div>
-
-      <div class="absolute inset-0 bg-gradient-to-r from-[#E67E22]/20 to-[#F39C12]/10 rounded-2xl blur-3xl transform scale-110"></div>
-    </div>
-
   </section>
 
   <section id="about-me">

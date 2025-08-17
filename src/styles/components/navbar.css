@@ -15,6 +15,10 @@
   .navbar-menu-container {
     @apply flex items-center text-xl font-medium select-none gap-4;
   }
+
+  .navbar-item {
+    @apply text-sm font-medium transition-colors hover:text-[#E67E22] text-gray-300;
+  }
 }
 
 @layer components {

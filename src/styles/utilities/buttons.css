@@ -16,6 +16,12 @@
   @apply px-6 py-3.5 text-lg rounded-[--radius-xl];
 }
 
+@utility btn-children {
+  &:empty {
+    display: none;
+  }
+}
+
 /* Base del botón */
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors
