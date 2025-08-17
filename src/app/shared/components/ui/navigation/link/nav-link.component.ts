@@ -16,7 +16,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       <ng-content></ng-content>
     </a>
   `,
-  styleUrls: ['./link.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class NavLinkComponent {

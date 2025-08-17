@@ -14,7 +14,6 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
       <ng-content></ng-content>
     </a>
   `,
-  styleUrls: ['./link.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class InternalLinkComponent {

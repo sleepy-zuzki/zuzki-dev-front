@@ -25,7 +25,6 @@ import { featherExternalLink } from '@ng-icons/feather-icons';
       }
     </a>
   `,
-  styleUrls: ['./link.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class ExternalLinkComponent {

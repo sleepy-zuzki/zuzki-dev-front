@@ -8,7 +8,48 @@
   @apply px-5 py-3 text-base rounded-[--radius-lg];
 }
 
+/* Base del botón */
 @utility btn {
   @apply inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors
   px-4 py-2 select-none w-full text-center cursor-pointer;
+}
+
+/* Variantes (intención visual) */
+@utility btn-variant-primary {
+  @apply bg-sleepy-accent text-sleepy-light-text-primary hover:bg-sleepy-accent-hover disabled:opacity-70 dark:text-white;
+}
+
+@utility btn-variant-secondary {
+  @apply bg-sleepy-light-bg-surface text-sleepy-light-text-secondary hover:bg-sleepy-light-border disabled:opacity-70;
+  @apply dark:bg-sleepy-dark-bg-surface dark:text-sleepy-dark-text-secondary dark:hover:bg-sleepy-dark-border;
+}
+
+@utility btn-variant-outline {
+  @apply bg-transparent text-sleepy-light-text-secondary border border-sleepy-light-border hover:bg-sleepy-light-bg-surface disabled:opacity-70;
+  @apply dark:text-sleepy-dark-text-secondary dark:border-sleepy-dark-border dark:hover:bg-sleepy-dark-bg-surface;
+}
+
+@utility btn-variant-ghost {
+  @apply bg-transparent text-sleepy-light-text-secondary hover:bg-sleepy-light-border disabled:opacity-70;
+  @apply dark:text-sleepy-dark-text-secondary dark:hover:bg-sleepy-dark-border;
+}
+
+@utility btn-variant-link {
+  @apply bg-transparent text-sleepy-accent p-0 hover:underline underline-offset-4 disabled:opacity-70;
+}
+
+/* Accesibilidad: focus visible consistente */
+@utility btn-focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  @apply ring-2 ring-sleepy-accent ring-offset-2;
+}
+
+/* Reseteo para anchors que actúan como botón */
+@utility btn-anchor-reset {
+  text-decoration: none;
+}
+
+@utility btn-anchor-primary-text {
+  @apply text-sleepy-light-text-primary;
 }

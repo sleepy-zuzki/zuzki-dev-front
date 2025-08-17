@@ -1,7 +1,7 @@
 <a
   [routerLink]="routerLink"
   [routerLinkActive]="routerLinkActiveClass"
-  [class]="variant === 'primary' ? 'btn-primary' : 'btn-secondary'"
+  [class]="btnClass"
   [attr.href]="href || null"
   [attr.aria-label]="ariaLabel">
   <ng-content select="button-text">

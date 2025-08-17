@@ -1,18 +1,37 @@
 
 @layer components {
+  /* Variantes aplicando utilidades */
   .btn-primary {
-    @apply btn;
-    /* Colores primarios */
-    @apply bg-sleepy-accent text-sleepy-light-text-primary;
-    @apply hover:bg-sleepy-accent-hover disabled:opacity-70 text-white;
+    @apply btn btn-variant-primary;
   }
 
   .btn-secondary {
-    @apply btn;
-    /* Colores secundarios */
-    @apply bg-sleepy-light-bg-surface text-sleepy-light-text-secondary;
-    @apply hover:bg-sleepy-light-border disabled:opacity-70;
-    @apply dark:bg-sleepy-dark-bg-surface dark:text-sleepy-dark-text-secondary;
-    @apply dark:hover:bg-sleepy-dark-border;
+    @apply btn btn-variant-secondary;
+  }
+
+  .btn-outline {
+    @apply btn btn-variant-outline;
+  }
+
+  .btn-ghost {
+    @apply btn btn-variant-ghost;
+  }
+
+  .btn-link {
+    @apply btn btn-variant-link;
+  }
+
+  /* Estilo para anchor: sin subrayado por defecto salvo .btn-link */
+  a:is(.btn-primary, .btn-secondary, .btn-outline, .btn-ghost) {
+    @apply btn-anchor-reset btn-anchor-primary-text;
+  }
+
+  /* Focus visible accesible en todas las variantes */
+  .btn-primary:focus-visible,
+  .btn-secondary:focus-visible,
+  .btn-outline:focus-visible,
+  .btn-ghost:focus-visible,
+  .btn-link:focus-visible {
+    @apply btn-focus-visible;
   }
 }
