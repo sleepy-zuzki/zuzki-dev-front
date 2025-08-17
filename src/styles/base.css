@@ -2,6 +2,10 @@
 /* Ajustes base mínimos (no dependientes de utilidades) */
 
 @layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+
   html, body {
     @apply bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary h-full w-full;
   }

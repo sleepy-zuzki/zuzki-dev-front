@@ -53,7 +53,6 @@ export class LinkComponent implements OnInit {
       this.variant = 'external';
     }
 
-    debugger;
     if (this.isExternal && this.target === '_self') {
       this.target = '_blank';
     }
