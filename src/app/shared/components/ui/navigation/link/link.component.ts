@@ -1,14 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { featherExternalLink } from '@ng-icons/feather-icons';
+import { NavLinkComponent } from './nav-link.component';
+import { ExternalLinkComponent } from './external-link.component';
+import { InternalLinkComponent } from './internal-link.component';
 
 @Component({
   selector: 'app-link',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, NgIconComponent],
-  providers: [provideIcons({ featherExternalLink })],
+  imports: [CommonModule, NavLinkComponent, ExternalLinkComponent, InternalLinkComponent],
   templateUrl: './link.component.html',
   styleUrls: ['./link.component.css'],
   encapsulation: ViewEncapsulation.None
