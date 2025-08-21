@@ -4,7 +4,8 @@
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="space-y-8">
           <div class="space-y-4">
-            <div class="inline-flex items-center rounded-full border px-3 py-1 text-sm transition-colors border-gray-700 bg-gray-800 text-gray-300">
+            <div
+              class="inline-flex items-center rounded-full border px-3 py-1 text-sm transition-colors border-gray-700 bg-gray-800 text-gray-300">
               <span class="mr-2 h-4 w-4 text-[#E67E22]">
                 <ng-icon name="featherZap"></ng-icon>
               </span>
@@ -51,8 +52,42 @@
             />
           </div>
 
-          <div class="absolute inset-0 bg-gradient-to-r from-[#E67E22]/20 to-[#F39C12]/10 rounded-2xl blur-3xl transform scale-110"></div>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-[#E67E22]/20 to-[#F39C12]/10 rounded-2xl blur-3xl transform scale-110"></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="container mx-auto px-4">
+      <div class="text-center space-y-4 mb-16">
+        <h2 class="text-3xl lg:text-4xl font-bold">¿Qué hago?</h2>
+
+        <p class="text-xl max-w-2xl mx-auto transition-colors text-gray-600 dark:text-gray-400">
+          Me especializo en crear experiencias digitales completas, desde la concepción hasta la implementación
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        @for (feature of features; track feature.id) {
+          <app-shadcn-card
+            class='border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white hover:bg-[#f8f4f0] dark:bg-[#2a1f14] dark:hover:bg-[#332518]'
+          >
+            <app-card-header>
+              <div
+                class='w-12 h-12 rounded-lg flex items-center justify-center text-[#E67E22] mb-4 bg-[#FDF2E9] dark:bg-[#E67E22]/10'>
+                <ng-icon name="{{ feature.icon }}"></ng-icon>
+              </div>
+              <app-card-title class="text-gray-900 dark:text-white">{{ feature.title }}</app-card-title>
+            </app-card-header>
+            <app-card-content>
+              <app-card-description class='text-base text-gray-600 dark:text-gray-400'>
+                {{ feature.description }}
+              </app-card-description>
+            </app-card-content>
+          </app-shadcn-card>
+        }
       </div>
     </div>
   </section>
@@ -60,8 +95,10 @@
   <section id="about-me">
     <h2 class="text-[1.75rem]">Sobre mí</h2>
     <p>Soy Zuzki, Ingeniero de Software con pasión por crear experiencias accesibles y visualmente atractivas.</p>
-    <p>Además, cuento con una sólida base en arquitecturas escalables, lo que me permite abordar cada proyecto con precisión y creatividad.</p>
-    <p>Siempre estoy explorando nuevas tecnologías para perfeccionar mi trabajo y ofrecer soluciones funcionales y memorables.</p>
+    <p>Además, cuento con una sólida base en arquitecturas escalables, lo que me permite abordar cada proyecto con
+      precisión y creatividad.</p>
+    <p>Siempre estoy explorando nuevas tecnologías para perfeccionar mi trabajo y ofrecer soluciones funcionales y
+      memorables.</p>
   </section>
 
   <section id="technologies">
@@ -92,4 +129,4 @@
   </section>
 </section>
 
-<app-structured-data [schema]="schema" />
+<app-structured-data [schema]="schema"/>

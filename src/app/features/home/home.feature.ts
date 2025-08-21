@@ -11,6 +11,8 @@ import { StructuredDataComponent } from '@components/structured-data/structured-
 import { ApiService } from '@core/services/api.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
+import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons'
+import { ShadcnCardComponent, CardTitleComponent, CardContentComponent, CardHeaderComponent, CardDescriptionComponent } from '@ui';
 
 @Component({
   selector: 'app-home-feature',
@@ -24,9 +26,14 @@ import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-ic
     NgOptimizedImage,
     StructuredDataComponent,
     ActionButtonComponent,
-    NgIcon
+    NgIcon,
+    ShadcnCardComponent,
+    CardTitleComponent,
+    CardContentComponent,
+    CardHeaderComponent,
+    CardDescriptionComponent
   ],
-  providers: [provideIcons({featherMail, featherArrowRight, featherZap})],
+  providers: [provideIcons({featherMail, featherArrowRight, featherZap, bootstrapPalette, bootstrapCodeSlash})],
   templateUrl: './home.feature.html'
 })
 /**
@@ -88,6 +95,27 @@ export class HomeFeatureComponent {
       ]
     }
   ];
+
+  features = [
+    {
+      id: 1,
+      icon: 'bootstrapCodeSlash',
+      title: "Desarrollo Full-Stack",
+      description: "Experiencia completa en frontend y backend con tecnologías modernas",
+    },
+    {
+      id: 2,
+      icon: 'bootstrapPalette',
+      title: "Diseño UI/UX",
+      description: "Interfaces intuitivas y experiencias de usuario excepcionales",
+    },
+    {
+      id: 3,
+      icon: 'featherZap',
+      title: "Optimización",
+      description: "Aplicaciones rápidas y eficientes con las mejores prácticas",
+    },
+  ]
 
 
   constructor(
