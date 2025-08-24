@@ -47,7 +47,6 @@
                  height="858"
                  width="500"
                  ngSrc="/https://cdn.zuzki.dev/public/images/sleepy_zuzki_full_body.jpg"
-                 placeholder
                  priority
             />
           </div>
@@ -92,30 +91,85 @@
     </div>
   </section>
 
-  <section id="about-me">
-    <h2 class="text-[1.75rem]">Sobre mí</h2>
-    <h3>La historia detrás del código y los píxeles</h3>
+  <section id="projects" class="py-20 transition-colors bg-[#f8f4f0] dark:bg-[#2a1f14]">
+    <div class="container mx-auto px-4">
+      <div class="text-center space-y-4 mb-16">
+        <h2 class="text-3xl lg:text-4xl font-bold">Proyectos Destacados</h2>
+        <p class="text-xl transition-colors text-gray-600 dark:text-gray-400">
+          Algunos de mis trabajos más recientes y significativos
+        </p>
+      </div>
 
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        @for (project of projects(); track project.id; let idx = $index) {
+          <app-shadcn-card
+            class="overflow-hidden group hover:shadow-xl transition-all duration-300 cursor-pointer bg-white border border-gray-200 dark:bg-[#2a1f14] dark:border-gray-700"
+          >
+            <div class="aspect-video bg-gradient-to-br from-purple-500 to-blue-600 relative overflow-hidden">
+              <div class="absolute inset-0 bg-black/20"></div>
+              <div class="absolute bottom-4 left-4 text-white">
+                <div class="text-sm opacity-80">{{ project?.year ?? '2025' }}</div>
+                <div class="text-xl font-bold">{{ project?.title ?? 'Proyecto' }}</div>
+              </div>
+              <div class="absolute top-4 right-4">
+                <span class="inline-flex items-center rounded-full px-2 py-1 text-xs bg-[#E67E22] text-white">
+                  {{ project.category }}
+                </span>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="inline-flex items-center rounded-full px-2 py-1 text-xs bg-gradient-to-r from-[#E67E22] to-[#F39C12] text-white">
+                  ⭐ Destacado
+                </span>
+              </div>
+            </div>
+
+            <app-card-header>
+              <app-card-title class="flex items-center justify-between text-gray-900 dark:text-white">
+                {{ project.title }}
+                <ng-icon name="featherExternalLink" class="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity"></ng-icon>
+              </app-card-title>
+              <app-card-description class="text-gray-600 dark:text-gray-400">
+                {{ project.description }}
+              </app-card-description>
+            </app-card-header>
+
+            <app-card-content>
+              <div class="flex flex-wrap gap-2 mb-4">
+                @for (tech of project.technologies.slice(0, 3); track tech) {
+                  <span class="inline-flex items-center rounded-full px-2 py-1 text-xs border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300">
+                    {{ tech }}
+                  </span>
+                }
+                @if (project.technologies.length > 3) {
+                  <span class="inline-flex items-center rounded-full px-2 py-1 text-xs border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300">
+                    +{{ project.technologies.length - 3 }}
+                  </span>
+                }
+              </div>
+
+              <app-action-button class="w-full group bg-[#E67E22] hover:bg-[#D35400] text-white" type="button" ariaLabel="Ver Detalles">
+                Ver Detalles
+                <ng-icon name="featherArrowRight" class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"></ng-icon>
+              </app-action-button>
+            </app-card-content>
+          </app-shadcn-card>
+        }
+      </div>
+
+      <div class="text-center">
+        <app-link-button
+          ariaLabel="Ver Todos los Proyectos"
+          routerLink="/works"
+          class="group border border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+          iconPosition="right"
+        >
+          Ver Todos los Proyectos ({{ projects().length }})
+          <ng-icon name="featherArrowRight" btn-icon></ng-icon>
+        </app-link-button>
+      </div>
+    </div>
   </section>
 
-  <section id="technologies">
-    <h2 class="text-[1.75rem]">Tecnologias</h2>
-
-    <app-badge [badges]="technologies"></app-badge>
-  </section>
-
-  <section class="flex flex-col gap-2" id="projects">
-    <h2 class="text-[1.75rem]">Trabajos</h2>
-
-    @for (project of projects(); track project.id) {
-      <app-project-card
-        class="w-full"
-        [project]="project"
-        [variant]="windowWidth < 426 ? 'square' : 'elongated'"
-        buttonText="Ver Trabajo">
-      </app-project-card>
-    }
-  </section>
 
   <section id="contact">
     <h2 class="text-[1.75rem]">Contacto</h2>

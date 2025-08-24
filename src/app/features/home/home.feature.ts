@@ -19,7 +19,6 @@ import { ShadcnCardComponent, CardTitleComponent, CardContentComponent, CardHead
   standalone: true,
   imports: [
     LinkButtonComponent,
-    BadgeComponent,
     ProjectCardComponent,
     FormsModule,
     ContactFormComponent,
@@ -41,8 +40,7 @@ import { ShadcnCardComponent, CardTitleComponent, CardContentComponent, CardHead
  * Muestra componentes como Proyectos y Redes Sociales.
  */
 export class HomeFeatureComponent {
-  technologies: string[] = ['Javascript', 'React', 'Node.js', 'Express', 'HTML5', 'CSS3', 'MongoDB', 'PostgreSQL', 'Git', 'AWS', 'Docker', 'Webpack'];
-  projects: Signal<Overlay[]>;
+  projects: Signal<unknown[]>;
   windowWidth: number = 0;
 
   schema: Record<string, unknown>[] = [
