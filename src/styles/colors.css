@@ -133,7 +133,7 @@
 /* Selection styling */
 ::selection {
   background-color: color-mix(in srgb, theme(--color-zuzki-500) 20%, transparent);
-  color: theme(--color-zuzki-500);
+  @apply text-zuzki-500;
 }
 
 /* Focus ring utilities */
