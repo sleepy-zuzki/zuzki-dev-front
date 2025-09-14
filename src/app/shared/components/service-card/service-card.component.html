@@ -1,0 +1,21 @@
+<div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+  <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
+       [ngClass]="iconColorClasses">
+    <ng-icon [name]="service.icon" class="w-6 h-6"></ng-icon>
+  </div>
+
+  <h3 class="text-xl font-bold text-gray-900 mb-3">{{ service.title }}</h3>
+
+  <p class="text-gray-600 mb-4 leading-relaxed">
+    {{ service.description }}
+  </p>
+
+  <ul class="text-sm text-gray-500 space-y-2">
+    @for (feature of service.features; track feature) {
+      <li class="flex items-center">
+        <span class="w-1 h-1 bg-gray-400 rounded-full mr-3 flex-shrink-0"></span>
+        {{ feature }}
+      </li>
+    }
+  </ul>
+</div>

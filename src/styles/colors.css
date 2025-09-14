@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* Variables CSS para temas claro y oscuro */
+:root {
+  --background-light: #fcfaf8;
+  --section-light: #f8f4f0;
+  --surface-light: #FDF2E9;
+}
+
+:root.dark {
+  --background-light: #221a11;
+  --section-light: #2a1f14;
+  --surface-light: #332518;
+}
+
+/* Configuración de variables de tema usando @theme */
+@theme {
+  /* Brand colors que Tailwind generará automáticamente */
+  --color-brand-primary: #E67E22;
+  --color-brand-primary-hover: #D35400;
+  --color-brand-secondary: #F39C12;
+
+  /* Theme-aware backgrounds usando variables CSS */
+  --color-background-default: var(--background-light);
+  --color-background-section: var(--section-light);
+  --color-background-surface: var(--surface-light);
+
+  /* UI element colors */
+  --color-ui-badge: #E67E22;
+  --color-ui-accent: #E67E22;
+  --color-ui-cta: #E67E22;
+  --color-ui-cta-hover: #D35400;
+
+  /* Extensión de colores de Tailwind */
+  --color-orange-400: #E67E22;
+  --color-orange-500: #E67E22;
+  --color-orange-600: #D35400;
+  --color-amber-400: #F39C12;
+  --color-amber-500: #F39C12;
+
+  /* Gradientes personalizados */
+  --color-gradient-brand: linear-gradient(135deg, #E67E22 0%, #F39C12 100%);
+  --color-gradient-brand-text: linear-gradient(135deg, #E67E22 0%, #F39C12 100%);
+}
+
+/* Componentes personalizados */
+@layer components {
+  /* Badge component */
+  .badge-brand {
+    @apply bg-brand-primary text-white px-4 py-2 rounded-full text-sm font-medium;
+  }
+
+  /* CTA Button component */
+  .btn-cta {
+    @apply bg-brand-primary text-white px-8 py-3 rounded-lg font-medium transition-all duration-300;
+    @apply hover:bg-brand-primary-hover hover:-translate-y-0.5 hover:shadow-lg;
+    @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2;
+  }
+
+  /* Gradient text component */
+  .text-gradient-brand {
+    background: var(--color-gradient-brand-text);
+    @apply bg-clip-text text-transparent;
+  }
+
+  /* Theme-aware surfaces */
+  .surface-primary {
+    @apply bg-background-default;
+  }
+
+  .surface-secondary {
+    @apply bg-background-section;
+  }
+
+  .surface-muted {
+    @apply bg-background-surface;
+  }
+}
+
+/* Utilidades adicionales */
+@layer utilities {
+  /* Opacity variants para brand colors */
+  .bg-brand-primary\/10 {
+    background-color: color-mix(in srgb, theme(--color-brand-primary) 10%, transparent);
+  }
+
+  .bg-brand-primary\/20 {
+    background-color: color-mix(in srgb, theme(--color-brand-primary) 20%, transparent);
+  }
+
+  /* Text gradients */
+  .text-gradient {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Smooth transitions */
+  .transition-theme {
+    @apply transition-colors duration-300 ease-in-out;
+  }
+}
+
+/* Global transitions for theme changes */
+* {
+  @apply transition-theme;
+}
+
+/* Custom scrollbar with brand colors */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background-section;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, theme(--color-brand-primary) 30%, transparent);
+  @apply rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, theme(--color-brand-primary) 50%, transparent);
+}
+
+/* Selection styling */
+::selection {
+  background-color: color-mix(in srgb, theme(--color-brand-primary) 20%, transparent);
+  color: theme(--color-brand-primary);
+}
+
+/* Focus ring utilities */
+.focus-brand {
+  @apply focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2 focus:ring-offset-background-default;
+}

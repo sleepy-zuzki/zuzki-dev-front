@@ -1,0 +1,72 @@
+:host {
+  display: block;
+}
+
+/* Social media icons hover animations */
+.social-icon {
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: translateY(-2px);
+}
+
+/* Logo hover effect */
+.footer-logo:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-out;
+}
+
+/* Smooth color transitions for social links */
+.social-link {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom hover states for each platform */
+.twitch-hover:hover {
+  background-color: #9146ff;
+  box-shadow: 0 4px 12px rgba(145, 70, 255, 0.3);
+}
+
+.youtube-hover:hover {
+  background-color: #ff0000;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+}
+
+.github-hover:hover {
+  background-color: #333333;
+  box-shadow: 0 4px 12px rgba(51, 51, 51, 0.3);
+}
+
+.twitter-hover:hover {
+  background-color: #1da1f2;
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .social-links {
+    gap: 1rem;
+  }
+
+  .social-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+/* Footer fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+footer {
+  animation: fadeInUp 0.6s ease-out;
+}

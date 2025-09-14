@@ -1,2 +1,26 @@
+/* Importar configuración de tema con @theme directive */
+@import "./styles/colors.css";
 
-@import "./styles/index.css";
+/* Estilos globales */
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  @apply bg-background text-gray-900 font-sans transition-theme;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Dark mode text color */
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply text-gray-100;
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    @apply bg-white text-gray-900;
+  }
+}

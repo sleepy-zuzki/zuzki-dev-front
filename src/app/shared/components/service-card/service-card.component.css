@@ -1,0 +1,96 @@
+:host {
+  display: block;
+}
+
+/* Card hover effects */
+.service-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Icon container animations */
+.icon-container {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.group:hover .icon-container::before {
+  left: 100%;
+}
+
+/* Feature list styling */
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.25rem 0;
+}
+
+.feature-bullet {
+  width: 4px;
+  height: 4px;
+  background-color: #9ca3af;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  margin-top: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .service-card {
+    padding: 1.5rem;
+  }
+
+  .icon-container {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .service-card h3 {
+    font-size: 1.125rem;
+  }
+}
+
+/* Loading state */
+.service-card.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.service-card.loading .icon-container {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Focus states for accessibility */
+.service-card:focus-within {
+  outline: 2px solid rgb(147 51 234);
+  outline-offset: 2px;
+}

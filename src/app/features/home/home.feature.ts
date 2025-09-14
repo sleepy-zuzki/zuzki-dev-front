@@ -1,15 +1,18 @@
-import { Component, effect, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
-import { provideIcons } from '@ng-icons/core';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
-import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons'
+import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons';
+import { ServiceCardComponent, ServiceCard } from '@shared/components/service-card/service-card.component';
 
 @Component({
   selector: 'app-home-feature',
   standalone: true,
   imports: [
     FormsModule,
+    NgIcon,
+    ServiceCardComponent
   ],
   providers: [provideIcons({featherMail, featherArrowRight, featherZap, bootstrapPalette, bootstrapCodeSlash})],
   templateUrl: './home.feature.html'
@@ -20,6 +23,42 @@ import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons'
  */
 export class HomeFeatureComponent {
   windowWidth: number = 0;
+
+  services: ServiceCard[] = [
+    {
+      icon: 'bootstrapCodeSlash',
+      iconColor: 'purple',
+      title: 'Desarrollo Web',
+      description: 'Aplicaciones web modernas y responsivas con las últimas tecnologías. Desde landing pages hasta aplicaciones complejas.',
+      features: [
+        'Angular, React, Vue.js',
+        'Node.js, Express',
+        'Bases de datos relacionales y NoSQL'
+      ]
+    },
+    {
+      icon: 'bootstrapPalette',
+      iconColor: 'blue',
+      title: 'Overlays & Widgets',
+      description: 'Overlays personalizados para streamers que potencian la interacción con tu audiencia. Diseños únicos y funcionalidades avanzadas.',
+      features: [
+        'Overlays animados',
+        'Widgets interactivos',
+        'Integración con OBS/Streamlabs'
+      ]
+    },
+    {
+      icon: 'featherZap',
+      iconColor: 'green',
+      title: 'Consultoría Técnica',
+      description: 'Asesoramiento especializado para optimizar tu setup de streaming y mejorar la experiencia técnica de tu canal.',
+      features: [
+        'Setup de streaming optimizado',
+        'Automatización de workflows',
+        'Optimización de rendimiento'
+      ]
+    }
+  ];
 
   schema: Record<string, unknown>[] = [
     {
