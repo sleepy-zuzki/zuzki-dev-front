@@ -14,7 +14,18 @@ shared/
 ```
 
 ## Componentes
+# Shared
 
+Esta carpeta contiene **elementos compartidos** entre diferentes capas y features.
+
+## Estructura
+- **Components**: Componentes UI reutilizables
+- **Utils**: Utilidades y helpers
+- **Constants**: Constantes de la aplicación
+- **Types**: Tipos TypeScript compartidos
+- **Validators**: Validadores comunes
+
+## Ejemplo de estructura:
 Los componentes compartidos están diseñados para ser reutilizables y mantener una experiencia de usuario consistente en toda la aplicación.
 
 ## Uso
