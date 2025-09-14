@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Signal } from '@angular/core';
 import { FileEntity } from '../entities/file/file.entity';
 
 export interface UploadFileRequest {
@@ -14,9 +14,14 @@ export interface UpdateFileRequest {
 }
 
 export abstract class FileRepository {
-  abstract getFiles(): Observable<FileEntity[]>;
-  abstract getFileById(id: number): Observable<FileEntity>;
-  abstract uploadFile(request: UploadFileRequest): Observable<FileEntity>;
-  abstract updateFile(id: number, request: UpdateFileRequest): Observable<FileEntity>;
-  abstract deleteFile(id: number): Observable<{ success: boolean }>;
+  abstract readonly files: Signal<FileEntity[]>;
+  abstract readonly currentFile: Signal<FileEntity | null>;
+  abstract readonly loading: Signal<boolean>;
+  abstract readonly error: Signal<string | null>;
+
+  abstract getFiles(): void;
+  abstract getFileById(id: number): void;
+  abstract uploadFile(request: UploadFileRequest): void;
+  abstract updateFile(id: number, request: UpdateFileRequest): void;
+  abstract deleteFile(id: number): void;
 }

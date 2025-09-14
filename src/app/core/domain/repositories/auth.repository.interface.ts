@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Signal } from '@angular/core';
 
 export interface LoginCredentials {
   email: string;
@@ -26,7 +26,12 @@ export interface LogoutRequest {
 }
 
 export abstract class AuthRepository {
-  abstract login(credentials: LoginCredentials): Observable<LoginResponse>;
-  abstract refreshToken(request: RefreshTokenRequest): Observable<LoginResponse>;
-  abstract logout(request: LogoutRequest): Observable<{ success: boolean }>;
+  abstract readonly currentUser: Signal<LoginResponse | null>;
+  abstract readonly loading: Signal<boolean>;
+  abstract readonly error: Signal<string | null>;
+  abstract readonly isAuthenticated: Signal<boolean>;
+
+  abstract login(credentials: LoginCredentials): void;
+  abstract refreshToken(request: RefreshTokenRequest): void;
+  abstract logout(request: LogoutRequest): void;
 }

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Signal } from '@angular/core';
 import { UserEntity } from '../entities/user/user.entity';
 
 export interface CreateUserRequest {
@@ -9,6 +9,10 @@ export interface CreateUserRequest {
 }
 
 export abstract class UserRepository {
-  abstract getUserById(id: string): Observable<UserEntity>;
-  abstract createUser(request: CreateUserRequest): Observable<UserEntity>;
+  abstract readonly currentUser: Signal<UserEntity | null>;
+  abstract readonly loading: Signal<boolean>;
+  abstract readonly error: Signal<string | null>;
+
+  abstract getUserById(id: string): void;
+  abstract createUser(request: CreateUserRequest): void;
 }

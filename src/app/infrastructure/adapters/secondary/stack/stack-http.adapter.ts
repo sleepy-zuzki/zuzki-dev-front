@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { StackRepository, CreateStackRequest, UpdateStackRequest } from '@domain/repositories/stack.repository.interface';
 import { StackEntity } from '@domain/entities/stack/stack.entity';
@@ -14,6 +13,16 @@ import { ApiConfig } from '@infrastructure/config/api.config';
   providedIn: 'root'
 })
 export class StackHttpAdapter extends StackRepository {
+  private _stacks: WritableSignal<StackEntity[]> = signal([]);
+  private _currentStack: WritableSignal<StackEntity | null> = signal(null);
+  private _loading: WritableSignal<boolean> = signal(false);
+  private _error: WritableSignal<string | null> = signal(null);
+
+  // Public readonly signals
+  public readonly stacks: Signal<StackEntity[]> = computed(() => this._stacks());
+  public readonly currentStack: Signal<StackEntity | null> = computed(() => this._currentStack());
+  public readonly loading: Signal<boolean> = computed(() => this._loading());
+  public readonly error: Signal<string | null> = computed(() => this._error());
 
   constructor(
     private readonly http: HttpClient,
@@ -22,23 +31,52 @@ export class StackHttpAdapter extends StackRepository {
     super();
   }
 
-  getStacks(): Observable<StackEntity[]> {
-    return this.http.get<StackResponseDto[]>(
+  getStacks(): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.get<StackResponseDto[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.base)
     ).pipe(
-      map(stacks => stacks.map(this.mapToStackEntity))
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (stacks) => {
+        const mappedStacks = stacks.map(this.mapToStackEntity);
+        this._stacks.set(mappedStacks);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al cargar stacks');
+        this._loading.set(false);
+      }
+    });
   }
 
-  getStackBySlug(slug: string): Observable<StackEntity> {
-    return this.http.get<StackResponseDto>(
+  getStackBySlug(slug: string): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.get<StackResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.bySlug(slug))
     ).pipe(
-      map(this.mapToStackEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (stack) => {
+        const mappedStack = this.mapToStackEntity(stack);
+        this._currentStack.set(mappedStack);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al cargar stack');
+        this._loading.set(false);
+      }
+    });
   }
 
-  createStack(request: CreateStackRequest): Observable<StackEntity> {
+  createStack(request: CreateStackRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const createDto: CreateStackDto = {
       name: request.name,
       slug: request.slug,
@@ -49,15 +87,30 @@ export class StackHttpAdapter extends StackRepository {
       technologyIds: request.technologyIds
     };
 
-    return this.http.post<StackResponseDto>(
+    this.http.post<StackResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.base),
       createDto
     ).pipe(
-      map(this.mapToStackEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (stack) => {
+        const mappedStack = this.mapToStackEntity(stack);
+        const currentStacks = this._stacks();
+        this._stacks.set([...currentStacks, mappedStack]);
+        this._currentStack.set(mappedStack);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al crear stack');
+        this._loading.set(false);
+      }
+    });
   }
 
-  updateStack(id: number, request: UpdateStackRequest): Observable<StackEntity> {
+  updateStack(id: number, request: UpdateStackRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const updateDto: UpdateStackDto = {
       name: request.name,
       slug: request.slug,
@@ -68,18 +121,47 @@ export class StackHttpAdapter extends StackRepository {
       technologyIds: request.technologyIds
     };
 
-    return this.http.patch<StackResponseDto>(
+    this.http.patch<StackResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.byId(id)),
       updateDto
     ).pipe(
-      map(this.mapToStackEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (stack) => {
+        const mappedStack = this.mapToStackEntity(stack);
+        const currentStacks = this._stacks();
+        const updatedStacks = currentStacks.map(s => s.id === id ? mappedStack : s);
+        this._stacks.set(updatedStacks);
+        this._currentStack.set(mappedStack);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al actualizar stack');
+        this._loading.set(false);
+      }
+    });
   }
 
-  deleteStack(id: number): Observable<{ success: boolean }> {
-    return this.http.delete<{ success: boolean }>(
+  deleteStack(id: number): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.byId(id))
-    );
+    ).pipe(
+      takeUntilDestroyed()
+    ).subscribe({
+      next: () => {
+        const currentStacks = this._stacks();
+        const filteredStacks = currentStacks.filter(s => s.id !== id);
+        this._stacks.set(filteredStacks);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al eliminar stack');
+        this._loading.set(false);
+      }
+    });
   }
 
   private mapToStackEntity = (dto: StackResponseDto): StackEntity => {

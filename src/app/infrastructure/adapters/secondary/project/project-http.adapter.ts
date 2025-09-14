@@ -1,21 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ProjectRepository, CreateProjectRequest, UpdateProjectRequest, AddImageToCarouselRequest, ReorderCarouselImagesRequest } from '../../../../core/domain/repositories/project.repository.interface';
-import { ProjectEntity } from '../../../../core/domain/entities/project/project.entity';
-import { TechnologyEntity } from '../../../../core/domain/entities/technology/technology.entity';
-import { FileEntity } from '../../../../core/domain/entities/file/file.entity';
-import { ProjectStatus } from '../../../../core/domain/enums/project-status.enum';
-import { TechnologyCategory } from '../../../../core/domain/enums/technology-category.enum';
-import { CreateProjectDto, UpdateProjectDto, ProjectResponseDto, AddImageToCarouselDto, ReorderCarouselImagesDto } from '../../../../application/dtos/project/project.dto';
+import { ProjectEntity } from '@core/domain';
+import { TechnologyEntity } from '@core/domain';
+import { FileEntity } from '@core/domain';
+import { ProjectStatus } from '@core/domain';
+import { TechnologyCategory } from '@core/domain';
+import { CreateProjectDto, UpdateProjectDto, ProjectResponseDto, AddImageToCarouselDto, ReorderCarouselImagesDto } from '@app/application';
 import { ApiConfig } from '../../../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectHttpAdapter extends ProjectRepository {
+  private _projects: WritableSignal<ProjectEntity[]> = signal([]);
+  private _currentProject: WritableSignal<ProjectEntity | null> = signal(null);
+  private _loading: WritableSignal<boolean> = signal(false);
+  private _error: WritableSignal<string | null> = signal(null);
+
+  // Public readonly signals
+  public readonly projects: Signal<ProjectEntity[]> = computed(() => this._projects());
+  public readonly currentProject: Signal<ProjectEntity | null> = computed(() => this._currentProject());
+  public readonly loading: Signal<boolean> = computed(() => this._loading());
+  public readonly error: Signal<string | null> = computed(() => this._error());
 
   constructor(
     private readonly http: HttpClient,
@@ -24,23 +33,52 @@ export class ProjectHttpAdapter extends ProjectRepository {
     super();
   }
 
-  getProjects(): Observable<ProjectEntity[]> {
-    return this.http.get<ProjectResponseDto[]>(
+  getProjects(): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.get<ProjectResponseDto[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base)
     ).pipe(
-      map(projects => projects.map(this.mapToProjectEntity))
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (projects) => {
+        const mappedProjects = projects.map(this.mapToProjectEntity);
+        this._projects.set(mappedProjects);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al cargar proyectos');
+        this._loading.set(false);
+      }
+    });
   }
 
-  getProjectBySlug(slug: string): Observable<ProjectEntity> {
-    return this.http.get<ProjectResponseDto>(
+  getProjectBySlug(slug: string): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.get<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.bySlug(slug))
     ).pipe(
-      map(this.mapToProjectEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (project) => {
+        const mappedProject = this.mapToProjectEntity(project);
+        this._currentProject.set(mappedProject);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al cargar proyecto');
+        this._loading.set(false);
+      }
+    });
   }
 
-  createProject(request: CreateProjectRequest): Observable<ProjectEntity> {
+  createProject(request: CreateProjectRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const createDto: CreateProjectDto = {
       name: request.name,
       slug: request.slug,
@@ -52,15 +90,30 @@ export class ProjectHttpAdapter extends ProjectRepository {
       technologyIds: request.technologyIds
     };
 
-    return this.http.post<ProjectResponseDto>(
+    this.http.post<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base),
       createDto
     ).pipe(
-      map(this.mapToProjectEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (project) => {
+        const mappedProject = this.mapToProjectEntity(project);
+        const currentProjects = this._projects();
+        this._projects.set([...currentProjects, mappedProject]);
+        this._currentProject.set(mappedProject);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al crear proyecto');
+        this._loading.set(false);
+      }
+    });
   }
 
-  updateProject(id: number, request: UpdateProjectRequest): Observable<ProjectEntity> {
+  updateProject(id: number, request: UpdateProjectRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const updateDto: UpdateProjectDto = {
       name: request.name,
       slug: request.slug,
@@ -72,47 +125,130 @@ export class ProjectHttpAdapter extends ProjectRepository {
       technologyIds: request.technologyIds
     };
 
-    return this.http.patch<ProjectResponseDto>(
+    this.http.patch<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id)),
       updateDto
     ).pipe(
-      map(this.mapToProjectEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (project) => {
+        const mappedProject = this.mapToProjectEntity(project);
+        const currentProjects = this._projects();
+        const updatedProjects = currentProjects.map(p => p.id === id ? mappedProject : p);
+        this._projects.set(updatedProjects);
+        this._currentProject.set(mappedProject);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al actualizar proyecto');
+        this._loading.set(false);
+      }
+    });
   }
 
-  deleteProject(id: number): Observable<{ success: boolean }> {
-    return this.http.delete<{ success: boolean }>(
+  deleteProject(id: number): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id))
-    );
+    ).pipe(
+      takeUntilDestroyed()
+    ).subscribe({
+      next: () => {
+        const currentProjects = this._projects();
+        const filteredProjects = currentProjects.filter(p => p.id !== id);
+        this._projects.set(filteredProjects);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al eliminar proyecto');
+        this._loading.set(false);
+      }
+    });
   }
 
-  addImageToCarousel(projectId: number, request: AddImageToCarouselRequest): Observable<void> {
+  addImageToCarousel(projectId: number, request: AddImageToCarouselRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const addImageDto: AddImageToCarouselDto = {
       fileId: request.fileId,
       position: request.position
     };
 
-    return this.http.post<void>(
+    this.http.post<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
       addImageDto
-    );
+    ).pipe(
+      takeUntilDestroyed()
+    ).subscribe({
+      next: () => {
+        // Recargar el proyecto actual para obtener las imágenes actualizadas
+        const currentProject = this._currentProject();
+        if (currentProject?.id === projectId) {
+          this.getProjectBySlug(currentProject.slug);
+        }
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al añadir imagen al carrusel');
+        this._loading.set(false);
+      }
+    });
   }
 
-  removeImageFromCarousel(projectId: number, fileId: number): Observable<void> {
-    return this.http.delete<void>(
+  removeImageFromCarousel(projectId: number, fileId: number): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.delete<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.removeImage(projectId, fileId))
-    );
+    ).pipe(
+      takeUntilDestroyed()
+    ).subscribe({
+      next: () => {
+        // Recargar el proyecto actual para obtener las imágenes actualizadas
+        const currentProject = this._currentProject();
+        if (currentProject?.id === projectId) {
+          this.getProjectBySlug(currentProject.slug);
+        }
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al eliminar imagen del carrusel');
+        this._loading.set(false);
+      }
+    });
   }
 
-  reorderCarouselImages(projectId: number, request: ReorderCarouselImagesRequest): Observable<void> {
+  reorderCarouselImages(projectId: number, request: ReorderCarouselImagesRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const reorderDto: ReorderCarouselImagesDto = {
       images: request.images
     };
 
-    return this.http.patch<void>(
+    this.http.patch<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
       reorderDto
-    );
+    ).pipe(
+      takeUntilDestroyed()
+    ).subscribe({
+      next: () => {
+        // Recargar el proyecto actual para obtener las imágenes actualizadas
+        const currentProject = this._currentProject();
+        if (currentProject?.id === projectId) {
+          this.getProjectBySlug(currentProject.slug);
+        }
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al reordenar imágenes del carrusel');
+        this._loading.set(false);
+      }
+    });
   }
 
   private mapToProjectEntity = (dto: ProjectResponseDto): ProjectEntity => {

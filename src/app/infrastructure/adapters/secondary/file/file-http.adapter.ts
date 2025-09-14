@@ -1,7 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { FileRepository, UploadFileRequest, UpdateFileRequest } from '@domain/repositories/file.repository.interface';
 import { FileEntity } from '@domain/entities/file/file.entity';
@@ -12,6 +11,16 @@ import { ApiConfig } from '@infrastructure/config/api.config';
   providedIn: 'root'
 })
 export class FileHttpAdapter extends FileRepository {
+  private _files: WritableSignal<FileEntity[]> = signal([]);
+  private _currentFile: WritableSignal<FileEntity | null> = signal(null);
+  private _loading: WritableSignal<boolean> = signal(false);
+  private _error: WritableSignal<string | null> = signal(null);
+
+  // Public readonly signals
+  public readonly files: Signal<FileEntity[]> = computed(() => this._files());
+  public readonly currentFile: Signal<FileEntity | null> = computed(() => this._currentFile());
+  public readonly loading: Signal<boolean> = computed(() => this._loading());
+  public readonly error: Signal<string | null> = computed(() => this._error());
 
   constructor(
     private readonly http: HttpClient,
@@ -20,23 +29,52 @@ export class FileHttpAdapter extends FileRepository {
     super();
   }
 
-  getFiles(): Observable<FileEntity[]> {
-    return this.http.get<FileResponseDto[]>(
+  getFiles(): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.get<FileResponseDto[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.base)
     ).pipe(
-      map(files => files.map(this.mapToFileEntity))
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (files) => {
+        const mappedFiles = files.map(this.mapToFileEntity);
+        this._files.set(mappedFiles);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al cargar archivos');
+        this._loading.set(false);
+      }
+    });
   }
 
-  getFileById(id: number): Observable<FileEntity> {
-    return this.http.get<FileResponseDto>(
+  getFileById(id: number): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.get<FileResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.byId(id))
     ).pipe(
-      map(this.mapToFileEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (file) => {
+        const mappedFile = this.mapToFileEntity(file);
+        this._currentFile.set(mappedFile);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al cargar archivo');
+        this._loading.set(false);
+      }
+    });
   }
 
-  uploadFile(request: UploadFileRequest): Observable<FileEntity> {
+  uploadFile(request: UploadFileRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const formData = new FormData();
     formData.append('file', request.file);
 
@@ -44,15 +82,30 @@ export class FileHttpAdapter extends FileRepository {
       formData.append('projectId', request.projectId);
     }
 
-    return this.http.post<FileResponseDto>(
+    this.http.post<FileResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.base),
       formData
     ).pipe(
-      map(this.mapToFileEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (file) => {
+        const mappedFile = this.mapToFileEntity(file);
+        const currentFiles = this._files();
+        this._files.set([...currentFiles, mappedFile]);
+        this._currentFile.set(mappedFile);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al subir archivo');
+        this._loading.set(false);
+      }
+    });
   }
 
-  updateFile(id: number, request: UpdateFileRequest): Observable<FileEntity> {
+  updateFile(id: number, request: UpdateFileRequest): void {
+    this._loading.set(true);
+    this._error.set(null);
+
     const updateDto: UpdateFileDto = {
       originalName: request.originalName,
       alt: request.alt,
@@ -60,18 +113,47 @@ export class FileHttpAdapter extends FileRepository {
       projectId: request.projectId
     };
 
-    return this.http.patch<FileResponseDto>(
+    this.http.patch<FileResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.byId(id)),
       updateDto
     ).pipe(
-      map(this.mapToFileEntity)
-    );
+      takeUntilDestroyed()
+    ).subscribe({
+      next: (file) => {
+        const mappedFile = this.mapToFileEntity(file);
+        const currentFiles = this._files();
+        const updatedFiles = currentFiles.map(f => f.id === id ? mappedFile : f);
+        this._files.set(updatedFiles);
+        this._currentFile.set(mappedFile);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al actualizar archivo');
+        this._loading.set(false);
+      }
+    });
   }
 
-  deleteFile(id: number): Observable<{ success: boolean }> {
-    return this.http.delete<{ success: boolean }>(
+  deleteFile(id: number): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.byId(id))
-    );
+    ).pipe(
+      takeUntilDestroyed()
+    ).subscribe({
+      next: () => {
+        const currentFiles = this._files();
+        const filteredFiles = currentFiles.filter(f => f.id !== id);
+        this._files.set(filteredFiles);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al eliminar archivo');
+        this._loading.set(false);
+      }
+    });
   }
 
   private mapToFileEntity = (dto: FileResponseDto): FileEntity => {

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Signal } from '@angular/core';
 import { TechnologyEntity } from '../entities/technology/technology.entity';
 import { TechnologyCategory } from '../enums/technology-category.enum';
 
@@ -23,9 +23,14 @@ export interface UpdateTechnologyRequest {
 }
 
 export abstract class TechnologyRepository {
-  abstract getTechnologies(): Observable<TechnologyEntity[]>;
-  abstract getTechnologyBySlug(slug: string): Observable<TechnologyEntity>;
-  abstract createTechnology(request: CreateTechnologyRequest): Observable<TechnologyEntity>;
-  abstract updateTechnology(id: number, request: UpdateTechnologyRequest): Observable<TechnologyEntity>;
-  abstract deleteTechnology(id: number): Observable<{ success: boolean }>;
+  abstract readonly technologies: Signal<TechnologyEntity[]>;
+  abstract readonly currentTechnology: Signal<TechnologyEntity | null>;
+  abstract readonly loading: Signal<boolean>;
+  abstract readonly error: Signal<string | null>;
+
+  abstract getTechnologies(): void;
+  abstract getTechnologyBySlug(slug: string): void;
+  abstract createTechnology(request: CreateTechnologyRequest): void;
+  abstract updateTechnology(id: number, request: UpdateTechnologyRequest): void;
+  abstract deleteTechnology(id: number): void;
 }

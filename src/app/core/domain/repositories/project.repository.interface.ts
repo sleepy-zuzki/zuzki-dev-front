@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Signal } from '@angular/core';
 import { ProjectEntity } from '../entities/project/project.entity';
 import { ProjectStatus } from '../enums/project-status.enum';
 
@@ -34,12 +34,17 @@ export interface ReorderCarouselImagesRequest {
 }
 
 export abstract class ProjectRepository {
-  abstract getProjects(): Observable<ProjectEntity[]>;
-  abstract getProjectBySlug(slug: string): Observable<ProjectEntity>;
-  abstract createProject(request: CreateProjectRequest): Observable<ProjectEntity>;
-  abstract updateProject(id: number, request: UpdateProjectRequest): Observable<ProjectEntity>;
-  abstract deleteProject(id: number): Observable<{ success: boolean }>;
-  abstract addImageToCarousel(projectId: number, request: AddImageToCarouselRequest): Observable<void>;
-  abstract removeImageFromCarousel(projectId: number, fileId: number): Observable<void>;
-  abstract reorderCarouselImages(projectId: number, request: ReorderCarouselImagesRequest): Observable<void>;
+  abstract readonly projects: Signal<ProjectEntity[]>;
+  abstract readonly currentProject: Signal<ProjectEntity | null>;
+  abstract readonly loading: Signal<boolean>;
+  abstract readonly error: Signal<string | null>;
+
+  abstract getProjects(): void;
+  abstract getProjectBySlug(slug: string): void;
+  abstract createProject(request: CreateProjectRequest): void;
+  abstract updateProject(id: number, request: UpdateProjectRequest): void;
+  abstract deleteProject(id: number): void;
+  abstract addImageToCarousel(projectId: number, request: AddImageToCarouselRequest): void;
+  abstract removeImageFromCarousel(projectId: number, fileId: number): void;
+  abstract reorderCarouselImages(projectId: number, request: ReorderCarouselImagesRequest): void;
 }
