@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @apply bg-background text-gray-900 font-sans transition-theme;
+  @apply bg-background-default text-gray-900 font-sans transition-theme;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
