@@ -1,10 +1,9 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { LinkButtonComponent } from '@ui';
 
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [LinkButtonComponent],
+  imports: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   template: `
     <div class="container mx-auto px-4 py-16 min-h-screen flex flex-col items-center justify-center">
@@ -17,11 +16,6 @@ import { LinkButtonComponent } from '@ui';
           Lo sentimos, la página que estás buscando no existe o ha sido movida.
         </p>
         <div class="mt-12 max-w-xs mx-auto">
-          <app-link-button routerLink="/" ariaLabel="Volver a la página de inicio">
-            <button-text>
-              Volver al inicio
-            </button-text>
-          </app-link-button>
         </div>
       </div>
     </div>

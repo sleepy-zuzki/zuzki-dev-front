@@ -1,36 +1,15 @@
-import { Component, effect, HostListener, Inject, PLATFORM_ID, Signal, DOCUMENT } from '@angular/core';
-import { LinkButtonComponent, ProjectCardComponent, BadgeComponent, ActionButtonComponent } from '@ui';
-import { Overlay } from '@core/models/overlay.model';
-import { FormGroup, FormsModule } from '@angular/forms';
-import { catchError, throwError } from 'rxjs';
-import { HotToastService } from '@ngxpert/hot-toast';
-import { ContactFormComponent } from '@components/forms/contact-form/contact-form.component';
-import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
-import { OverlayApiService } from '@services/overlay-api.service';
-import { StructuredDataComponent } from '@components/structured-data/structured-data.component';
-import { ApiService } from '@core/services/api.service';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { Component, effect, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
+import { provideIcons } from '@ng-icons/core';
 import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
 import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons'
-import { ShadcnCardComponent, CardTitleComponent, CardContentComponent, CardHeaderComponent, CardDescriptionComponent } from '@ui';
 
 @Component({
   selector: 'app-home-feature',
   standalone: true,
   imports: [
-    LinkButtonComponent,
-    ProjectCardComponent,
     FormsModule,
-    ContactFormComponent,
-    NgOptimizedImage,
-    StructuredDataComponent,
-    ActionButtonComponent,
-    NgIcon,
-    ShadcnCardComponent,
-    CardTitleComponent,
-    CardContentComponent,
-    CardHeaderComponent,
-    CardDescriptionComponent
   ],
   providers: [provideIcons({featherMail, featherArrowRight, featherZap, bootstrapPalette, bootstrapCodeSlash})],
   templateUrl: './home.feature.html'
@@ -40,7 +19,6 @@ import { ShadcnCardComponent, CardTitleComponent, CardContentComponent, CardHead
  * Muestra componentes como Proyectos y Redes Sociales.
  */
 export class HomeFeatureComponent {
-  projects: Signal<unknown[]>;
   windowWidth: number = 0;
 
   schema: Record<string, unknown>[] = [
@@ -94,36 +72,9 @@ export class HomeFeatureComponent {
     }
   ];
 
-  features = [
-    {
-      id: 1,
-      icon: 'bootstrapCodeSlash',
-      title: "Desarrollo Full-Stack",
-      description: "Experiencia completa en frontend y backend con tecnologías modernas",
-    },
-    {
-      id: 2,
-      icon: 'bootstrapPalette',
-      title: "Diseño UI/UX",
-      description: "Interfaces intuitivas y experiencias de usuario excepcionales",
-    },
-    {
-      id: 3,
-      icon: 'featherZap',
-      title: "Optimización",
-      description: "Aplicaciones rápidas y eficientes con las mejores prácticas",
-    },
-  ]
-
-
   constructor(
-    private overlayApiService: OverlayApiService,
-    private toast: HotToastService,
-    private apiService: ApiService,
-    @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
-    this.projects = this.overlayApiService.data;
     if (isPlatformBrowser(this.platformId)) {
       this.windowWidth = window.innerWidth;
 
@@ -131,12 +82,6 @@ export class HomeFeatureComponent {
         schema['dateModified'] = new Date(document.lastModified).toISOString();
       })
     }
-
-    effect(() => {
-      if (this.projects().length === 0) {
-        this.overlayApiService.fetchOverlays();
-      }
-    });
   }
 
   @HostListener('window:resize')
@@ -144,28 +89,5 @@ export class HomeFeatureComponent {
     if (isPlatformBrowser(this.platformId)) {
       this.windowWidth = window.innerWidth;
     }
-  }
-
-  onSubmit(form: FormGroup) {
-    const endpoint = "zl0p2vv4190wklivjadktnec326qzqs6";
-    const values = form.value;
-
-    this.apiService.postToMake<unknown>(endpoint, values)
-    .pipe(
-      catchError(error => {
-        console.error(error);
-        return throwError(() => new Error('Ocurrió un error al enviar el formulario. Por favor, inténtalo de nuevo.'));
-      })
-    )
-    .subscribe({
-      next: () => {
-        this.toast.show('Tu mensaje ha sido enviado correctamente. Gracias por contactarnos.');
-      },
-      error: err => {
-        // Aquí puedes manejar el error que fue relanzado o uno nuevo
-        console.error('Error en la suscripción:', err);
-        // Podrías mostrar un mensaje de error al usuario aquí
-      }
-    });
   }
 }

@@ -1,29 +1,14 @@
-import { Component, effect, Signal } from '@angular/core';
-import { ProjectCardComponent } from '@ui';
-import { Overlay } from '@core/models/overlay.model';
-import { RouterLink } from '@angular/router';
-import { OverlayApiService } from '@services/overlay-api.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-works-feature',
-  imports: [
-    ProjectCardComponent,
-    RouterLink
-  ],
+  imports: [],
   templateUrl: './works.feature.html',
   standalone: true,
   styleUrl: './works.feature.css'
 })
 export class WorksFeature {
-  projects: Signal<Overlay[]>;
 
-  constructor(private overlayApiService: OverlayApiService) {
-    this.projects = this.overlayApiService.data;
-
-    effect(() => {
-      if (this.projects().length === 0) {
-        this.overlayApiService.fetchOverlays();
-      }
-    });
+  constructor() {
   }
 }

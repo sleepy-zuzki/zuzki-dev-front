@@ -1,27 +1,2 @@
 <section id="works">
-  <header>
-    <div class="flex flex-row gap-5 justify-between items-center">
-      <div class="flex flex-col gap-2">
-        <h1 class="text-5xl font-bold">Ultimos Proyectos</h1>
-        <p class="text-secondary">Drive into our latest work, each project showcasing innovative solutions and design</p>
-      </div>
-
-<!--      <app-button type="button" variant="secondary">-->
-<!--        Filtros-->
-<!--      </app-button>-->
-    </div>
-  </header>
-
-  <section class="flex flex-row flex-wrap mt-8 gap-3 justify-between">
-    @for (project of projects(); track project.id) {
-      <a class="w-[176px] no-underline hover:no-underline focus:ring-0 m-0"
-         routerLink="/works/{{ project.id }}">
-        <app-project-card
-          [project]="project"
-          [showDescription]="false"
-          variant="square">
-        </app-project-card>
-      </a>
-    }
-  </section>
 </section>
