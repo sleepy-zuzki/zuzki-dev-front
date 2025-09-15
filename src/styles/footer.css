@@ -1,0 +1,38 @@
+@layer components {
+  .footer {
+    @apply bg-background-section text-zuzki-800 py-12 dark:text-zuzki-100;
+  }
+  .footer-container {
+    @apply container mx-auto px-6;
+  }
+  .footer-content {
+    @apply text-center;
+  }
+  .footer-logo {
+    @apply flex items-center justify-center space-x-2 mb-4 hover:opacity-80 transition-opacity;
+  }
+  .footer-logo-icon {
+    @apply w-8 h-8 bg-gradient-to-br from-zuzki-500 to-zuzki-400 rounded-lg;
+  }
+  .footer-logo-text {
+    @apply font-bold text-xl;
+  }
+  .footer-text {
+    @apply text-zuzki-600 mb-6 dark:text-zuzki-400;
+  }
+  .footer-social {
+    @apply flex justify-center space-x-6 mb-6;
+  }
+  .footer-social-link {
+    @apply text-zuzki-600 hover:text-zuzki-900 transition-colors dark:text-zuzki-400 dark:hover:text-zuzki-100;
+  }
+  .footer-social-icon {
+    @apply w-10 h-10 bg-background-surface rounded-lg flex items-center justify-center transition-colors dark:bg-zuzki-800;
+  }
+  .footer-copyright {
+    @apply border-t border-background-surface pt-6;
+  }
+  .footer-copyright-text {
+    @apply text-sm text-zuzki-600 dark:text-zuzki-500;
+  }
+}

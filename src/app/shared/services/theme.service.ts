@@ -52,13 +52,13 @@ export class ThemeService {
     const root = document.documentElement;
 
     // Remove existing theme attributes
-    root.removeAttribute('data-theme');
+    root.removeAttribute('class');
 
     if (theme === 'auto') {
       // Let CSS handle auto theme based on system preference
       // The CSS media query will apply dark theme if needed
     } else {
-      root.setAttribute('data-theme', theme);
+      root.setAttribute('class', theme);
     }
   }
 
@@ -75,7 +75,7 @@ export class ThemeService {
         next = 'dark';
         break;
       case 'dark':
-        next = 'auto';
+        next = 'light';
         break;
       default:
         next = 'light';

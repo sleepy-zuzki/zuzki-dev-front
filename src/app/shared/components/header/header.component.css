@@ -1,6 +1,4 @@
-:host {
-  display: block;
-}
+:host { outline: 2px solid red; }
 
 /* Smooth transitions for mobile menu */
 .mobile-menu-enter {

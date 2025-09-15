@@ -3,11 +3,12 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { featherMenu, featherX } from '@ng-icons/feather-icons';
+import { ThemeToggleComponent } from '@shared/components/theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgIconComponent],
+  imports: [CommonModule, RouterModule, NgIconComponent, ThemeToggleComponent],
   providers: [provideIcons({ featherMenu, featherX })],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
