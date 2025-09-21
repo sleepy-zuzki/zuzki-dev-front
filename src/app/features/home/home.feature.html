@@ -1,22 +1,42 @@
 <main id="main" class="block">
   <!-- Hero Section -->
-  <app-section [id]="'inicio'" [ariaLabel]="'Inicio'" variant="transparent" padding="none" [container]="false" extraClasses="min-h-screen flex items-center justify-center bg-gradient-to-br from-zuzki-50 via-white to-background-surface pt-20">
+  <app-section [id]="'inicio'"
+               [ariaLabel]="'Inicio'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="min-h-screen flex items-center justify-center pt-20">
     <app-home-hero></app-home-hero>
   </app-section>
 
   <!-- Sobre Mí Section -->
-  <app-section [id]="'sobre-mi'" [ariaLabel]="'Sobre mí'" variant="transparent" padding="none" [container]="false" extraClasses="py-20 bg-white">
+  <app-section [id]="'sobre-mi'"
+               [ariaLabel]="'Sobre mí'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
     <app-home-about></app-home-about>
   </app-section>
 
   <!-- Servicios Section -->
   <!-- Servicios Section -->
-  <app-section [id]="'servicios'" [ariaLabel]="'Servicios'" variant="transparent" padding="none" [container]="false" extraClasses="py-20 bg-gray-50">
+  <app-section [id]="'servicios'"
+               [ariaLabel]="'Servicios'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
     <app-home-services [services]="services"></app-home-services>
   </app-section>
 
   <!-- Contacto Section -->
-  <app-section [id]="'contacto'" [ariaLabel]="'Contacto'" variant="transparent" padding="none" [container]="false" extraClasses="py-20 bg-gradient-to-br from-zuzki-600 to-zuzki-500 text-white">
+  <app-section [id]="'contacto'"
+               [ariaLabel]="'Contacto'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
     <app-home-contact></app-home-contact>
   </app-section>
 </main>
