@@ -10,14 +10,14 @@
   --brand-amber: oklch(79.27% 0.132 85.52);
 
   /* Fondos tema claro */
-  --background-light: oklch(98.04% 0.008 83.73);
+  --background-light: oklch(98.61% 0.0034 67.78);
   --section-light: oklch(95.69% 0.016 83.73);
   --surface-light: oklch(96.84% 0.024 65.69);
 }
 
 :root.dark {
   /* Fondos tema oscuro */
-  --background-light: oklch(12.94% 0.022 49.44);
+  --background-light: oklch(22.46% 0.0207 69.76);
   --section-light: oklch(16.86% 0.027 49.44);
   --surface-light: oklch(20.78% 0.032 49.44);
 }
@@ -36,6 +36,9 @@
   --color-zuzki-800: oklch(47.8% 0.108 38.64);
   --color-zuzki-900: oklch(38.2% 0.078 35.12);
   --color-zuzki-950: oklch(25.1% 0.045 32.58);
+
+  /* Neutrales/ink para fondos oscuros */
+  --color-ink-900: oklch(22.46% 0.0207 69.76);
 
   /* Brand colors que apuntan a la paleta zuzki */
   --color-brand-primary: var(--color-zuzki-500);
