@@ -116,6 +116,11 @@ Cuando necesites nuevos tokens/utilidades:
 - [ ] No hay CSS local para cosas resolubles con Tailwind/utilidades existentes.
 - [ ] Nombres de clases coherentes con el sistema (btn-*, badge-*, surface-*, ...).
 
+## 14) Importación de estilos
+- Los estilos de componentes (capas en @layer components como buttons.css, sections.css, etc.) se importan exclusivamente desde styles.css.
+- colors.css está reservado para tokens de tema, utilidades y variables (no debe importar archivos de componentes).
+- Mantén organizado styles.css como punto único de entrada de estilos globales del proyecto.
+
 ---
 
 Notas para IAs:
