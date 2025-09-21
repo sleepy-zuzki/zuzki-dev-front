@@ -4,11 +4,12 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { featherMenu, featherX } from '@ng-icons/feather-icons';
 import { ThemeToggleComponent } from '@shared/components/theme-toggle/theme-toggle.component';
+import { ButtonComponent } from '@shared/components/button/button.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, NgIconComponent, ThemeToggleComponent],
+  imports: [CommonModule, RouterModule, NgIconComponent, ThemeToggleComponent, ButtonComponent],
   providers: [provideIcons({ featherMenu, featherX })],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
@@ -25,6 +26,12 @@ export class HeaderComponent {
 
   closeMobileMenu(): void {
     this.isMobileMenuOpen = false;
+  }
+
+  navigateToContact(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.location.href = '/#contacto';
+    }
   }
 
   isActiveRoute(route: string): boolean {

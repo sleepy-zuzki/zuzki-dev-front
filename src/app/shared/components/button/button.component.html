@@ -1,0 +1,17 @@
+<button
+  [attr.type]="type"
+  [disabled]="disabled || loading"
+  [class]="classes()"
+  [attr.aria-busy]="loading ? 'true' : null"
+  [attr.aria-disabled]="(disabled || loading) ? 'true' : null"
+  [attr.aria-label]="ariaLabel"
+  [attr.title]="title">
+  @if (loading) {
+    <span class="btn__spinner" aria-hidden="true">
+      <ng-icon name="featherLoader" class="w-4 h-4 animate-spin"></ng-icon>
+    </span>
+  }
+  <span class="btn__content">
+    <ng-content></ng-content>
+  </span>
+</button>

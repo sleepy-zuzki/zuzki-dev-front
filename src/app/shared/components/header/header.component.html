@@ -28,10 +28,9 @@
              [class.border-zuzki-600]="isActiveRoute('/works')">
             Proyectos
           </a>
-          <a href="/#contacto"
-             class="header-nav-button">
+          <app-button variant="brand" size="sm" type="button" (click)="navigateToContact()">
             Contacto
-          </a>
+          </app-button>
         </div>
 
         <app-theme-toggle></app-theme-toggle>
@@ -81,11 +80,9 @@
            (click)="closeMobileMenu()">
           Proyectos
         </a>
-        <a href="/#contacto"
-           class="header-mobile-nav-button"
-           (click)="closeMobileMenu()">
+        <app-button variant="brand" size="md" [block]="true" type="button" (click)="navigateToContact(); closeMobileMenu()">
           Contacto
-        </a>
+        </app-button>
       </div>
     </div>
   </div>

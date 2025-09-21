@@ -1,13 +1,9 @@
-<button
+<app-button
+  variant="ghost"
+  size="icon"
+  type="button"
   (click)="toggleTheme()"
-  class="relative p-2 rounded-lg hover:bg-background-section transition-theme focus-brand"
-  [attr.aria-label]="themeLabel"
+  [ariaLabel]="themeLabel"
   [title]="themeLabel">
-  <ng-icon
-    [name]="themeIcon"
-    class="w-5 h-5 text-ui-accent transition-all duration-300 hover:scale-110 hover:text-brand-primary">
-  </ng-icon>
-
-  <!-- Ripple effect for better UX -->
-  <span class="absolute inset-0 rounded-lg bg-brand-primary/10 scale-0 transition-transform duration-200 active:scale-100"></span>
-</button>
+  <ng-icon [name]="themeIcon"></ng-icon>
+</app-button>

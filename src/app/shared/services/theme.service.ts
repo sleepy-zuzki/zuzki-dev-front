@@ -54,6 +54,10 @@ export class ThemeService {
     // Remove existing theme attributes
     root.removeAttribute('class');
 
+    if (theme === 'light') {
+      return;
+    }
+
     if (theme === 'auto') {
       // Let CSS handle auto theme based on system preference
       // The CSS media query will apply dark theme if needed

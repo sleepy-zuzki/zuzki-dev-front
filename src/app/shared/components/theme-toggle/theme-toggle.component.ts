@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ThemeService, Theme } from '@shared/services/theme.service';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherSun, featherMoon, featherMonitor } from '@ng-icons/feather-icons';
+import { ButtonComponent } from '@shared/components/button/button.component';
 
 @Component({
   selector: 'app-theme-toggle',
   standalone: true,
-  imports: [NgIcon],
+  imports: [NgIcon, ButtonComponent],
   providers: [provideIcons({ featherSun, featherMoon, featherMonitor })],
   templateUrl: './theme-toggle.component.html',
   styleUrl: './theme-toggle.component.css'
