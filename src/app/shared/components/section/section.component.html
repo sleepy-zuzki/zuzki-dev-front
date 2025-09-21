@@ -1,0 +1,35 @@
+<section
+  [attr.id]="id || null"
+  role="region"
+  [attr.aria-label]="ariaLabel || null"
+  [class]="hostClasses">
+  <div *ngIf="container; else noContainer" class="max-w-7xl mx-auto px-4">
+    <header class="section__header">
+      <div class="section__title">
+        <ng-content select="[section-title]"></ng-content>
+      </div>
+      <div class="section__actions">
+        <ng-content select="[section-actions]"></ng-content>
+      </div>
+    </header>
+
+    <div class="section__body">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+  <ng-template #noContainer>
+    <header class="section__header">
+      <div class="section__title">
+        <ng-content select="[section-title]"></ng-content>
+      </div>
+      <div class="section__actions">
+        <ng-content select="[section-actions]"></ng-content>
+      </div>
+    </header>
+
+    <div class="section__body">
+      <ng-content></ng-content>
+    </div>
+  </ng-template>
+</section>

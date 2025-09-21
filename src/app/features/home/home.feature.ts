@@ -5,6 +5,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
 import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons';
 import { ServiceCardComponent, ServiceCard } from '@shared/components/service-card/service-card.component';
+import { SectionComponent } from '@shared/components/section/section.component';
 
 @Component({
   selector: 'app-home-feature',
@@ -12,7 +13,8 @@ import { ServiceCardComponent, ServiceCard } from '@shared/components/service-ca
   imports: [
     FormsModule,
     NgIcon,
-    ServiceCardComponent
+    ServiceCardComponent,
+    SectionComponent
   ],
   providers: [provideIcons({featherMail, featherArrowRight, featherZap, bootstrapPalette, bootstrapCodeSlash})],
   templateUrl: './home.feature.html'

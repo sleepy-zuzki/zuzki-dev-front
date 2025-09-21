@@ -3,6 +3,7 @@
 @import "./styles/header.css";
 @import "./styles/footer.css";
 @import "./styles/buttons.css";
+@import "./styles/sections.css";
 
 /* Estilos globales */
 html {
