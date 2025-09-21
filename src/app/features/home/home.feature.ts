@@ -1,20 +1,26 @@
-import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, Inject, PLATFORM_ID, AfterViewInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { isPlatformBrowser } from '@angular/common';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { provideIcons } from '@ng-icons/core';
 import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
 import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons';
-import { ServiceCardComponent, ServiceCard } from '@shared/components/service-card/service-card.component';
-import { SectionComponent } from '@shared/components/section/section.component';
+import { ServiceCard, ServiceCardComponent } from '@shared/components/service-card/service-card.component';
+import { SectionComponent } from '@components/section/section.component';
+import { HomeHeroComponent } from '@features/home/hero/home-hero.component';
+import { HomeAboutComponent } from '@features/home/about/home-about.component';
+import { HomeServicesComponent } from '@features/home/services/home-services.component';
+import { HomeContactComponent } from '@features/home/contact/home-contact.component';
 
 @Component({
   selector: 'app-home-feature',
   standalone: true,
   imports: [
     FormsModule,
-    NgIcon,
-    ServiceCardComponent,
-    SectionComponent
+    SectionComponent,
+    HomeHeroComponent,
+    HomeAboutComponent,
+    HomeServicesComponent,
+    HomeContactComponent
   ],
   providers: [provideIcons({featherMail, featherArrowRight, featherZap, bootstrapPalette, bootstrapCodeSlash})],
   templateUrl: './home.feature.html'
@@ -23,7 +29,7 @@ import { SectionComponent } from '@shared/components/section/section.component';
  * Componente que representa la característica de la página de inicio (Home Page) de la aplicación.
  * Muestra componentes como Proyectos y Redes Sociales.
  */
-export class HomeFeatureComponent {
+export class HomeFeatureComponent implements AfterViewInit, OnDestroy {
   windowWidth: number = 0;
 
   services: ServiceCard[] = [
@@ -113,8 +119,12 @@ export class HomeFeatureComponent {
     }
   ];
 
+  private jsonLdScripts: HTMLScriptElement[] = [];
+
   constructor(
-    @Inject(PLATFORM_ID) private platformId: object
+    @Inject(PLATFORM_ID) private platformId: object,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private document: Document
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.windowWidth = window.innerWidth;
@@ -123,6 +133,33 @@ export class HomeFeatureComponent {
         schema['dateModified'] = new Date(document.lastModified).toISOString();
       })
     }
+  }
+
+  ngAfterViewInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.injectJsonLd();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.jsonLdScripts.forEach(s => s.remove());
+      this.jsonLdScripts = [];
+    }
+  }
+
+  private injectJsonLd(): void {
+    // Limpia anteriores por seguridad
+    this.jsonLdScripts.forEach(s => s.remove());
+    this.jsonLdScripts = [];
+
+    this.jsonLdScripts = this.schema.map((node) => {
+      const script = this.renderer.createElement('script') as HTMLScriptElement;
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(node);
+      this.renderer.appendChild(this.document.head, script);
+      return script;
+    });
   }
 
   @HostListener('window:resize')

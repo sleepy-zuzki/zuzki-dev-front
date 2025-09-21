@@ -1,12 +1,12 @@
-<div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-  <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
+<article itemscope itemtype="https://schema.org/Service" class="service-card bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group">
+  <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
        [ngClass]="iconColorClasses">
-    <ng-icon [name]="service.icon" class="w-6 h-6"></ng-icon>
+    <ng-icon [name]="service.icon" class="w-6 h-6" aria-hidden="true"></ng-icon>
   </div>
 
-  <h3 class="text-xl font-bold text-gray-900 mb-3">{{ service.title }}</h3>
+  <h3 class="text-xl font-bold text-gray-900 mb-3" itemprop="name">{{ service.title }}</h3>
 
-  <p class="text-gray-600 mb-4 leading-relaxed">
+  <p class="text-gray-600 mb-4 leading-relaxed" itemprop="description">
     {{ service.description }}
   </p>
 
@@ -18,4 +18,4 @@
       </li>
     }
   </ul>
-</div>
+</article>

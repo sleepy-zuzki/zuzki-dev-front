@@ -1,0 +1,16 @@
+<div class="container mx-auto px-6" role="region" aria-labelledby="services-heading">
+  <header class="text-center mb-16">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Servicios</h2>
+    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+      Soluciones personalizadas que transforman tu presencia digital
+    </p>
+  </header>
+
+  <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" role="list" aria-labelledby="services-heading">
+    @for (service of services; track service.title) {
+      <li role="listitem">
+        <app-service-card [service]="service"></app-service-card>
+      </li>
+    }
+  </ul>
+</div>
