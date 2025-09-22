@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-type SectionVariant = 'primary' | 'secondary' | 'muted' | 'transparent';
+type SectionVariant = 'primary' | 'secondary' | 'muted' | 'transparent' | 'coffee';
 type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
 
 @Component({
@@ -29,7 +29,8 @@ export class SectionComponent {
       primary: 'surface-primary',
       secondary: 'surface-secondary',
       muted: 'surface-muted',
-      transparent: 'bg-transparent'
+      transparent: 'bg-transparent',
+      coffee: 'surface-coffee'
     };
     base.push(surfaceMap[this.variant]);
 

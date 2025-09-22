@@ -9,6 +9,15 @@
     <app-home-hero></app-home-hero>
   </app-section>
 
+  <!-- Servicios Section -->
+  <app-section [id]="'servicios'"
+               variant="coffee"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
+    <app-home-services [services]="services"></app-home-services>
+  </app-section>
+
   <!-- Sobre Mí Section -->
   <app-section [id]="'sobre-mi'"
                [ariaLabel]="'Sobre mí'"
@@ -17,17 +26,6 @@
                [container]="false"
                extraClasses="py-20">
     <app-home-about></app-home-about>
-  </app-section>
-
-  <!-- Servicios Section -->
-  <!-- Servicios Section -->
-  <app-section [id]="'servicios'"
-               [ariaLabel]="'Servicios'"
-               variant="transparent"
-               padding="none"
-               [container]="false"
-               extraClasses="py-20">
-    <app-home-services [services]="services"></app-home-services>
   </app-section>
 
   <!-- Contacto Section -->
