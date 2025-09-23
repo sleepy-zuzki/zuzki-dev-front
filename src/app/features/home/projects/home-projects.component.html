@@ -1,0 +1,46 @@
+<section class="container mx-auto px-4">
+  <header class="mb-10 text-center">
+    <h2 class="text-3xl font-semibold tracking-tight">Proyectos</h2>
+    <p class="mt-2 text-sm opacity-80">Una selección de trabajos recientes</p>
+  </header>
+
+  <ul role="list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    @for (project of featuredProjects; track project.id) {
+      <li>
+        <article class="h-full rounded-xl border border-black/10 dark:border-white/10 p-5 bg-surface-primary/50 hover:bg-surface-primary transition-theme">
+          <header class="mb-2">
+            @if (project.category) {
+              <p class="text-xs uppercase tracking-wide opacity-70">{{ project.category }}</p>
+            }
+            <h3 class="text-lg font-semibold leading-tight">{{ project.title }}</h3>
+          </header>
+          <p class="text-sm opacity-80 mb-4">{{ project.description }}</p>
+
+          @if (project.tags?.length) {
+            <ul class="flex flex-wrap gap-2 mb-4" aria-label="Tecnologías utilizadas" role="list">
+              @for (tag of project.tags; track tag) {
+                <li class="px-2 py-0.5 text-xs rounded-md border border-black/10 dark:border-white/10">
+                  {{ tag }}
+                </li>
+              }
+            </ul>
+          }
+
+          @if (project.url) {
+            <a class="inline-flex items-center gap-1 text-ui-accent hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent rounded px-1"
+               [href]="project.url" target="_blank" rel="noopener noreferrer">
+              Ver proyecto externo ->
+            </a>
+          }
+        </article>
+      </li>
+    }
+  </ul>
+
+  <nav aria-label="Navegación de proyectos" class="mt-10 flex justify-center">
+    <a class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-surface-primary text-ui-accent hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
+       [routerLink]="['/proyectos']">
+      Ver Todos los Proyectos ({{ total }}) ->
+    </a>
+  </nav>
+</section>

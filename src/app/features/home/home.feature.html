@@ -28,6 +28,16 @@
     <app-home-about></app-home-about>
   </app-section>
 
+  <!-- Proyectos Section -->
+  <app-section [id]="'proyectos'"
+               [ariaLabel]="'Proyectos destacados'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
+    <app-home-projects [projects]="projects"></app-home-projects>
+  </app-section>
+
   <!-- Contacto Section -->
   <app-section [id]="'contacto'"
                [ariaLabel]="'Contacto'"
