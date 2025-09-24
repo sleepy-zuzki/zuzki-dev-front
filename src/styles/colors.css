@@ -99,7 +99,7 @@
 
   /* Superficie basada en el color personalizado coffee */
   .surface-coffee {
-    @apply bg-coffee;
+    @apply bg-background-section dark:bg-coffee;
   }
 }
 

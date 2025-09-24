@@ -1,19 +1,18 @@
-<article itemscope itemtype="https://schema.org/Service" class="service-card bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group">
-  <div class="icon-container w-12 h-12 rounded-lg flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
-       [ngClass]="iconColorClasses">
+<article itemscope itemtype="https://schema.org/Service" class="card card--interactive card-group">
+  <div class="card__icon" [ngClass]="iconColorClasses">
     <ng-icon [name]="service.icon" class="w-6 h-6" aria-hidden="true"></ng-icon>
   </div>
 
-  <h3 class="text-xl font-bold text-gray-900 mb-3" itemprop="name">{{ service.title }}</h3>
+  <h3 class="card__title" itemprop="name">{{ service.title }}</h3>
 
-  <p class="text-gray-600 mb-4 leading-relaxed" itemprop="description">
+  <p class="card__description" itemprop="description">
     {{ service.description }}
   </p>
 
-  <ul class="text-sm text-gray-500 space-y-2">
+  <ul class="card__list">
     @for (feature of service.features; track feature) {
-      <li class="flex items-center">
-        <span class="w-1 h-1 bg-gray-400 rounded-full mr-3 flex-shrink-0"></span>
+      <li class="card__list-item">
+        <span class="card__bullet"></span>
         {{ feature }}
       </li>
     }

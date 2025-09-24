@@ -1,0 +1,132 @@
+/* Cards: componentes y utilidades personalizadas */
+
+/* Capa de componentes: clases listas para usar en tarjetas */
+@layer components {
+  /* Contenedor base de tarjeta */
+  .card {
+    @apply bg-background-surface rounded-xl shadow-lg
+           border border-background-section/60
+           p-6 md:p-8 transition-all duration-300;
+  }
+
+  /* Interacciones por defecto para tarjetas clicables */
+  .card--interactive {
+    @apply hover:shadow-xl hover:-translate-y-1 focus-brand cursor-pointer;
+  }
+
+  /* Resaltar contenedor cuando elementos internos reciben foco */
+  .card:focus-within {
+    @apply ring-2 ring-zuzki-500 ring-offset-2 ring-offset-background-default;
+  }
+
+  /* Elementos internos comunes */
+  .card__icon {
+    @apply w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center mb-6
+           transition-transform duration-300 group-hover:scale-110;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Efecto shimmer al pasar el mouse sobre el grupo */
+  .card__icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: -100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s;
+  }
+
+  .card__icon::before,
+  .card-group:hover .card__icon::before {
+    left: 100%;
+  }
+
+  .card__title {
+    @apply text-lg md:text-xl font-bold text-zuzki-900 dark:text-zuzki-50 mb-3;
+  }
+
+  .card__description {
+    @apply text-zuzki-700 dark:text-zuzki-300 mb-4 leading-relaxed;
+  }
+
+  .card__list {
+    @apply text-sm text-zuzki-600 dark:text-zuzki-400 space-y-2;
+  }
+
+  .card__list-item {
+    @apply flex items-center;
+  }
+
+  .card__bullet {
+    @apply w-1 h-1 bg-zuzki-500/60 rounded-full mr-3 flex-shrink-0;
+  }
+
+  /* Estado de carga (loading) */
+  .card.loading,
+  .card--loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .card.loading .card__icon,
+  .card--loading .card__icon {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: card-loading 1.5s infinite;
+  }
+
+  /* Compatibilidad: aplicar estilos de card a tarjetas existentes (sin @apply de componentes) */
+  .service-card {
+    @apply bg-background-surface rounded-xl shadow-lg
+           border border-background-section/60
+           p-6 md:p-8 transition-all duration-300;
+  }
+  .service-card--interactive {
+    @apply hover:shadow-xl hover:-translate-y-1 focus-brand cursor-pointer;
+  }
+}
+
+/* Animación keyframes para loading */
+@keyframes card-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Utilidades Tailwind v4 (@utility) para construir tarjetas de forma composable */
+@utility card-surface {
+  @apply bg-background-surface;
+}
+
+@utility card-rounded {
+  @apply rounded-xl;
+}
+
+@utility card-shadow {
+  @apply shadow-lg;
+}
+
+@utility card-border {
+  @apply border border-background-section/60;
+}
+
+@utility card-padding {
+  @apply p-6 md:p-8;
+}
+
+@utility card-hover {
+  @apply hover:shadow-xl hover:-translate-y-0.5;
+}
+
+@utility card-transition {
+  @apply transition-all duration-300;
+}
+
+@utility card-focus {
+  @apply focus-brand;
+}
+
+/* Contenedor que actúa como "grupo" para efectos de hover y mejora rendimiento */
+@utility card-group {
+  isolation: isolate;            /* Evita que efectos internos escapen */
+  will-change: transform, box-shadow; /* Pista al navegador para interacciones suaves */
+}

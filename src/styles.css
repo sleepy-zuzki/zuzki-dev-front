@@ -4,6 +4,7 @@
 @import "./styles/footer.css";
 @import "./styles/buttons.css";
 @import "./styles/sections.css";
+@import "./styles/cards.css";
 
 /* Estilos globales */
 html {
