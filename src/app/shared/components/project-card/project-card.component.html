@@ -1,0 +1,64 @@
+<article class="group h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-surface-primary/60 flex flex-col focus-within:ring-2 focus-within:ring-ui-accent transition-theme">
+  <figure class="relative h-48 md:h-56 lg:h-60 w-full">
+    @if (data.imageUrl) {
+      <img [src]="data.imageUrl" class="absolute inset-0 w-full h-full object-cover" [alt]="'Imagen del proyecto ' + data.title">
+      <div class="absolute inset-0 bg-gradient-to-b from-black/10 to-black/50"></div>
+    } @else {
+      <div class="absolute inset-0 bg-gradient-to-br from-zuzki-400 to-zuzki-600"></div>
+    }
+
+    @if (data.featured) {
+      <span class="absolute top-3 left-3 text-[11px] font-medium px-2.5 py-1 rounded-full bg-zuzki-500 text-white shadow-md">Destacado</span>
+    }
+    @if (data.category) {
+      <span class="absolute top-3 right-3 text-[11px] font-medium px-2.5 py-1 rounded-full bg-black/30 text-white backdrop-blur border border-white/10">
+        {{ data.category }}
+      </span>
+    }
+
+    <div class="absolute left-4 bottom-4 text-white drop-shadow-md" aria-hidden="true">
+      @if (data.year) {
+        <p class="text-xs opacity-90">{{ data.year }}</p>
+      }
+      <p class="text-lg md:text-xl font-semibold leading-tight">{{ data.title }}</p>
+    </div>
+
+    <figcaption class="sr-only">Banner visual del proyecto {{ data.title }}</figcaption>
+  </figure>
+
+  <div class="p-5 flex flex-col gap-4 grow">
+    <header>
+      <h3 class="text-xl font-semibold leading-tight">{{ data.title }}</h3>
+    </header>
+
+    <p class="text-sm opacity-80">{{ data.description }}</p>
+
+    @if (data.tags?.length) {
+      <ul class="flex flex-wrap gap-2" aria-label="Tecnologías utilizadas" role="list">
+        @for (tag of data.tags; track tag) {
+          <li class="px-2 py-0.5 text-xs rounded-md border border-black/10 dark:border-white/10">
+            {{ tag }}
+          </li>
+        }
+      </ul>
+    }
+
+    <nav class="mt-auto" aria-label="Acciones del proyecto">
+      @if (data.url) {
+        <a
+          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
+          [href]="data.url" target="_blank" rel="noopener noreferrer"
+          [attr.aria-label]="'Ver detalles del proyecto ' + data.title">
+          Ver Detalles →
+        </a>
+      } @else {
+        <a
+          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
+          [routerLink]="['/proyectos']"
+          [attr.aria-label]="'Ver detalles del proyecto ' + data.title">
+          Ver Detalles →
+        </a>
+      }
+    </nav>
+  </div>
+</article>

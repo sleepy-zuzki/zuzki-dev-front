@@ -136,7 +136,6 @@
 
 ::-webkit-scrollbar-thumb {
   background-color: color-mix(in srgb, theme(--color-zuzki-500) 30%, transparent);
-  @apply rounded;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -146,7 +145,7 @@
 /* Selection styling */
 ::selection {
   background-color: color-mix(in srgb, theme(--color-zuzki-500) 20%, transparent);
-  @apply text-zuzki-500;
+  @apply text-black;
 }
 
 /* Focus ring utilities */

@@ -1,11 +1,11 @@
-<article itemscope itemtype="https://schema.org/Service" class="card card--interactive card-group">
+<article class="card card--interactive card-group">
   <div class="card__icon" [ngClass]="iconColorClasses">
     <ng-icon [name]="service.icon" class="w-6 h-6" aria-hidden="true"></ng-icon>
   </div>
 
-  <h3 class="card__title" itemprop="name">{{ service.title }}</h3>
+  <h3 class="card__title">{{ service.title }}</h3>
 
-  <p class="card__description" itemprop="description">
+  <p class="card__description">
     {{ service.description }}
   </p>
 

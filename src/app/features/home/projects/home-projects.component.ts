@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ProjectCardComponent } from '../../../shared/components/project-card/project-card.component';
 
 export interface Project {
   id: string | number;
@@ -13,7 +14,7 @@ export interface Project {
 @Component({
   selector: 'app-home-projects',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ProjectCardComponent],
   templateUrl: './home-projects.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
