@@ -14,44 +14,7 @@
         Creando experiencias digitales únicas, un proyecto a la vez.
       </p>
 
-      <div class="footer-social">
-        <a href="https://twitch.tv/sleepy_zuzki"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer-social-link"
-           aria-label="Visitar canal de Twitch">
-          <div class="footer-social-icon hover:bg-zuzki-600">
-            <span class="text-sm font-bold">TW</span>
-          </div>
-        </a>
-        <a href="https://youtube.com/@sleepy_zuzki"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer-social-link"
-           aria-label="Visitar canal de YouTube">
-          <div class="footer-social-icon hover:bg-red-600">
-            <span class="text-sm font-bold">YT</span>
-          </div>
-        </a>
-        <a href="https://github.com/sleepy-zuzki"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer-social-link"
-           aria-label="Visitar perfil de GitHub">
-          <div class="footer-social-icon hover:bg-gray-700">
-            <span class="text-sm font-bold">GH</span>
-          </div>
-        </a>
-        <a href="https://x.com/sleepy_zuzki"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="footer-social-link"
-           aria-label="Visitar perfil de Twitter/X">
-          <div class="footer-social-icon hover:bg-blue-500">
-            <span class="text-sm font-bold">X</span>
-          </div>
-        </a>
-      </div>
+      <app-social-icons [platforms]="['twitch', 'youtube', 'github', 'x']"></app-social-icons>
 
       <div class="footer-copyright">
         <p class="footer-copyright-text">

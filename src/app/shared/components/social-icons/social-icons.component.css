@@ -1,0 +1,49 @@
+@reference "tailwindcss";
+@reference "../../../../styles/colors.css";
+
+/* Contenedor de iconos sociales */
+.footer-social {
+  @apply flex justify-center space-x-6 mb-6;
+}
+
+.footer-social-link {
+  @apply text-zuzki-600 hover:text-zuzki-900 dark:text-zuzki-900 dark:hover:text-zuzki-100;
+}
+
+.footer-social-icon {
+  @apply w-10 h-10 bg-background-default rounded-lg flex items-center justify-center dark:bg-zuzki-500 transition-transform;
+}
+
+/* Elevación individual al hover */
+.footer-social-icon:hover {
+  transform: translateY(-2px);
+}
+
+/* Hovers por plataforma (color/acento) */
+.twitch-hover:hover {
+  background-color: #9146ff;
+  box-shadow: 0 4px 12px rgba(145, 70, 255, 0.3);
+}
+.youtube-hover:hover {
+  background-color: #ff0000;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+}
+.github-hover:hover {
+  background-color: #333333;
+  box-shadow: 0 4px 12px rgba(51, 51, 51, 0.3);
+}
+.twitter-hover:hover {
+  background-color: #1da1f2;
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .footer-social {
+    gap: 1rem;
+  }
+  .footer-social-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
