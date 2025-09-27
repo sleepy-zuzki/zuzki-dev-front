@@ -1,77 +1,82 @@
 <div class="container mx-auto px-6">
-  <header class="text-center mb-16">
-    <h2 class="text-3xl md:text-4xl font-bold  mb-4">Sobre Mí</h2>
-    <p class="text-xl text-gray-600 dark:text-gray-400 dark:text-gray-400 max-w-2xl mx-auto">
-      Combino mi pasión por la tecnología con la creatividad del streaming para crear experiencias únicas
+  <header class="text-center max-w-2xl mx-auto mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold tracking-tight">
+      Sobre mí
+    </h2>
+    <p class="mt-3 text-base md:text-lg opacity-80">
+      La historia detrás del código y los píxeles.
     </p>
   </header>
 
-  <div class="grid md:grid-cols-2 gap-12 items-center">
-    <article class="space-y-6">
-      <h3 class="text-2xl font-bold">Mi Historia</h3>
-      <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-        Soy un desarrollador apasionado que encontró en el streaming una forma única de compartir conocimiento y creatividad.
-        Mi experiencia abarca desde desarrollo web hasta overlays personalizados para streamers.
-      </p>
-      <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-        Como VTuber, he construido una comunidad donde la tecnología y el entretenimiento se fusionan,
-        creando contenido educativo y experiencias interactivas que inspiran a otros desarrolladores.
+  <!-- Métricas -->
+  <ul class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12" role="list">
+    @for (s of stats; track s.label) {
+      <li class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-coffee  p-6 text-center">
+        <p class="text-3xl md:text-4xl font-bold text-zuzki-500">{{ s.value }}</p>
+        <p class="mt-1 text-sm opacity-80 text-gray-600 dark:text-gray-400">{{ s.label }}</p>
+      </li>
+    }
+  </ul>
+
+  <!-- Contenido principal -->
+  <div class="grid lg:grid-cols-2 gap-10 items-start">
+    <!-- Columna izquierda: artículos -->
+    <article aria-labelledby="porque-title">
+      <h3 id="porque-title" class="text-xl md:text-2xl font-semibold">¿Por qué “Sleepy” Zuzki?</h3>
+      <p class="mt-3 opacity-90">
+        El nombre viene de mis días universitarios programando hasta altas horas. Mis compañeros siempre me veían con ojeras
+        pero entregando los mejores proyectos. “Sleepy” se volvió mi marca personal: trabajo mejor en las madrugadas cuando
+        el mundo está en silencio y puedo concentrarme al 100%.
       </p>
 
-      <div class="grid grid-cols-2 gap-6 mt-8">
-        <div class="text-center p-4 bg-gray-50 rounded-lg">
-          <div class="text-2xl font-bold text-zuzki-600 mb-1">3+</div>
-          <div class="text-gray-600 dark:text-gray-400 text-sm">Años Streaming</div>
-        </div>
-        <div class="text-center p-4 bg-gray-50 rounded-lg">
-          <div class="text-2xl font-bold text-zuzki-600 mb-1">50+</div>
-          <div class="text-gray-600 dark:text-gray-400 text-sm">Proyectos Completados</div>
-        </div>
-      </div>
+      <h3 class="mt-8 text-xl md:text-2xl font-semibold">Mi Filosofía</h3>
+      <p class="mt-3 opacity-90">
+        Creo que el mejor código es el que resuelve problemas reales de personas reales. No me interesa la complejidad por
+        la complejidad, sino crear soluciones elegantes que funcionen y que la gente realmente quiera usar.
+      </p>
+
+      <h3 class="mt-8 text-xl md:text-2xl font-semibold">Datos Curiosos</h3>
+      <ul class="mt-4 space-y-2 list-disc pl-5" role="list">
+        @for (item of curiosities; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+
+      <nav class="mt-8 flex flex-wrap gap-3" aria-label="Acciones de perfil">
+        <a
+          class="inline-flex items-center justify-center rounded-lg border px-4 py-2 font-medium transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          href="/assets/cv.pdf"
+          target="_blank"
+          rel="noopener"
+        >
+          Ver CV Completo
+        </a>
+        <a
+          class="inline-flex items-center justify-center rounded-lg bg-black text-white px-4 py-2 font-medium transition-colors hover:bg-black/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          href="/#contacto"
+        >
+          Hablemos
+        </a>
+      </nav>
     </article>
 
-    <section class="space-y-4" aria-labelledby="skills-heading">
-      <h3 id="skills-heading" class="text-2xl font-bold">Skills Técnicos</h3>
+    <!-- Columna derecha: trayectoria y setup -->
+    <div class="space-y-8">
+      <app-about-timeline [items]="timeline"></app-about-timeline>
 
-      <div class="space-y-3">
-        <div class="flex justify-between items-center">
-          <span class="text-gray-600 dark:text-gray-400 font-medium">Frontend Development</span>
-          <span class="text-sm text-gray-500">95%</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div class="bg-gradient-to-r from-zuzki-500 to-zuzki-400 h-2 rounded-full" style="width: 95%"></div>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="flex justify-between items-center">
-          <span class="text-gray-600 dark:text-gray-400 font-medium">Backend Development</span>
-          <span class="text-sm text-gray-500">88%</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div class="bg-gradient-to-r from-zuzki-500 to-zuzki-400 h-2 rounded-full" style="width: 88%"></div>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="flex justify-between items-center">
-          <span class="text-gray-600 dark:text-gray-400 font-medium">UI/UX Design</span>
-          <span class="text-sm text-gray-500">92%</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div class="bg-gradient-to-r from-zuzki-500 to-zuzki-400 h-2 rounded-full" style="width: 92%"></div>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="flex justify-between items-center">
-          <span class="text-gray-600 dark:text-gray-400 font-medium">Streaming Tech</span>
-          <span class="text-sm text-gray-500">98%</span>
-        </div>
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div class="bg-gradient-to-r from-zuzki-500 to-zuzki-400 h-2 rounded-full" style="width: 98%"></div>
-        </div>
-      </div>
-    </section>
+      <aside aria-labelledby="setup-title" class="rounded-xl border p-5 border-gray-200 dark:border-gray-700 bg-white dark:bg-coffee">
+        <h3 id="setup-title" class="text-lg font-semibold">Mi Setup</h3>
+        <ul class="mt-3 flex flex-col gap-1" role="list">
+          @for (row of setup; track row.key) {
+            <li class="flex items-start justify-between gap-4">
+              <span class="opacity-70">{{ row.key }}:</span>
+              <span class="font-medium text-right">{{ row.value }}</span>
+            </li>
+          }
+        </ul>
+      </aside>
+    </div>
   </div>
+
+  <app-about-stack [categories]="stack"></app-about-stack>
 </div>
