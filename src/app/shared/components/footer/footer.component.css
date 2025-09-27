@@ -6,7 +6,7 @@
 }
 
 .footer {
-  @apply bg-background-section dark:bg-coffee text-zuzki-800 py-12 dark:text-zuzki-100;
+  @apply bg-background-section dark:bg-coffee py-12;
 }
 
 .footer-container {
@@ -18,11 +18,11 @@
 }
 
 .footer-logo {
-  @apply flex items-center justify-center space-x-2 mb-4 hover:opacity-80;
+  @apply inline-block space-x-2 mb-4 hover:opacity-80 transition-transform duration-200 ease-out hover:scale-105;
 }
 
 .footer-logo-icon {
-  @apply w-8 h-8 bg-gradient-to-br from-zuzki-500 to-zuzki-400 rounded-lg;
+  @apply inline-block;
 }
 
 .footer-logo-text {
@@ -30,7 +30,7 @@
 }
 
 .footer-text {
-  @apply text-zuzki-600 mb-6 dark:text-zuzki-400;
+  @apply text-black dark:text-white mb-6;
 }
 
 .footer-social {
@@ -50,18 +50,13 @@
 }
 
 .footer-copyright-text {
-  @apply text-sm text-zuzki-600 dark:text-zuzki-500;
+  @apply text-black dark:text-white text-sm;
 }
 
 .social-icon:hover {
   transform: translateY(-2px);
 }
 
-/* Logo hover effect */
-.footer-logo:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease-out;
-}
 
 /* Custom hover states for each platform */
 .twitch-hover:hover {
