@@ -16,11 +16,7 @@
           <h4 class="as-card-title">{{ cat.name }}</h4>
         </div>
 
-        <ul class="as-tags" role="list">
-          @for (tag of cat.tags; track tag) {
-            <li class="as-tag">{{ tag }}</li>
-          }
-        </ul>
+        <app-tags-list [tags]="cat.tags"></app-tags-list>
       </li>
     }
   </ul>

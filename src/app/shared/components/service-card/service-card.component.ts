@@ -15,7 +15,8 @@ export interface ServiceCard {
   selector: 'app-service-card',
   standalone: true,
   imports: [NgIconComponent, NgClass],
-  templateUrl: './service-card.component.html'
+  templateUrl: './service-card.component.html',
+  styleUrl: './service-card.component.css',
 })
 export class ServiceCardComponent {
   @Input({ required: true }) service!: ServiceCard;

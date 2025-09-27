@@ -33,15 +33,7 @@
 
     <p class="text-sm opacity-80">{{ data.description }}</p>
 
-    @if (data.tags?.length) {
-      <ul class="flex flex-wrap gap-2" aria-label="Tecnologías utilizadas" role="list">
-        @for (tag of data.tags; track tag) {
-          <li class="px-2 py-0.5 text-xs rounded-md border border-black/10 dark:border-white/10">
-            {{ tag }}
-          </li>
-        }
-      </ul>
-    }
+    <app-tags-list [tags]="data.tags"></app-tags-list>
 
     <nav class="mt-auto" aria-label="Acciones del proyecto">
       @if (data.url) {
@@ -49,14 +41,14 @@
           class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
           [href]="data.url" target="_blank" rel="noopener noreferrer"
           [attr.aria-label]="'Ver detalles del proyecto ' + data.title">
-          Ver Detalles →
+          Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
         </a>
       } @else {
         <a
           class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
           [routerLink]="['/proyectos']"
           [attr.aria-label]="'Ver detalles del proyecto ' + data.title">
-          Ver Detalles →
+          Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
         </a>
       }
     </nav>

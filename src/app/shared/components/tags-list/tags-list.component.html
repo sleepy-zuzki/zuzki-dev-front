@@ -1,0 +1,5 @@
+<ul class="tlst-list" role="list" [attr.aria-label]="ariaLabel">
+  @for (tag of tags; track tag) {
+    <li class="tlst-chip" role="listitem">{{ tag }}</li>
+  }
+</ul>

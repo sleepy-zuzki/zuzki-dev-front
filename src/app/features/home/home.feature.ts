@@ -4,7 +4,7 @@ import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { provideIcons } from '@ng-icons/core';
 import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
 import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons';
-import { ServiceCard, ServiceCardComponent } from '@shared/components/service-card/service-card.component';
+import { ServiceCard } from '@shared/components/service-card/service-card.component';
 import { SectionComponent } from '@components/section/section.component';
 import { HomeHeroComponent } from '@features/home/hero/home-hero.component';
 import { HomeAboutComponent } from '@features/home/about/home-about.component';

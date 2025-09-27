@@ -1,10 +1,10 @@
-<section class="container mx-auto px-4">
-  <header class="mb-10 text-center">
-    <h2 class="text-3xl font-semibold tracking-tight">Proyectos</h2>
-    <p class="mt-2 text-sm opacity-80">Una selección de trabajos recientes</p>
+<section class="hp-section">
+  <header class="hp-header">
+    <h2 class="hp-title">Proyectos</h2>
+    <p class="hp-subtitle">Una selección de trabajos recientes</p>
   </header>
 
-  <ul role="list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <ul role="list" class="hp-grid">
     @for (project of featuredProjects; track project.id) {
       <li>
         <app-project-card [data]="project"></app-project-card>
@@ -12,10 +12,10 @@
     }
   </ul>
 
-  <nav aria-label="Navegación de proyectos" class="mt-10 flex justify-center">
-    <a class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-surface-primary text-ui-accent hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
-       [routerLink]="['/proyectos']">
-      Ver Todos los Proyectos ({{ total }}) ->
+  <nav aria-label="Navegación de proyectos" class="hp-nav">
+    <a class="hp-link" [routerLink]="['/proyectos']">
+      Ver Todos los Proyectos ({{ total }})
+      <ng-icon name="bootstrapArrowRightShort" class="hp-link-icon"></ng-icon>
     </a>
   </nav>
 </section>

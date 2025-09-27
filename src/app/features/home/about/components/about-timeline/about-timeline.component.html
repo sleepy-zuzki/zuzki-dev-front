@@ -28,9 +28,7 @@
           </p>
 
           <div class="tl-tags" role="list" aria-label="Tecnologías">
-            @for (tag of t.tags; track tag) {
-              <span class="tl-tag" role="listitem">{{ tag }}</span>
-            }
+            <app-tags-list [tags]="t.tags"></app-tags-list>
           </div>
         </div>
       </div>

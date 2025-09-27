@@ -2,8 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AboutTimelineComponent } from './components/about-timeline/about-timeline.component';
 import { AboutStackComponent } from './components/about-stack/about-stack.component';
-import { provideIcons } from '@ng-icons/core';
-import { featherLayout, featherDatabase, featherServer, featherPenTool } from '@ng-icons/feather-icons';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { featherLayout, featherDatabase, featherServer, featherPenTool, featherMail, featherExternalLink } from '@ng-icons/feather-icons';
+
 type Stat = { value: string; label: string };
 type TimelineItem = { title: string; period: string; description: string; tags: string[] };
 type KeyValue = { key: string; value: string };
@@ -12,10 +13,10 @@ type StackCategory = { name: string; tags: string[]; icon?: string; color?: stri
 @Component({
   selector: 'app-home-about',
   standalone: true,
-  imports: [CommonModule, AboutTimelineComponent, AboutStackComponent],
+  imports: [CommonModule, AboutTimelineComponent, AboutStackComponent, NgIcon],
   templateUrl: './home-about.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [provideIcons({ featherLayout, featherDatabase, featherServer, featherPenTool })]
+  providers: [provideIcons({ featherLayout, featherDatabase, featherServer, featherPenTool, featherMail, featherExternalLink })]
 })
 export class HomeAboutComponent {
   readonly stats: Stat[] = [

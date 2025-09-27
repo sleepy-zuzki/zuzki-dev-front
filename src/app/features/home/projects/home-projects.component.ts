@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ProjectCardComponent } from '../../../shared/components/project-card/project-card.component';
+import { ProjectCardComponent } from '@components/project-card/project-card.component';
+import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 
 export interface Project {
   id: string | number;
   title: string;
   description: string;
-  tags?: string[];
+  tags: string[];
   category?: string;
   url?: string;
 }
@@ -14,8 +16,10 @@ export interface Project {
 @Component({
   selector: 'app-home-projects',
   standalone: true,
-  imports: [RouterModule, ProjectCardComponent],
+  imports: [RouterModule, ProjectCardComponent, NgIcon],
   templateUrl: './home-projects.component.html',
+  styleUrl: './home-projects.component.css',
+  providers: [provideIcons({bootstrapArrowRightShort})],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeProjectsComponent {

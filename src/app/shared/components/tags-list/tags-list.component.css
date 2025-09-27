@@ -1,0 +1,20 @@
+@reference "tailwindcss";
+@reference "../../../../styles/colors.css";
+
+/* Contenedor de la lista */
+.tlst-list {
+  @apply mt-3 flex flex-wrap gap-2;
+}
+
+/* Chip de tag */
+.tlst-chip {
+  @apply inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold focus:outline-hidden focus:ring-2 focus:ring-offset-2;
+  @apply border-transparent text-xs transition-colors bg-gray-700 text-gray-300 cursor-default;
+}
+
+/* Hover/focus individual usando el color de acento si está disponible en el contenedor */
+.tlst-chip:hover,
+.tlst-chip:focus-visible {
+  background-color: var(--as-accent, theme(colors.zuzki.500));
+  @apply text-white;
+}

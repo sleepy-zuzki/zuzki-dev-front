@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TagsListComponent } from '@components/tags-list/tags-list.component';
+import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
+import { NgIcon, provideIcons } from '@ng-icons/core';
 
 export interface ProjectCardData {
   id: string | number;
   title: string;
   description: string;
-  tags?: string[];
+  tags: string[];
   category?: string;
   url?: string;
   year?: string | number;
@@ -16,9 +19,10 @@ export interface ProjectCardData {
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, TagsListComponent, NgIcon],
   templateUrl: './project-card.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [provideIcons({bootstrapArrowRightShort})],
 })
 export class ProjectCardComponent {
   @Input({ required: true }) data!: ProjectCardData;

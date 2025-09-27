@@ -12,7 +12,8 @@ type ButtonType = 'button' | 'submit' | 'reset';
   standalone: true,
   imports: [CommonModule, NgIcon],
   providers: [provideIcons({ featherLoader })],
-  templateUrl: './button.component.html'
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.css',
 })
 export class ButtonComponent {
   @Input() variant: ButtonVariant = 'brand';
