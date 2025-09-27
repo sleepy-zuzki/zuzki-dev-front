@@ -3,7 +3,17 @@
 
 /* Contenedor de iconos sociales */
 .footer-social {
-  @apply flex justify-center space-x-6 mb-6;
+  @apply flex space-x-6 mb-6;
+}
+/* Alineación controlada por el padre */
+.align-center {
+  @apply justify-center;
+}
+.align-start {
+  @apply justify-start;
+}
+.align-end {
+  @apply justify-end;
 }
 
 .footer-social-link {

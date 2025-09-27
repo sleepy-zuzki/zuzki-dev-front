@@ -1,12 +1,49 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ContactFormComponent {}
+export class ContactFormComponent {
+  contactData = {
+    name: '',
+    email: '',
+    message: '',
+  };
+
+  contactForm = new FormGroup({
+    name: new FormControl(this.contactData.name, {
+      validators: [Validators.required, Validators.minLength(3)],
+      nonNullable: true
+    }),
+    email: new FormControl(this.contactData.email, {
+      validators: [Validators.required, Validators.email],
+    }),
+    message: new FormControl(this.contactData.message, {
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(500)],
+      nonNullable: true
+    })
+  });
+
+  // Getters para simplificar la plantilla
+  get name() { return this.contactForm.controls.name; }
+  get email() { return this.contactForm.controls.email; }
+  get message() { return this.contactForm.controls.message; }
+
+  onSubmit(): void {
+    if (this.contactForm.invalid) {
+      this.contactForm.markAllAsTouched();
+      return;
+    }
+    // Aquí podrías emitir un evento o llamar a un servicio
+    const payload = this.contactForm.getRawValue();
+    console.info('Contacto enviado:', payload);
+    this.contactForm.reset({ name: '', email: '', message: '' });
+  }
+}

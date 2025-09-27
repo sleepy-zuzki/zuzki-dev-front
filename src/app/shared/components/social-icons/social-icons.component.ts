@@ -51,11 +51,23 @@ const PLATFORM_CONFIG: Record<PlatformKey, PlatformConfig> = {
 })
 export class SocialIconsComponent {
   @Input({ required: true }) platforms: ReadonlyArray<PlatformKey> = [];
+  @Input() align: 'start' | 'center' | 'end' = 'center';
 
   get items(): PlatformConfig[] {
     return (this.platforms ?? [])
       .map((p) => PLATFORM_CONFIG[p])
       .filter((v): v is PlatformConfig => !!v);
+  }
+
+  get alignmentClass(): string {
+    switch (this.align) {
+      case 'start':
+        return 'align-start';
+      case 'end':
+        return 'align-end';
+      default:
+        return 'align-center';
+    }
   }
 
   hoverClass(key: PlatformKey): string {

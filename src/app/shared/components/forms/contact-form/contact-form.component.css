@@ -43,3 +43,7 @@
   @apply w-full rounded-lg font-medium px-6 py-3 hover:cursor-pointer;
   @apply bg-zuzki-500/90 text-white hover:bg-zuzki-500;
 }
+
+.cf-error {
+  @apply text-red-400 dark:text-red-500;
+}

@@ -1,20 +1,68 @@
 <div class="cf-card">
-  <form class="cf-form" aria-label="Formulario de contacto">
+  <form [formGroup]="contactForm"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        class="cf-form"
+        aria-label="Formulario de contacto">
+
     <div class="cf-field">
       <label for="cf-name" class="cf-label">Nombre</label>
-      <input id="cf-name" name="name" type="text" class="cf-input" autocomplete="name" placeholder="Ingrese su nombre"/>
+      <input id="cf-name"
+             name="name"
+             formControlName="name"
+             type="text"
+             class="cf-input"
+             [attr.aria-invalid]="name.invalid && (name.dirty || name.touched)"
+             [attr.aria-describedby]="name.invalid ? 'cf-name-error' : null"
+             autocomplete="name"
+             placeholder="Ingrese su nombre" />
+      @if (name.invalid && (name.dirty || name.touched)) {
+        <p id="cf-name-error" class="cf-error">
+          @if (name.errors?.['required']) { El nombre es obligatorio. }
+          @else if (name.errors?.['minlength']) { Debe tener al menos 3 caracteres. }
+        </p>
+      }
     </div>
 
     <div class="cf-field">
       <label for="cf-email" class="cf-label">Email</label>
-      <input id="cf-email" name="email" type="email" class="cf-input" autocomplete="email" placeholder="Ingrese su correo"/>
+      <input id="cf-email"
+             name="email"
+             formControlName="email"
+             type="email"
+             class="cf-input"
+             [attr.aria-invalid]="email.invalid && (email.dirty || email.touched)"
+             [attr.aria-describedby]="email.invalid ? 'cf-email-error' : null"
+             autocomplete="email"
+             placeholder="Ingrese su correo" />
+      @if (email.invalid && (email.dirty || email.touched)) {
+        <p id="cf-email-error" class="cf-error">
+          @if (email.errors?.['required']) { El email es obligatorio. }
+          @else if (email.errors?.['email']) { Ingresa un email válido. }
+        </p>
+      }
     </div>
 
     <div class="cf-field">
       <label for="cf-message" class="cf-label">Mensaje</label>
-      <textarea id="cf-message" name="message" rows="4" class="cf-textarea" ></textarea>
+      <textarea id="cf-message"
+                name="message"
+                formControlName="message"
+                rows="4"
+                class="cf-textarea"
+                [attr.aria-invalid]="message.invalid && (message.dirty || message.touched)"
+                [attr.aria-describedby]="message.invalid ? 'cf-message-error' : null"></textarea>
+      @if (message.invalid && (message.dirty || message.touched)) {
+        <p id="cf-message-error" class="cf-error">
+          @if (message.errors?.['required']) { El mensaje es obligatorio. }
+          @else if (message.errors?.['minlength']) { Debe tener al menos 3 caracteres. }
+          @else if (message.errors?.['maxlength']) { Máximo 500 caracteres. }
+        </p>
+      }
     </div>
 
-    <button type="submit" class="cf-button">Enviar Mensaje</button>
+    <button type="submit" class="cf-button" [disabled]="contactForm.invalid">
+      Enviar Mensaje
+    </button>
   </form>
 </div>

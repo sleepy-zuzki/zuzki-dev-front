@@ -22,20 +22,7 @@
         </a>
       </address>
 
-      <nav class="flex space-x-4 pt-4" aria-label="Redes sociales">
-        <a href="https://twitch.tv/sleepy_zuzki" target="_blank"
-           class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30">
-          <span class="text-sm font-bold">TW</span>
-        </a>
-        <a href="https://youtube.com/@sleepy_zuzki" target="_blank"
-           class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30">
-          <span class="text-sm font-bold">YT</span>
-        </a>
-        <a href="https://github.com/sleepy-zuzki" target="_blank"
-           class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center hover:bg-white/30">
-          <span class="text-sm font-bold">GH</span>
-        </a>
-      </nav>
+      <app-social-icons [platforms]="['x', 'youtube', 'github']" align="start"></app-social-icons>
     </article>
 
     <app-contact-form></app-contact-form>

@@ -18,15 +18,19 @@
         Hola, soy Zuzki, un Ingeniero de Software apasionado por crear soluciones creativas que transforman ideas en experiencias digitales excepcionales.
       </p>
 
-      <nav class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" aria-label="Acciones principales">
-        <a href="#contacto" class="bg-zuzki-500 text-white px-8 py-3 rounded-lg hover:bg-zuzki-600 duration-300 font-medium inline-flex items-center justify-center">
-          <ng-icon name="featherMail" class="w-5 h-5 mr-2"></ng-icon>
-          Hablemos
-        </a>
-        <a href="/works" class="border-2 border-zuzki-500 text-zuzki-600 px-8 py-3 rounded-lg hover:bg-zuzki-500 hover:text-white duration-300 font-medium inline-flex items-center justify-center">
-          Ver Proyectos
-          <ng-icon name="featherArrowRight" class="w-5 h-5 ml-2"></ng-icon>
-        </a>
+      <nav class="flex flex-col gap-4 lg:justify-start" aria-label="Acciones principales">
+        <div class="flex gap-4">
+          <a href="#contacto" class="bg-zuzki-500 text-white px-8 py-3 rounded-lg hover:bg-zuzki-600 duration-300 font-medium inline-flex items-center justify-center">
+            <ng-icon name="featherMail" class="w-5 h-5 mr-2"></ng-icon>
+            Hablemos
+          </a>
+          <a href="/works" class="border-2 border-zuzki-500 text-zuzki-600 px-8 py-3 rounded-lg hover:bg-zuzki-500 hover:text-white duration-300 font-medium inline-flex items-center justify-center">
+            Ver Proyectos
+            <ng-icon name="featherArrowRight" class="w-5 h-5 ml-2"></ng-icon>
+          </a>
+        </div>
+
+        <app-social-icons [platforms]="['github', 'x', 'youtube']" align="start"></app-social-icons>
       </nav>
     </header>
 
