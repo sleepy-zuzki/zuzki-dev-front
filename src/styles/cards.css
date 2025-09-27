@@ -31,10 +31,6 @@
   @apply hover:shadow-xl hover:-translate-y-0.5;
 }
 
-@utility card-transition {
-  @apply transition-all duration-300;
-}
-
 @utility card-focus {
   @apply focus-brand;
 }

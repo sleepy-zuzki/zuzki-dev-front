@@ -42,14 +42,13 @@
 
 /* Icono */
 .as-icon-container  {
-  @apply w-8 h-8 rounded-lg flex items-center justify-center transition-colors group-hover:scale-110;
+  @apply w-8 h-8 rounded-lg flex items-center justify-center group-hover:scale-110;
   background-color: color-mix(in srgb, var(--as-accent, theme(colors.zuzki.500)) 20%, transparent);
 }
 
 .as-icon {
   @apply w-6 h-5;
   color: var(--as-accent);
-  transition: transform 150ms ease;
 }
 
 /* Tags/tecnologías */
@@ -58,7 +57,7 @@
 }
 .as-tag {
   @apply inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold focus:outline-hidden focus:ring-2 focus:ring-offset-2;
-  @apply border-transparent text-xs transition-colors bg-gray-700 text-gray-300 hover:cursor-default focus:outline-none;
+  @apply border-transparent text-xs bg-gray-700 text-gray-300 hover:cursor-default focus:outline-none;
 }
 
 /* Interacciones individuales (hover/focus) */

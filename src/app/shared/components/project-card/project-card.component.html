@@ -1,4 +1,4 @@
-<article class="group h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-surface-primary/60 flex flex-col focus-within:ring-2 focus-within:ring-ui-accent transition-theme">
+<article class="group h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-surface-primary/60 flex flex-col focus-within:ring-2 focus-within:ring-ui-accent">
   <figure class="relative h-48 md:h-56 lg:h-60 w-full">
     @if (data.imageUrl) {
       <img [src]="data.imageUrl" class="absolute inset-0 w-full h-full object-cover" [alt]="'Imagen del proyecto ' + data.title">
@@ -38,14 +38,14 @@
     <nav class="mt-auto" aria-label="Acciones del proyecto">
       @if (data.url) {
         <a
-          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
+          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
           [href]="data.url" target="_blank" rel="noopener noreferrer"
           [attr.aria-label]="'Ver detalles del proyecto ' + data.title">
           Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
         </a>
       } @else {
         <a
-          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-theme"
+          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
           [routerLink]="['/proyectos']"
           [attr.aria-label]="'Ver detalles del proyecto ' + data.title">
           Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>

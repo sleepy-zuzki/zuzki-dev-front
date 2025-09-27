@@ -2,10 +2,10 @@ import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/c
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-import { TechnologyRepository, CreateTechnologyRequest, UpdateTechnologyRequest } from '../../../../core/domain/repositories/technology.repository.interface';
-import { TechnologyEntity } from '../../../../core/domain/entities/technology/technology.entity';
-import { TechnologyCategory } from '../../../../core/domain/enums/technology-category.enum';
-import { CreateTechnologyDto, UpdateTechnologyDto, TechnologyResponseDto } from '../../../../application/dtos/technology/technology.dto';
+import { TechnologyRepository, CreateTechnologyRequest, UpdateTechnologyRequest } from '@domain/repositories/technology.repository.interface';
+import { TechnologyEntity } from '@core/domain';
+import { TechnologyCategory } from '@core/domain';
+import { CreateTechnologyDto, UpdateTechnologyDto, TechnologyResponseDto } from '@app/application';
 import { ApiConfig } from '../../../config/api.config';
 
 @Injectable({

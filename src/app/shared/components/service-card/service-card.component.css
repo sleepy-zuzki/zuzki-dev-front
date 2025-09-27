@@ -6,7 +6,7 @@
 .card {
   @apply bg-background-default rounded-xl shadow-lg
   border border-background-section/60
-  p-6 md:p-8 transition-all duration-300 min-h-[380px];
+  p-6 md:p-8 duration-300 min-h-[380px];
 }
 
 /* Interacciones por defecto para tarjetas clicables */
@@ -34,7 +34,6 @@
   inset: 0;
   left: -100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transition: left 0.5s;
 }
 
 .card__icon::before,
@@ -80,7 +79,7 @@
 .service-card {
   @apply bg-background-surface rounded-xl shadow-lg
   border border-background-section/60
-  p-6 md:p-8 transition-all duration-300;
+  p-6 md:p-8 duration-300;
 }
 
 .service-card--interactive {

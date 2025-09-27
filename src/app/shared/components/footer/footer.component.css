@@ -18,7 +18,7 @@
 }
 
 .footer-logo {
-  @apply flex items-center justify-center space-x-2 mb-4 hover:opacity-80 transition-opacity;
+  @apply flex items-center justify-center space-x-2 mb-4 hover:opacity-80;
 }
 
 .footer-logo-icon {
@@ -38,11 +38,11 @@
 }
 
 .footer-social-link {
-  @apply text-zuzki-600 hover:text-zuzki-900 transition-colors dark:text-zuzki-400 dark:hover:text-zuzki-100;
+  @apply text-zuzki-600 hover:text-zuzki-900 dark:text-zuzki-400 dark:hover:text-zuzki-100;
 }
 
 .footer-social-icon {
-  @apply w-10 h-10 bg-background-surface rounded-lg flex items-center justify-center transition-colors dark:bg-zuzki-800;
+  @apply w-10 h-10 bg-background-surface rounded-lg flex items-center justify-center dark:bg-zuzki-800;
 }
 
 .footer-copyright {
@@ -53,11 +53,6 @@
   @apply text-sm text-zuzki-600 dark:text-zuzki-500;
 }
 
-/* Social media icons hover animations */
-.social-icon {
-  transition: all 0.3s ease;
-}
-
 .social-icon:hover {
   transform: translateY(-2px);
 }
@@ -66,11 +61,6 @@
 .footer-logo:hover {
   transform: scale(1.05);
   transition: transform 0.2s ease-out;
-}
-
-/* Smooth color transitions for social links */
-.social-link {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Custom hover states for each platform */

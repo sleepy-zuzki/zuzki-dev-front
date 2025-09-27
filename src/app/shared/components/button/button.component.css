@@ -2,8 +2,7 @@
 @reference "../../../../styles/colors.css";
 
 .btn {
-  @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg
-  transition-theme focus-brand select-none hover:cursor-pointer
+  @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg focus-brand select-none hover:cursor-pointer
   disabled:opacity-60 disabled:cursor-not-allowed disabled:shadow-none;
 }
 
