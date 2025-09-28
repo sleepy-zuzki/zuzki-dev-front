@@ -1,0 +1,60 @@
+@reference "tailwindcss";
+@reference "../../../../styles/colors.css";
+
+.login {
+  @apply min-h-[60vh] h-dvh flex items-center justify-center py-12;
+}
+
+.login__card {
+  @apply w-full max-w-md rounded-lg border bg-white shadow p-6;
+}
+
+.login__header {
+  @apply mb-6 text-center;
+}
+.login__title {
+  @apply text-2xl font-semibold text-zuzki-700;
+}
+.login__subtitle {
+  @apply text-sm text-gray-600;
+}
+
+.login__sr {
+  @apply sr-only;
+}
+
+.login__fields {
+  @apply space-y-4;
+}
+
+.login__label {
+  @apply block text-sm font-medium mb-1;
+}
+
+.login__input {
+  @apply w-full rounded-lg border px-3 py-2 outline-none focus:ring focus:ring-zuzki-500;
+}
+
+.login__input[aria-invalid="true"] {
+  @apply border-red-500 ring-1 ring-red-500;
+}
+
+.login__error {
+  @apply mt-1 text-sm text-red-600;
+}
+
+.login__actions {
+  @apply mt-6 flex items-center justify-between gap-3;
+}
+
+.login__submit {
+  @apply inline-flex items-center justify-center rounded-lg bg-zuzki-600 px-4 py-2 text-white transition hover:bg-zuzki-700 focus:outline-none focus:ring focus:ring-zuzki-500;
+}
+
+.login__submit:disabled {
+  @apply opacity-60;
+}
+
+.login__status {
+  @apply text-sm text-red-600;
+}

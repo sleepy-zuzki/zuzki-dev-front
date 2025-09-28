@@ -46,11 +46,11 @@
 }
 
 .card__description {
-  @apply text-gray-600 dark:text-gray-400 mb-4 leading-relaxed;
+  @apply mb-4 leading-relaxed;
 }
 
 .card__list {
-  @apply text-sm text-zuzki-600 dark:text-zuzki-400 space-y-2;
+  @apply text-sm text-zuzki-600 space-y-2;
 }
 
 .card__list-item {
@@ -61,7 +61,6 @@
   @apply w-1 h-1 bg-zuzki-500/60 rounded-full mr-3 flex-shrink-0;
 }
 
-/* Estado de carga (loading) */
 .card.loading,
 .card--loading {
   opacity: 0.7;

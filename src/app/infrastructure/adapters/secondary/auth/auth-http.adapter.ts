@@ -1,6 +1,5 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { AuthRepository, LoginCredentials, LoginResponse, RefreshTokenRequest, LogoutRequest } from '@domain/repositories/auth.repository.interface';
 import { LoginDto, LoginResponseDto, RefreshTokenDto, LogoutDto, LogoutResponseDto } from '@application/dtos/auth/auth.dto';
@@ -40,8 +39,6 @@ export class AuthHttpAdapter extends AuthRepository {
     this.http.post<LoginResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.auth.login),
       loginDto
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (response) => {
         const loginResponse: LoginResponse = {
@@ -77,8 +74,6 @@ export class AuthHttpAdapter extends AuthRepository {
     this.http.post<LoginResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.auth.refresh),
       refreshDto
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (response) => {
         const loginResponse: LoginResponse = {
@@ -114,8 +109,6 @@ export class AuthHttpAdapter extends AuthRepository {
     this.http.post<LogoutResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.auth.logout),
       logoutDto
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         this._currentUser.set(null);

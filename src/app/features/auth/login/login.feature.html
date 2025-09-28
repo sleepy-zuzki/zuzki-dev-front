@@ -1,0 +1,83 @@
+<section class="login">
+  <div class="login__card">
+    <header class="login__header">
+      <h1 class="login__title">Iniciar sesión</h1>
+      <p class="login__subtitle">Accede con tu usuario y contraseña</p>
+    </header>
+
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      novalidate
+      aria-describedby="login-help"
+      class="login__form"
+    >
+      <p id="login-help" class="login__sr">
+        Todos los campos son obligatorios. Usa la tecla Tab para navegar entre campos.
+      </p>
+
+      <div class="login__fields">
+        <div class="login__group">
+          <label for="username" class="login__label">
+            Usuario
+          </label>
+          <input
+            id="username"
+            type="text"
+            class="login__input"
+            formControlName="username"
+            required
+            autocomplete="username"
+            [attr.aria-invalid]="usernameInvalid ? 'true' : 'false'"
+            [attr.aria-describedby]="usernameInvalid ? 'username-error' : null"
+          />
+
+          @if (usernameInvalid) {
+            <p id="username-error" class="login__error">
+              Ingresa un usuario válido (mínimo 3 caracteres).
+            </p>
+          }
+        </div>
+
+        <div class="login__group">
+          <label for="password" class="login__label">
+            Contraseña
+          </label>
+          <input
+            id="password"
+            type="password"
+            class="login__input"
+            formControlName="password"
+            required
+            autocomplete="current-password"
+            [attr.aria-invalid]="passwordInvalid ? 'true' : 'false'"
+            [attr.aria-describedby]="passwordInvalid ? 'password-error' : null"
+          />
+
+          @if (passwordInvalid) {
+            <p id="password-error" class="login__error">
+              Ingresa una contraseña válida (mínimo 6 caracteres).
+            </p>
+          }
+        </div>
+      </div>
+
+      <div class="login__actions">
+        <button
+          type="submit"
+          class="login__submit"
+          [disabled]="form.invalid || loading()"
+          [attr.aria-busy]="loading() ? 'true' : 'false'"
+        >
+          {{ loading() ? 'Ingresando…' : 'Ingresar' }}
+        </button>
+
+        @if (error()) {
+          <span role="status" class="login__status">
+            {{ error() }}
+          </span>
+        }
+      </div>
+    </form>
+  </div>
+</section>
