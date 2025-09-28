@@ -1,16 +1,22 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { ButtonComponent } from '@components/button/button.component';
 
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ButtonComponent],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
+  loading = false;
+
+  constructor(private http: HttpClient) {}
+
   contactData = {
     name: '',
     email: '',
@@ -41,9 +47,21 @@ export class ContactFormComponent {
       this.contactForm.markAllAsTouched();
       return;
     }
-    // Aquí podrías emitir un evento o llamar a un servicio
+
     const payload = this.contactForm.getRawValue();
-    console.info('Contacto enviado:', payload);
-    this.contactForm.reset({ name: '', email: '', message: '' });
+    this.loading = true;
+
+    this.http.post('/contact', payload).subscribe({
+      next: () => {
+        console.info('Contacto enviado:', payload);
+        this.contactForm.reset({ name: '', email: '', message: '' });
+      },
+      error: (error) => {
+        console.error('Error al enviar el contacto:', error);
+      },
+      complete: () => {
+        this.loading = false;
+      }
+    });
   }
 }
