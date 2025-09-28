@@ -18,19 +18,19 @@
              [class.text-zuzki-600]="isActiveRoute('/')">
             Inicio
           </a>
-          <a href="/#sobre-mi"
-             class="header-nav-link">
-            Sobre Mí
-          </a>
           <a href="/#servicios"
              class="header-nav-link">
             Servicios
           </a>
-          <a routerLink="/works"
+          <a href="/#sobre-mi"
+             class="header-nav-link">
+            Sobre Mí
+          </a>
+          <a href="/#proyectos"
              class="header-nav-link"
-             [class.text-zuzki-600]="isActiveRoute('/works')"
-             [class.border-b-2]="isActiveRoute('/works')"
-             [class.border-zuzki-600]="isActiveRoute('/works')">
+             [class.text-zuzki-600]="isActiveRoute('/proyectos')"
+             [class.border-b-2]="isActiveRoute('/proyectos')"
+             [class.border-zuzki-600]="isActiveRoute('/proyectos')">
             Proyectos
           </a>
           <app-button variant="brand" size="sm" type="button" (click)="navigateToContact()">
@@ -79,9 +79,9 @@
            (click)="closeMobileMenu()">
           Servicios
         </a>
-        <a routerLink="/works"
+        <a href="/#proyectos"
            class="header-mobile-nav-link"
-           [class.text-zuzki-600]="isActiveRoute('/works')"
+           [class.text-zuzki-600]="isActiveRoute('/proyectos')"
            (click)="closeMobileMenu()">
           Proyectos
         </a>
