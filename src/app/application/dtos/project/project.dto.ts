@@ -1,26 +1,30 @@
 import { FileResponseDto } from '../file/file.dto';
-import { TechnologyResponseDto } from '../technology/technology.dto';
+import { TechnologyResponseDto } from '@app/application';
 
 export interface CreateProjectDto {
   name: string;
   slug: string;
-  description?: string;
-  longDescription?: string;
-  demoUrl?: string;
-  repositoryUrl?: string;
-  status?: string;
+  description?: string | null;
+  repoUrl?: string | null;
+  liveUrl?: string | null;
+  category?: string | null;
+  year?: number | null;
+  isFeatured?: boolean;
   technologyIds?: number[];
+  previewImageId?: number | null;
 }
 
 export interface UpdateProjectDto {
   name?: string;
   slug?: string;
-  description?: string;
-  longDescription?: string;
-  demoUrl?: string;
-  repositoryUrl?: string;
-  status?: string;
-  technologyIds?: number[];
+  description?: string | null;
+  repoUrl?: string | null;
+  liveUrl?: string | null;
+  category?: string | null;
+  year?: number | null;
+  isFeatured?: boolean;
+  technologyIds?: number[] | null;
+  previewImageId?: number | null;
 }
 
 export interface ProjectResponseDto {
@@ -28,10 +32,12 @@ export interface ProjectResponseDto {
   name: string;
   slug: string;
   description?: string;
-  longDescription?: string;
-  demoUrl?: string;
-  repositoryUrl?: string;
-  status: string;
+  liveUrl?: string | null;
+  repoUrl?: string | null;
+  category?: string | null;
+  year?: number | null;
+  isFeatured?: boolean;
+  previewImageId?: number | null;
   technologies: TechnologyResponseDto[];
   carouselImages: FileResponseDto[];
   createdAt: string;

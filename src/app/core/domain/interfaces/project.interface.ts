@@ -1,16 +1,17 @@
-import { Technology } from './technology.interface';
-import { File } from './file.interface';
-import { ProjectStatus } from '@domain/enums/project-status.enum';
+import { Technology } from '@core/domain';
+import { File } from '@core/domain';
 
 export interface Project {
   id: number;
   name: string;
   slug: string;
   description?: string;
-  longDescription?: string;
-  demoUrl?: string;
-  repositoryUrl?: string;
-  status: ProjectStatus;
+  liveUrl?: string | null;
+  repoUrl?: string | null;
+  category?: string | null;
+  year?: number | null;
+  isFeatured?: boolean;
+  previewImageId?: number | null;
   technologies: Technology[];
   carouselImages: File[];
   createdAt: Date;

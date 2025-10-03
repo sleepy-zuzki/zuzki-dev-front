@@ -1,27 +1,30 @@
 import { Signal } from '@angular/core';
 import { ProjectEntity } from '@core/domain';
-import { ProjectStatus } from '@core/domain';
 
 export interface CreateProjectRequest {
   name: string;
   slug: string;
-  description?: string;
-  longDescription?: string;
-  demoUrl?: string;
-  repositoryUrl?: string;
-  status?: ProjectStatus;
+  description?: string | null;
+  repoUrl?: string | null;
+  liveUrl?: string | null;
+  category?: string | null;
+  year?: number | null;
+  isFeatured?: boolean;
   technologyIds?: number[];
+  previewImageId?: number | null;
 }
 
 export interface UpdateProjectRequest {
   name?: string;
   slug?: string;
-  description?: string;
-  longDescription?: string;
-  demoUrl?: string;
-  repositoryUrl?: string;
-  status?: ProjectStatus;
-  technologyIds?: number[];
+  description?: string | null;
+  repoUrl?: string | null;
+  liveUrl?: string | null;
+  category?: string | null;
+  year?: number | null;
+  isFeatured?: boolean;
+  technologyIds?: number[] | null;
+  previewImageId?: number | null;
 }
 
 export interface AddImageToCarouselRequest {

@@ -1,5 +1,4 @@
 import { Project } from '@core/domain';
-import { ProjectStatus } from '@core/domain';
 import { Technology } from '@core/domain';
 import { File } from '@core/domain';
 
@@ -9,30 +8,24 @@ export class ProjectEntity implements Project {
     public readonly name: string,
     public readonly slug: string,
     public readonly description: string | undefined,
-    public readonly longDescription: string | undefined,
-    public readonly demoUrl: string | undefined,
-    public readonly repositoryUrl: string | undefined,
-    public readonly status: ProjectStatus,
+    public readonly liveUrl: string | undefined,
+    public readonly repoUrl: string | undefined,
+    public readonly category: string | undefined,
+    public readonly year: number | undefined,
+    public readonly isFeatured: boolean | undefined,
+    public readonly previewImageId: number | undefined,
     public readonly technologies: Technology[],
     public readonly carouselImages: File[],
     public readonly createdAt: Date,
     public readonly updatedAt: Date
   ) {}
 
-  isPublished(): boolean {
-    return this.status === ProjectStatus.PUBLISHED;
-  }
-
-  isDraft(): boolean {
-    return this.status === ProjectStatus.DRAFT;
-  }
-
   hasRepository(): boolean {
-    return !!this.repositoryUrl;
+    return !!this.repoUrl;
   }
 
   hasDemo(): boolean {
-    return !!this.demoUrl;
+    return !!this.liveUrl;
   }
 
   getTechnologyNames(): string[] {

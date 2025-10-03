@@ -75,16 +75,17 @@ export class FileHttpAdapter extends FileRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    const formData = new FormData();
-    formData.append('file', request.file);
-
-    if (request.projectId) {
-      formData.append('projectId', request.projectId);
-    }
+    const payload = {
+      url: request.url,
+      provider: request.provider ?? null,
+      mimeType: request.mimeType ?? null,
+      sizeBytes: request.sizeBytes ?? null,
+      projectId: request.projectId ?? null
+    };
 
     this.http.post<FileResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.base),
-      formData
+      payload
     ).pipe(
       takeUntilDestroyed()
     ).subscribe({
@@ -107,10 +108,11 @@ export class FileHttpAdapter extends FileRepository {
     this._error.set(null);
 
     const updateDto: UpdateFileDto = {
-      originalName: request.originalName,
-      alt: request.alt,
-      caption: request.caption,
-      projectId: request.projectId
+      url: request.url,
+      provider: request.provider ?? null,
+      mimeType: request.mimeType ?? null,
+      sizeBytes: request.sizeBytes ?? null,
+      projectId: request.projectId ?? null
     };
 
     this.http.patch<FileResponseDto>(
@@ -157,16 +159,18 @@ export class FileHttpAdapter extends FileRepository {
   }
 
   private mapToFileEntity = (dto: FileResponseDto): FileEntity => {
+    const url = dto.url || '';
+    const filename = url ? url.split('/').pop() || '' : '';
+    const originalName = filename;
+
     return new FileEntity(
       dto.id,
-      dto.originalName,
-      dto.filename,
-      dto.mimeType,
-      dto.size,
-      dto.url,
-      dto.alt,
-      dto.caption,
-      dto.projectId,
+      originalName,
+      filename,
+      dto.mimeType || '',
+      (dto.sizeBytes ?? 0) as number,
+      url,
+      dto.projectId ?? undefined,
       new Date(dto.createdAt),
       new Date(dto.updatedAt)
     );

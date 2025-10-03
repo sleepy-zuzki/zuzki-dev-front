@@ -1,4 +1,4 @@
-import { File } from '../../interfaces/file.interface';
+import { File } from '@core/domain';
 
 export class FileEntity implements File {
   constructor(
@@ -8,8 +8,6 @@ export class FileEntity implements File {
     public readonly mimeType: string,
     public readonly size: number,
     public readonly url: string,
-    public readonly alt: string | undefined,
-    public readonly caption: string | undefined,
     public readonly projectId: number | undefined,
     public readonly createdAt: Date,
     public readonly updatedAt: Date

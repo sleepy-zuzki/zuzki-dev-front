@@ -1,20 +1,18 @@
 export interface UpdateFileDto {
-  originalName?: string;
-  alt?: string;
-  caption?: string;
-  projectId?: number;
+  url?: string;
+  provider?: string | null;
+  mimeType?: string | null;
+  sizeBytes?: number | null;
+  projectId?: number | null;
 }
 
 export interface FileResponseDto {
   id: number;
-  originalName: string;
-  filename: string;
-  mimeType: string;
-  size: number;
   url: string;
-  alt?: string;
-  caption?: string;
-  projectId?: number;
+  provider?: string | null;
+  mimeType?: string | null;
+  sizeBytes?: number | null;
+  projectId?: number | null;
   createdAt: string;
   updatedAt: string;
 }

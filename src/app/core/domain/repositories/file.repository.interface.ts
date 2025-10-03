@@ -1,16 +1,20 @@
 import { Signal } from '@angular/core';
-import { FileEntity } from '../entities/file/file.entity';
+import { FileEntity } from '@core/domain';
 
 export interface UploadFileRequest {
-  file: File;
-  projectId?: string;
+  url: string;
+  provider?: string | null;
+  mimeType?: string | null;
+  sizeBytes?: number | null;
+  projectId?: number | null;
 }
 
 export interface UpdateFileRequest {
-  originalName?: string;
-  alt?: string;
-  caption?: string;
-  projectId?: number;
+  url?: string;
+  provider?: string | null;
+  mimeType?: string | null;
+  sizeBytes?: number | null;
+  projectId?: number | null;
 }
 
 export abstract class FileRepository {

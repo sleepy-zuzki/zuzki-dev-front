@@ -1,11 +1,10 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ProjectRepository, CreateProjectRequest, UpdateProjectRequest, AddImageToCarouselRequest, ReorderCarouselImagesRequest } from '../../../../core/domain/repositories/project.repository.interface';
+import { ProjectRepository, CreateProjectRequest, UpdateProjectRequest, AddImageToCarouselRequest, ReorderCarouselImagesRequest } from '@domain/repositories/project.repository.interface';
 import { ProjectEntity } from '@core/domain';
 import { TechnologyEntity } from '@core/domain';
 import { FileEntity } from '@core/domain';
-import { ProjectStatus } from '@core/domain';
 import { TechnologyCategory } from '@core/domain';
 import { CreateProjectDto, UpdateProjectDto, ProjectResponseDto, AddImageToCarouselDto, ReorderCarouselImagesDto } from '@app/application';
 import { ApiConfig } from '../../../config/api.config';
@@ -77,8 +76,14 @@ export class ProjectHttpAdapter extends ProjectRepository {
     const createDto: CreateProjectDto = {
       name: request.name,
       slug: request.slug,
-      description: request.description,
-      technologyIds: request.technologyIds
+      description: request.description ?? null,
+      repoUrl: request.repoUrl ?? null,
+      liveUrl: request.liveUrl ?? null,
+      category: request.category ?? null,
+      year: request.year ?? null,
+      isFeatured: request.isFeatured,
+      technologyIds: request.technologyIds,
+      previewImageId: request.previewImageId ?? null
     };
 
     this.http.post<ProjectResponseDto>(
@@ -106,8 +111,14 @@ export class ProjectHttpAdapter extends ProjectRepository {
     const updateDto: UpdateProjectDto = {
       name: request.name,
       slug: request.slug,
-      description: request.description,
-      technologyIds: request.technologyIds
+      description: request.description ?? null,
+      repoUrl: request.repoUrl ?? null,
+      liveUrl: request.liveUrl ?? null,
+      category: request.category ?? null,
+      year: request.year ?? null,
+      isFeatured: request.isFeatured,
+      technologyIds: request.technologyIds ?? null,
+      previewImageId: request.previewImageId ?? null
     };
 
     this.http.patch<ProjectResponseDto>(
@@ -232,10 +243,12 @@ export class ProjectHttpAdapter extends ProjectRepository {
       dto.name,
       dto.slug,
       dto.description,
-      dto.longDescription,
-      dto.demoUrl,
-      dto.repositoryUrl,
-      dto.status as ProjectStatus,
+      dto.liveUrl ?? undefined,
+      dto.repoUrl ?? undefined,
+      dto.category ?? undefined,
+      dto.year ?? undefined,
+      dto.isFeatured ?? undefined,
+      dto.previewImageId ?? undefined,
       dto.technologies.map(tech => new TechnologyEntity(
         tech.id,
         tech.name,
@@ -248,19 +261,26 @@ export class ProjectHttpAdapter extends ProjectRepository {
         new Date(tech.createdAt),
         new Date(tech.updatedAt)
       )),
-      dto.carouselImages.map(file => new FileEntity(
-        file.id,
-        file.originalName,
-        file.filename,
-        file.mimeType,
-        file.size,
-        file.url,
-        file.alt,
-        file.caption,
-        file.projectId,
-        new Date(file.createdAt),
-        new Date(file.updatedAt)
-      )),
+      dto.carouselImages.map(file => {
+        const url = (file as any).url || '';
+        const filename = url ? url.split('/').pop() || '' : '';
+        const originalName = filename;
+        const size = (file as any).sizeBytes ?? 0;
+        const mimeType = (file as any).mimeType || '';
+        const projectId = (file as any).projectId ?? undefined;
+
+        return new FileEntity(
+          (file as any).id,
+          originalName,
+          filename,
+          mimeType,
+          size,
+          url,
+          projectId,
+          new Date((file as any).createdAt),
+          new Date((file as any).updatedAt)
+        );
+      }),
       new Date(dto.createdAt),
       new Date(dto.updatedAt)
     );
