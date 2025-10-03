@@ -6,6 +6,8 @@ export const authGuard: CanActivateFn = (): boolean | UrlTree => {
   const auth = inject(AuthHttpAdapter);
   const router = inject(Router);
 
-  // Permite el acceso si está autenticado; si no, redirige a /login
-  return auth.isAuthenticated() ? true : router.parseUrl('/login');
+  // Asegura restauración desde storage y valida expiración del token
+  const hasSession = auth.ensureSession();
+
+  return hasSession ? true : router.parseUrl('/login');
 };

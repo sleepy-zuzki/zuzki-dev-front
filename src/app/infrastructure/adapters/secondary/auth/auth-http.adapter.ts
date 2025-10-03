@@ -20,11 +20,24 @@ export class AuthHttpAdapter extends AuthRepository {
   public readonly error: Signal<string | null> = computed(() => this._error());
   public readonly isAuthenticated: Signal<boolean> = computed(() => this._isAuthenticated());
 
+  // Keys de almacenamiento (solicitado: buscar 'access_token')
+  private readonly ACCESS_TOKEN_KEY = 'access_token';
+  private readonly REFRESH_TOKEN_KEY = 'refresh_token';
+  private readonly USER_KEY = 'auth_user';
+
   constructor(
     private readonly http: HttpClient,
     private readonly apiConfig: ApiConfig
   ) {
     super();
+    // Restaurar sesión desde localStorage (SSR-safe)
+    this.restoreFromStorage();
+  }
+
+  // API pública para garantizar restauración previa a un guard
+  ensureSession(): boolean {
+    this.restoreFromStorage();
+    return this._isAuthenticated();
   }
 
   login(credentials: LoginCredentials): void {
@@ -50,8 +63,18 @@ export class AuthHttpAdapter extends AuthRepository {
             roles: response.user.roles
           }
         };
+        // Validar que el token no esté expirado antes de persistir
+        if (this.isJwtExpired(loginResponse.accessToken)) {
+          this._error.set('El token recibido ya expiró');
+          this._currentUser.set(null);
+          this._isAuthenticated.set(false);
+          this._loading.set(false);
+          this.clearStorage();
+          return;
+        }
         this._currentUser.set(loginResponse);
         this._isAuthenticated.set(true);
+        this.writeToStorage(loginResponse);
         this._loading.set(false);
       },
       error: (error) => {
@@ -85,8 +108,17 @@ export class AuthHttpAdapter extends AuthRepository {
             roles: response.user.roles
           }
         };
+        if (this.isJwtExpired(loginResponse.accessToken)) {
+          this._error.set('La sesión expiró');
+          this._currentUser.set(null);
+          this._isAuthenticated.set(false);
+          this._loading.set(false);
+          this.clearStorage();
+          return;
+        }
         this._currentUser.set(loginResponse);
         this._isAuthenticated.set(true);
+        this.writeToStorage(loginResponse);
         this._loading.set(false);
       },
       error: (error) => {
@@ -114,11 +146,110 @@ export class AuthHttpAdapter extends AuthRepository {
         this._currentUser.set(null);
         this._isAuthenticated.set(false);
         this._loading.set(false);
+        this.clearStorage();
       },
       error: (error) => {
         this._error.set(error.message || 'Error al cerrar sesión');
         this._loading.set(false);
       }
     });
+  }
+
+  // ---------- Helpers de almacenamiento y JWT ----------
+
+  private getStorage(): Storage | null {
+    try {
+      if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+        return window.localStorage;
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  }
+
+  private writeToStorage(session: LoginResponse): void {
+    const storage = this.getStorage();
+    if (!storage) return;
+    try {
+      storage.setItem(this.ACCESS_TOKEN_KEY, session.accessToken);
+      storage.setItem(this.REFRESH_TOKEN_KEY, session.refreshToken);
+      storage.setItem(this.USER_KEY, JSON.stringify(session.user));
+    } catch {
+      // Ignorar errores de cuota o denegación
+    }
+  }
+
+  private clearStorage(): void {
+    const storage = this.getStorage();
+    if (!storage) return;
+    try {
+      storage.removeItem(this.ACCESS_TOKEN_KEY);
+      storage.removeItem(this.REFRESH_TOKEN_KEY);
+      storage.removeItem(this.USER_KEY);
+    } catch {
+      // Ignorar
+    }
+  }
+
+  private restoreFromStorage(): void {
+    const storage = this.getStorage();
+    if (!storage) return;
+
+    const accessToken = storage.getItem(this.ACCESS_TOKEN_KEY);
+    const refreshToken = storage.getItem(this.REFRESH_TOKEN_KEY);
+    const userRaw = storage.getItem(this.USER_KEY);
+
+    if (!accessToken || !userRaw) {
+      this._isAuthenticated.set(false);
+      this._currentUser.set(null);
+      return;
+    }
+
+    if (this.isJwtExpired(accessToken)) {
+      this._isAuthenticated.set(false);
+      this._currentUser.set(null);
+      // Limpia tokens expirados
+      this.clearStorage();
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userRaw) as LoginResponse['user'];
+      const loginResponse: LoginResponse = { accessToken, refreshToken: refreshToken || '', user };
+      this._currentUser.set(loginResponse);
+      this._isAuthenticated.set(true);
+    } catch {
+      this._isAuthenticated.set(false);
+      this._currentUser.set(null);
+      this.clearStorage();
+    }
+  }
+
+  private decodeJwtPayload<T = any>(token: string): T | null {
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) return null;
+      const base64 = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(jsonPayload) as T;
+    } catch {
+      return null;
+    }
+  }
+
+  private isJwtExpired(token: string): boolean {
+    const payload = this.decodeJwtPayload<{ exp?: number }>(token);
+    if (!payload || !payload.exp) {
+      // Si no hay 'exp', por seguridad lo consideramos expirado
+      return true;
+    }
+    const nowInSeconds = Math.floor(Date.now() / 1000);
+    return payload.exp <= nowInSeconds;
   }
 }

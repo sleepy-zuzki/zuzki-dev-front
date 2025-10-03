@@ -32,6 +32,12 @@ export const routes: Routes = [
     loadComponent: () => import('@pages/dashboard.page').then(m => m.DashboardPage)
   },
   {
+    path: 'dashboard/projects',
+    title: 'Proyectos - Dashboard',
+    canActivate: [authGuard],
+    loadComponent: () => import('@pages/projects-admin.page').then(m => m.ProjectsAdminPage)
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'
