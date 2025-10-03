@@ -2,7 +2,7 @@
 @reference "../../../../styles/colors.css";
 
 .login {
-  @apply min-h-[60vh] h-dvh flex items-center justify-center py-12;
+  @apply min-h-[60vh] h-dvh flex items-center justify-center;
 }
 
 .login__card {
@@ -12,9 +12,11 @@
 .login__header {
   @apply mb-6 text-center;
 }
+
 .login__title {
   @apply text-2xl font-semibold text-zuzki-700;
 }
+
 .login__subtitle {
   @apply text-sm text-gray-600;
 }
