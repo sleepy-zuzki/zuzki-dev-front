@@ -1,6 +1,5 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { ProjectRepository, CreateProjectRequest, UpdateProjectRequest, AddImageToCarouselRequest, ReorderCarouselImagesRequest } from '../../../../core/domain/repositories/project.repository.interface';
 import { ProjectEntity } from '@core/domain';
@@ -39,8 +38,6 @@ export class ProjectHttpAdapter extends ProjectRepository {
 
     this.http.get<ProjectResponseDto[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base)
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (projects) => {
         const mappedProjects = projects.map(this.mapToProjectEntity);
@@ -60,8 +57,6 @@ export class ProjectHttpAdapter extends ProjectRepository {
 
     this.http.get<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.bySlug(slug))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (project) => {
         const mappedProject = this.mapToProjectEntity(project);
@@ -83,18 +78,12 @@ export class ProjectHttpAdapter extends ProjectRepository {
       name: request.name,
       slug: request.slug,
       description: request.description,
-      longDescription: request.longDescription,
-      demoUrl: request.demoUrl,
-      repositoryUrl: request.repositoryUrl,
-      status: request.status,
       technologyIds: request.technologyIds
     };
 
     this.http.post<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base),
       createDto
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (project) => {
         const mappedProject = this.mapToProjectEntity(project);
@@ -118,18 +107,12 @@ export class ProjectHttpAdapter extends ProjectRepository {
       name: request.name,
       slug: request.slug,
       description: request.description,
-      longDescription: request.longDescription,
-      demoUrl: request.demoUrl,
-      repositoryUrl: request.repositoryUrl,
-      status: request.status,
       technologyIds: request.technologyIds
     };
 
     this.http.patch<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id)),
       updateDto
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (project) => {
         const mappedProject = this.mapToProjectEntity(project);
@@ -152,8 +135,6 @@ export class ProjectHttpAdapter extends ProjectRepository {
 
     this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         const currentProjects = this._projects();
@@ -180,8 +161,6 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this.http.post<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
       addImageDto
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         // Recargar el proyecto actual para obtener las imágenes actualizadas
@@ -204,8 +183,6 @@ export class ProjectHttpAdapter extends ProjectRepository {
 
     this.http.delete<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.removeImage(projectId, fileId))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         // Recargar el proyecto actual para obtener las imágenes actualizadas
@@ -233,8 +210,6 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this.http.patch<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
       reorderDto
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         // Recargar el proyecto actual para obtener las imágenes actualizadas

@@ -6,10 +6,11 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { provideCloudflareLoader } from '@angular/common';
+import { authTokenInterceptor } from './infrastructure/interceptors/auth-token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withFetch(), withInterceptors([])),
+    provideHttpClient(withFetch(), withInterceptors([authTokenInterceptor])),
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
