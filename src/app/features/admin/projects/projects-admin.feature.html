@@ -1,0 +1,175 @@
+<main id="projects-admin" aria-label="Gestión de Proyectos" class="min-h-[60vh] p-6">
+  <header class="mb-6">
+    <app-typography-title [level]="1" variant="page">
+      Gestión de Proyectos
+    </app-typography-title>
+    <app-typography-text variant="muted">
+      Aquí podrás crear y editar la información de los proyectos.
+    </app-typography-text>
+  </header>
+
+  <section aria-label="Crear nuevo proyecto" class="mb-10">
+    <app-typography-title [level]="2" variant="section">Crear nuevo proyecto</app-typography-title>
+
+    <form [formGroup]="form" (ngSubmit)="onCreate()" class="mt-4 grid gap-4 md:grid-cols-2" novalidate>
+      <div class="md:col-span-1">
+        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nombre</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="Mi proyecto"
+          aria-describedby="name-error"
+        />
+        @if (f.name.invalid && (f.name.dirty || f.name.touched)) {
+          <p id="name-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Nombre requerido (mínimo 3 caracteres)</p>
+        }
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Slug</label>
+        <input
+          id="slug"
+          type="text"
+          formControlName="slug"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="mi-proyecto"
+          aria-describedby="slug-error"
+        />
+        @if (f.slug.invalid && (f.slug.dirty || f.slug.touched)) {
+          <p id="slug-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Slug requerido (kebab-case)</p>
+        }
+      </div>
+
+      <div class="md:col-span-2">
+        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Descripción corta</label>
+        <textarea
+          id="description"
+          rows="3"
+          formControlName="description"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="Resumen del proyecto"
+          aria-describedby="description-error"
+        ></textarea>
+        @if (f.description.invalid && (f.description.dirty || f.description.touched)) {
+          <p id="description-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Descripción requerida (mínimo 10 caracteres)</p>
+        }
+      </div>
+
+      <div class="md:col-span-2">
+        <label for="longDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Descripción larga</label>
+        <textarea
+          id="longDescription"
+          rows="4"
+          formControlName="longDescription"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="Detalles del proyecto"
+        ></textarea>
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="demoUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Demo URL</label>
+        <input
+          id="demoUrl"
+          type="url"
+          formControlName="demoUrl"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="https://demo.ejemplo.com"
+          aria-describedby="demoUrl-error"
+        />
+        @if (f.demoUrl.invalid && (f.demoUrl.dirty || f.demoUrl.touched)) {
+          <p id="demoUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida</p>
+        }
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="repositoryUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Repositorio URL</label>
+        <input
+          id="repositoryUrl"
+          type="url"
+          formControlName="repositoryUrl"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="https://github.com/usuario/repo"
+          aria-describedby="repositoryUrl-error"
+        />
+        @if (f.repositoryUrl.invalid && (f.repositoryUrl.dirty || f.repositoryUrl.touched)) {
+          <p id="repositoryUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida</p>
+        }
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Estado</label>
+        <input
+          id="status"
+          type="text"
+          formControlName="status"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="p.ej., draft, active, published"
+          aria-describedby="status-error"
+        />
+        @if (f.status.invalid && (f.status.dirty || f.status.touched)) {
+          <p id="status-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Estado requerido</p>
+        }
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="technologyIds" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Tecnologías (IDs)</label>
+        <input
+          id="technologyIds"
+          type="text"
+          formControlName="technologyIds"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="1, 2, 3"
+        />
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">IDs separados por coma (opcional)</p>
+      </div>
+
+      <div class="md:col-span-2">
+        <button
+          type="submit"
+          [disabled]="form.invalid || loading()"
+          class="inline-flex items-center rounded-md bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 transition"
+          aria-label="Crear proyecto"
+        >
+          Crear proyecto
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section aria-label="Listado de proyectos" class="space-y-4">
+    @if (loading()) {
+      <app-typography-text variant="muted">Cargando proyectos…</app-typography-text>
+    } @else if (error()) {
+      <div role="alert" class="rounded-md border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/30 p-4">
+        <app-typography-text class="block text-red-800 dark:text-red-300">{{ error() }}</app-typography-text>
+        <button
+          type="button"
+          (click)="reload()"
+          class="mt-2 inline-flex items-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 transition"
+          aria-label="Reintentar cargar proyectos"
+        >
+          Reintentar
+        </button>
+      </div>
+    } @else if (projects().length === 0) {
+      <app-typography-text>No hay proyectos aún.</app-typography-text>
+    } @else {
+      <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-800">
+        @for (p of projects(); track p.id) {
+          <li class="py-4 flex items-start justify-between">
+            <div class="min-w-0 pr-4">
+              <app-typography-title [level]="3" variant="subsection">{{ p.name }}</app-typography-title>
+              <app-typography-text variant="muted">{{ p.description }}</app-typography-text>
+            </div>
+            <span class="shrink-0 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium
+                         bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+              {{ p.status }}
+            </span>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</main>

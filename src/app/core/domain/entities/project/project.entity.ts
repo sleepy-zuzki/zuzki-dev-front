@@ -1,7 +1,7 @@
-import { Project } from '../../interfaces/project.interface';
-import { ProjectStatus } from '../../enums/project-status.enum';
-import { Technology } from '../../interfaces/technology.interface';
-import { File } from '../../interfaces/file.interface';
+import { Project } from '@core/domain';
+import { ProjectStatus } from '@core/domain';
+import { Technology } from '@core/domain';
+import { File } from '@core/domain';
 
 export class ProjectEntity implements Project {
   constructor(

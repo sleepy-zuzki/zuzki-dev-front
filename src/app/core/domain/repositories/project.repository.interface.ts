@@ -1,6 +1,6 @@
 import { Signal } from '@angular/core';
-import { ProjectEntity } from '../entities/project/project.entity';
-import { ProjectStatus } from '../enums/project-status.enum';
+import { ProjectEntity } from '@core/domain';
+import { ProjectStatus } from '@core/domain';
 
 export interface CreateProjectRequest {
   name: string;
