@@ -1,13 +1,14 @@
 import { FormControl } from '@angular/forms';
-import { ProjectStatus } from '@core/domain';
 
 export type CreateProjectForm = {
   name: FormControl<string>;
   slug: FormControl<string>;
-  description: FormControl<string>;
-  longDescription: FormControl<string>;
-  demoUrl: FormControl<string>;
-  repositoryUrl: FormControl<string>;
-  status: FormControl<ProjectStatus | ''>;
+  description: FormControl<string | null>;
+  repoUrl: FormControl<string | null>;
+  liveUrl: FormControl<string | null>;
+  category: FormControl<string | null>;
+  year: FormControl<number | null>;
+  isFeatured: FormControl<boolean>;
   technologyIds: FormControl<string>;
+  previewImageId: FormControl<number | null>;
 };

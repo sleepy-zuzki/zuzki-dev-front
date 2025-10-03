@@ -4,7 +4,6 @@ import { TypographyTitleComponent } from '@shared/components/typography/title.co
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { ProjectHttpAdapter } from '@infrastructure/adapters/secondary/project/project-http.adapter';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProjectStatus } from '@core/domain';
 import { CreateProjectForm } from './projects-admin.types';
 
 @Component({
@@ -23,14 +22,16 @@ export class ProjectsAdminFeatureComponent {
   error = this.projectAdapter.error;
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(3)]],
-    slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)]],
-    description: ['', [Validators.required, Validators.minLength(10)]],
-    longDescription: [''],
-    demoUrl: ['', [Validators.pattern(/^https?:\/\/.+/i)]],
-    repositoryUrl: ['', [Validators.pattern(/^https?:\/\/.+/i)]],
-    status: this.fb.control<ProjectStatus | ''>('', [Validators.required]),
-    technologyIds: [''],
+    name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+    slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
+    description: this.fb.control<string | null>(null, [Validators.maxLength(1000)]),
+    repoUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
+    liveUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
+    category: this.fb.control<string | null>(null),
+    year: this.fb.control<number | null>(null, [Validators.min(1900), Validators.max(2100)]),
+    isFeatured: this.fb.control<boolean>(false),
+    technologyIds: this.fb.control<string>(''),
+    previewImageId: this.fb.control<number | null>(null, [Validators.min(1)]),
   });
 
   constructor() {
@@ -49,25 +50,21 @@ export class ProjectsAdminFeatureComponent {
     const raw = this.form.getRawValue();
     const technologyIds = this.parseIds(raw.technologyIds);
 
-    if (!raw.status) {
-      // This case should be handled by the form validation,
-      // but this check provides an extra layer of safety.
-      return;
-    }
-
     this.projectAdapter.createProject({
       name: raw.name,
       slug: raw.slug,
-      description: raw.description,
-      longDescription: raw.longDescription || '',
-      demoUrl: raw.demoUrl || '',
-      repositoryUrl: raw.repositoryUrl || '',
-      status: raw.status,
+      description: raw.description ?? null,
+      repoUrl: raw.repoUrl ?? null,
+      liveUrl: raw.liveUrl ?? null,
+      category: raw.category ?? null,
+      year: this.parseNumber(raw.year),
+      isFeatured: !!raw.isFeatured,
       technologyIds,
+      previewImageId: this.parseNumber(raw.previewImageId),
     });
 
-    // Opcional: reset parcial sin perder status habitual
-    // this.form.reset({ status: raw.status }, { emitEvent: false });
+    // Opcional: reset parcial conservando algunos valores
+    // this.form.reset({ isFeatured: raw.isFeatured }, { emitEvent: false });
   }
 
   private parseIds(input: string | null | undefined): number[] {
@@ -76,6 +73,15 @@ export class ProjectsAdminFeatureComponent {
       .split(',')
       .map(s => parseInt(s.trim(), 10))
       .filter(n => Number.isFinite(n));
+  }
+
+  private parseNumber(value: number | string | null | undefined): number | null {
+    if (typeof value === 'number') {
+      return Number.isFinite(value) ? value : null;
+    }
+    if (value === null || value === undefined) return null;
+    const n = parseInt(String(value).trim(), 10);
+    return Number.isFinite(n) ? n : null;
   }
 
   // Helpers de template

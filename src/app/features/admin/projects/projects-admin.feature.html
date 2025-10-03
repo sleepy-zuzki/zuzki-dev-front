@@ -23,7 +23,7 @@
           aria-describedby="name-error"
         />
         @if (f.name.invalid && (f.name.dirty || f.name.touched)) {
-          <p id="name-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Nombre requerido (mínimo 3 caracteres)</p>
+          <p id="name-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Nombre requerido (2-150 caracteres)</p>
         }
       </div>
 
@@ -38,78 +38,103 @@
           aria-describedby="slug-error"
         />
         @if (f.slug.invalid && (f.slug.dirty || f.slug.touched)) {
-          <p id="slug-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Slug requerido (kebab-case)</p>
+          <p id="slug-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Slug requerido (kebab-case, 2-160)</p>
         }
       </div>
 
       <div class="md:col-span-2">
-        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Descripción corta</label>
+        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Descripción (opcional)</label>
         <textarea
           id="description"
           rows="3"
           formControlName="description"
           class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="Resumen del proyecto"
+          placeholder="Resumen del proyecto (máx. 1000)"
           aria-describedby="description-error"
         ></textarea>
         @if (f.description.invalid && (f.description.dirty || f.description.touched)) {
-          <p id="description-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Descripción requerida (mínimo 10 caracteres)</p>
+          <p id="description-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Máximo 1000 caracteres</p>
         }
       </div>
 
-      <div class="md:col-span-2">
-        <label for="longDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Descripción larga</label>
-        <textarea
-          id="longDescription"
-          rows="4"
-          formControlName="longDescription"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="Detalles del proyecto"
-        ></textarea>
-      </div>
-
       <div class="md:col-span-1">
-        <label for="demoUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Demo URL</label>
+        <label for="liveUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Live URL (opcional)</label>
         <input
-          id="demoUrl"
+          id="liveUrl"
           type="url"
-          formControlName="demoUrl"
+          formControlName="liveUrl"
           class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
           placeholder="https://demo.ejemplo.com"
-          aria-describedby="demoUrl-error"
+          aria-describedby="liveUrl-error"
         />
-        @if (f.demoUrl.invalid && (f.demoUrl.dirty || f.demoUrl.touched)) {
-          <p id="demoUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida</p>
+        @if (f.liveUrl.invalid && (f.liveUrl.dirty || f.liveUrl.touched)) {
+          <p id="liveUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida (http/https)</p>
         }
       </div>
 
       <div class="md:col-span-1">
-        <label for="repositoryUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Repositorio URL</label>
+        <label for="repoUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Repo URL (opcional)</label>
         <input
-          id="repositoryUrl"
+          id="repoUrl"
           type="url"
-          formControlName="repositoryUrl"
+          formControlName="repoUrl"
           class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
           placeholder="https://github.com/usuario/repo"
-          aria-describedby="repositoryUrl-error"
+          aria-describedby="repoUrl-error"
         />
-        @if (f.repositoryUrl.invalid && (f.repositoryUrl.dirty || f.repositoryUrl.touched)) {
-          <p id="repositoryUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida</p>
+        @if (f.repoUrl.invalid && (f.repoUrl.dirty || f.repoUrl.touched)) {
+          <p id="repoUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida (http/https)</p>
         }
       </div>
 
       <div class="md:col-span-1">
-        <label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Estado</label>
+        <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Categoría (opcional)</label>
         <input
-          id="status"
+          id="category"
           type="text"
-          formControlName="status"
+          formControlName="category"
           class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="p.ej., draft, active, published"
-          aria-describedby="status-error"
+          placeholder="web, mobile, etc."
         />
-        @if (f.status.invalid && (f.status.dirty || f.status.touched)) {
-          <p id="status-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Estado requerido</p>
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="year" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Año (opcional)</label>
+        <input
+          id="year"
+          type="number"
+          min="1900"
+          max="2100"
+          formControlName="year"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="2024"
+          aria-describedby="year-error"
+        />
+        @if (f.year.invalid && (f.year.dirty || f.year.touched)) {
+          <p id="year-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Entre 1900 y 2100</p>
+        }
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="isFeatured" class="inline-flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-200">
+          <input id="isFeatured" type="checkbox" formControlName="isFeatured" class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400" />
+          Destacado
+        </label>
+      </div>
+
+      <div class="md:col-span-1">
+        <label for="previewImageId" class="block text-sm font-medium text-gray-700 dark:text-gray-200">ID imagen previa (opcional)</label>
+        <input
+          id="previewImageId"
+          type="number"
+          min="1"
+          formControlName="previewImageId"
+          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+          placeholder="Ej: 12"
+          aria-describedby="previewImageId-error"
+        />
+        @if (f.previewImageId.invalid && (f.previewImageId.dirty || f.previewImageId.touched)) {
+          <p id="previewImageId-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Debe ser un entero >= 1</p>
         }
       </div>
 
@@ -163,10 +188,18 @@
               <app-typography-title [level]="3" variant="subsection">{{ p.name }}</app-typography-title>
               <app-typography-text variant="muted">{{ p.description }}</app-typography-text>
             </div>
-            <span class="shrink-0 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium
-                         bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
-              {{ p.status }}
-            </span>
+            <div class="shrink-0 flex items-center gap-2">
+              @if (p.isFeatured) {
+                <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+                  Destacado
+                </span>
+              }
+              @if (p.category) {
+                <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
+                  {{ p.category }}
+                </span>
+              }
+            </div>
           </li>
         }
       </ul>
