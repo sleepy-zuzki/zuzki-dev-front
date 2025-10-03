@@ -25,7 +25,7 @@ export class LoginFeatureComponent {
     // Redirige cuando la autenticación se completa correctamente
     effect(() => {
       if (this.auth.isAuthenticated()) {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/dashboard');
       }
     });
   }
