@@ -5,11 +5,12 @@ import { TypographyTextComponent } from '@shared/components/typography/text.comp
 import { ProjectHttpAdapter } from '@infrastructure/adapters/secondary/project/project-http.adapter';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateProjectForm } from './projects-admin.types';
+import { ProjectCardComponent } from '@components/project-card/project-card.component';
 
 @Component({
   standalone: true,
   selector: 'app-projects-admin-feature',
-  imports: [CommonModule, ReactiveFormsModule, TypographyTitleComponent, TypographyTextComponent],
+  imports: [CommonModule, ReactiveFormsModule, TypographyTitleComponent, TypographyTextComponent, ProjectCardComponent],
   templateUrl: './projects-admin.feature.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

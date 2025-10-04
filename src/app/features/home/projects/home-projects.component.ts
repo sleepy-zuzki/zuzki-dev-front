@@ -3,15 +3,7 @@ import { RouterModule } from '@angular/router';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-
-export interface Project {
-  id: string | number;
-  title: string;
-  description: string;
-  tags: string[];
-  category?: string;
-  url?: string;
-}
+import { ProjectEntity } from '@core/domain';
 
 @Component({
   selector: 'app-home-projects',
@@ -23,9 +15,9 @@ export interface Project {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeProjectsComponent {
-  @Input({ required: true }) projects: Project[] = [];
+  @Input({ required: true }) projects: ProjectEntity[] = [];
 
-  get featuredProjects(): Project[] {
+  get featuredProjects(): ProjectEntity[] {
     return (this.projects ?? []).slice(0, 4);
   }
 

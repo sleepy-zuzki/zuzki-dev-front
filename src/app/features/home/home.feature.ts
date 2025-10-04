@@ -10,7 +10,8 @@ import { HomeHeroComponent } from '@features/home/hero/home-hero.component';
 import { HomeAboutComponent } from '@features/home/about/home-about.component';
 import { HomeServicesComponent } from '@features/home/services/home-services.component';
 import { HomeContactComponent } from '@features/home/contact/home-contact.component';
-import { HomeProjectsComponent, Project } from '@features/home/projects/home-projects.component';
+import { HomeProjectsComponent } from '@features/home/projects/home-projects.component';
+import { ProjectEntity } from '@core/domain';
 
 @Component({
   selector: 'app-home-feature',
@@ -121,50 +122,7 @@ export class HomeFeatureComponent implements AfterViewInit, OnDestroy {
     }
   ];
 
-  projects: Project[] = [
-    {
-      id: 1,
-      title: 'Stream Overlay Animado',
-      description: 'Overlay personalizado con animaciones y eventos en tiempo real.',
-      tags: ['HTML/CSS', 'JavaScript', 'OBS'],
-      category: 'Overlay'
-    },
-    {
-      id: 2,
-      title: 'Dashboard de Analytics',
-      description: 'App para visualizar estadísticas de streaming en tiempo real.',
-      tags: ['Angular', 'TypeScript', 'Chart.js'],
-      category: 'Web App'
-    },
-    {
-      id: 3,
-      title: 'Chat Command Bot',
-      description: 'Bot para gestión de comandos de chat con moderación automática.',
-      tags: ['Node.js', 'WebSocket', 'Twitch API'],
-      category: 'Widget'
-    },
-    {
-      id: 4,
-      title: 'Landing de Producto',
-      description: 'Landing optimizada para SEO y performance.',
-      tags: ['Angular', 'TailwindCSS'],
-      category: 'Web'
-    },
-    {
-      id: 5,
-      title: 'Generador de Clips',
-      description: 'Herramienta para crear clips automáticos a partir de streams.',
-      tags: ['FFmpeg', 'Cloudflare Workers'],
-      category: 'Herramientas'
-    },
-    {
-      id: 6,
-      title: 'Widget de Alertas',
-      description: 'Widget personalizable para alertas de donaciones y follows.',
-      tags: ['Web Components', 'CSS Animations'],
-      category: 'Widget'
-    }
-  ];
+  projects: ProjectEntity[] = [];
 
   private jsonLdScripts: HTMLScriptElement[] = [];
 

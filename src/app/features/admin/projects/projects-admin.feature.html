@@ -181,26 +181,9 @@
     } @else if (projects().length === 0) {
       <app-typography-text>No hay proyectos aún.</app-typography-text>
     } @else {
-      <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-800">
+      <ul role="list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 divide-y divide-gray-200 dark:divide-gray-800">
         @for (p of projects(); track p.id) {
-          <li class="py-4 flex items-start justify-between">
-            <div class="min-w-0 pr-4">
-              <app-typography-title [level]="3" variant="subsection">{{ p.name }}</app-typography-title>
-              <app-typography-text variant="muted">{{ p.description }}</app-typography-text>
-            </div>
-            <div class="shrink-0 flex items-center gap-2">
-              @if (p.isFeatured) {
-                <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
-                  Destacado
-                </span>
-              }
-              @if (p.category) {
-                <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200">
-                  {{ p.category }}
-                </span>
-              }
-            </div>
-          </li>
+          <app-project-card [project]="p"></app-project-card>
         }
       </ul>
     }

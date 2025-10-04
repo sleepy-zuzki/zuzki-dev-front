@@ -7,7 +7,7 @@
   <ul role="list" class="hp-grid">
     @for (project of featuredProjects; track project.id) {
       <li>
-        <app-project-card [data]="project"></app-project-card>
+        <app-project-card [project]="project"></app-project-card>
       </li>
     }
   </ul>
