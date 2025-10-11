@@ -36,21 +36,84 @@
     <app-tags-list [tags]="tags"></app-tags-list>
 
     <nav class="mt-auto" aria-label="Acciones del proyecto">
-      @if (actionUrl) {
-        <a
-          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
-          [href]="actionUrl" target="_blank" rel="noopener noreferrer"
-          [attr.aria-label]="'Ver detalles del proyecto ' + project.name">
-          Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
-        </a>
-      } @else {
-        <a
-          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
-          [routerLink]="['/proyectos']"
-          [attr.aria-label]="'Ver detalles del proyecto ' + project.name">
-          Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
-        </a>
-      }
+      <button
+        type="button"
+        (click)="openModal(projectModal)"
+        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
+        [attr.aria-label]="'Ver detalles del proyecto ' + project.name">
+        Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
+      </button>
     </nav>
   </div>
 </article>
+
+<dialog #projectModal class="p-0 rounded-2xl shadow-xl bg-surface-primary text-on-surface backdrop:bg-black/50 backdrop:backdrop-blur-sm max-w-4xl w-full">
+  <div class="relative">
+    <header class="p-4 flex items-center justify-between border-b border-black/10 dark:border-white/10 sticky top-0 bg-surface-primary z-10">
+        <app-typography-title [level]="2" variant="section">{{ project.name }}</app-typography-title>
+        <button (click)="projectModal.close()" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10" aria-label="Cerrar modal">
+            <ng-icon name="bootstrapX" size="24"></ng-icon>
+        </button>
+    </header>
+
+    <section class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Carousel -->
+      <div class="w-full">
+        @if (project.carouselImages && project.carouselImages.length > 0) {
+          <div class="relative w-full h-80 rounded-lg overflow-hidden shadow-lg bg-black/10">
+            @for (image of project.carouselImages; track image.id; let i = $index) {
+              <img [src]="image.url" [alt]="'Imagen ' + (i + 1) + ' del proyecto ' + project.name" class="absolute w-full h-full object-cover transition-opacity duration-300 ease-in-out" [class.opacity-100]="i === currentImageIndex" [class.opacity-0]="i !== currentImageIndex">
+            }
+
+            @if (project.carouselImages.length > 1) {
+              <button (click)="prevImage()" class="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 text-white hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-colors" aria-label="Imagen anterior">
+                <ng-icon name="bootstrapChevronLeft"></ng-icon>
+              </button>
+              <button (click)="nextImage()" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/40 text-white hover:bg-black/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent transition-colors" aria-label="Siguiente imagen">
+                <ng-icon name="bootstrapChevronRight"></ng-icon>
+              </button>
+            }
+          </div>
+        } @else {
+          <div class="w-full h-80 rounded-lg bg-gradient-to-br from-zuzki-400 to-zuzki-600 flex items-center justify-center">
+            <p class="text-white">No hay imágenes disponibles</p>
+          </div>
+        }
+      </div>
+
+      <!-- Project Info -->
+      <div class="flex flex-col gap-4">
+        <div>
+          <div class="flex items-center gap-4 text-sm text-on-surface-variant">
+            @if (project.year) {
+              <span>{{ project.year }}</span>
+            }
+            @if (project.category) {
+              <span class="px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/10">{{ project.category }}</span>
+            }
+          </div>
+        </div>
+
+        <app-typography-text as="p">{{ project.description }}</app-typography-text>
+
+        <div>
+            <app-typography-title as="h3" class="font-semibold mb-2">Tecnologías</app-typography-title>
+            <app-tags-list [tags]="tags"></app-tags-list>
+        </div>
+
+        <footer class="mt-auto flex gap-4">
+            @if (project.liveUrl) {
+                <a [href]="project.liveUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600">
+                    Ver Demo <ng-icon name="bootstrapArrowUpRight"></ng-icon>
+                </a>
+            }
+            @if (project.repoUrl) {
+                <a [href]="project.repoUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-gray-700 text-white hover:bg-gray-800">
+                    Repositorio <ng-icon name="bootstrapGithub"></ng-icon>
+                </a>
+            }
+        </footer>
+      </div>
+    </section>
+  </div>
+</dialog>

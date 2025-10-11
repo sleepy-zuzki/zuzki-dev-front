@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { ProjectHttpAdapter } from '@infrastructure/adapters/secondary/project/project-http.adapter';
+import { TechnologyHttpAdapter } from '@infrastructure/adapters/secondary/technology/technology-http.adapter';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateProjectForm } from './projects-admin.types';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
@@ -16,6 +17,7 @@ import { ProjectCardComponent } from '@components/project-card/project-card.comp
 })
 export class ProjectsAdminFeatureComponent {
   private projectAdapter = inject(ProjectHttpAdapter);
+  private techsAdapter = inject(TechnologyHttpAdapter);
   private fb = inject(NonNullableFormBuilder);
 
   projects = this.projectAdapter.projects;
@@ -37,10 +39,12 @@ export class ProjectsAdminFeatureComponent {
 
   constructor() {
     this.projectAdapter.getProjects();
+    this.techsAdapter.getTechnologies();
   }
 
   reload(): void {
     this.projectAdapter.getProjects();
+    this.techsAdapter.getTechnologies();
   }
 
   onCreate(): void {
