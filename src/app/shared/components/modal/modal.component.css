@@ -1,0 +1,42 @@
+@reference "tailwindcss";
+@reference "../../../../styles/colors.css";
+
+dialog {
+  @apply bg-white dark:bg-coffee;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+  width: 500px;
+  max-width: 90%;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+  }
+}
+
+.modal-header {
+  @apply text-xl font-bold text-black dark:text-white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
