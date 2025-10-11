@@ -1,7 +1,3 @@
----
-apply: always
----
-
 ### Reglas de Desarrollo para el Agente de IA (Gemini)
 
 Este documento define las reglas y convenciones que el agente de IA debe seguir al desarrollar en el proyecto `zuzki-dev-front`.
@@ -92,3 +88,78 @@ Este documento define las reglas y convenciones que el agente de IA debe seguir 
 *   **Títulos de Página y Metadatos**: Para cada página, utiliza el `SeoService` inyectable (`@core/services/seo.service.ts`) para establecer un título único y una meta descripción relevante. No dejes los valores por defecto.
 *   **Jerarquía de Encabezados**: Asegúrate de que cada página tenga una estructura de encabezados lógica, comenzando con una sola etiqueta `<h1>` para el título principal.
 *   **Accesibilidad de Imágenes**: Todas las etiquetas `<img>` deben incluir un atributo `alt` descriptivo, a menos que sean puramente decorativas, en cuyo caso el `alt` debe estar vacío (`alt=""`).
+
+#### **9. Gestión de Estado y Flujo de Datos (Arquitectura de Store)**
+
+*   **Principio de Responsabilidad Única (SRP)**: Para una clara separación de responsabilidades, la obtención de datos y la gestión de estado deben dividirse en dos servicios distintos.
+
+    1.  **Servicio de API (Stateless)**:
+        *   **Responsabilidad**: Únicamente comunicarse con el `HttpClient` y conocer los endpoints. Es "tonto" y no guarda estado.
+        *   **Implementación**: Sus métodos deben devolver `Observables` puros obtenidos de `HttpClient`.
+        *   **Ejemplo**: `ProjectApiService`.
+
+    2.  **Servicio de Estado / Store (Stateful)**:
+        *   **Responsabilidad**: Únicamente gestionar el estado de un dominio (`projects`, `loading`, `error`) usando `Signals`. Es "inteligente" respecto al estado, pero no sabe de dónde vienen los datos.
+        *   **Implementación**: **No inyecta `HttpClient`**. Inyecta el **Servicio de API** correspondiente. Sus métodos llaman al servicio de API, se suscriben al `Observable` y actualizan sus `WritableSignal`s internos.
+        *   **Ejemplo**: `ProjectStore` (o el `ProjectHttpAdapter` actual, refactorizado).
+
+*   **Flujo de Datos (Regla Obligatoria)**:
+    1.  Un **Componente** necesita datos, así que llama a un método en el **Servicio de Estado / Store** (ej. `projectStore.loadProjects()`).
+    2.  El **Store** llama al método correspondiente en el **Servicio de API** (ej. `projectApi.fetchProjects()`).
+    3.  El **Servicio de API** realiza la llamada HTTP y devuelve un `Observable`.
+    4.  El **Store** se suscribe a ese `Observable` y actualiza sus `Signals` internos.
+    5.  El **Componente**, que ya está conectado a los `Signals` públicos del Store, se actualiza automáticamente de forma reactiva.
+
+*   **Ejemplo de Implementación**:
+
+    ```typescript
+    // 1. Servicio de API (Stateless)
+    @Injectable({ providedIn: 'root' })
+    export class ProjectApiService {
+      constructor(private http: HttpClient) {}
+      fetchProjects = (): Observable<Project[]> => this.http.get<Project[]>('api/projects');
+    }
+
+    // 2. Servicio de Estado / Store (Stateful)
+    @Injectable({ providedIn: 'root' })
+    export class ProjectStore {
+      private _projects = signal<Project[]>([]);
+      public readonly projects = this._projects.asReadonly();
+
+      constructor(private apiService: ProjectApiService) {} // Inyecta el API Service
+
+      loadProjects(): void {
+        this.apiService.fetchProjects().subscribe({
+          next: (data) => this._projects.set(data),
+          // ...
+        });
+      }
+    }
+
+    // 3. Componente (Consumidor)
+    @Component({...})
+    export class MyComponent {
+      private projectStore = inject(ProjectStore);
+      projects = this.projectStore.projects; // Se conecta al Signal
+
+      constructor() {
+        this.projectStore.loadProjects(); // Dispara la acción
+      }
+    }
+    ```
+
+#### **10. Manejo de Errores**
+
+*   **Errores de API**: Todas las llamadas a la API realizadas con `HttpClient` deben manejar los posibles errores. Utiliza el operador `catchError` de RxJS.
+*   **Feedback al Usuario**: Cuando un error ocurra (ej. fallo en una petición de red), la UI debe comunicarlo de forma clara al usuario. Utiliza un servicio de notificaciones (como el ya instalado `HotToast`) para mostrar mensajes de error.
+*   **Logging**: Considera la implementación de un servicio de logging centralizado para reportar errores a un sistema externo en producción.
+
+#### **11. Interacción con API**
+
+*   **Servicios Tipados**: La interacción con la API debe estar encapsulada en servicios específicos dentro de la capa de `infrastructure`. Estos servicios deben usar el `HttpClient` de Angular y devolver `Observable` fuertemente tipados (ej. `Observable<User[]>`).
+*   **DTOs**: Utiliza los Data Transfer Objects (DTOs) definidos en `src/app/application/dtos` para modelar las respuestas de la API.
+
+#### **12. Seguridad Básica (Frontend)**
+
+*   **Sanitización**: Confía en la sanitización automática de Angular para prevenir ataques XSS. No intentes desactivarla usando `bypassSecurityTrust...` a menos que sea absolutamente necesario y se entienda el riesgo.
+*   **Información Sensible**: Nunca almacenes información sensible (como tokens de larga duración o datos de usuario privados) en `localStorage`. Para la gestión de tokens de sesión, utiliza `sessionStorage` o una cookie segura (`HttpOnly`, `Secure`).
