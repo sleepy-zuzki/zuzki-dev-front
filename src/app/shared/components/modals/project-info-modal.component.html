@@ -1,0 +1,92 @@
+<app-modal [title]="project.name">
+  <section class="project-modal-content grid gap-6">
+    <figure class="carousel relative" aria-roledescription="carousel" aria-label="Galería del proyecto">
+      <img
+        [src]="currentImageUrl"
+        [alt]="project?.images?.[currentIndex]?.alt || project.name"
+        class="carousel-image w-full rounded-md object-cover"
+      />
+      <figcaption class="sr-only">
+        Imagen {{ currentIndex + 1 }} de {{ project?.images?.length || 1 }} — {{ project.name }}
+      </figcaption>
+
+      <nav class="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2" aria-label="Controles del carrusel">
+        <button
+          type="button"
+          class="prev inline-flex items-center justify-center rounded-full p-2 bg-black/50 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          (click)="prevImage()"
+          aria-label="Imagen anterior"
+        >
+          <ng-icon name="bootstrapChevronLeft" size="24"></ng-icon>
+        </button>
+
+        <button
+          type="button"
+          class="next inline-flex items-center justify-center rounded-full p-2 bg-black/50 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          (click)="nextImage()"
+          aria-label="Imagen siguiente"
+        >
+          <ng-icon name="bootstrapChevronRight" size="24"></ng-icon>
+        </button>
+      </nav>
+
+      <div class="mt-2 flex items-center justify-center gap-1" aria-hidden="true">
+        @for (img of project?.images; track img; let i = $index) {
+          <span class="h-1.5 w-1.5 rounded-full" [class.bg-white]="i === currentIndex"></span>
+        }
+      </div>
+    </figure>
+
+    <article class="project-details grid gap-4">
+      <section aria-labelledby="desc-title">
+        <h3 id="desc-title" class="text-lg font-semibold">Descripción</h3>
+        <p class="text-sm leading-relaxed">{{ project.description }}</p>
+      </section>
+
+      <section class="grid gap-2 sm:grid-cols-2" aria-labelledby="tech-title">
+        <div>
+          <h3 id="tech-title" class="text-lg font-semibold">Tecnologías</h3>
+          <ul class="mt-2 flex flex-wrap gap-2" role="list">
+            @for (tech of project.technologies; track tech) {
+              <li>
+                <span class="inline-block rounded-full px-2 py-1 text-xs bg-white/10">{{ tech }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div aria-labelledby="details-title">
+          <h3 id="details-title" class="text-lg font-semibold">Detalles</h3>
+          <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
+            <dt class="opacity-70">Categoría:</dt>
+            <dd>{{ project.category }}</dd>
+            <dt class="opacity-70">Año:</dt>
+            <dd>{{ project.year }}</dd>
+          </dl>
+        </div>
+      </section>
+
+      <section aria-labelledby="features-title">
+        <h3 id="features-title" class="text-lg font-semibold">Características</h3>
+        <ul class="mt-2 list-disc pl-5 space-y-1">
+          @for (feat of project.features; track feat) {
+            <li>{{ feat }}</li>
+          }
+        </ul>
+      </section>
+
+      <nav class="mt-2" aria-label="Acciones">
+        <a
+          class="inline-flex items-center gap-2 rounded-md bg-orange-500 px-4 py-2 text-white transition-theme hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          [href]="project.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'Ver proyecto ' + project.name"
+        >
+          <ng-icon name="bootstrapBoxArrowUpRight" size="18"></ng-icon>
+          Ver Proyecto
+        </a>
+      </nav>
+    </article>
+  </section>
+</app-modal>
