@@ -20,6 +20,14 @@ dialog {
   }
 }
 
+/* Tamaños del modal: se aplican como clases en el elemento <dialog> */
+dialog.size-sm { width: 24rem; }   /* 384px */
+dialog.size-md { width: 32rem; }   /* 512px (por defecto similar a 500px) */
+dialog.size-lg { width: 48rem; }   /* 768px */
+dialog.size-xl { width: 64rem; }   /* 1024px */
+dialog.size-full { width: 90vw; max-width: 90vw; }
+
+/* Header */
 .modal-header {
   @apply text-xl font-bold text-black dark:text-white;
 

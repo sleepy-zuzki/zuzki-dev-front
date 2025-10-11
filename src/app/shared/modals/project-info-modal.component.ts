@@ -4,14 +4,18 @@ import { ProjectEntity } from '@core/domain';
 import { ModalComponent } from '@components/modal/modal.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { bootstrapChevronLeft, bootstrapChevronRight } from '@ng-icons/bootstrap-icons';
+import { featherGithub } from '@ng-icons/feather-icons';
+import { TypographyTitleComponent } from '@components/typography/title.component';
+import { TypographyTextComponent } from '@components/typography/text.component';
+import { ButtonComponent } from '@components/button/button.component';
 
 @Component({
   selector: 'app-project-info-modal',
   standalone: true,
-  imports: [CommonModule, ModalComponent, NgIcon],
+  imports: [CommonModule, ModalComponent, NgIcon, TypographyTitleComponent, TypographyTextComponent, ButtonComponent],
   templateUrl: './project-info-modal.component.html',
   styleUrls: ['./project-info-modal.component.css'],
-  providers: [provideIcons({ bootstrapChevronLeft, bootstrapChevronRight })],
+  providers: [provideIcons({ bootstrapChevronLeft, bootstrapChevronRight, featherGithub })],
 })
 export class ProjectInfoModalComponent {
   @Input({ required: true }) project!: ProjectEntity;

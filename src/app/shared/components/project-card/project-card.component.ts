@@ -4,37 +4,37 @@ import { TagsListComponent } from '@components/tags-list/tags-list.component';
 import {
   bootstrapArrowRightShort,
   bootstrapArrowUpRight,
-  bootstrapChevronLeft,
-  bootstrapChevronRight,
   bootstrapGithub,
-  bootstrapX,
 } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ProjectEntity } from '@core/domain';
 import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
+import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
 
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [RouterModule, TagsListComponent, NgIcon, TypographyTextComponent, TypographyTitleComponent],
+  imports: [
+    RouterModule,
+    TagsListComponent,
+    NgIcon,
+    TypographyTextComponent,
+    TypographyTitleComponent,
+    ProjectInfoModalComponent,
+  ],
   templateUrl: './project-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     provideIcons({
       bootstrapArrowRightShort,
-      bootstrapX,
       bootstrapArrowUpRight,
       bootstrapGithub,
-      bootstrapChevronLeft,
-      bootstrapChevronRight,
     }),
   ],
 })
 export class ProjectCardComponent {
   @Input({ required: true }) project!: ProjectEntity;
-
-  currentImageIndex = 0;
 
   get imageUrl(): string | undefined {
     if (!this.project) return undefined;
@@ -54,21 +54,7 @@ export class ProjectCardComponent {
     return this.project.technologies.map(t => t.name);
   }
 
-  openModal(modal: HTMLDialogElement) {
-    this.currentImageIndex = 0;
-    modal.showModal();
-  }
-
-  nextImage() {
-    if (this.project.carouselImages.length > 1) {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.project.carouselImages.length;
-    }
-  }
-
-  prevImage() {
-    if (this.project.carouselImages.length > 1) {
-      this.currentImageIndex =
-        (this.currentImageIndex - 1 + this.project.carouselImages.length) % this.project.carouselImages.length;
-    }
+  openProjectModal(modal: ProjectInfoModalComponent) {
+    modal.open();
   }
 }

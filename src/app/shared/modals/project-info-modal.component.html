@@ -1,0 +1,132 @@
+<app-modal [title]="project.name" size="lg">
+  <section class="project-modal-content grid gap-6">
+    <figure class="carousel relative" aria-roledescription="carousel" aria-label="Galería del proyecto">
+      @if (project.carouselImages.length) {
+        <img
+          [src]="currentImageUrl"
+          [alt]="(project.carouselImages[currentImageIndex]?.alt ?? project.carouselImages[currentImageIndex]?.originalName ?? '') ?? project.name"
+          class="carousel-image w-full rounded-md object-cover"
+        />
+      } @else {
+        <div class="h-48 sm:h-60 md:h-64 w-full rounded-md bg-gradient-to-br from-zuzki-400 to-zuzki-600"></div>
+      }
+
+      <figcaption class="mt-2 text-center">
+        @if (project.carouselImages.length) {
+          <app-typography-text as="span" variant="caption" extraClasses="opacity-70">
+            Imagen {{ currentImageIndex + 1 }} de {{ project.carouselImages.length }} — {{ project.name }}
+          </app-typography-text>
+        } @else {
+          <app-typography-text as="span" variant="caption" extraClasses="opacity-70">
+            Banner visual del proyecto {{ project.name }}
+          </app-typography-text>
+        }
+      </figcaption>
+
+      @if (project.carouselImages.length > 1) {
+        <nav class="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2" aria-label="Controles del carrusel">
+          <button
+            type="button"
+            class="prev inline-flex items-center justify-center rounded-full p-2 bg-black/50 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            (click)="prevImage()"
+            aria-label="Imagen anterior"
+          >
+            <ng-icon name="bootstrapChevronLeft" size="24"></ng-icon>
+          </button>
+
+          <button
+            type="button"
+            class="next inline-flex items-center justify-center rounded-full p-2 bg-black/50 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            (click)="nextImage()"
+            aria-label="Imagen siguiente"
+          >
+            <ng-icon name="bootstrapChevronRight" size="24"></ng-icon>
+          </button>
+        </nav>
+      }
+
+      @if (project.carouselImages.length && project.carouselImages.length > 1) {
+        <div class="mt-2 flex items-center justify-center gap-1" aria-hidden="true">
+          @for (img of project.carouselImages; track $index; let i = $index) {
+            <span class="h-1.5 w-1.5 rounded-full" [class.bg-white]="i === currentImageIndex" [class.bg-white/40]="i !== currentImageIndex"></span>
+          }
+        </div>
+      }
+    </figure>
+
+
+    <article class="project-details grid grid-cols-1 sm:grid-cols-2 gap-4">
+      @if (project.description) {
+        <section aria-labelledby="desc-title">
+          <app-typography-title id="desc-title" [level]="3" variant="subsection">Descripción</app-typography-title>
+          <app-typography-text variant="base" extraClasses="text-sm leading-relaxed">{{ project.description }}</app-typography-text>
+        </section>
+      }
+
+      <div class="flex flex-col gap-4">
+        <section class="grid gap-2 grid-cols-1" aria-labelledby="tech-title">
+          <div>
+            <app-typography-title id="tech-title" [level]="3" variant="subsection">Tecnologías</app-typography-title>
+            @if (project.technologies.length) {
+              <ul class="mt-2 flex flex-wrap gap-2" role="list">
+                @for (tech of project.technologies; track tech.name) {
+                  <li>
+                    <span class="inline-block rounded-full px-2 py-1 text-xs bg-white/10">{{ tech.name }}</span>
+                  </li>
+                }
+              </ul>
+            } @else {
+              <app-typography-text variant="muted" extraClasses="text-sm">No especificadas</app-typography-text>
+            }
+          </div>
+
+          @if (project.category || project.year) {
+            <div aria-labelledby="details-title">
+              <app-typography-title id="details-title" [level]="3" variant="subsection">Detalles</app-typography-title>
+              <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
+                @if (project.category) {
+                  <ng-template>
+                    <dt class="opacity-70">Categoría:</dt>
+                    <dd>{{ project.category }}</dd>
+                  </ng-template>
+                }
+                @if (project.year) {
+                  <ng-template>
+                    <dt class="opacity-70">Año:</dt>
+                    <dd>{{ project.year }}</dd>
+                  </ng-template>
+                }
+              </dl>
+            </div>
+          }
+        </section>
+
+        <nav class="mt-2 flex flex-wrap gap-3 justify-end" aria-label="Acciones">
+          @if (project.liveUrl) {
+            <a
+              class="inline-flex items-center justify-center rounded-md bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              [href]="project.liveUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="'Abrir demo de ' + project.name"
+            >
+              Ver demo
+            </a>
+          }
+          @if (project.repoUrl) {
+            <a
+              class="inline-flex items-center justify-center rounded-md bg-neutral-700 px-4 py-2 text-white hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              [href]="project.repoUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="'Abrir repositorio de ' + project.name"
+            >
+              <ng-icon name="featherGithub" class="mr-2"></ng-icon>
+              Repositorio
+            </a>
+          }
+        </nav>
+      </div>
+    </article>
+  </section>
+</app-modal>
