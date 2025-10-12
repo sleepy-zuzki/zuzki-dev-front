@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@reference "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -85,23 +85,6 @@
   }
 }
 
-/* Utilidades adicionales */
-@utility bg-zuzki-* {
-  background-color: color-mix(in srgb, theme(--color-zuzki-500) --value([percentage]), transparent);
-}
-
-/* Text gradients */
-@utility text-gradient {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* Smooth transitions */
-@utility transition-theme {
-  @apply transition-colors duration-300 ease-in-out;
-}
-
 /* Custom scrollbar with brand colors */
 ::-webkit-scrollbar {
   @apply w-2;
@@ -125,7 +108,4 @@
   @apply text-black;
 }
 
-/* Focus ring utilities */
-@utility focus-brand {
-  @apply focus:outline-none focus:ring-2 focus:ring-zuzki-500 focus:ring-offset-2 focus:ring-offset-background-default;
-}
+

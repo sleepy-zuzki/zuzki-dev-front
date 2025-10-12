@@ -5,38 +5,3 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
-/* Utilidades Tailwind v4 (@utility) para construir tarjetas de forma composable */
-@utility card-surface {
-  @apply bg-background-surface;
-}
-
-@utility card-rounded {
-  @apply rounded-xl;
-}
-
-@utility card-shadow {
-  @apply shadow-lg;
-}
-
-@utility card-border {
-  @apply border border-background-section/60;
-}
-
-@utility card-padding {
-  @apply p-6 md:p-8;
-}
-
-@utility card-hover {
-  @apply hover:shadow-xl hover:-translate-y-0.5;
-}
-
-@utility card-focus {
-  @apply focus-brand;
-}
-
-/* Contenedor que actúa como "grupo" para efectos de hover y mejora rendimiento */
-@utility card-group {
-  isolation: isolate;            /* Evita que efectos internos escapen */
-  will-change: transform, box-shadow; /* Pista al navegador para interacciones suaves */
-}

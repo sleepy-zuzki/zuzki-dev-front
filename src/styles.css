@@ -1,6 +1,7 @@
 /* Importar configuración de tema con @theme directive */
+@import "tailwindcss";
 @import "./styles/colors.css";
-@import "./styles/cards.css";
+@import "./styles/utilities.css";
 
 /* Estilos globales */
 html {

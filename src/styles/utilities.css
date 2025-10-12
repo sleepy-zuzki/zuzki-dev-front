@@ -1,0 +1,67 @@
+@reference "./colors.css";
+
+/* Utilidades adicionales */
+@utility bg-zuzki-* {
+  background-color: color-mix(in srgb, theme(--color-zuzki-500) --value([percentage]), transparent);
+}
+
+/* Text gradients */
+@utility text-gradient {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Smooth transitions */
+@utility transition-theme {
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+/* Focus ring utilities */
+@utility focus-brand {
+  @apply focus:outline-none focus:ring-2 focus:ring-zuzki-500 focus:ring-offset-2 focus:ring-offset-background-default;
+}
+
+@utility form-input-base {
+  @apply block w-full rounded-md border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus-brand;
+}
+
+/* Utilidades Tailwind v4 (@utility) para construir tarjetas de forma composable */
+@utility card-surface {
+  @apply bg-background-surface;
+}
+
+@utility card-rounded {
+  @apply rounded-xl;
+}
+
+@utility card-shadow {
+  @apply shadow-lg;
+}
+
+@utility card-border {
+  @apply border border-background-section/60;
+}
+
+@utility card-padding {
+  @apply p-6 md:p-8;
+}
+
+@utility card-hover {
+  @apply hover:shadow-xl hover:-translate-y-0.5;
+}
+
+@utility card-focus {
+  @apply focus-brand;
+}
+
+/* Contenedor que actúa como "grupo" para efectos de hover y mejora rendimiento */
+@utility card-group {
+  isolation: isolate;            /* Evita que efectos internos escapen */
+  will-change: transform, box-shadow; /* Pista al navegador para interacciones suaves */
+}
+
+/* Recrea la utilidad ring-opacity-5 para compatibilidad */
+@utility ring-opacity-5 {
+  --tw-ring-opacity: 0.05;
+}
