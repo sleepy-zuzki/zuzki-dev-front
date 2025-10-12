@@ -163,3 +163,27 @@ Este documento define las reglas y convenciones que el agente de IA debe seguir 
 
 *   **Sanitización**: Confía en la sanitización automática de Angular para prevenir ataques XSS. No intentes desactivarla usando `bypassSecurityTrust...` a menos que sea absolutamente necesario y se entienda el riesgo.
 *   **Información Sensible**: Nunca almacenes información sensible (como tokens de larga duración o datos de usuario privados) en `localStorage`. Para la gestión de tokens de sesión, utiliza `sessionStorage` o una cookie segura (`HttpOnly`, `Secure`).
+
+#### **13. Ubicación y Reutilización de Estructuras de Datos**
+
+*   **Principio de Única Fuente de Verdad (Single Source of Truth)**: Todas las estructuras de datos (interfaces, DTOs, entidades) deben tener una única ubicación centralizada según su propósito arquitectónico. Queda estrictamente prohibido definir estas estructuras a nivel de componente si son reutilizables.
+
+*   **Reglas de Ubicación Obligatorias**:
+    *   **Entidades (`Entity`)**:
+        *   **Ubicación**: `src/app/core/domain/entities/`
+        *   **Propósito**: Representan los objetos de negocio principales (ej. `ProjectEntity`).
+    *   **Interfaces de Repositorio**:
+        *   **Ubicación**: `src/app/core/domain/repositories/`
+        *   **Propósito**: Definen los contratos (`puertos`) que los adaptadores de infraestructura deben implementar (ej. `ProjectRepository`).
+    *   **DTOs (Data Transfer Objects)**:
+        *   **Ubicación**: `src/app/application/dtos/`
+        *   **Propósito**: Son objetos planos para transferir datos entre capas, especialmente para la API (ej. `ProjectResponseDto`).
+    *   **Interfaces Genéricas/UI**:
+        *   **Ubicación**: `src/app/core/interfaces/`
+        *   **Propósito**: Para contratos de datos compartidos que no son entidades ni DTOs.
+
+*   **Regla de Oro y Deber de Refactorización**:
+    *   **Búsqueda Obligatoria**: Antes de crear una nueva `interface`, `type`, `DTO`, o `Entity`, el agente **DEBE** buscar si ya existe una estructura que cumpla la misma función en su ubicación designada. La duplicación es un error grave.
+    *   **Deber de Refactorización**: Si durante su trabajo el agente encuentra una de estas estructuras definida en una ubicación incorrecta (ej. una `interface` dentro de un archivo de componente), **DEBE** refactorizar el código de la siguiente manera:
+        1.  **Mover** la estructura a su directorio correcto según las reglas de ubicación.
+        2.  **Actualizar** el archivo original y cualquier otro consumidor para que importen la estructura desde su nueva y única ubicación centralizada.
