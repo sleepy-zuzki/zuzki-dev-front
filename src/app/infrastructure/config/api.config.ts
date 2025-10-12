@@ -26,6 +26,7 @@ export class ApiConfig {
     portfolio: {
       projects: {
         base: '/portfolio/projects',
+        featured: '/portfolio/projects/featured',
         bySlug: (slug: string) => `/portfolio/projects/${slug}`,
         byId: (id: number) => `/portfolio/projects/${id}`,
         images: (id: number) => `/portfolio/projects/${id}/images`,

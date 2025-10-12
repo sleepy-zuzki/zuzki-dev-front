@@ -11,7 +11,6 @@ import { HomeAboutComponent } from '@features/home/about/home-about.component';
 import { HomeServicesComponent } from '@features/home/services/home-services.component';
 import { HomeContactComponent } from '@features/home/contact/home-contact.component';
 import { HomeProjectsComponent } from '@features/home/projects/home-projects.component';
-import { ProjectEntity } from '@core/domain';
 
 @Component({
   selector: 'app-home-feature',
@@ -121,8 +120,6 @@ export class HomeFeatureComponent implements AfterViewInit, OnDestroy {
       ]
     }
   ];
-
-  projects: ProjectEntity[] = [];
 
   private jsonLdScripts: HTMLScriptElement[] = [];
 

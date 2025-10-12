@@ -23,6 +23,12 @@ export class ProjectApiService {
     );
   }
 
+  getFeaturedProjects(): Observable<ProjectResponseDto[]> {
+    return this.http.get<ProjectResponseDto[]>(
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.featured)
+    );
+  }
+
   getProjectBySlug(slug: string): Observable<ProjectResponseDto> {
     return this.http.get<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.bySlug(slug))

@@ -12,11 +12,13 @@ export class ProjectStore extends ProjectRepository {
   private readonly apiService = inject(ProjectApiService);
 
   private _projects: WritableSignal<ProjectEntity[]> = signal([]);
+  private _featuredProjects: WritableSignal<ProjectEntity[]> = signal([]);
   private _currentProject: WritableSignal<ProjectEntity | null> = signal(null);
   private _loading: WritableSignal<boolean> = signal(false);
   private _error: WritableSignal<string | null> = signal(null);
 
   public readonly projects: Signal<ProjectEntity[]> = this._projects.asReadonly();
+  public readonly featuredProjects: Signal<ProjectEntity[]> = this._featuredProjects.asReadonly();
   public readonly currentProject: Signal<ProjectEntity | null> = this._currentProject.asReadonly();
   public readonly loading: Signal<boolean> = this._loading.asReadonly();
   public readonly error: Signal<string | null> = this._error.asReadonly();
@@ -37,6 +39,23 @@ export class ProjectStore extends ProjectRepository {
       },
       error: (error) => {
         this._error.set(error.message || 'Error al cargar proyectos');
+        this._loading.set(false);
+      }
+    });
+  }
+
+  getFeaturedProjects(): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.apiService.getFeaturedProjects().subscribe({
+      next: (projects) => {
+        const mappedProjects = projects.map(ProjectMapper.toEntity);
+        this._featuredProjects.set(mappedProjects);
+        this._loading.set(false);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al cargar proyectos destacados');
         this._loading.set(false);
       }
     });
