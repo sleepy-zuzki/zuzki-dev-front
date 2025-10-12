@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
@@ -10,6 +11,7 @@ import { ProjectCardComponent } from '@components/project-card/project-card.comp
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
 import { AppSelectComponent } from '@shared/components/select/app-select.component';
+import { toSlug } from '@shared/utils/slug.util';
 
 @Component({
   standalone: true,
@@ -25,7 +27,7 @@ import { AppSelectComponent } from '@shared/components/select/app-select.compone
     AppSelectComponent,
   ],
   templateUrl: './projects-admin.feature.html',
-  styleUrls: ['./projects-admin.feature.css'],
+  styleUrls: ['./projects-admin.feature.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsAdminFeatureComponent {
@@ -41,7 +43,7 @@ export class ProjectsAdminFeatureComponent {
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
-    slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
+    slug: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
     description: this.fb.control<string | null>(null, [Validators.maxLength(1000)]),
     repoUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     liveUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
@@ -55,6 +57,16 @@ export class ProjectsAdminFeatureComponent {
   constructor() {
     this.projectStore.getProjects();
     this.technologyStore.getTechnologies();
+    this.setupSlugGeneration();
+  }
+
+  private setupSlugGeneration(): void {
+    this.form.controls.name.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(name => {
+        const slug = toSlug(name);
+        this.form.controls.slug.setValue(slug, { emitEvent: false });
+      });
   }
 
   reload(): void {
@@ -67,6 +79,7 @@ export class ProjectsAdminFeatureComponent {
       this.form.markAllAsTouched();
       return;
     }
+    // Usamos getRawValue() para obtener el valor del campo slug aunque esté deshabilitado
     const raw = this.form.getRawValue();
 
     this.projectStore.createProject({
