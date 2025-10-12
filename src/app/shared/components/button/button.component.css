@@ -1,5 +1,4 @@
-@reference "tailwindcss";
-@reference "../../../../styles/colors.css";
+@reference "../../../../styles/utilities.css";
 
 .btn {
   @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg focus-brand select-none hover:cursor-pointer

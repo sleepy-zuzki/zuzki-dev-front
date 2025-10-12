@@ -1,6 +1,5 @@
 /* AboutTimelineComponent: estilos con clases propias + Tailwind via @apply */
-@reference "tailwindcss";
-@reference "../../../../../../styles/colors.css"
+@reference "../../../../../../styles/utilities.css"
 
 /* Host */
 :host {

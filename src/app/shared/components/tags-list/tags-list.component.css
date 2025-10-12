@@ -1,5 +1,4 @@
-@reference "tailwindcss";
-@reference "../../../../styles/colors.css";
+@reference "../../../../styles/utilities.css";
 
 /* Contenedor de la lista */
 .tlst-list {
