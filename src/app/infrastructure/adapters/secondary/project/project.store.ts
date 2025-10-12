@@ -1,9 +1,9 @@
-import { Injectable, signal, computed, WritableSignal, Signal, inject } from '@angular/core';
+import { Injectable, signal, WritableSignal, Signal, inject } from '@angular/core';
 
 import { ProjectRepository, CreateProjectRequest, UpdateProjectRequest, AddImageToCarouselRequest, ReorderCarouselImagesRequest } from '@domain/repositories/project.repository.interface';
-import { ProjectEntity, TechnologyEntity, FileEntity, TechnologyCategory } from '@core/domain';
-import { ProjectResponseDto } from '@app/application';
+import { ProjectEntity } from '@core/domain';
 import { ProjectApiService } from './project-api.service';
+import { ProjectMapper } from './project.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -21,13 +21,17 @@ export class ProjectStore extends ProjectRepository {
   public readonly loading: Signal<boolean> = this._loading.asReadonly();
   public readonly error: Signal<string | null> = this._error.asReadonly();
 
+  constructor() {
+    super();
+  }
+
   getProjects(): void {
     this._loading.set(true);
     this._error.set(null);
 
     this.apiService.getProjects().subscribe({
       next: (projects) => {
-        const mappedProjects = projects.map(this.mapToProjectEntity);
+        const mappedProjects = projects.map(ProjectMapper.toEntity);
         this._projects.set(mappedProjects);
         this._loading.set(false);
       },
@@ -44,7 +48,7 @@ export class ProjectStore extends ProjectRepository {
 
     this.apiService.getProjectBySlug(slug).subscribe({
       next: (project) => {
-        const mappedProject = this.mapToProjectEntity(project);
+        const mappedProject = ProjectMapper.toEntity(project);
         this._currentProject.set(mappedProject);
         this._loading.set(false);
       },
@@ -61,7 +65,7 @@ export class ProjectStore extends ProjectRepository {
 
     this.apiService.createProject(request).subscribe({
       next: (project) => {
-        const mappedProject = this.mapToProjectEntity(project);
+        const mappedProject = ProjectMapper.toEntity(project);
         this._projects.update(currentProjects => [...currentProjects, mappedProject]);
         this._currentProject.set(mappedProject);
         this._loading.set(false);
@@ -79,7 +83,7 @@ export class ProjectStore extends ProjectRepository {
 
     this.apiService.updateProject(id, request).subscribe({
       next: (project) => {
-        const mappedProject = this.mapToProjectEntity(project);
+        const mappedProject = ProjectMapper.toEntity(project);
         this._projects.update(projects => projects.map(p => p.id === id ? mappedProject : p));
         if (this._currentProject()?.id === id) {
           this._currentProject.set(mappedProject);
@@ -168,53 +172,4 @@ export class ProjectStore extends ProjectRepository {
       }
     });
   }
-
-  private mapToProjectEntity = (dto: ProjectResponseDto): ProjectEntity => {
-    return new ProjectEntity(
-      dto.id,
-      dto.name,
-      dto.slug,
-      dto.description,
-      dto.liveUrl ?? undefined,
-      dto.repoUrl ?? undefined,
-      dto.category ?? undefined,
-      dto.year ?? undefined,
-      dto.isFeatured ?? undefined,
-      dto.previewImageId ?? undefined,
-      dto.technologies.map(tech => new TechnologyEntity(
-        tech.id,
-        tech.name,
-        tech.slug,
-        tech.description,
-        tech.category as TechnologyCategory,
-        tech.iconUrl,
-        tech.websiteUrl,
-        tech.color,
-        new Date(tech.createdAt),
-        new Date(tech.updatedAt)
-      )),
-      dto.carouselImages.map(file => {
-        const url = (file as any).url || '';
-        const filename = url ? url.split('/').pop() || '' : '';
-        const originalName = filename;
-        const size = (file as any).sizeBytes ?? 0;
-        const mimeType = (file as any).mimeType || '';
-        const projectId = (file as any).projectId ?? undefined;
-
-        return new FileEntity(
-          (file as any).id,
-          originalName,
-          filename,
-          mimeType,
-          size,
-          url,
-          projectId,
-          new Date((file as any).createdAt),
-          new Date((file as any).updatedAt)
-        );
-      }),
-      new Date(dto.createdAt),
-      new Date(dto.updatedAt)
-    );
-  };
 }
