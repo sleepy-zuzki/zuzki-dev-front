@@ -1,5 +1,4 @@
-import { Injectable, signal, computed, WritableSignal, Signal, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Injectable, signal, WritableSignal, Signal, inject } from '@angular/core';
 
 import { TechnologyRepository, CreateTechnologyRequest, UpdateTechnologyRequest } from '@domain/repositories/technology.repository.interface';
 import { TechnologyEntity } from '@core/domain';
@@ -35,7 +34,7 @@ export class TechnologyStore extends TechnologyRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.apiService.getTechnologies().pipe(takeUntilDestroyed()).subscribe({
+    this.apiService.getTechnologies().subscribe({
       next: (dtos) => {
         const entities = dtos.map(TechnologyMapper.toEntity);
         this._technologies.set(entities);
@@ -52,7 +51,7 @@ export class TechnologyStore extends TechnologyRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.apiService.getTechnologyBySlug(slug).pipe(takeUntilDestroyed()).subscribe({
+    this.apiService.getTechnologyBySlug(slug).subscribe({
       next: (dto) => {
         this._currentTechnology.set(TechnologyMapper.toEntity(dto));
         this._loading.set(false);
@@ -68,7 +67,7 @@ export class TechnologyStore extends TechnologyRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.apiService.createTechnology(request).pipe(takeUntilDestroyed()).subscribe({
+    this.apiService.createTechnology(request).subscribe({
       next: (dto) => {
         const newEntity = TechnologyMapper.toEntity(dto);
         this._technologies.update(current => [...current, newEntity]);
@@ -85,7 +84,7 @@ export class TechnologyStore extends TechnologyRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.apiService.updateTechnology(id, request).pipe(takeUntilDestroyed()).subscribe({
+    this.apiService.updateTechnology(id, request).subscribe({
       next: (dto) => {
         const updatedEntity = TechnologyMapper.toEntity(dto);
         this._technologies.update(current => current.map(t => t.id === id ? updatedEntity : t));
@@ -105,7 +104,7 @@ export class TechnologyStore extends TechnologyRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.apiService.deleteTechnology(id).pipe(takeUntilDestroyed()).subscribe({
+    this.apiService.deleteTechnology(id).subscribe({
       next: () => {
         this._technologies.update(current => current.filter(t => t.id !== id));
         if (this._currentTechnology()?.id === id) {

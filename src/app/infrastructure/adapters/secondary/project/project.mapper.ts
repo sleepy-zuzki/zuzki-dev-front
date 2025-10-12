@@ -18,13 +18,7 @@ export class ProjectMapper {
         tech.id,
         tech.name,
         tech.slug,
-        tech.description,
-        tech.category as TechnologyCategory,
-        tech.iconUrl,
-        tech.websiteUrl,
-        tech.color,
-        new Date(tech.createdAt),
-        new Date(tech.updatedAt)
+        tech.website
       )),
       dto.carouselImages.map(file => {
         const url = (file as any).url || '';

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
@@ -44,7 +43,7 @@ export class TechnologiesAdminFeatureComponent {
   }
 
   private setupSlugGeneration(): void {
-    this.form.controls.name.valueChanges.pipe(takeUntilDestroyed()).subscribe(name => {
+    this.form.controls.name.valueChanges.subscribe(name => {
       const slug = toSlug(name);
       this.form.controls.slug.setValue(slug, { emitEvent: false });
     });

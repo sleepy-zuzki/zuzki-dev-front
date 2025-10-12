@@ -75,9 +75,6 @@
         @for (tech of technologies(); track tech.id) {
           <div class="technologies-admin__list-item">
             <div class="technologies-admin__tech-info">
-              @if (tech.hasIcon()) {
-                <img [src]="tech.iconUrl" [alt]="tech.name" class="technologies-admin__tech-icon" />
-              }
               <span class="technologies-admin__tech-name">{{ tech.name }}</span>
             </div>
             <!-- Aquí se podrían añadir botones de editar/eliminar en el futuro -->
