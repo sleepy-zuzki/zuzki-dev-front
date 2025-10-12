@@ -101,13 +101,13 @@ Este documento define las reglas y convenciones que el agente de IA debe seguir 
     2.  **Servicio de Estado / Store (Stateful)**:
         *   **Responsabilidad**: Únicamente gestionar el estado de un dominio (`projects`, `loading`, `error`) usando `Signals`. Es "inteligente" respecto al estado, pero no sabe de dónde vienen los datos.
         *   **Implementación**: **No inyecta `HttpClient`**. Inyecta el **Servicio de API** correspondiente. Sus métodos llaman al servicio de API, se suscriben al `Observable` y actualizan sus `WritableSignal`s internos.
-        *   **Ejemplo**: `ProjectStore` (o el `ProjectHttpAdapter` actual, refactorizado).
+        *   **Ejemplo**: `ProjectStore`.
 
 *   **Flujo de Datos (Regla Obligatoria)**:
     1.  Un **Componente** necesita datos, así que llama a un método en el **Servicio de Estado / Store** (ej. `projectStore.loadProjects()`).
     2.  El **Store** llama al método correspondiente en el **Servicio de API** (ej. `projectApi.fetchProjects()`).
     3.  El **Servicio de API** realiza la llamada HTTP y devuelve un `Observable`.
-    4.  El **Store** se suscribe a ese `Observable` y actualiza sus `Signals` internos.
+    4.  El **Store** se suscribe a ese `Observable` y actualiza sus `Signals` internos, usando un `Mapper` para la transformación de datos.
     5.  El **Componente**, que ya está conectado a los `Signals` públicos del Store, se actualiza automáticamente de forma reactiva.
 
 *   **Ejemplo de Implementación**:
@@ -117,26 +117,34 @@ Este documento define las reglas y convenciones que el agente de IA debe seguir 
     @Injectable({ providedIn: 'root' })
     export class ProjectApiService {
       constructor(private http: HttpClient) {}
-      fetchProjects = (): Observable<Project[]> => this.http.get<Project[]>('api/projects');
+      fetchProjects = (): Observable<ProjectDto[]> => this.http.get<ProjectDto[]>('api/projects');
     }
 
-    // 2. Servicio de Estado / Store (Stateful)
+    // 2. Mapper (Stateless, solo transformación)
+    export class ProjectMapper {
+      static toEntity(dto: ProjectDto): ProjectEntity {
+        // ...lógica de mapeo
+        return new ProjectEntity(/*...*/);
+      }
+    }
+
+    // 3. Servicio de Estado / Store (Stateful)
     @Injectable({ providedIn: 'root' })
     export class ProjectStore {
-      private _projects = signal<Project[]>([]);
+      private _projects = signal<ProjectEntity[]>([]);
       public readonly projects = this._projects.asReadonly();
 
       constructor(private apiService: ProjectApiService) {} // Inyecta el API Service
 
       loadProjects(): void {
         this.apiService.fetchProjects().subscribe({
-          next: (data) => this._projects.set(data),
+          next: (dtos) => this._projects.set(dtos.map(ProjectMapper.toEntity)), // Usa el Mapper
           // ...
         });
       }
     }
 
-    // 3. Componente (Consumidor)
+    // 4. Componente (Consumidor)
     @Component({...})
     export class MyComponent {
       private projectStore = inject(ProjectStore);
@@ -156,7 +164,7 @@ Este documento define las reglas y convenciones que el agente de IA debe seguir 
 
 #### **11. Interacción con API**
 
-*   **Servicios Tipados**: La interacción con la API debe estar encapsulada en servicios específicos dentro de la capa de `infrastructure`. Estos servicios deben usar el `HttpClient` de Angular y devolver `Observable` fuertemente tipados (ej. `Observable<User[]>`).
+*   **Servicios Tipados**: La interacción con la API debe estar encapsulada en servicios específicos (`Servicios de API`) dentro de la capa de `infrastructure`. Estos servicios deben usar el `HttpClient` de Angular y devolver `Observable` fuertemente tipados.
 *   **DTOs**: Utiliza los Data Transfer Objects (DTOs) definidos en `src/app/application/dtos` para modelar las respuestas de la API.
 
 #### **12. Seguridad Básica (Frontend)**
@@ -187,3 +195,12 @@ Este documento define las reglas y convenciones que el agente de IA debe seguir 
     *   **Deber de Refactorización**: Si durante su trabajo el agente encuentra una de estas estructuras definida en una ubicación incorrecta (ej. una `interface` dentro de un archivo de componente), **DEBE** refactorizar el código de la siguiente manera:
         1.  **Mover** la estructura a su directorio correcto según las reglas de ubicación.
         2.  **Actualizar** el archivo original y cualquier otro consumidor para que importen la estructura desde su nueva y única ubicación centralizada.
+
+#### **14. Mapeo de Datos (Patrón Mapper)**
+
+*   **Responsabilidad del Mapeo**: La lógica de transformación de datos entre capas (ej. de un `ProjectResponseDto` a una `ProjectEntity`) es una responsabilidad única y no debe residir dentro de los Servicios de Estado (Stores) o de API.
+*   **Uso de Clases `Mapper`**:
+    *   **Creación**: Para cualquier transformación de datos compleja, se debe crear una clase `Mapper` dedicada.
+    *   **Ubicación**: Los mappers deben ubicarse junto a la capa que los utiliza, típicamente en `infrastructure/adapters/mappers/` o junto al adaptador/store correspondiente (ej. `project.mapper.ts`).
+    *   **Implementación**: Un `Mapper` debe ser una clase simple, a menudo con métodos estáticos, que recibe un objeto de una capa y devuelve el objeto transformado para la otra capa. No debe tener estado ni dependencias de gestión de estado o API.
+*   **Delegación en el Store**: El Servicio de Estado (Store) debe delegar la tarea de mapeo a la clase `Mapper` correspondiente, manteniendo su propio código enfocado exclusivamente en la gestión de los `signals`.
