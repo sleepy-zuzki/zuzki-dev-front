@@ -35,7 +35,7 @@ const PLATFORM_CONFIG: Record<PlatformKey, PlatformConfig> = {
   x: {
     key: 'x',
     href: 'https://x.com/sleepy_zuzki',
-    icon: 'bootstrapTwitterX', // Ícono de Twitter como representación de X
+    icon: 'bootstrapTwitterX',
     aria: 'Visitar perfil de X'
   }
 };

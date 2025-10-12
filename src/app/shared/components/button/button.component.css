@@ -17,7 +17,7 @@
 
 /* Variantes (tokens del tema) */
 .btn--brand {
-  @apply bg-brand-primary text-white hover:bg-brand-primary-hover;
+  @apply bg-brand-primary text-black dark:text-white hover:bg-brand-primary-hover;
 }
 
 .btn--secondary {
