@@ -2,10 +2,7 @@ import { Component, Input, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherLoader } from '@ng-icons/feather-icons';
-
-type ButtonVariant = 'brand' | 'secondary' | 'outline' | 'ghost' | 'link';
-type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
-type ButtonType = 'button' | 'submit' | 'reset';
+import { ButtonVariant, ButtonSize, ButtonType } from '@core/types/ui.types';
 
 @Component({
   selector: 'app-button',

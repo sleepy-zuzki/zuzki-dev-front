@@ -6,8 +6,8 @@ import { TypographyTitleComponent } from '@shared/components/typography/title.co
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
-import { CreateTechnologyForm } from './technologies-admin.types';
 import { toSlug } from '@shared/utils/slug.util';
+import { CreateTechnologyForm } from '@core/interfaces/forms/technology.forms';
 
 @Component({
   standalone: true,

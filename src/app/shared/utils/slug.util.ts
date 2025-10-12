@@ -20,8 +20,8 @@ export function toSlug(text: string): string {
     .replace(/\s+/g, '-') // Reemplaza espacios con -
     .replace(p, c => b.charAt(a.indexOf(c))) // Reemplaza caracteres especiales
     .replace(/&/g, '-and-') // Reemplaza & con 'and'
-    .replace(/[^\w\-]+/g, '') // Elimina caracteres no válidos
-    .replace(/\-\-+/g, '-') // Reemplaza múltiples - con uno solo
+    .replace(/[^\w-]+/g, '') // Elimina caracteres no válidos
+    .replace(/--+/g, '-') // Reemplaza múltiples - con uno solo
     .replace(/^-+/, '') // Elimina - del inicio
     .replace(/-+$/, ''); // Elimina - del final
 }

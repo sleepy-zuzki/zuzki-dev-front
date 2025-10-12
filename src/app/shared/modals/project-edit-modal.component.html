@@ -1,0 +1,124 @@
+<app-modal title="Editar Proyecto" size="lg" (close)="onClose()">
+  @if (form) {
+    <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+      <fieldset class="form-fieldset">
+        <legend class="sr-only">Detalles del Proyecto</legend>
+
+        <!-- Nombre -->
+        <div class="form-field-group--span-3">
+          <app-input label="Nombre" id="edit-name" formControlName="name" placeholder="Mi proyecto">
+            Nombre requerido (2-150 caracteres)
+          </app-input>
+        </div>
+
+        <!-- Slug (Visible pero deshabilitado) -->
+        <div class="form-field-group--span-3">
+          <app-input label="Slug (auto-generado)" id="edit-slug" formControlName="slug" placeholder="mi-proyecto">
+            Slug requerido (kebab-case, 2-160)
+          </app-input>
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-field-group--span-6">
+          <app-input
+            label="Descripción (opcional)"
+            id="edit-description"
+            formControlName="description"
+            placeholder="Resumen del proyecto (máx. 1000)"
+            controlType="textarea"
+            [rows]="3"
+          >
+            Máximo 1000 caracteres
+          </app-input>
+        </div>
+
+        <!-- Live URL -->
+        <div class="form-field-group--span-3">
+          <app-input
+            label="Live URL (opcional)"
+            id="edit-liveUrl"
+            type="url"
+            formControlName="liveUrl"
+            placeholder="https://demo.ejemplo.com"
+          >
+            URL inválida (http/https)
+          </app-input>
+        </div>
+
+        <!-- Repo URL -->
+        <div class="form-field-group--span-3">
+          <app-input
+            label="Repo URL (opcional)"
+            id="edit-repoUrl"
+            type="url"
+            formControlName="repoUrl"
+            placeholder="https://github.com/usuario/repo"
+          >
+            URL inválida (http/https)
+          </app-input>
+        </div>
+
+        <!-- Categoría -->
+        <div class="form-field-group--span-2">
+          <app-input
+            label="Categoría (opcional)"
+            id="edit-category"
+            formControlName="category"
+            placeholder="web, mobile, etc."
+          />
+        </div>
+
+        <!-- Año -->
+        <div class="form-field-group--span-2">
+          <app-input label="Año (opcional)" id="edit-year" type="number" formControlName="year" placeholder="2024">
+            Entre 1900 y 2100
+          </app-input>
+        </div>
+
+        <!-- ID Imagen Previa -->
+        <div class="form-field-group--span-2">
+          <app-input
+            label="ID imagen previa (opcional)"
+            id="edit-previewImageId"
+            type="number"
+            formControlName="previewImageId"
+            placeholder="Ej: 12"
+          >
+            Debe ser un entero >= 1
+          </app-input>
+        </div>
+
+        <!-- Tecnologías -->
+        <div class="form-field-group--span-4">
+          <app-select
+            label="Tecnologías"
+            id="edit-technologyIds"
+            formControlName="technologyIds"
+            [options]="technologies"
+            [multiple]="true"
+            placeholder="Seleccionar tecnologías..."
+          ></app-select>
+        </div>
+
+        <!-- Destacado -->
+        <div class="form-field-group--span-6">
+          <app-checkbox id="edit-isFeatured" formControlName="isFeatured">
+            Destacado
+          </app-checkbox>
+        </div>
+      </fieldset>
+
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <button type="button" (click)="onClose()" class="form-button form-button--secondary">
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="form.invalid" class="form-button form-button--primary">
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  } @else {
+    <p>Cargando datos del proyecto...</p>
+  }
+</app-modal>

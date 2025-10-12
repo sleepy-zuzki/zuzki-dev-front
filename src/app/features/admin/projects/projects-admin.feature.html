@@ -19,21 +19,21 @@
           <legend class="projects-admin__legend">Detalles del Proyecto</legend>
 
           <!-- Nombre -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+          <div class="projects-admin__field-group--span-3">
             <app-input label="Nombre" id="name" formControlName="name" placeholder="Mi proyecto">
               Nombre requerido (2-150 caracteres)
             </app-input>
           </div>
 
           <!-- Slug (Visible pero deshabilitado) -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+          <div class="projects-admin__field-group--span-3">
             <app-input label="Slug (auto-generado)" id="slug" formControlName="slug" placeholder="mi-proyecto">
               Slug requerido (kebab-case, 2-160)
             </app-input>
           </div>
 
           <!-- Descripción -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-6">
+          <div class="projects-admin__field-group--span-6">
             <app-input
               label="Descripción (opcional)"
               id="description"
@@ -47,7 +47,7 @@
           </div>
 
           <!-- Live URL -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+          <div class="projects-admin__field-group--span-3">
             <app-input
               label="Live URL (opcional)"
               id="liveUrl"
@@ -60,7 +60,7 @@
           </div>
 
           <!-- Repo URL -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+          <div class="projects-admin__field-group--span-3">
             <app-input
               label="Repo URL (opcional)"
               id="repoUrl"
@@ -73,7 +73,7 @@
           </div>
 
           <!-- Categoría -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-2">
+          <div class="projects-admin__field-group--span-2">
             <app-input
               label="Categoría (opcional)"
               id="category"
@@ -83,14 +83,14 @@
           </div>
 
           <!-- Año -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-2">
+          <div class="projects-admin__field-group--span-2">
             <app-input label="Año (opcional)" id="year" type="number" formControlName="year" placeholder="2024">
               Entre 1900 y 2100
             </app-input>
           </div>
 
           <!-- ID Imagen Previa -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-2">
+          <div class="projects-admin__field-group--span-2">
             <app-input
               label="ID imagen previa (opcional)"
               id="previewImageId"
@@ -103,7 +103,7 @@
           </div>
 
           <!-- Tecnologías -->
-          <div class="projects-admin__field-group projects-admin__field-group--span-4">
+          <div class="projects-admin__field-group--span-4">
             <app-select
               label="Tecnologías"
               id="technologyIds"
@@ -142,24 +142,47 @@
       <app-typography-text variant="muted">Cargando proyectos…</app-typography-text>
     } @else if (error()) {
       <div role="alert" class="projects-admin__alert">
+
         <app-typography-text [class]="'projects-admin__alert-text'">{{ error() }}</app-typography-text>
+
         <button
+
           type="button"
+
           (click)="reload()"
+
           class="projects-admin__reload-button"
+
           aria-label="Reintentar cargar proyectos"
+
         >
+
           Reintentar
+
         </button>
+
       </div>
     } @else if (projects().length === 0) {
       <app-typography-text>No hay proyectos aún.</app-typography-text>
     } @else {
       <ul role="list" class="projects-admin__project-list">
         @for (p of projects(); track p.id) {
-          <app-project-card [project]="p"></app-project-card>
+          <app-project-card
+            [project]="p"
+            [isAdmin]="true"
+            (edit)="onEditProject($event)"
+            (delete)="onDeleteProject($event)"
+          ></app-project-card>
         }
       </ul>
     }
   </section>
 </main>
+
+<app-project-edit-modal
+  [isOpen]="isEditModalOpen()"
+  [project]="selectedProject()"
+  [technologies]="technologies()"
+  (save)="onSaveProject($event)"
+  (closeModal)="onCloseModal()"
+></app-project-edit-modal>

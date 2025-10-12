@@ -36,13 +36,32 @@
     <app-tags-list [tags]="tags"></app-tags-list>
 
     <nav class="mt-auto" aria-label="Acciones del proyecto">
-      <button
-        type="button"
-        (click)="openProjectModal(projectModal)"
-        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
-        [attr.aria-label]="'Ver detalles del proyecto ' + project.name">
-        Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
-      </button>
+      @if (isAdmin) {
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            (click)="onEdit()"
+            class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
+            [attr.aria-label]="'Editar proyecto ' + project.name">
+            Editar
+          </button>
+          <button
+            type="button"
+            (click)="onDelete()"
+            class="px-2 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+            [attr.aria-label]="'Eliminar proyecto ' + project.name">
+            <ng-icon name="bootstrapTrash" />
+          </button>
+        </div>
+      } @else {
+        <button
+          type="button"
+          (click)="openProjectModal(projectModal)"
+          class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-zuzki-500 text-white hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-ui-accent"
+          [attr.aria-label]="'Ver detalles del proyecto ' + project.name">
+          Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
+        </button>
+      }
     </nav>
   </div>
 </article>

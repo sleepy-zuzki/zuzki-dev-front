@@ -1,5 +1,5 @@
-<main id="technologies-admin" aria-label="Gestión de Tecnologías" class="technologies-admin">
-  <header class="technologies-admin__header">
+<main class="page-container" aria-label="Gestión de Tecnologías">
+  <header class="page-header">
     <app-typography-title [level]="1" variant="page">
       Gestión de Tecnologías
     </app-typography-title>
@@ -8,30 +8,30 @@
     </app-typography-text>
   </header>
 
-  <section aria-label="Crear nueva tecnología" class="technologies-admin__create-section">
-    <app-typography-title [level]="2" variant="section" class="technologies-admin__section-title">
+  <section class="create-section" aria-label="Crear nueva tecnología">
+    <app-typography-title [level]="2" variant="section" class="section-title">
       Crear nueva tecnología
     </app-typography-title>
 
-    <div class="technologies-admin__form-wrapper">
+    <div class="form-wrapper">
       <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
-        <fieldset class="technologies-admin__fieldset">
-          <legend class="technologies-admin__legend">Detalles de la Tecnología</legend>
+        <fieldset class="form-fieldset">
+          <legend class="sr-only">Detalles de la Tecnología</legend>
 
           <!-- Nombre -->
-          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+          <div class="field-group--span-3">
             <app-input label="Nombre" id="name" formControlName="name" placeholder="Ej: Angular">
               Nombre requerido (2-100 caracteres)
             </app-input>
           </div>
 
           <!-- Slug -->
-          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+          <div class="field-group--span-3">
             <app-input label="Slug (auto-generado)" id="slug" formControlName="slug" placeholder="ej-angular" />
           </div>
 
           <!-- Website URL -->
-          <div class="technologies-admin__field-group technologies-admin__field-group--span-6">
+          <div class="field-group--span-6">
             <app-input label="Website (opcional)" id="website" type="url" formControlName="website" placeholder="https://angular.io">
               Debe ser una URL válida
             </app-input>
@@ -39,11 +39,11 @@
 
         </fieldset>
 
-        <div class="technologies-admin__submit-wrapper">
+        <div class="submit-wrapper">
           <button
             type="submit"
             [disabled]="form.invalid || loading()"
-            class="technologies-admin__submit-button"
+            class="submit-button"
             aria-label="Crear tecnología"
           >
             Crear tecnología
@@ -53,16 +53,16 @@
     </div>
   </section>
 
-  <section aria-label="Listado de tecnologías" class="technologies-admin__list-section">
+  <section aria-label="Listado de tecnologías">
     @if (loading() && technologies().length === 0) {
       <app-typography-text variant="muted">Cargando tecnologías…</app-typography-text>
     } @else if (error()) {
-      <div role="alert" class="technologies-admin__alert">
-        <app-typography-text [class]="'technologies-admin__alert-text'">{{ error() }}</app-typography-text>
+      <div role="alert" class="alert">
+        <app-typography-text [class]="'alert__text'">{{ error() }}</app-typography-text>
         <button
           type="button"
           (click)="reload()"
-          class="technologies-admin__reload-button"
+          class="alert__reload-button"
           aria-label="Reintentar cargar tecnologías"
         >
           Reintentar
@@ -71,12 +71,10 @@
     } @else if (technologies().length === 0) {
       <app-typography-text>No hay tecnologías aún.</app-typography-text>
     } @else {
-      <div class="technologies-admin__list">
+      <div class="technology-list">
         @for (tech of technologies(); track tech.id) {
-          <div class="technologies-admin__list-item">
-            <div class="technologies-admin__tech-info">
-              <span class="technologies-admin__tech-name">{{ tech.name }}</span>
-            </div>
+          <div class="technology-list-item">
+            <span class="technology-list-item__name">{{ tech.name }}</span>
             <!-- Aquí se podrían añadir botones de editar/eliminar en el futuro -->
           </div>
         }

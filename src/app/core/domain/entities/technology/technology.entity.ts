@@ -1,5 +1,4 @@
 import { Technology } from '@core/domain';
-import { TechnologyCategory } from '@core/domain';
 
 export class TechnologyEntity implements Technology {
   constructor(

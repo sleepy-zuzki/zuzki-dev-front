@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   // Solo aplicamos a POST, PUT y DELETE
   const method = (req.method || '').toUpperCase();
-  if (method !== 'POST' && method !== 'PUT' && method !== 'DELETE') {
+  if (method !== 'POST' && method !== 'PUT' && method !== 'DELETE' && method !== 'PATCH') {
     return next(req);
   }
 

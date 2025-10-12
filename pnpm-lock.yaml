@@ -9,43 +9,43 @@ importers:
   .:
     dependencies:
       '@angular/common':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2)
       '@angular/compiler':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3
       '@angular/core':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)
       '@angular/forms':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@angular/platform-browser@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)))(rxjs@7.8.2)
       '@angular/platform-browser':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))
       '@angular/platform-browser-dynamic':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/compiler@20.3.3)(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@angular/platform-browser@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)))
       '@angular/platform-server':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/compiler@20.3.3)(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@angular/platform-browser@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)))(rxjs@7.8.2)
       '@angular/router':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@angular/platform-browser@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)))(rxjs@7.8.2)
       '@angular/ssr':
-        specifier: ^20.3.4
+        specifier: 20.3.4
         version: 20.3.4(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@angular/platform-server@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/compiler@20.3.3)(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@angular/platform-browser@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)))(rxjs@7.8.2))(@angular/router@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@angular/platform-browser@20.3.3(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)))(rxjs@7.8.2))
       '@eslint/js':
-        specifier: ^9.36.0
+        specifier: 9.36.0
         version: 9.36.0
       '@ng-icons/bootstrap-icons':
-        specifier: ^32.1.0
+        specifier: 32.1.0
         version: 32.1.0
       '@ng-icons/core':
-        specifier: ^32.1.0
+        specifier: 32.1.0
         version: 32.1.0(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2)
       '@ng-icons/feather-icons':
-        specifier: ^32.1.0
+        specifier: 32.1.0
         version: 32.1.0
       '@ngneat/overview':
         specifier: 6.1.2
@@ -54,56 +54,56 @@ importers:
         specifier: 5.1.1
         version: 5.1.1(@angular/common@20.3.3(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2))(@ngneat/overview@6.1.2(@angular/core@20.3.3(@angular/compiler@20.3.3)(rxjs@7.8.2)))
       '@tailwindcss/postcss':
-        specifier: ^4.1.14
+        specifier: 4.1.14
         version: 4.1.14
       normalize.css:
-        specifier: ^8.0.1
+        specifier: 8.0.1
         version: 8.0.1
       postcss:
-        specifier: ^8.5.6
+        specifier: 8.5.6
         version: 8.5.6
       rxjs:
         specifier: ~7.8.2
         version: 7.8.2
       tslib:
-        specifier: ^2.8.1
+        specifier: 2.8.1
         version: 2.8.1
       typescript-eslint:
-        specifier: ^8.45.0
+        specifier: 8.45.0
         version: 8.45.0(eslint@9.36.0(jiti@2.6.1))(typescript@5.8.2)
     devDependencies:
       '@angular/build':
-        specifier: ^20.3.4
+        specifier: 20.3.4
         version: 20.3.4(brl4udejesj5j3u7tvyxv3uh64)
       '@angular/cli':
-        specifier: ^20.3.4
+        specifier: 20.3.4
         version: 20.3.4(@types/node@24.6.2)(chokidar@4.0.3)
       '@angular/compiler-cli':
-        specifier: ^20.3.3
+        specifier: 20.3.3
         version: 20.3.3(@angular/compiler@20.3.3)(typescript@5.8.2)
       '@types/jasmine':
         specifier: ~5.1.9
         version: 5.1.9
       '@types/node':
-        specifier: ^24.6.2
+        specifier: 24.6.2
         version: 24.6.2
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.45.0
+        specifier: 8.45.0
         version: 8.45.0(@typescript-eslint/parser@8.45.0(eslint@9.36.0(jiti@2.6.1))(typescript@5.8.2))(eslint@9.36.0(jiti@2.6.1))(typescript@5.8.2)
       '@typescript-eslint/parser':
-        specifier: ^8.45.0
+        specifier: 8.45.0
         version: 8.45.0(eslint@9.36.0(jiti@2.6.1))(typescript@5.8.2)
       axe-core:
-        specifier: ^4.10.3
+        specifier: 4.10.3
         version: 4.10.3
       eslint:
-        specifier: ^9.36.0
+        specifier: 9.36.0
         version: 9.36.0(jiti@2.6.1)
       eslint-import-resolver-typescript:
-        specifier: ^4.4.4
+        specifier: 4.4.4
         version: 4.4.4(eslint-plugin-import@2.32.0)(eslint@9.36.0(jiti@2.6.1))
       eslint-plugin-import:
-        specifier: ^2.32.0
+        specifier: 2.32.0
         version: 2.32.0(@typescript-eslint/parser@8.45.0(eslint@9.36.0(jiti@2.6.1))(typescript@5.8.2))(eslint-import-resolver-typescript@4.4.4)(eslint@9.36.0(jiti@2.6.1))
       jasmine-core:
         specifier: ~5.9.0
@@ -124,16 +124,16 @@ importers:
         specifier: ~2.1.0
         version: 2.1.0(jasmine-core@5.9.0)(karma-jasmine@5.1.0(karma@6.4.4))(karma@6.4.4)
       tailwindcss:
-        specifier: ^4.1.14
+        specifier: 4.1.14
         version: 4.1.14
       typescript:
         specifier: 5.8.2
         version: 5.8.2
       wrangler:
-        specifier: ^4.42.0
+        specifier: 4.42.0
         version: 4.42.0
       xhr2:
-        specifier: ^0.2.1
+        specifier: 0.2.1
         version: 0.2.1
 
 packages:
@@ -7361,7 +7361,7 @@ snapshots:
 
   istanbul-lib-instrument@6.0.3:
     dependencies:
-      '@babel/core': 7.28.3
+      '@babel/core': 7.28.4
       '@babel/parser': 7.28.4
       '@istanbuljs/schema': 0.1.3
       istanbul-lib-coverage: 3.2.2

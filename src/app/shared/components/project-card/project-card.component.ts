@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
 import {
   bootstrapArrowRightShort,
   bootstrapArrowUpRight,
   bootstrapGithub,
+  bootstrapTrash,
 } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { ProjectEntity } from '@core/domain';
@@ -30,11 +31,16 @@ import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.com
       bootstrapArrowRightShort,
       bootstrapArrowUpRight,
       bootstrapGithub,
+      bootstrapTrash,
     }),
   ],
 })
 export class ProjectCardComponent {
   @Input({ required: true }) project!: ProjectEntity;
+  @Input() isAdmin = false;
+
+  @Output() edit = new EventEmitter<ProjectEntity>();
+  @Output() delete = new EventEmitter<number>();
 
   get imageUrl(): string | undefined {
     if (!this.project) return undefined;
@@ -56,5 +62,13 @@ export class ProjectCardComponent {
 
   openProjectModal(modal: ProjectInfoModalComponent) {
     modal.open();
+  }
+
+  onEdit(): void {
+    this.edit.emit(this.project);
+  }
+
+  onDelete(): void {
+    this.delete.emit(this.project.id);
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
@@ -6,12 +6,15 @@ import { TypographyTextComponent } from '@shared/components/typography/text.comp
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
 import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CreateProjectForm } from './projects-admin.types';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
 import { AppSelectComponent } from '@shared/components/select/app-select.component';
 import { toSlug } from '@shared/utils/slug.util';
+import { ProjectEditModalComponent } from '@shared/modals/project-edit-modal.component';
+import { ProjectEntity } from '@core/domain';
+import { UpdateProjectDto } from '@app/application';
+import { CreateProjectForm } from '@core/interfaces/forms/project.forms';
 
 @Component({
   standalone: true,
@@ -25,9 +28,10 @@ import { toSlug } from '@shared/utils/slug.util';
     AppInputComponent,
     AppCheckboxComponent,
     AppSelectComponent,
+    ProjectEditModalComponent,
   ],
   templateUrl: './projects-admin.feature.html',
-  styleUrls: ['./projects-admin.feature.scss'],
+  styleUrls: ['./projects-admin.feature.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsAdminFeatureComponent {
@@ -40,6 +44,9 @@ export class ProjectsAdminFeatureComponent {
   error = this.projectStore.error;
 
   technologies = this.technologyStore.technologies;
+
+  isEditModalOpen = signal(false);
+  selectedProject = signal<ProjectEntity | null>(null);
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
@@ -79,7 +86,6 @@ export class ProjectsAdminFeatureComponent {
       this.form.markAllAsTouched();
       return;
     }
-    // Usamos getRawValue() para obtener el valor del campo slug aunque esté deshabilitado
     const raw = this.form.getRawValue();
 
     this.projectStore.createProject({
@@ -94,6 +100,28 @@ export class ProjectsAdminFeatureComponent {
       technologyIds: raw.technologyIds,
       previewImageId: this.parseNumber(raw.previewImageId),
     });
+    this.form.reset();
+  }
+
+  onEditProject(project: ProjectEntity): void {
+    this.selectedProject.set(project);
+    this.isEditModalOpen.set(true);
+  }
+
+  onDeleteProject(id: number): void {
+    if (confirm('¿Estás seguro de que quieres eliminar este proyecto?')) {
+      this.projectStore.deleteProject(id);
+    }
+  }
+
+  onSaveProject(event: { id: number; data: UpdateProjectDto }): void {
+    this.projectStore.updateProject(event.id, event.data);
+    this.onCloseModal();
+  }
+
+  onCloseModal(): void {
+    this.isEditModalOpen.set(false);
+    this.selectedProject.set(null);
   }
 
   private parseNumber(value: number | string | null | undefined): number | null {
@@ -104,7 +132,4 @@ export class ProjectsAdminFeatureComponent {
     const n = parseInt(String(value).trim(), 10);
     return Number.isFinite(n) ? n : null;
   }
-
-  // Helpers de template
-  get f() { return this.form.controls; }
 }
