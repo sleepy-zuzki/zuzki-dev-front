@@ -7,12 +7,11 @@ import { bootstrapChevronLeft, bootstrapChevronRight } from '@ng-icons/bootstrap
 import { featherGithub } from '@ng-icons/feather-icons';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { TypographyTextComponent } from '@components/typography/text.component';
-import { ButtonComponent } from '@components/button/button.component';
 
 @Component({
   selector: 'app-project-info-modal',
   standalone: true,
-  imports: [CommonModule, ModalComponent, NgIcon, TypographyTitleComponent, TypographyTextComponent, ButtonComponent],
+  imports: [CommonModule, ModalComponent, NgIcon, TypographyTitleComponent, TypographyTextComponent],
   templateUrl: './project-info-modal.component.html',
   styleUrls: ['./project-info-modal.component.css'],
   providers: [provideIcons({ bootstrapChevronLeft, bootstrapChevronRight, featherGithub })],
