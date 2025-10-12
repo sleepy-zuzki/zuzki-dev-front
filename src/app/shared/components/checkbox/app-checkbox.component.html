@@ -1,0 +1,12 @@
+<label [for]="id" class="checkbox-label">
+  <input
+    [id]="id"
+    type="checkbox"
+    [checked]="value"
+    [disabled]="isDisabled"
+    (change)="onCheckboxChange($event)"
+    class="form-checkbox"
+  />
+  <!-- El texto del label se proyectará aquí -->
+  <ng-content></ng-content>
+</label>

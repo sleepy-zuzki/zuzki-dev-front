@@ -1,0 +1,9 @@
+@reference "../../../../styles/utilities.css";
+
+.checkbox-label {
+  @apply inline-flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-200;
+}
+
+.form-checkbox {
+  @apply rounded border-gray-300 text-zuzki-500 dark:border-gray-600 focus-brand;
+}

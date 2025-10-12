@@ -1,0 +1,26 @@
+@reference "../../../../styles/utilities.css";
+
+/* Contenedor principal para el campo, etiqueta y error */
+.form-field {
+  @apply w-full;
+}
+
+/* Estilo para la etiqueta <label> */
+.form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1;
+}
+
+/* Estilo para el campo <input> */
+.form-input {
+  @apply form-input-base;
+}
+
+/* Estilo para el campo <textarea> */
+.form-textarea {
+  @apply form-input-base;
+}
+
+/* Estilo para el texto de error de validación */
+.error-text {
+  @apply mt-1 text-xs text-red-600 dark:text-red-400;
+}
