@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
-import { ProjectHttpAdapter } from '@infrastructure/adapters/secondary/project/project-http.adapter';
+import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
 import { TechnologyHttpAdapter } from '@infrastructure/adapters/secondary/technology/technology-http.adapter';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateProjectForm } from './projects-admin.types';
@@ -16,13 +16,13 @@ import { ProjectCardComponent } from '@components/project-card/project-card.comp
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsAdminFeatureComponent {
-  private projectAdapter = inject(ProjectHttpAdapter);
+  private projectStore = inject(ProjectStore);
   private techsAdapter = inject(TechnologyHttpAdapter);
   private fb = inject(NonNullableFormBuilder);
 
-  projects = this.projectAdapter.projects;
-  loading = this.projectAdapter.loading;
-  error = this.projectAdapter.error;
+  projects = this.projectStore.projects;
+  loading = this.projectStore.loading;
+  error = this.projectStore.error;
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
@@ -38,12 +38,12 @@ export class ProjectsAdminFeatureComponent {
   });
 
   constructor() {
-    this.projectAdapter.getProjects();
+    this.projectStore.getProjects();
     this.techsAdapter.getTechnologies();
   }
 
   reload(): void {
-    this.projectAdapter.getProjects();
+    this.projectStore.getProjects();
     this.techsAdapter.getTechnologies();
   }
 
@@ -55,7 +55,7 @@ export class ProjectsAdminFeatureComponent {
     const raw = this.form.getRawValue();
     const technologyIds = this.parseIds(raw.technologyIds);
 
-    this.projectAdapter.createProject({
+    this.projectStore.createProject({
       name: raw.name,
       slug: raw.slug,
       description: raw.description ?? null,

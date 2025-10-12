@@ -1,43 +1,31 @@
-import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, signal, computed, WritableSignal, Signal, inject } from '@angular/core';
 
 import { ProjectRepository, CreateProjectRequest, UpdateProjectRequest, AddImageToCarouselRequest, ReorderCarouselImagesRequest } from '@domain/repositories/project.repository.interface';
-import { ProjectEntity } from '@core/domain';
-import { TechnologyEntity } from '@core/domain';
-import { FileEntity } from '@core/domain';
-import { TechnologyCategory } from '@core/domain';
-import { CreateProjectDto, UpdateProjectDto, ProjectResponseDto, AddImageToCarouselDto, ReorderCarouselImagesDto } from '@app/application';
-import { ApiConfig } from '../../../config/api.config';
+import { ProjectEntity, TechnologyEntity, FileEntity, TechnologyCategory } from '@core/domain';
+import { ProjectResponseDto } from '@app/application';
+import { ProjectApiService } from './project-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectHttpAdapter extends ProjectRepository {
+export class ProjectStore extends ProjectRepository {
+  private readonly apiService = inject(ProjectApiService);
+
   private _projects: WritableSignal<ProjectEntity[]> = signal([]);
   private _currentProject: WritableSignal<ProjectEntity | null> = signal(null);
   private _loading: WritableSignal<boolean> = signal(false);
   private _error: WritableSignal<string | null> = signal(null);
 
-  // Public readonly signals
-  public readonly projects: Signal<ProjectEntity[]> = computed(() => this._projects());
-  public readonly currentProject: Signal<ProjectEntity | null> = computed(() => this._currentProject());
-  public readonly loading: Signal<boolean> = computed(() => this._loading());
-  public readonly error: Signal<string | null> = computed(() => this._error());
-
-  constructor(
-    private readonly http: HttpClient,
-    private readonly apiConfig: ApiConfig
-  ) {
-    super();
-  }
+  public readonly projects: Signal<ProjectEntity[]> = this._projects.asReadonly();
+  public readonly currentProject: Signal<ProjectEntity | null> = this._currentProject.asReadonly();
+  public readonly loading: Signal<boolean> = this._loading.asReadonly();
+  public readonly error: Signal<string | null> = this._error.asReadonly();
 
   getProjects(): void {
     this._loading.set(true);
     this._error.set(null);
 
-    this.http.get<ProjectResponseDto[]>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base)
-    ).subscribe({
+    this.apiService.getProjects().subscribe({
       next: (projects) => {
         const mappedProjects = projects.map(this.mapToProjectEntity);
         this._projects.set(mappedProjects);
@@ -54,9 +42,7 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.http.get<ProjectResponseDto>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.bySlug(slug))
-    ).subscribe({
+    this.apiService.getProjectBySlug(slug).subscribe({
       next: (project) => {
         const mappedProject = this.mapToProjectEntity(project);
         this._currentProject.set(mappedProject);
@@ -73,27 +59,10 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    const createDto: CreateProjectDto = {
-      name: request.name,
-      slug: request.slug,
-      description: request.description ?? null,
-      repoUrl: request.repoUrl ?? null,
-      liveUrl: request.liveUrl ?? null,
-      category: request.category ?? null,
-      year: request.year ?? null,
-      isFeatured: request.isFeatured,
-      technologyIds: request.technologyIds,
-      previewImageId: request.previewImageId ?? null
-    };
-
-    this.http.post<ProjectResponseDto>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base),
-      createDto
-    ).subscribe({
+    this.apiService.createProject(request).subscribe({
       next: (project) => {
         const mappedProject = this.mapToProjectEntity(project);
-        const currentProjects = this._projects();
-        this._projects.set([...currentProjects, mappedProject]);
+        this._projects.update(currentProjects => [...currentProjects, mappedProject]);
         this._currentProject.set(mappedProject);
         this._loading.set(false);
       },
@@ -108,29 +77,13 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    const updateDto: UpdateProjectDto = {
-      name: request.name,
-      slug: request.slug,
-      description: request.description ?? null,
-      repoUrl: request.repoUrl ?? null,
-      liveUrl: request.liveUrl ?? null,
-      category: request.category ?? null,
-      year: request.year ?? null,
-      isFeatured: request.isFeatured,
-      technologyIds: request.technologyIds ?? null,
-      previewImageId: request.previewImageId ?? null
-    };
-
-    this.http.patch<ProjectResponseDto>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id)),
-      updateDto
-    ).subscribe({
+    this.apiService.updateProject(id, request).subscribe({
       next: (project) => {
         const mappedProject = this.mapToProjectEntity(project);
-        const currentProjects = this._projects();
-        const updatedProjects = currentProjects.map(p => p.id === id ? mappedProject : p);
-        this._projects.set(updatedProjects);
-        this._currentProject.set(mappedProject);
+        this._projects.update(projects => projects.map(p => p.id === id ? mappedProject : p));
+        if (this._currentProject()?.id === id) {
+          this._currentProject.set(mappedProject);
+        }
         this._loading.set(false);
       },
       error: (error) => {
@@ -144,13 +97,12 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.http.delete<{ success: boolean }>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id))
-    ).subscribe({
+    this.apiService.deleteProject(id).subscribe({
       next: () => {
-        const currentProjects = this._projects();
-        const filteredProjects = currentProjects.filter(p => p.id !== id);
-        this._projects.set(filteredProjects);
+        this._projects.update(projects => projects.filter(p => p.id !== id));
+        if (this._currentProject()?.id === id) {
+          this._currentProject.set(null);
+        }
         this._loading.set(false);
       },
       error: (error) => {
@@ -164,17 +116,8 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    const addImageDto: AddImageToCarouselDto = {
-      fileId: request.fileId,
-      position: request.position
-    };
-
-    this.http.post<void>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
-      addImageDto
-    ).subscribe({
+    this.apiService.addImageToCarousel(projectId, request).subscribe({
       next: () => {
-        // Recargar el proyecto actual para obtener las imágenes actualizadas
         const currentProject = this._currentProject();
         if (currentProject?.id === projectId) {
           this.getProjectBySlug(currentProject.slug);
@@ -192,11 +135,8 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    this.http.delete<void>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.removeImage(projectId, fileId))
-    ).subscribe({
+    this.apiService.removeImageFromCarousel(projectId, fileId).subscribe({
       next: () => {
-        // Recargar el proyecto actual para obtener las imágenes actualizadas
         const currentProject = this._currentProject();
         if (currentProject?.id === projectId) {
           this.getProjectBySlug(currentProject.slug);
@@ -214,16 +154,8 @@ export class ProjectHttpAdapter extends ProjectRepository {
     this._loading.set(true);
     this._error.set(null);
 
-    const reorderDto: ReorderCarouselImagesDto = {
-      images: request.images
-    };
-
-    this.http.patch<void>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
-      reorderDto
-    ).subscribe({
+    this.apiService.reorderCarouselImages(projectId, request).subscribe({
       next: () => {
-        // Recargar el proyecto actual para obtener las imágenes actualizadas
         const currentProject = this._currentProject();
         if (currentProject?.id === projectId) {
           this.getProjectBySlug(currentProject.slug);

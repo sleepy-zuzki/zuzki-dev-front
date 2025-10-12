@@ -11,7 +11,7 @@ import { StackRepository } from '../../core/domain/repositories/stack.repository
 // Infrastructure Adapters (Implementations)
 import { AuthHttpAdapter } from '../adapters/secondary/auth/auth-http.adapter';
 import { UserHttpAdapter } from '../adapters/secondary/user/user-http.adapter';
-import { ProjectHttpAdapter } from '../adapters/secondary/project/project-http.adapter';
+import { ProjectStore } from '../adapters/secondary/project/project.store';
 import { FileHttpAdapter } from '../adapters/secondary/file/file-http.adapter';
 import { TechnologyHttpAdapter } from '../adapters/secondary/technology/technology-http.adapter';
 import { StackHttpAdapter } from '../adapters/secondary/stack/stack-http.adapter';
@@ -37,7 +37,7 @@ export const REPOSITORY_PROVIDERS: Provider[] = [
   // Project Repository
   {
     provide: ProjectRepository,
-    useClass: ProjectHttpAdapter
+    useClass: ProjectStore
   },
 
   // File Repository
