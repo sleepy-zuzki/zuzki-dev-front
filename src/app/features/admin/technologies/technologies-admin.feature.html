@@ -1,0 +1,130 @@
+<main id="technologies-admin" aria-label="Gestión de Tecnologías" class="technologies-admin">
+  <header class="technologies-admin__header">
+    <app-typography-title [level]="1" variant="page">
+      Gestión de Tecnologías
+    </app-typography-title>
+    <app-typography-text variant="muted">
+      Aquí podrás crear y editar las tecnologías del portfolio.
+    </app-typography-text>
+  </header>
+
+  <section aria-label="Crear nueva tecnología" class="technologies-admin__create-section">
+    <app-typography-title [level]="2" variant="section" class="technologies-admin__section-title">
+      Crear nueva tecnología
+    </app-typography-title>
+
+    <div class="technologies-admin__form-wrapper">
+      <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
+        <fieldset class="technologies-admin__fieldset">
+          <legend class="technologies-admin__legend">Detalles de la Tecnología</legend>
+
+          <!-- Nombre -->
+          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+            <app-input label="Nombre" id="name" formControlName="name" placeholder="Ej: Angular">
+              Nombre requerido (2-100 caracteres)
+            </app-input>
+          </div>
+
+          <!-- Slug -->
+          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+            <app-input label="Slug (auto-generado)" id="slug" formControlName="slug" placeholder="ej-angular" />
+          </div>
+
+          <!-- Categoría -->
+          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+            <app-select
+              label="Categoría"
+              id="category"
+              formControlName="category"
+              [options]="categoryOptions"
+              placeholder="Seleccionar categoría..."
+            >
+              Categoría requerida
+            </app-select>
+          </div>
+
+          <!-- Color -->
+          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+            <app-input label="Color (opcional)" id="color" formControlName="color" placeholder="#FFFFFF">
+              Debe ser un color hexadecimal válido (ej: #A4B2C1)
+            </app-input>
+          </div>
+
+          <!-- Icon URL -->
+          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+            <app-input label="Icon URL (opcional)" id="iconUrl" type="url" formControlName="iconUrl" placeholder="https://.../icon.svg">
+              Debe ser una URL válida
+            </app-input>
+          </div>
+
+          <!-- Website URL -->
+          <div class="technologies-admin__field-group technologies-admin__field-group--span-3">
+            <app-input label="Website URL (opcional)" id="websiteUrl" type="url" formControlName="websiteUrl" placeholder="https://angular.io">
+              Debe ser una URL válida
+            </app-input>
+          </div>
+
+          <!-- Descripción -->
+          <div class="technologies-admin__field-group technologies-admin__field-group--span-6">
+            <app-input
+              label="Descripción (opcional)"
+              id="description"
+              formControlName="description"
+              placeholder="Breve descripción de la tecnología..."
+              controlType="textarea"
+              [rows]="3"
+            >
+              Máximo 1000 caracteres
+            </app-input>
+          </div>
+
+        </fieldset>
+
+        <div class="technologies-admin__submit-wrapper">
+          <button
+            type="submit"
+            [disabled]="form.invalid || loading()"
+            class="technologies-admin__submit-button"
+            aria-label="Crear tecnología"
+          >
+            Crear tecnología
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section aria-label="Listado de tecnologías" class="technologies-admin__list-section">
+    @if (loading() && technologies().length === 0) {
+      <app-typography-text variant="muted">Cargando tecnologías…</app-typography-text>
+    } @else if (error()) {
+      <div role="alert" class="technologies-admin__alert">
+        <app-typography-text [class]="'technologies-admin__alert-text'">{{ error() }}</app-typography-text>
+        <button
+          type="button"
+          (click)="reload()"
+          class="technologies-admin__reload-button"
+          aria-label="Reintentar cargar tecnologías"
+        >
+          Reintentar
+        </button>
+      </div>
+    } @else if (technologies().length === 0) {
+      <app-typography-text>No hay tecnologías aún.</app-typography-text>
+    } @else {
+      <div class="technologies-admin__list">
+        @for (tech of technologies(); track tech.id) {
+          <div class="technologies-admin__list-item">
+            <div class="technologies-admin__tech-info">
+              @if (tech.hasIcon()) {
+                <img [src]="tech.iconUrl" [alt]="tech.name" class="technologies-admin__tech-icon" />
+              }
+              <span class="technologies-admin__tech-name">{{ tech.name }}</span>
+            </div>
+            <!-- Aquí se podrían añadir botones de editar/eliminar en el futuro -->
+          </div>
+        }
+      </div>
+    }
+  </section>
+</main>

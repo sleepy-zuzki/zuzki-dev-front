@@ -1,0 +1,85 @@
+@reference "../../../../styles/utilities.css";
+
+/* Bloque principal del componente */
+.technologies-admin {
+  @apply min-h-[60vh] p-6;
+}
+
+/* --- Cabecera --- */
+.technologies-admin__header {
+  @apply mb-6;
+}
+
+/* --- Sección de Creación --- */
+.technologies-admin__create-section {
+  @apply mb-10;
+}
+
+.technologies-admin__section-title {
+  @apply mb-4;
+}
+
+.technologies-admin__form-wrapper {
+  @apply rounded-lg border border-gray-200 bg-gray-50 p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/50;
+}
+
+.technologies-admin__fieldset {
+  @apply grid md:grid-cols-2 gap-6;
+}
+
+.technologies-admin__legend {
+  @apply sr-only;
+}
+
+/* Contenedor genérico para un campo del formulario */
+.technologies-admin__field-group {
+  /* Modificadores de columna */
+  &--span-2 { @apply md:col-span-2; }
+  &--span-3 { @apply md:col-span-3; }
+  &--span-6 { @apply md:col-span-6; }
+}
+
+.technologies-admin__submit-wrapper {
+  @apply mt-8 flex justify-end;
+}
+
+.technologies-admin__submit-button {
+  @apply inline-flex items-center rounded-md bg-zuzki-500 px-4 py-2 text-white transition hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 disabled:opacity-50 dark:focus-visible:ring-zuzki-400;
+}
+
+/* --- Sección de Listado --- */
+.technologies-admin__list-section {
+  @apply space-y-4;
+}
+
+.technologies-admin__alert {
+  @apply rounded-md border border-red-300 bg-red-50 p-4 dark:border-red-700 dark:bg-red-900/30;
+}
+
+.technologies-admin__alert-text {
+  @apply block text-red-800 dark:text-red-300;
+}
+
+.technologies-admin__reload-button {
+  @apply mt-2 inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus-visible:ring-zuzki-400 transition;
+}
+
+.technologies-admin__list {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
+}
+
+.technologies-admin__list-item {
+  @apply flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800;
+}
+
+.technologies-admin__tech-info {
+  @apply flex items-center gap-3;
+}
+
+.technologies-admin__tech-icon {
+  @apply h-8 w-8;
+}
+
+.technologies-admin__tech-name {
+  @apply font-semibold text-gray-800 dark:text-gray-100;
+}

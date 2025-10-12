@@ -38,6 +38,12 @@ export const routes: Routes = [
     loadComponent: () => import('@pages/projects-admin.page').then(m => m.ProjectsAdminPage)
   },
   {
+    path: 'dashboard/technologies',
+    title: 'Tecnologías - Dashboard',
+    canActivate: [authGuard],
+    loadComponent: () => import('@pages/technologies-admin.page').then(m => m.TechnologiesAdminPage)
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'

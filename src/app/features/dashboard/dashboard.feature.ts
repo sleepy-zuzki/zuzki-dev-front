@@ -17,16 +17,31 @@ import { TypographyTextComponent } from '@shared/components/typography/text.comp
 
       <section aria-label="Acciones rápidas">
         <ul role="list" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Tarjeta de Proyectos -->
           <li>
             <a
               routerLink="/dashboard/projects"
-              class="block rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-md focus:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 transition"
+              class="block rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-md focus:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 dark:focus-visible:ring-zuzki-400 transition"
               aria-label="Gestionar proyectos"
             >
               <header class="mb-2">
                 <app-typography-title [level]="2" variant="card">Proyectos</app-typography-title>
               </header>
               <app-typography-text variant="muted">Crear, editar y organizar los proyectos del portafolio.</app-typography-text>
+            </a>
+          </li>
+
+          <!-- Tarjeta de Tecnologías -->
+          <li>
+            <a
+              routerLink="/dashboard/technologies"
+              class="block rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-md focus:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 dark:focus-visible:ring-zuzki-400 transition"
+              aria-label="Gestionar tecnologías"
+            >
+              <header class="mb-2">
+                <app-typography-title [level]="2" variant="card">Tecnologías</app-typography-title>
+              </header>
+              <app-typography-text variant="muted">Administrar el catálogo de tecnologías, lenguajes y herramientas.</app-typography-text>
             </a>
           </li>
         </ul>
