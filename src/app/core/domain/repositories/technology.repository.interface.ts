@@ -1,25 +1,18 @@
 import { Signal } from '@angular/core';
-import { TechnologyEntity } from '../entities/technology/technology.entity';
-import { TechnologyCategory } from '../enums/technology-category.enum';
+import { TechnologyEntity } from '@core/domain';
 
+// Simplificado para coincidir con la API
 export interface CreateTechnologyRequest {
   name: string;
   slug: string;
-  description?: string;
-  category: TechnologyCategory;
-  iconUrl?: string;
-  websiteUrl?: string;
-  color?: string;
+  website?: string;
 }
 
+// Simplificado para coincidir con la API
 export interface UpdateTechnologyRequest {
   name?: string;
   slug?: string;
-  description?: string;
-  category?: TechnologyCategory;
-  iconUrl?: string;
-  websiteUrl?: string;
-  color?: string;
+  website?: string;
 }
 
 export abstract class TechnologyRepository {

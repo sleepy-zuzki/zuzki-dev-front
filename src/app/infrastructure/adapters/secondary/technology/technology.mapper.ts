@@ -15,13 +15,7 @@ export class TechnologyMapper {
       dto.id,
       dto.name,
       dto.slug,
-      dto.description,
-      dto.category as TechnologyCategory,
-      dto.iconUrl,
-      dto.websiteUrl,
-      dto.color,
-      new Date(dto.createdAt),
-      new Date(dto.updatedAt)
+      dto.website
     );
   }
 }

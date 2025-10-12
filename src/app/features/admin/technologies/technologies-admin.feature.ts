@@ -6,11 +6,9 @@ import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } fr
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { AppInputComponent } from '@shared/components/input/app-input.component';
-import { AppSelectComponent, SelectOption } from '@shared/components/select/app-select.component';
 import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
 import { CreateTechnologyForm } from './technologies-admin.types';
 import { toSlug } from '@shared/utils/slug.util';
-import { TechnologyCategory } from '@core/domain';
 
 @Component({
   standalone: true,
@@ -21,7 +19,6 @@ import { TechnologyCategory } from '@core/domain';
     TypographyTitleComponent,
     TypographyTextComponent,
     AppInputComponent,
-    AppSelectComponent,
   ],
   templateUrl: './technologies-admin.feature.html',
   styleUrls: ['./technologies-admin.feature.css'],
@@ -35,20 +32,10 @@ export class TechnologiesAdminFeatureComponent {
   loading = this.technologyStore.loading;
   error = this.technologyStore.error;
 
-  // Prepara las opciones para el selector de categorías
-  categoryOptions: SelectOption[] = Object.values(TechnologyCategory).map(category => ({
-    value: category,
-    label: category.charAt(0).toUpperCase() + category.slice(1),
-  }));
-
   form: FormGroup<CreateTechnologyForm> = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
     slug: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)]],
-    description: this.fb.control<string | null>(null, [Validators.maxLength(1000)]),
-    category: this.fb.control<TechnologyCategory | null>(null, [Validators.required]),
-    iconUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i)]),
-    websiteUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i)]),
-    color: this.fb.control<string | null>(null, [Validators.pattern(/^#[0-9a-fA-F]{6}$/)]),
+    website: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i)]),
   });
 
   constructor() {
@@ -77,11 +64,7 @@ export class TechnologiesAdminFeatureComponent {
     this.technologyStore.createTechnology({
       name: raw.name,
       slug: raw.slug,
-      description: raw.description ?? undefined,
-      category: raw.category as TechnologyCategory, // El validador asegura que no sea null
-      iconUrl: raw.iconUrl ?? undefined,
-      websiteUrl: raw.websiteUrl ?? undefined,
-      color: raw.color ?? undefined,
+      website: raw.website ?? undefined,
     });
 
     this.form.reset();
