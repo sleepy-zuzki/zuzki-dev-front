@@ -3,26 +3,41 @@ import { CommonModule } from '@angular/common';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
-import { TechnologyHttpAdapter } from '@infrastructure/adapters/secondary/technology/technology-http.adapter';
+import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreateProjectForm } from './projects-admin.types';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
+import { AppInputComponent } from '@shared/components/input/app-input.component';
+import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
+import { AppSelectComponent } from '@shared/components/select/app-select.component';
 
 @Component({
   standalone: true,
   selector: 'app-projects-admin-feature',
-  imports: [CommonModule, ReactiveFormsModule, TypographyTitleComponent, TypographyTextComponent, ProjectCardComponent],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    TypographyTitleComponent,
+    TypographyTextComponent,
+    ProjectCardComponent,
+    AppInputComponent,
+    AppCheckboxComponent,
+    AppSelectComponent,
+  ],
   templateUrl: './projects-admin.feature.html',
+  styleUrls: ['./projects-admin.feature.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsAdminFeatureComponent {
   private projectStore = inject(ProjectStore);
-  private techsAdapter = inject(TechnologyHttpAdapter);
+  private technologyStore = inject(TechnologyStore);
   private fb = inject(NonNullableFormBuilder);
 
   projects = this.projectStore.projects;
   loading = this.projectStore.loading;
   error = this.projectStore.error;
+
+  technologies = this.technologyStore.technologies;
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
@@ -33,18 +48,18 @@ export class ProjectsAdminFeatureComponent {
     category: this.fb.control<string | null>(null),
     year: this.fb.control<number | null>(null, [Validators.min(1900), Validators.max(2100)]),
     isFeatured: this.fb.control<boolean>(false),
-    technologyIds: this.fb.control<string>(''),
+    technologyIds: this.fb.control<number[]>([]),
     previewImageId: this.fb.control<number | null>(null, [Validators.min(1)]),
   });
 
   constructor() {
     this.projectStore.getProjects();
-    this.techsAdapter.getTechnologies();
+    this.technologyStore.getTechnologies();
   }
 
   reload(): void {
     this.projectStore.getProjects();
-    this.techsAdapter.getTechnologies();
+    this.technologyStore.getTechnologies();
   }
 
   onCreate(): void {
@@ -53,7 +68,6 @@ export class ProjectsAdminFeatureComponent {
       return;
     }
     const raw = this.form.getRawValue();
-    const technologyIds = this.parseIds(raw.technologyIds);
 
     this.projectStore.createProject({
       name: raw.name,
@@ -64,20 +78,9 @@ export class ProjectsAdminFeatureComponent {
       category: raw.category ?? null,
       year: this.parseNumber(raw.year),
       isFeatured: !!raw.isFeatured,
-      technologyIds,
+      technologyIds: raw.technologyIds,
       previewImageId: this.parseNumber(raw.previewImageId),
     });
-
-    // Opcional: reset parcial conservando algunos valores
-    // this.form.reset({ isFeatured: raw.isFeatured }, { emitEvent: false });
-  }
-
-  private parseIds(input: string | null | undefined): number[] {
-    if (!input) return [];
-    return input
-      .split(',')
-      .map(s => parseInt(s.trim(), 10))
-      .filter(n => Number.isFinite(n));
   }
 
   private parseNumber(value: number | string | null | undefined): number | null {

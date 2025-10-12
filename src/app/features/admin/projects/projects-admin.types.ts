@@ -9,6 +9,6 @@ export type CreateProjectForm = {
   category: FormControl<string | null>;
   year: FormControl<number | null>;
   isFeatured: FormControl<boolean>;
-  technologyIds: FormControl<string>;
+  technologyIds: FormControl<number[]>;
   previewImageId: FormControl<number | null>;
 };

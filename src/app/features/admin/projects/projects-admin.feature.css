@@ -1,0 +1,79 @@
+@reference "../../../../styles/utilities.css";
+
+/* Bloque principal del componente */
+.projects-admin {
+  @apply min-h-[60vh] p-6;
+}
+
+/* --- Cabecera --- */
+.projects-admin__header {
+  @apply mb-6;
+}
+
+/* --- Sección de Creación de Proyecto --- */
+.projects-admin__create-section {
+  @apply mb-10;
+}
+
+.projects-admin__section-title {
+  @apply mb-4;
+}
+
+.projects-admin__form-wrapper {
+  @apply rounded-lg border border-gray-200 bg-gray-50 p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/50;
+}
+
+.projects-admin__fieldset {
+  @apply grid md:grid-cols-2 gap-4;
+}
+
+.projects-admin__legend {
+  @apply sr-only;
+}
+
+/* Contenedor genérico para un campo del formulario */
+.projects-admin__field-group {
+  /* Modificadores de columna */
+  &--span-2 { @apply md:col-span-2; }
+  &--span-3 { @apply md:col-span-3; }
+  &--span-4 { @apply md:col-span-4; }
+  &--span-6 { @apply md:col-span-6; }
+}
+
+/* Grupo específico para el checkbox */
+.projects-admin__checkbox-group {
+  @apply flex items-center md:col-span-2;
+}
+
+.projects-admin__hint-text {
+  @apply mt-1 text-xs text-gray-500 dark:text-gray-400;
+}
+
+.projects-admin__submit-wrapper {
+  @apply mt-8 flex justify-end;
+}
+
+.projects-admin__submit-button {
+  @apply inline-flex items-center rounded-md bg-zuzki-500 px-4 py-2 text-white transition hover:bg-zuzki-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 disabled:opacity-50 dark:focus-visible:ring-zuzki-400;
+}
+
+/* --- Sección de Listado de Proyectos --- */
+.projects-admin__list-section {
+  @apply space-y-4;
+}
+
+.projects-admin__alert {
+  @apply rounded-md border border-red-300 bg-red-50 p-4 dark:border-red-700 dark:bg-red-900/30;
+}
+
+.projects-admin__alert-text {
+  @apply block text-red-800 dark:text-red-300;
+}
+
+.projects-admin__reload-button {
+  @apply mt-2 inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus-visible:ring-zuzki-400 transition;
+}
+
+.projects-admin__project-list {
+  @apply grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4;
+}

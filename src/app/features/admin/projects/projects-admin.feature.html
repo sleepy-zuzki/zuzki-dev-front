@@ -1,5 +1,5 @@
-<main id="projects-admin" aria-label="Gestión de Proyectos" class="min-h-[60vh] p-6">
-  <header class="mb-6">
+<main id="projects-admin" aria-label="Gestión de Proyectos" class="projects-admin">
+  <header class="projects-admin__header">
     <app-typography-title [level]="1" variant="page">
       Gestión de Proyectos
     </app-typography-title>
@@ -8,171 +8,145 @@
     </app-typography-text>
   </header>
 
-  <section aria-label="Crear nuevo proyecto" class="mb-10">
-    <app-typography-title [level]="2" variant="section">Crear nuevo proyecto</app-typography-title>
+  <section aria-label="Crear nuevo proyecto" class="projects-admin__create-section">
+    <app-typography-title [level]="2" variant="section" class="projects-admin__section-title">
+      Crear nuevo proyecto
+    </app-typography-title>
 
-    <form [formGroup]="form" (ngSubmit)="onCreate()" class="mt-4 grid gap-4 md:grid-cols-2" novalidate>
-      <div class="md:col-span-1">
-        <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Nombre</label>
-        <input
-          id="name"
-          type="text"
-          formControlName="name"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="Mi proyecto"
-          aria-describedby="name-error"
-        />
-        @if (f.name.invalid && (f.name.dirty || f.name.touched)) {
-          <p id="name-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Nombre requerido (2-150 caracteres)</p>
-        }
-      </div>
+    <div class="projects-admin__form-wrapper">
+      <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
+        <fieldset class="projects-admin__fieldset">
+          <legend class="projects-admin__legend">Detalles del Proyecto</legend>
 
-      <div class="md:col-span-1">
-        <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Slug</label>
-        <input
-          id="slug"
-          type="text"
-          formControlName="slug"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="mi-proyecto"
-          aria-describedby="slug-error"
-        />
-        @if (f.slug.invalid && (f.slug.dirty || f.slug.touched)) {
-          <p id="slug-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Slug requerido (kebab-case, 2-160)</p>
-        }
-      </div>
+          <!-- Nombre -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+            <app-input label="Nombre" id="name" formControlName="name" placeholder="Mi proyecto">
+              Nombre requerido (2-150 caracteres)
+            </app-input>
+          </div>
 
-      <div class="md:col-span-2">
-        <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Descripción (opcional)</label>
-        <textarea
-          id="description"
-          rows="3"
-          formControlName="description"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="Resumen del proyecto (máx. 1000)"
-          aria-describedby="description-error"
-        ></textarea>
-        @if (f.description.invalid && (f.description.dirty || f.description.touched)) {
-          <p id="description-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Máximo 1000 caracteres</p>
-        }
-      </div>
+          <!-- Slug -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+            <app-input label="Slug" id="slug" formControlName="slug" placeholder="mi-proyecto">
+              Slug requerido (kebab-case, 2-160)
+            </app-input>
+          </div>
 
-      <div class="md:col-span-1">
-        <label for="liveUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Live URL (opcional)</label>
-        <input
-          id="liveUrl"
-          type="url"
-          formControlName="liveUrl"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="https://demo.ejemplo.com"
-          aria-describedby="liveUrl-error"
-        />
-        @if (f.liveUrl.invalid && (f.liveUrl.dirty || f.liveUrl.touched)) {
-          <p id="liveUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida (http/https)</p>
-        }
-      </div>
+          <!-- Descripción -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-6">
+            <app-input
+              label="Descripción (opcional)"
+              id="description"
+              formControlName="description"
+              placeholder="Resumen del proyecto (máx. 1000)"
+              controlType="textarea"
+              [rows]="3"
+            >
+              Máximo 1000 caracteres
+            </app-input>
+          </div>
 
-      <div class="md:col-span-1">
-        <label for="repoUrl" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Repo URL (opcional)</label>
-        <input
-          id="repoUrl"
-          type="url"
-          formControlName="repoUrl"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="https://github.com/usuario/repo"
-          aria-describedby="repoUrl-error"
-        />
-        @if (f.repoUrl.invalid && (f.repoUrl.dirty || f.repoUrl.touched)) {
-          <p id="repoUrl-error" class="mt-1 text-xs text-red-600 dark:text-red-400">URL inválida (http/https)</p>
-        }
-      </div>
+          <!-- Live URL -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+            <app-input
+              label="Live URL (opcional)"
+              id="liveUrl"
+              type="url"
+              formControlName="liveUrl"
+              placeholder="https://demo.ejemplo.com"
+            >
+              URL inválida (http/https)
+            </app-input>
+          </div>
 
-      <div class="md:col-span-1">
-        <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Categoría (opcional)</label>
-        <input
-          id="category"
-          type="text"
-          formControlName="category"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="web, mobile, etc."
-        />
-      </div>
+          <!-- Repo URL -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-3">
+            <app-input
+              label="Repo URL (opcional)"
+              id="repoUrl"
+              type="url"
+              formControlName="repoUrl"
+              placeholder="https://github.com/usuario/repo"
+            >
+              URL inválida (http/https)
+            </app-input>
+          </div>
 
-      <div class="md:col-span-1">
-        <label for="year" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Año (opcional)</label>
-        <input
-          id="year"
-          type="number"
-          min="1900"
-          max="2100"
-          formControlName="year"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="2024"
-          aria-describedby="year-error"
-        />
-        @if (f.year.invalid && (f.year.dirty || f.year.touched)) {
-          <p id="year-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Entre 1900 y 2100</p>
-        }
-      </div>
+          <!-- Categoría -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-2">
+            <app-input
+              label="Categoría (opcional)"
+              id="category"
+              formControlName="category"
+              placeholder="web, mobile, etc."
+            />
+          </div>
 
-      <div class="md:col-span-1">
-        <label for="isFeatured" class="inline-flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-200">
-          <input id="isFeatured" type="checkbox" formControlName="isFeatured" class="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:focus:ring-blue-400" />
-          Destacado
-        </label>
-      </div>
+          <!-- Año -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-2">
+            <app-input label="Año (opcional)" id="year" type="number" formControlName="year" placeholder="2024">
+              Entre 1900 y 2100
+            </app-input>
+          </div>
 
-      <div class="md:col-span-1">
-        <label for="previewImageId" class="block text-sm font-medium text-gray-700 dark:text-gray-200">ID imagen previa (opcional)</label>
-        <input
-          id="previewImageId"
-          type="number"
-          min="1"
-          formControlName="previewImageId"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="Ej: 12"
-          aria-describedby="previewImageId-error"
-        />
-        @if (f.previewImageId.invalid && (f.previewImageId.dirty || f.previewImageId.touched)) {
-          <p id="previewImageId-error" class="mt-1 text-xs text-red-600 dark:text-red-400">Debe ser un entero >= 1</p>
-        }
-      </div>
+          <!-- ID Imagen Previa -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-2">
+            <app-input
+              label="ID imagen previa (opcional)"
+              id="previewImageId"
+              type="number"
+              formControlName="previewImageId"
+              placeholder="Ej: 12"
+            >
+              Debe ser un entero >= 1
+            </app-input>
+          </div>
 
-      <div class="md:col-span-1">
-        <label for="technologyIds" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Tecnologías (IDs)</label>
-        <input
-          id="technologyIds"
-          type="text"
-          formControlName="technologyIds"
-          class="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 px-3 py-2 text-gray-900 dark:text-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
-          placeholder="1, 2, 3"
-        />
-        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">IDs separados por coma (opcional)</p>
-      </div>
+          <!-- Tecnologías -->
+          <div class="projects-admin__field-group projects-admin__field-group--span-4">
+            <app-select
+              label="Tecnologías"
+              id="technologyIds"
+              formControlName="technologyIds"
+              [options]="technologies()"
+              [multiple]="true"
+              placeholder="Seleccionar tecnologías..."
+            ></app-select>
+          </div>
 
-      <div class="md:col-span-2">
-        <button
-          type="submit"
-          [disabled]="form.invalid || loading()"
-          class="inline-flex items-center rounded-md bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 transition"
-          aria-label="Crear proyecto"
-        >
-          Crear proyecto
-        </button>
-      </div>
-    </form>
+          <!-- Destacado -->
+          <div class="projects-admin__checkbox-group">
+            <app-checkbox id="isFeatured" formControlName="isFeatured">
+              Destacado
+            </app-checkbox>
+          </div>
+        </fieldset>
+
+        <!-- Botón de envío -->
+        <div class="projects-admin__submit-wrapper">
+          <button
+            type="submit"
+            [disabled]="form.invalid || loading()"
+            class="projects-admin__submit-button"
+            aria-label="Crear proyecto"
+          >
+            Crear proyecto
+          </button>
+        </div>
+      </form>
+    </div>
   </section>
 
-  <section aria-label="Listado de proyectos" class="space-y-4">
+  <section aria-label="Listado de proyectos" class="projects-admin__list-section">
     @if (loading()) {
       <app-typography-text variant="muted">Cargando proyectos…</app-typography-text>
     } @else if (error()) {
-      <div role="alert" class="rounded-md border border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/30 p-4">
-        <app-typography-text class="block text-red-800 dark:text-red-300">{{ error() }}</app-typography-text>
+      <div role="alert" class="projects-admin__alert">
+        <app-typography-text [class]="'projects-admin__alert-text'">{{ error() }}</app-typography-text>
         <button
           type="button"
           (click)="reload()"
-          class="mt-2 inline-flex items-center rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-1.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 dark:focus-visible:ring-blue-400 transition"
+          class="projects-admin__reload-button"
           aria-label="Reintentar cargar proyectos"
         >
           Reintentar
@@ -181,7 +155,7 @@
     } @else if (projects().length === 0) {
       <app-typography-text>No hay proyectos aún.</app-typography-text>
     } @else {
-      <ul role="list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 divide-y divide-gray-200 dark:divide-gray-800">
+      <ul role="list" class="projects-admin__project-list">
         @for (p of projects(); track p.id) {
           <app-project-card [project]="p"></app-project-card>
         }
