@@ -65,3 +65,7 @@
 @utility ring-opacity-5 {
   --tw-ring-opacity: 0.05;
 }
+
+@utility bg-gradient-brand {
+  @apply bg-gradient-to-br from-zuzki-400 to-zuzki-600;
+}

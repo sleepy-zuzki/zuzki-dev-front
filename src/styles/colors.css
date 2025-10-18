@@ -58,10 +58,6 @@
 
   /* Color personalizado */
   --color-coffee: #2a1f14;
-
-  /* Gradientes personalizados con paleta zuzki */
-  --color-gradient-brand: linear-gradient(135deg, var(--color-zuzki-500) 0%, var(--color-zuzki-400) 100%);
-  --color-gradient-brand-text: linear-gradient(135deg, var(--color-zuzki-500) 0%, var(--color-zuzki-400) 100%);
 }
 
 /* Componentes personalizados */
