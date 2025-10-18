@@ -12,6 +12,7 @@ import { ProjectEntity } from '@core/domain';
 import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
+import { ButtonComponent } from '@shared/components/button/button.component';
 
 @Component({
   selector: 'app-project-card',
@@ -23,8 +24,10 @@ import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.com
     TypographyTextComponent,
     TypographyTitleComponent,
     ProjectInfoModalComponent,
+    ButtonComponent,
   ],
   templateUrl: './project-card.component.html',
+  styleUrls: ['./project-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     provideIcons({

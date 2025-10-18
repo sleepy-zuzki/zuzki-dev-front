@@ -10,6 +10,7 @@ type Align = 'left' | 'center' | 'right';
   selector: 'app-typography-text',
   imports: [CommonModule],
   templateUrl: './text.component.html',
+  styleUrls: ['./text.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TypographyTextComponent {
@@ -19,16 +20,10 @@ export class TypographyTextComponent {
   @Input() extraClasses = '';
 
   get classes(): string {
-    const align =
-      this.align === 'center' ? 'text-center' :
-      this.align === 'right' ? 'text-right' : 'text-left';
+    const baseClass = 'typography-text';
+    const alignClass = `typography-text--align-${this.align}`;
+    const variantClass = `typography-text--variant-${this.variant}`;
 
-    const variant =
-      this.variant === 'muted' ? 'text-gray-500 dark:text-gray-400' :
-      this.variant === 'lead' ? 'text-lg text-gray-600 dark:text-gray-300' :
-      this.variant === 'caption' ? 'text-xs text-gray-500 dark:text-gray-400' :
-      'text-gray-700 dark:text-gray-300';
-
-    return [align, variant, 'antialiased', this.extraClasses].filter(Boolean).join(' ');
+    return [baseClass, alignClass, variantClass, this.extraClasses].filter(Boolean).join(' ');
   }
 }
