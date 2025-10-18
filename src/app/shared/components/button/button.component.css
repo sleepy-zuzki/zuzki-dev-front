@@ -2,7 +2,8 @@
 
 .btn {
   @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg focus-brand select-none hover:cursor-pointer
-  disabled:opacity-60 disabled:cursor-not-allowed disabled:shadow-none;
+  disabled:opacity-60 disabled:cursor-not-allowed disabled:shadow-none
+  transition-colors duration-200;
 }
 
 .btn--block {
@@ -17,11 +18,13 @@
 
 /* Variantes (tokens del tema) */
 .btn--brand {
-  @apply bg-brand-primary text-black dark:text-white hover:bg-brand-primary-hover;
+  @apply bg-gradient-brand text-white shadow-sm hover:shadow-md transition-all duration-200 hover:brightness-95;
 }
 
 .btn--secondary {
-  @apply bg-background-section text-zuzki-700 dark:text-zuzki-200 hover:bg-background-surface;
+  @apply bg-background-section text-zuzki-700 border border-zuzki-200
+  dark:text-zuzki-200 dark:border-zuzki-800
+  hover:bg-background-surface;
 }
 
 .btn--outline {

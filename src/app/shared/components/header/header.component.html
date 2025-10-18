@@ -18,14 +18,17 @@
              [class.text-zuzki-600]="isActiveRoute('/')">
             Inicio
           </a>
+
           <a href="/#servicios"
              class="header-nav-link">
             Servicios
           </a>
+
           <a href="/#sobre-mi"
              class="header-nav-link">
             Sobre Mí
           </a>
+
           <a href="/#proyectos"
              class="header-nav-link"
              [class.text-zuzki-600]="isActiveRoute('/proyectos')"
@@ -33,7 +36,8 @@
              [class.border-zuzki-600]="isActiveRoute('/proyectos')">
             Proyectos
           </a>
-          <app-button variant="brand" size="sm" type="button" (click)="navigateToContact()">
+
+          <app-button variant="brand" size="lg" type="button" (click)="navigateToContact()">
             Contacto
           </app-button>
         </div>
