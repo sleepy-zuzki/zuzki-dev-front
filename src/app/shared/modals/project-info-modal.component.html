@@ -1,4 +1,4 @@
-<app-modal [title]="project.name" size="lg">
+<app-modal [title]="project.name" size="xl">
   <section class="project-modal-content grid gap-6">
     <figure class="carousel relative" aria-roledescription="carousel" aria-label="Galería del proyecto">
       @if (project.carouselImages.length) {
@@ -67,13 +67,7 @@
           <div>
             <app-typography-title id="tech-title" [level]="3" variant="subsection">Tecnologías</app-typography-title>
             @if (project.technologies.length) {
-              <ul class="mt-2 flex flex-wrap gap-2" role="list">
-                @for (tech of project.technologies; track tech.name) {
-                  <li>
-                    <span class="inline-block rounded-full px-2 py-1 text-xs bg-white/10">{{ tech.name }}</span>
-                  </li>
-                }
-              </ul>
+              <app-tags-list [tags]="projectTags"></app-tags-list>
             } @else {
               <app-typography-text variant="muted" extraClasses="text-sm">No especificadas</app-typography-text>
             }

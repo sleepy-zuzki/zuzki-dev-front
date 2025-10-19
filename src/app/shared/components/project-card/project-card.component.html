@@ -31,7 +31,7 @@
       <app-typography-title [level]="3" variant="card" align="left">{{ project.name }}</app-typography-title>
     </header>
 
-    <app-typography-text as="p" variant="caption">{{ project.description }}</app-typography-text>
+    <app-typography-text as="p" variant="caption" extraClasses="line-clamp-3">{{ project.description }}</app-typography-text>
 
     <app-tags-list [tags]="tags"></app-tags-list>
 
