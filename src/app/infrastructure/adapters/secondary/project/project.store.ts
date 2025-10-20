@@ -4,12 +4,14 @@ import { ProjectRepository, CreateProjectRequest, UpdateProjectRequest, AddImage
 import { ProjectEntity } from '@core/domain';
 import { ProjectApiService } from './project-api.service';
 import { ProjectMapper } from './project.mapper';
+import { FileApiService } from '../file/file-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectStore extends ProjectRepository {
   private readonly apiService = inject(ProjectApiService);
+  private readonly fileApiService = inject(FileApiService);
 
   private _projects: WritableSignal<ProjectEntity[]> = signal([]);
   private _featuredProjects: WritableSignal<ProjectEntity[]> = signal([]);
@@ -187,6 +189,23 @@ export class ProjectStore extends ProjectRepository {
       },
       error: (error) => {
         this._error.set(error.message || 'Error al reordenar imágenes del carrusel');
+        this._loading.set(false);
+      }
+    });
+  }
+
+  uploadCarouselImage(projectId: number, file: File): void {
+    this._loading.set(true);
+    this._error.set(null);
+
+    this.fileApiService.uploadFile(file).subscribe({
+      next: (uploadedFile) => {
+        const request: AddImageToCarouselRequest = { fileId: uploadedFile.id };
+        // Re-use the existing method to associate the file and handle state
+        this.addImageToCarousel(projectId, request);
+      },
+      error: (error) => {
+        this._error.set(error.message || 'Error al subir la imagen');
         this._loading.set(false);
       }
     });

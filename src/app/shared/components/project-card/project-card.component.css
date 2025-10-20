@@ -49,10 +49,14 @@
 }
 
 .project-card__admin-actions {
+  @apply flex justify-between items-center gap-2;
+}
+
+.project-card__admin-actions-btn-group {
   @apply flex items-center gap-2;
 }
 
 /* --- Button Overrides --- */
 .project-card__delete-button {
-  @apply bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500;
+  @apply bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500 rounded;
 }

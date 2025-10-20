@@ -38,15 +38,26 @@
     <nav class="project-card__actions" aria-label="Acciones del proyecto">
       @if (isAdmin) {
         <div class="project-card__admin-actions">
+          <div class="project-card__admin-actions-btn-group">
+            <app-button
+              variant="brand"
+              size="sm"
+              (click)="onEdit()"
+              [ariaLabel]="'Editar proyecto ' + project.name">
+              Editar
+            </app-button>
+
+            <app-button
+              variant="secondary"
+              size="sm"
+              [routerLink]="['/dashboard/projects', project.slug, 'carousel']"
+              [ariaLabel]="'Editar carousel del proyecto ' + project.name">
+              Editar Carousel
+            </app-button>
+          </div>
+
           <app-button
-            variant="brand"
-            size="md"
-            (click)="onEdit()"
-            [ariaLabel]="'Editar proyecto ' + project.name"
-            class="flex-1">
-            Editar
-          </app-button>
-          <app-button
+            variant="ghost"
             size="icon"
             (click)="onDelete()"
             [ariaLabel]="'Eliminar proyecto ' + project.name"

@@ -5,5 +5,6 @@ export enum LoadState {
   INIT = 'init',
   LOADING = 'loading',
   LOADED = 'loaded',
-  ERROR = 'error'
-} 
+  ERROR = 'error',
+  NOT_LOADED = 'not_loaded',
+}

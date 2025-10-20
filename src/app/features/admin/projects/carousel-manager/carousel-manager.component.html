@@ -1,0 +1,38 @@
+<section class="carousel-manager-container">
+  <header class="manager-header">
+    <h2 class="title">Manage Project Carousel</h2>
+    <app-button variant="secondary" size="sm" type="button" (click)="fileUpload.click()">
+      <ng-icon name="featherUpload" class="icon"></ng-icon>
+      <span>Upload Image</span>
+    </app-button>
+    <input #fileUpload id="file-upload" type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+  </header>
+
+  @switch (loadState()) {
+    @case (LoadState.LOADING) {
+      <div class="feedback-message">Loading images...</div>
+    }
+    @case (LoadState.ERROR) {
+      <div class="feedback-message error">Failed to load images. Please try again.</div>
+    }
+    @case (LoadState.LOADED) {
+      @if (images().length === 0) {
+        <div class="feedback-message">No images found for this project. Upload one to get started.</div>
+      } @else {
+        <div cdkDropList class="image-list" (cdkDropListDropped)="onDrop($event)">
+          @for (image of images(); track image.id) {
+            <div class="image-item" cdkDrag>
+              <div class="drag-handle" cdkDragHandle>
+                <ng-icon name="lucideGripVertical" class="icon"></ng-icon>
+              </div>
+              <img [src]="image.url" [alt]="'Project image'" class="image-preview">
+              <app-button variant="ghost" size="icon" (click)="onDelete(image.id)" title="Delete image">
+                <ng-icon name="featherTrash2" class="icon-delete"></ng-icon>
+              </app-button>
+            </div>
+          }
+        </div>
+      }
+    }
+  }
+</section>
