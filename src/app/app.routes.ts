@@ -38,6 +38,12 @@ export const routes: Routes = [
     loadComponent: () => import('@pages/projects-admin.page').then(m => m.ProjectsAdminPage)
   },
   {
+    path: 'dashboard/projects/:slug/carousel',
+    title: 'Carousel - Proyectos',
+    canActivate: [authGuard],
+    loadComponent: () => import('@pages/project-carousel-admin.page').then(m => m.ProjectCarouselAdminPageComponent)
+  },
+  {
     path: 'dashboard/technologies',
     title: 'Tecnologías - Dashboard',
     canActivate: [authGuard],

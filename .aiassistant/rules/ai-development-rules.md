@@ -1,3 +1,7 @@
+---
+apply: always
+---
+
 ### Reglas de Desarrollo para el Agente de IA (Gemini)
 
 Este documento define las reglas y convenciones que el agente de IA debe seguir al desarrollar en el proyecto `zuzki-dev-front`.
@@ -45,7 +49,7 @@ Este documento define las reglas y convenciones que el agente de IA debe seguir 
 *   **Importar Utilidades en CSS**: Para que `@apply` funcione correctamente en la v4, es necesario importar las utilidades de Tailwind al inicio del archivo CSS usando `@reference`. Ejemplo:
     ```css
     /* Al inicio del archivo CSS del componente */
-    @reference "tailwindcss/utilities";
+    @reference "../../../../../styles/utilities.css";
 
     .card-container {
       @apply block p-4 border rounded-lg shadow-sm;

@@ -32,7 +32,7 @@
 }
 
 .btn--ghost {
-  @apply bg-transparent text-ui-accent hover:bg-background-section;
+  @apply bg-transparent text-ui-accent;
 }
 
 .btn--link {
