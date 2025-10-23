@@ -5,7 +5,7 @@ export const serverRoutes: ServerRoute[] = [
     renderMode: RenderMode.Server,
   },
   {
-    path: 'works',
+    path: 'projects',
     renderMode: RenderMode.Server,
   },
   {

@@ -12,7 +12,7 @@ export const routes: Routes = [
     loadComponent: () => import('@pages/home.page').then(m => m.HomePage)
   },
   {
-    path: 'works',
+    path: 'projects',
     title: 'Proyectos de Sleepy Zuzki - Soluciones Interactivas',
     data: {
       description: "Sleepy Zuzki muestra proyectos con soluciones interactivas y disenos a medida. Revisa sus overlays y descubre como mejorar tu presencia en linea.",

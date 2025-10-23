@@ -1,5 +1,11 @@
 <ul class="tlst-list" role="list" [attr.aria-label]="ariaLabel">
   @for (tag of tags; track tag) {
-    <li class="tlst-chip" role="listitem">{{ tag }}</li>
+    <li>
+      @if (clickable) {
+        <button class="tlst-chip cursor-pointer" (click)="tagClick.emit(tag)">{{ tag }}</button>
+      } @else {
+        <span class="tlst-chip cursor-default">{{ tag }}</span>
+      }
+    </li>
   }
 </ul>

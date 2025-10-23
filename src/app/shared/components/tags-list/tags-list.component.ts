@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, output, OutputEmitterRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,4 +12,7 @@ import { CommonModule } from '@angular/common';
 export class TagsListComponent {
   @Input({ required: true }) tags: ReadonlyArray<string> = [];
   @Input() ariaLabel = 'Etiquetas';
+  @Input() clickable = false;
+
+  tagClick: OutputEmitterRef<string> = output<string>();
 }
