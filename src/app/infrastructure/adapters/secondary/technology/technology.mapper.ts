@@ -1,5 +1,5 @@
 import { TechnologyResponseDto } from '@app/application';
-import { TechnologyEntity, TechnologyCategory } from '@core/domain';
+import { TechnologyEntity } from '@core/domain';
 
 /**
  * Mapper para transformar datos de tecnología entre la capa de DTO y la de Entidad.

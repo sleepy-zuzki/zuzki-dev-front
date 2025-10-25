@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal, Signal, WritableSignal } from '@angular/core';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
-import { ProjectEntity, TechnologyEntity } from '@domain/entities';
+import { ProjectEntity } from '@domain/entities';
 import { ProjectCardComponent } from '@shared/components/project-card/project-card.component';
 import { CommonModule } from '@angular/common';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';

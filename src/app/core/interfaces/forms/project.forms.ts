@@ -13,4 +13,4 @@ export interface CreateProjectForm {
   previewImageId: FormControl<number | null>;
 }
 
-export interface UpdateProjectForm extends CreateProjectForm {}
+export type UpdateProjectForm = CreateProjectForm;
