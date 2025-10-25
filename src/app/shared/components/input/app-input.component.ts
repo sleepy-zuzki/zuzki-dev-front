@@ -28,15 +28,15 @@ export class AppInputComponent implements ControlValueAccessor {
 
   // --- Implementación de ControlValueAccessor ---
 
-  writeValue(value: any): void {
+  writeValue(value: string | number | null): void {
     this.value = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string | number | null) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
@@ -46,7 +46,7 @@ export class AppInputComponent implements ControlValueAccessor {
 
   // --- Funciones internas para propagar cambios ---
 
-  onChange: (value: any) => void = () => {};
+  onChange: (value: string | number | null) => void = () => {};
   onTouched: () => void = () => {};
 
   onInputChange(event: Event): void {

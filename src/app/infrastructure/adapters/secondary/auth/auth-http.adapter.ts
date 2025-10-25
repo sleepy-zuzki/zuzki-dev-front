@@ -226,7 +226,7 @@ export class AuthHttpAdapter extends AuthRepository {
     }
   }
 
-  private decodeJwtPayload<T = any>(token: string): T | null {
+  private decodeJwtPayload<T = Record<string, unknown>>(token: string): T | null {
     try {
       const parts = token.split('.');
       if (parts.length !== 3) return null;

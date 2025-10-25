@@ -24,15 +24,15 @@ export class AppCheckboxComponent implements ControlValueAccessor {
 
   // --- Implementación de ControlValueAccessor ---
 
-  writeValue(value: any): void {
+  writeValue(value: boolean): void {
     this.value = !!value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: boolean) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
@@ -42,7 +42,7 @@ export class AppCheckboxComponent implements ControlValueAccessor {
 
   // --- Funciones internas para propagar cambios ---
 
-  onChange: (value: any) => void = () => {};
+  onChange: (value: boolean) => void = () => {};
   onTouched: () => void = () => {};
 
   onCheckboxChange(event: Event): void {
