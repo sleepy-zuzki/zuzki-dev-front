@@ -1,6 +1,8 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, throwError } from 'rxjs';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 import { StackRepository, CreateStackRequest, UpdateStackRequest } from '@domain/repositories/stack.repository.interface';
 import { StackEntity } from '@domain/entities/stack/stack.entity';
@@ -26,7 +28,8 @@ export class StackHttpAdapter extends StackRepository {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly apiConfig: ApiConfig
+    private readonly apiConfig: ApiConfig,
+    private readonly toast: HotToastService
   ) {
     super();
   }
@@ -38,6 +41,10 @@ export class StackHttpAdapter extends StackRepository {
     this.http.get<StackResponseDto[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.base)
     ).pipe(
+      catchError(err => {
+        console.error('Error fetching stacks:', err);
+        return throwError(() => new Error('No se pudieron cargar los stacks.'));
+      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stacks) => {
@@ -46,7 +53,9 @@ export class StackHttpAdapter extends StackRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al cargar stacks');
+        const errorMessage = error.message || 'Error al cargar stacks';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -59,6 +68,10 @@ export class StackHttpAdapter extends StackRepository {
     this.http.get<StackResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.bySlug(slug))
     ).pipe(
+      catchError(err => {
+        console.error(`Error fetching stack ${slug}:`, err);
+        return throwError(() => new Error('No se pudo cargar el stack.'));
+      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
@@ -67,7 +80,9 @@ export class StackHttpAdapter extends StackRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al cargar stack');
+        const errorMessage = error.message || 'Error al cargar stack';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -91,6 +106,10 @@ export class StackHttpAdapter extends StackRepository {
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.base),
       createDto
     ).pipe(
+      catchError(err => {
+        console.error('Error creating stack:', err);
+        return throwError(() => new Error('No se pudo crear el stack.'));
+      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
@@ -101,7 +120,9 @@ export class StackHttpAdapter extends StackRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al crear stack');
+        const errorMessage = error.message || 'Error al crear stack';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -125,6 +146,10 @@ export class StackHttpAdapter extends StackRepository {
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.byId(id)),
       updateDto
     ).pipe(
+      catchError(err => {
+        console.error(`Error updating stack ${id}:`, err);
+        return throwError(() => new Error('No se pudo actualizar el stack.'));
+      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
@@ -136,7 +161,9 @@ export class StackHttpAdapter extends StackRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al actualizar stack');
+        const errorMessage = error.message || 'Error al actualizar stack';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -149,6 +176,10 @@ export class StackHttpAdapter extends StackRepository {
     this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.byId(id))
     ).pipe(
+      catchError(err => {
+        console.error(`Error deleting stack ${id}:`, err);
+        return throwError(() => new Error('No se pudo eliminar el stack.'));
+      }),
       takeUntilDestroyed()
     ).subscribe({
       next: () => {
@@ -158,7 +189,9 @@ export class StackHttpAdapter extends StackRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al eliminar stack');
+        const errorMessage = error.message || 'Error al eliminar stack';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -177,13 +210,7 @@ export class StackHttpAdapter extends StackRepository {
         tech.id,
         tech.name,
         tech.slug,
-        tech.description,
-        tech.category as TechnologyCategory,
-        tech.iconUrl,
-        tech.websiteUrl,
-        tech.color,
-        new Date(tech.createdAt),
-        new Date(tech.updatedAt)
+        tech.website
       )),
       new Date(dto.createdAt),
       new Date(dto.updatedAt)

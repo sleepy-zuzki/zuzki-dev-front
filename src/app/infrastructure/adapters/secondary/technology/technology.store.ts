@@ -5,6 +5,8 @@ import { TechnologyEntity } from '@core/domain';
 import { TechnologyApiService } from './technology-api.service';
 import { TechnologyMapper } from './technology.mapper';
 
+import { HotToastService } from '@ngxpert/hot-toast';
+
 /**
  * Servicio con estado (Store) para gestionar las tecnologías.
  * Orquesta la obtención de datos a través del ApiService y gestiona el estado con Signals.
@@ -14,6 +16,7 @@ import { TechnologyMapper } from './technology.mapper';
 })
 export class TechnologyStore extends TechnologyRepository {
   private apiService = inject(TechnologyApiService);
+  private toast = inject(HotToastService);
 
   private _technologies: WritableSignal<TechnologyEntity[]> = signal([]);
   private _currentTechnology: WritableSignal<TechnologyEntity | null> = signal(null);
@@ -41,7 +44,9 @@ export class TechnologyStore extends TechnologyRepository {
         this._loading.set(false);
       },
       error: (err) => {
-        this._error.set(err.message || 'Error al cargar tecnologías');
+        const errorMessage = err.message || 'Error al cargar tecnologías';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -57,7 +62,9 @@ export class TechnologyStore extends TechnologyRepository {
         this._loading.set(false);
       },
       error: (err) => {
-        this._error.set(err.message || 'Error al cargar la tecnología');
+        const errorMessage = err.message || 'Error al cargar la tecnología';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -74,7 +81,9 @@ export class TechnologyStore extends TechnologyRepository {
         this._loading.set(false);
       },
       error: (err) => {
-        this._error.set(err.message || 'Error al crear la tecnología');
+        const errorMessage = err.message || 'Error al crear la tecnología';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -94,7 +103,9 @@ export class TechnologyStore extends TechnologyRepository {
         this._loading.set(false);
       },
       error: (err) => {
-        this._error.set(err.message || 'Error al actualizar la tecnología');
+        const errorMessage = err.message || 'Error al actualizar la tecnología';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -113,7 +124,9 @@ export class TechnologyStore extends TechnologyRepository {
         this._loading.set(false);
       },
       error: (err) => {
-        this._error.set(err.message || 'Error al eliminar la tecnología');
+        const errorMessage = err.message || 'Error al eliminar la tecnología';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });

@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { catchError, finalize, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-contact-form',
@@ -14,7 +16,11 @@ import { HttpClient } from '@angular/common/http';
 export class ContactFormComponent {
   loading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private toast: HotToastService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   contactData = {
     name: '',
@@ -44,22 +50,29 @@ export class ContactFormComponent {
   onSubmit(): void {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
+      this.toast.error('Por favor, completa todos los campos requeridos.');
       return;
     }
 
-    const payload = this.contactForm.getRawValue();
     this.loading = true;
+    const payload = this.contactForm.getRawValue();
 
-    this.http.post('/contact', payload).subscribe({
+    this.http.post('/contact', payload).pipe(
+      catchError(err => {
+        console.error('Error al enviar el contacto:', err);
+        return throwError(() => new Error('Hubo un problema al enviar tu mensaje. Inténtalo de nuevo más tarde.'));
+      }),
+      finalize(() => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      })
+    ).subscribe({
       next: () => {
-        console.info('Contacto enviado:', payload);
+        this.toast.success('¡Gracias por tu mensaje! Te responderé pronto.');
         this.contactForm.reset({ name: '', email: '', message: '' });
       },
       error: (error) => {
-        console.error('Error al enviar el contacto:', error);
-      },
-      complete: () => {
-        this.loading = false;
+        this.toast.error(error.message);
       }
     });
   }

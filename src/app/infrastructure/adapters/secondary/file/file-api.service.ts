@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { ApiConfig } from '../../../config/api.config';
 import { FileResponseDto } from '@app/application';
 
@@ -22,6 +22,11 @@ export class FileApiService {
     return this.http.post<FileResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.base),
       formData
+    ).pipe(
+      catchError(err => {
+        console.error('Error uploading file:', err);
+        return throwError(() => new Error('No se pudo subir el archivo.'));
+      })
     );
   }
 }

@@ -1,6 +1,8 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { catchError, throwError } from 'rxjs';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 import { UserRepository, CreateUserRequest } from '@domain/repositories/user.repository.interface';
 import { UserEntity } from '@domain/entities/user/user.entity';
@@ -22,7 +24,8 @@ export class UserHttpAdapter extends UserRepository {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly apiConfig: ApiConfig
+    private readonly apiConfig: ApiConfig,
+    private readonly toast: HotToastService
   ) {
     super();
   }
@@ -34,6 +37,10 @@ export class UserHttpAdapter extends UserRepository {
     this.http.get<UserResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.users.byId(id))
     ).pipe(
+      catchError(err => {
+        console.error(`Error fetching user ${id}:`, err);
+        return throwError(() => new Error('No se pudo cargar el usuario.'));
+      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (user) => {
@@ -42,7 +49,9 @@ export class UserHttpAdapter extends UserRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al cargar usuario');
+        const errorMessage = error.message || 'Error al cargar usuario';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -63,6 +72,10 @@ export class UserHttpAdapter extends UserRepository {
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.users.base),
       createDto
     ).pipe(
+      catchError(err => {
+        console.error('Error creating user:', err);
+        return throwError(() => new Error('No se pudo crear el usuario.'));
+      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (user) => {
@@ -71,7 +84,9 @@ export class UserHttpAdapter extends UserRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al crear usuario');
+        const errorMessage = error.message || 'Error al crear usuario';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });

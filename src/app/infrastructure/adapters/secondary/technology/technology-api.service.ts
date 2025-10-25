@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 import { TechnologyResponseDto } from '@app/application';
 import { ApiConfig } from '../../../config/api.config';
@@ -25,25 +25,50 @@ export class TechnologyApiService {
   }
 
   getTechnologies(): Observable<TechnologyResponseDto[]> {
-    return this.http.get<TechnologyResponseDto[]>(this.baseUrl);
+    return this.http.get<TechnologyResponseDto[]>(this.baseUrl).pipe(
+      catchError(err => {
+        console.error('Error fetching technologies:', err);
+        return throwError(() => new Error('No se pudieron cargar las tecnologías.'));
+      })
+    );
   }
 
   getTechnologyBySlug(slug: string): Observable<TechnologyResponseDto> {
     const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.technologies.bySlug(slug));
-    return this.http.get<TechnologyResponseDto>(url);
+    return this.http.get<TechnologyResponseDto>(url).pipe(
+      catchError(err => {
+        console.error(`Error fetching technology with slug ${slug}:`, err);
+        return throwError(() => new Error(`No se pudo cargar la tecnología ${slug}.`));
+      })
+    );
   }
 
   createTechnology(request: CreateTechnologyRequest): Observable<TechnologyResponseDto> {
-    return this.http.post<TechnologyResponseDto>(this.baseUrl, request);
+    return this.http.post<TechnologyResponseDto>(this.baseUrl, request).pipe(
+      catchError(err => {
+        console.error('Error creating technology:', err);
+        return throwError(() => new Error('No se pudo crear la tecnología.'));
+      })
+    );
   }
 
   updateTechnology(id: number, request: UpdateTechnologyRequest): Observable<TechnologyResponseDto> {
     const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.technologies.byId(id));
-    return this.http.patch<TechnologyResponseDto>(url, request);
+    return this.http.patch<TechnologyResponseDto>(url, request).pipe(
+      catchError(err => {
+        console.error(`Error updating technology ${id}:`, err);
+        return throwError(() => new Error('No se pudo actualizar la tecnología.'));
+      })
+    );
   }
 
   deleteTechnology(id: number): Observable<{ success: boolean }> {
     const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.technologies.byId(id));
-    return this.http.delete<{ success: boolean }>(url);
+    return this.http.delete<{ success: boolean }>(url).pipe(
+      catchError(err => {
+        console.error(`Error deleting technology ${id}:`, err);
+        return throwError(() => new Error('No se pudo eliminar la tecnología.'));
+      })
+    );
   }
 }
