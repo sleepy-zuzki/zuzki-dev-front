@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 import { CreateProjectDto, UpdateProjectDto, ProjectResponseDto, AddImageToCarouselDto, ReorderCarouselImagesDto } from '@app/application';
 import { ApiConfig } from '../../../config/api.config';
@@ -20,18 +20,33 @@ export class ProjectApiService {
   getProjects(): Observable<ProjectResponseDto[]> {
     return this.http.get<ProjectResponseDto[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base)
+    ).pipe(
+      catchError(err => {
+        console.error('Error fetching projects:', err);
+        return throwError(() => new Error('No se pudieron cargar los proyectos.'));
+      })
     );
   }
 
   getFeaturedProjects(): Observable<ProjectResponseDto[]> {
     return this.http.get<ProjectResponseDto[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.featured)
+    ).pipe(
+      catchError(err => {
+        console.error('Error fetching featured projects:', err);
+        return throwError(() => new Error('No se pudieron cargar los proyectos destacados.'));
+      })
     );
   }
 
   getProjectBySlug(slug: string): Observable<ProjectResponseDto> {
     return this.http.get<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.bySlug(slug))
+    ).pipe(
+      catchError(err => {
+        console.error(`Error fetching project with slug ${slug}:`, err);
+        return throwError(() => new Error(`No se pudo cargar el proyecto ${slug}.`));
+      })
     );
   }
 
@@ -52,6 +67,11 @@ export class ProjectApiService {
     return this.http.post<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.base),
       createDto
+    ).pipe(
+      catchError(err => {
+        console.error('Error creating project:', err);
+        return throwError(() => new Error('No se pudo crear el proyecto.'));
+      })
     );
   }
 
@@ -72,12 +92,22 @@ export class ProjectApiService {
     return this.http.patch<ProjectResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id)),
       updateDto
+    ).pipe(
+      catchError(err => {
+        console.error(`Error updating project ${id}:`, err);
+        return throwError(() => new Error('No se pudo actualizar el proyecto.'));
+      })
     );
   }
 
   deleteProject(id: number): Observable<{ success: boolean }> {
     return this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.byId(id))
+    ).pipe(
+      catchError(err => {
+        console.error(`Error deleting project ${id}:`, err);
+        return throwError(() => new Error('No se pudo eliminar el proyecto.'));
+      })
     );
   }
 
@@ -90,12 +120,22 @@ export class ProjectApiService {
     return this.http.post<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
       addImageDto
+    ).pipe(
+      catchError(err => {
+        console.error(`Error adding image to carousel for project ${projectId}:`, err);
+        return throwError(() => new Error('No se pudo añadir la imagen al carrusel.'));
+      })
     );
   }
 
   removeImageFromCarousel(projectId: number, fileId: number): Observable<void> {
     return this.http.delete<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.removeImage(projectId, fileId))
+    ).pipe(
+      catchError(err => {
+        console.error(`Error removing image from carousel for project ${projectId}:`, err);
+        return throwError(() => new Error('No se pudo eliminar la imagen del carrusel.'));
+      })
     );
   }
 
@@ -107,6 +147,11 @@ export class ProjectApiService {
     return this.http.patch<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.projects.images(projectId)),
       reorderDto
+    ).pipe(
+      catchError(err => {
+        console.error(`Error reordering carousel images for project ${projectId}:`, err);
+        return throwError(() => new Error('No se pudo reordenar las imágenes del carrusel.'));
+      })
     );
   }
 }

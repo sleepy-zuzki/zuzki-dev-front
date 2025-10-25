@@ -6,12 +6,15 @@ import { ProjectApiService } from './project-api.service';
 import { ProjectMapper } from './project.mapper';
 import { FileApiService } from '../file/file-api.service';
 
+import { HotToastService } from '@ngxpert/hot-toast';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectStore extends ProjectRepository {
   private readonly apiService = inject(ProjectApiService);
   private readonly fileApiService = inject(FileApiService);
+  private readonly toast = inject(HotToastService);
 
   private _projects: WritableSignal<ProjectEntity[]> = signal([]);
   private _featuredProjects: WritableSignal<ProjectEntity[]> = signal([]);
@@ -40,7 +43,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al cargar proyectos');
+        const errorMessage = error.message || 'Error al cargar proyectos';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -57,7 +62,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al cargar proyectos destacados');
+        const errorMessage = error.message || 'Error al cargar proyectos destacados';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -74,7 +81,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al cargar proyecto');
+        const errorMessage = error.message || 'Error al cargar proyecto';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -92,7 +101,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al crear proyecto');
+        const errorMessage = error.message || 'Error al crear proyecto';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -112,7 +123,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al actualizar proyecto');
+        const errorMessage = error.message || 'Error al actualizar proyecto';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -131,7 +144,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al eliminar proyecto');
+        const errorMessage = error.message || 'Error al eliminar proyecto';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -150,7 +165,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al añadir imagen al carrusel');
+        const errorMessage = error.message || 'Error al añadir imagen al carrusel';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -169,7 +186,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al eliminar imagen del carrusel');
+        const errorMessage = error.message || 'Error al eliminar imagen del carrusel';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -188,7 +207,9 @@ export class ProjectStore extends ProjectRepository {
         this._loading.set(false);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al reordenar imágenes del carrusel');
+        const errorMessage = error.message || 'Error al reordenar imágenes del carrusel';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });
@@ -205,7 +226,9 @@ export class ProjectStore extends ProjectRepository {
         this.addImageToCarousel(projectId, request);
       },
       error: (error) => {
-        this._error.set(error.message || 'Error al subir la imagen');
+        const errorMessage = error.message || 'Error al subir la imagen';
+        this._error.set(errorMessage);
+        this.toast.error(errorMessage);
         this._loading.set(false);
       }
     });

@@ -1,5 +1,5 @@
-import { ProjectEntity, TechnologyEntity, FileEntity, TechnologyCategory } from '@core/domain';
-import { ProjectResponseDto } from '@app/application';
+import { ProjectEntity, TechnologyEntity, FileEntity } from '@core/domain';
+import { ProjectResponseDto, FileResponseDto } from '@app/application';
 
 export class ProjectMapper {
   static toEntity(dto: ProjectResponseDto): ProjectEntity {
@@ -20,24 +20,20 @@ export class ProjectMapper {
         tech.slug,
         tech.website
       )),
-      dto.carouselImages.map(file => {
-        const url = (file as any).url || '';
-        const filename = url ? url.split('/').pop() || '' : '';
+      dto.carouselImages.map((file: FileResponseDto) => {
+        const filename = file.url ? file.url.split('/').pop() || '' : '';
         const originalName = filename;
-        const size = (file as any).sizeBytes ?? 0;
-        const mimeType = (file as any).mimeType || '';
-        const projectId = (file as any).projectId ?? undefined;
 
         return new FileEntity(
-          (file as any).id,
+          file.id,
           originalName,
           filename,
-          mimeType,
-          size,
-          url,
-          projectId,
-          new Date((file as any).createdAt),
-          new Date((file as any).updatedAt)
+          file.mimeType || '',
+          file.sizeBytes ?? 0,
+          file.url,
+          file.projectId ?? undefined,
+          new Date(file.createdAt),
+          new Date(file.updatedAt)
         );
       }),
       new Date(dto.createdAt),
