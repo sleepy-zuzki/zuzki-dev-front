@@ -25,7 +25,6 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title: string = 'Sleepy Zuzki';
-  isWorkDetailsPage: boolean = false;
 
   /**
    * @param seoService
