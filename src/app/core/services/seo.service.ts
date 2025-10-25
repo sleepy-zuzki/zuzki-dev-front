@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -6,18 +6,17 @@ import { filter } from 'rxjs/operators';
 interface SEOData {
   description?: string;
   keywords?: string[];
+  robots?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class SeoService {
-  constructor(
-    private meta: Meta,
-    private title: Title,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
+  private readonly meta = inject(Meta);
+  private readonly title = inject(Title);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   /**
    * Inicializa el servicio para escuchar cambios en la navegación
@@ -71,6 +70,16 @@ export class SeoService {
       });
     } else {
       this.meta.removeTag("name='keywords'");
+    }
+
+    // Actualizar meta robots
+    if (data.robots) {
+      this.meta.updateTag({
+        name: 'robots',
+        content: data.robots
+      });
+    } else {
+      this.meta.removeTag("name='robots'");
     }
   }
 }

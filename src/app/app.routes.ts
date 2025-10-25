@@ -22,31 +22,51 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    title: 'Login',
+    title: 'Login - Zuzki Dev',
+    data: {
+      description: "Acceso al panel de administración de Zuzki Dev.",
+      robots: "noindex, nofollow"
+    },
     loadComponent: () => import('@pages/login.page').then(m => m.LoginPage)
   },
   {
     path: 'dashboard',
-    title: 'Dashboard',
+    title: 'Dashboard - Zuzki Dev',
     canActivate: [authGuard],
+    data: {
+      description: "Panel de administración principal de Zuzki Dev.",
+      robots: "noindex, nofollow"
+    },
     loadComponent: () => import('@pages/dashboard.page').then(m => m.DashboardPage)
   },
   {
     path: 'dashboard/projects',
-    title: 'Proyectos - Dashboard',
+    title: 'Gestión de Proyectos - Zuzki Dev',
     canActivate: [authGuard],
+    data: {
+      description: "Administra los proyectos del portafolio.",
+      robots: "noindex, nofollow"
+    },
     loadComponent: () => import('@pages/projects-admin.page').then(m => m.ProjectsAdminPage)
   },
   {
     path: 'dashboard/projects/:slug/carousel',
-    title: 'Carousel - Proyectos',
+    title: 'Gestión de Carrusel - Zuzki Dev',
     canActivate: [authGuard],
+    data: {
+      description: "Administra las imágenes del carrusel de un proyecto.",
+      robots: "noindex, nofollow"
+    },
     loadComponent: () => import('@pages/project-carousel-admin.page').then(m => m.ProjectCarouselAdminPageComponent)
   },
   {
     path: 'dashboard/technologies',
-    title: 'Tecnologías - Dashboard',
+    title: 'Gestión de Tecnologías - Zuzki Dev',
     canActivate: [authGuard],
+    data: {
+      description: "Administra las tecnologías del portafolio.",
+      robots: "noindex, nofollow"
+    },
     loadComponent: () => import('@pages/technologies-admin.page').then(m => m.TechnologiesAdminPage)
   },
   {
