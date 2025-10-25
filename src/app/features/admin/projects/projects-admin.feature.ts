@@ -9,7 +9,7 @@ import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } fr
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
-import { AppSelectComponent } from '@shared/components/select/app-select.component';
+import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
 import { toSlug } from '@shared/utils/slug.util';
 import { ProjectEditModalComponent } from '@shared/modals/project-edit-modal.component';
 import { ProjectEntity } from '@core/domain';
@@ -65,6 +65,13 @@ export class ProjectsAdminFeatureComponent {
     this.projectStore.getProjects();
     this.technologyStore.getTechnologies();
     this.setupSlugGeneration();
+  }
+
+  getTechnologyOptions(): Option[] {
+    return this.technologies().map((technology): Option => ({
+      label: technology.name,
+      value: technology.slug
+    }));
   }
 
   private setupSlugGeneration(): void {

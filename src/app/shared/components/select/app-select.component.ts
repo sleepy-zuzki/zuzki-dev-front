@@ -3,9 +3,14 @@ import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/f
 import { CommonModule } from '@angular/common';
 
 export interface SelectOption {
-  value: any;
+  value: string | number;
   label: string;
 }
+
+export interface Option {
+  [key: string]: string | number;
+}
+
 
 @Component({
   selector: 'app-select',
@@ -19,18 +24,18 @@ export class AppSelectComponent implements ControlValueAccessor {
   @Input() id = '';
   @Input() placeholder = 'Selecciona una opción';
   @Input() multiple = false;
-  @Input() options: any[] = [];
+  @Input() options: Option[] = [];
   @Input() optionValue = 'id';
   @Input() optionLabel = 'name';
 
   isOpen = false;
-  selectedValue: any | any[] | null = null;
+  selectedValue: string | number | (string | number)[] | null = null;
   isDisabled = false;
 
   processedOptions: Signal<SelectOption[]> = computed(() => {
-    return this.options.map(option => ({
+    return this.options.map((option: Option): SelectOption => ({
       value: option[this.optionValue],
-      label: option[this.optionLabel],
+      label: option[this.optionLabel].toString(),
     }));
   });
 
@@ -40,12 +45,12 @@ export class AppSelectComponent implements ControlValueAccessor {
         return this.placeholder;
       }
       if (this.selectedValue.length === 1) {
-        const selectedOption = this.processedOptions().find(opt => this.isOptionSelected(opt));
+        const selectedOption = this.processedOptions().find((opt: SelectOption) => this.isOptionSelected(opt));
         return selectedOption?.label ?? this.placeholder;
       }
       return `${this.selectedValue.length} seleccionados`;
     } else {
-      const selectedOption = this.processedOptions().find(opt => this.isOptionSelected(opt));
+      const selectedOption = this.processedOptions().find((opt: SelectOption) => this.isOptionSelected(opt));
       return selectedOption?.label ?? this.placeholder;
     }
   });
@@ -63,18 +68,18 @@ export class AppSelectComponent implements ControlValueAccessor {
     }
   }
 
-  onChange: (value: any) => void = () => {};
+  onChange: (value: string | number | (string | number)[] | null) => void = () => {};
   onTouched: () => void = () => {};
 
-  writeValue(value: any): void {
+  writeValue(value: string | number | (string | number)[] | null): void {
     this.selectedValue = value;
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string | number | (string | number)[] | null) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
@@ -99,7 +104,7 @@ export class AppSelectComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  private toggleMultiSelect(value: any): void {
+  private toggleMultiSelect(value: string | number): void {
     const currentSelection = Array.isArray(this.selectedValue) ? [...this.selectedValue] : [];
     const index = currentSelection.indexOf(value);
 
@@ -116,5 +121,9 @@ export class AppSelectComponent implements ControlValueAccessor {
       return this.selectedValue.includes(option.value);
     }
     return this.selectedValue === option.value;
+  }
+
+  showPlaceholder(): boolean {
+    return !this.multiple && (!this.selectedValue || this.selectedValue === '');
   }
 }

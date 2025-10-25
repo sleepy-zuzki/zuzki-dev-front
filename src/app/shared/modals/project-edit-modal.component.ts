@@ -13,7 +13,7 @@ import { toSlug } from '@shared/utils/slug.util';
 
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
-import { AppSelectComponent } from '@shared/components/select/app-select.component';
+import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
 import { ModalComponent } from '@components/modal/modal.component';
 import { UpdateProjectForm } from '@core/interfaces/forms/project.forms';
 
@@ -114,6 +114,13 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
 
   onClose(): void {
     this.closeModal.emit();
+  }
+
+  getTechnologyOptions(): Option[] {
+    return this.technologies.map((technology): Option => ({
+      label: technology.name,
+      value: technology.slug
+    }));
   }
 
   private parseNumber(value: number | string | null | undefined): number | null {

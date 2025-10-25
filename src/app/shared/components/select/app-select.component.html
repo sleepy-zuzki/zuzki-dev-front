@@ -13,7 +13,7 @@
     aria-haspopup="listbox"
     [attr.aria-expanded]="isOpen"
   >
-    <span [class.select-placeholder]="!selectedValue || (multiple && selectedValue.length === 0)">
+    <span [class.select-placeholder]="showPlaceholder()">
       {{ displayValue() }}
     </span>
     <span class="select-arrow">
