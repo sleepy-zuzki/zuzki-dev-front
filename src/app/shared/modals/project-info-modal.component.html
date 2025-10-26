@@ -6,6 +6,7 @@
           [src]="currentImageUrl"
           [alt]="(project.carouselImages[currentImageIndex]?.alt ?? project.carouselImages[currentImageIndex]?.originalName ?? '') ?? project.name"
           class="carousel-image w-full rounded-md object-cover"
+
         />
       } @else {
         <div class="h-48 sm:h-60 md:h-64 w-full rounded-md bg-gradient-to-br from-zuzki-400 to-zuzki-600"></div>

@@ -1,17 +1,16 @@
 @reference "../../../../styles/utilities.css";
 
 dialog {
-  @apply bg-white dark:bg-coffee;
-
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  @apply bg-white dark:bg-coffee m-auto;
 
   padding: 20px;
   border-radius: 5px;
   border: none;
   width: 500px;
   max-width: 90%;
+
+  transition: scale 0.3s ease, display 0.2s ease allow-discrete;
+  scale: 0;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.6);
@@ -25,6 +24,15 @@ dialog.size-md { width: 32rem; }   /* 512px (por defecto similar a 500px) */
 dialog.size-lg { width: 48rem; }   /* 768px */
 dialog.size-xl { width: 64rem; }   /* 1024px */
 dialog.size-full { width: 90vw; max-width: 90vw; }
+
+dialog[open] {
+  scale: 1;
+  transition: scale 0.2s ease;
+
+  @starting-style {
+    scale: 0;
+  }
+}
 
 /* Header */
 .modal-header {
