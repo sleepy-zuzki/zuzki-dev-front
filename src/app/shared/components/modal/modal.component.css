@@ -9,7 +9,7 @@ dialog {
   width: 500px;
   max-width: 90%;
 
-  transition: scale 0.3s ease, display 0.2s ease allow-discrete;
+  transition: scale 0.3s ease, display 0.3s ease allow-discrete;
   scale: 0;
 
   &::backdrop {
@@ -27,7 +27,7 @@ dialog.size-full { width: 90vw; max-width: 90vw; }
 
 dialog[open] {
   scale: 1;
-  transition: scale 0.2s ease;
+  transition: scale 0.3s ease;
 
   @starting-style {
     scale: 0;
