@@ -9,7 +9,7 @@ export type Theme = 'light' | 'dark' | 'auto';
 })
 export class ThemeService {
   private readonly THEME_KEY = 'app-theme';
-  private currentTheme = new BehaviorSubject<Theme>('auto');
+  private currentTheme = new BehaviorSubject<Theme>('light');
 
   public theme$ = this.currentTheme.asObservable();
 
@@ -22,7 +22,7 @@ export class ThemeService {
 
   private initializeTheme(): void {
     const savedTheme = localStorage.getItem(this.THEME_KEY) as Theme;
-    const theme = savedTheme || 'auto';
+    const theme = savedTheme || 'light';
     this.setTheme(theme);
   }
 

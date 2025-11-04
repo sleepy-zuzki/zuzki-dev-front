@@ -27,7 +27,7 @@ export class ThemeToggleComponent {
       case 'dark':
         return 'featherMoon';
       default:
-        return 'featherMonitor';
+        return 'featherSun';
     }
   }
 
