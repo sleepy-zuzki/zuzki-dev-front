@@ -20,27 +20,6 @@
   @apply rounded-lg border border-gray-200 bg-gray-50 p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900/50;
 }
 
-.projects-admin__fieldset {
-  @apply grid md:grid-cols-2 gap-4;
-}
-
-.projects-admin__legend {
-  @apply sr-only;
-}
-
-.projects-admin__field-group--span-2 { @apply md:col-span-2; }
-.projects-admin__field-group--span-3 { @apply md:col-span-3; }
-.projects-admin__field-group--span-4 { @apply md:col-span-4; }
-.projects-admin__field-group--span-6 { @apply md:col-span-6; }
-
-.projects-admin__checkbox-group {
-  @apply flex items-center md:col-span-2;
-}
-
-.projects-admin__hint-text {
-  @apply mt-1 text-xs text-gray-500 dark:text-gray-400;
-}
-
 .projects-admin__submit-wrapper {
   @apply mt-8 flex justify-end;
 }

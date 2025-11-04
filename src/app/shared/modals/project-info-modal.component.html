@@ -76,6 +76,7 @@
           @if (project.category || project.year) {
             <div aria-labelledby="details-title">
               <app-typography-title id="details-title" [level]="3" variant="subsection">Detalles</app-typography-title>
+              <app-typography-text variant="base" extraClasses="text-sm leading-relaxed">{{ project.details }}</app-typography-text>
               <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
                 @if (project.category) {
                   <ng-template>

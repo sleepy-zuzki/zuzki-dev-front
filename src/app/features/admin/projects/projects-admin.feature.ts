@@ -4,17 +4,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
-import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
-import { AppInputComponent } from '@shared/components/input/app-input.component';
-import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
-import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
+import { Option } from '@shared/components/select/app-select.component';
 import { toSlug } from '@shared/utils/slug.util';
 import { ProjectEditModalComponent } from '@shared/modals/project-edit-modal.component';
 import { ProjectEntity } from '@core/domain';
 import { UpdateProjectDto } from '@app/application';
 import { CreateProjectForm } from '@core/interfaces/forms/project.forms';
+
+import { ProjectFormComponent } from '@features/admin/projects/components/project-form/project-form.component';
 
 @Component({
   standalone: true,
@@ -25,10 +24,8 @@ import { CreateProjectForm } from '@core/interfaces/forms/project.forms';
     TypographyTitleComponent,
     TypographyTextComponent,
     ProjectCardComponent,
-    AppInputComponent,
-    AppCheckboxComponent,
-    AppSelectComponent,
     ProjectEditModalComponent,
+    ProjectFormComponent,
   ],
   templateUrl: './projects-admin.feature.html',
   styleUrls: ['./projects-admin.feature.css'],
@@ -36,14 +33,11 @@ import { CreateProjectForm } from '@core/interfaces/forms/project.forms';
 })
 export class ProjectsAdminFeatureComponent {
   private projectStore = inject(ProjectStore);
-  private technologyStore = inject(TechnologyStore);
   private fb = inject(NonNullableFormBuilder);
 
   projects = this.projectStore.projects;
   loading = this.projectStore.loading;
   error = this.projectStore.error;
-
-  technologies = this.technologyStore.technologies;
 
   isEditModalOpen = signal(false);
   selectedProject = signal<ProjectEntity | null>(null);
@@ -52,6 +46,7 @@ export class ProjectsAdminFeatureComponent {
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
     slug: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
     description: this.fb.control<string | null>(null, [Validators.maxLength(1000)]),
+    details: this.fb.control<string | null>(null, [Validators.maxLength(5000)]),
     repoUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     liveUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     category: this.fb.control<string | null>(null),
@@ -63,15 +58,7 @@ export class ProjectsAdminFeatureComponent {
 
   constructor() {
     this.projectStore.getProjects();
-    this.technologyStore.getTechnologies();
     this.setupSlugGeneration();
-  }
-
-  getTechnologyOptions(): Option[] {
-    return this.technologies().map((technology): Option => ({
-      label: technology.name,
-      value: technology.slug
-    }));
   }
 
   private setupSlugGeneration(): void {
@@ -85,7 +72,6 @@ export class ProjectsAdminFeatureComponent {
 
   reload(): void {
     this.projectStore.getProjects();
-    this.technologyStore.getTechnologies();
   }
 
   onCreate(): void {
@@ -99,6 +85,7 @@ export class ProjectsAdminFeatureComponent {
       name: raw.name,
       slug: raw.slug,
       description: raw.description ?? null,
+      details: raw.details ?? null,
       repoUrl: raw.repoUrl ?? null,
       liveUrl: raw.liveUrl ?? null,
       category: raw.category ?? null,

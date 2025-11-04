@@ -15,112 +15,9 @@
 
     <div class="projects-admin__form-wrapper">
       <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
-        <fieldset class="projects-admin__fieldset">
-          <legend class="projects-admin__legend">Detalles del Proyecto</legend>
-
-          <!-- Nombre -->
-          <div class="projects-admin__field-group--span-3">
-            <app-input label="Nombre" id="name" formControlName="name" placeholder="Mi proyecto">
-              Nombre requerido (2-150 caracteres)
-            </app-input>
-          </div>
-
-          <!-- Slug (Visible pero deshabilitado) -->
-          <div class="projects-admin__field-group--span-3">
-            <app-input label="Slug (auto-generado)" id="slug" formControlName="slug" placeholder="mi-proyecto">
-              Slug requerido (kebab-case, 2-160)
-            </app-input>
-          </div>
-
-          <!-- Descripción -->
-          <div class="projects-admin__field-group--span-6">
-            <app-input
-              label="Descripción (opcional)"
-              id="description"
-              formControlName="description"
-              placeholder="Resumen del proyecto (máx. 1000)"
-              controlType="textarea"
-              [rows]="3"
-            >
-              Máximo 1000 caracteres
-            </app-input>
-          </div>
-
-          <!-- Live URL -->
-          <div class="projects-admin__field-group--span-3">
-            <app-input
-              label="Live URL (opcional)"
-              id="liveUrl"
-              type="url"
-              formControlName="liveUrl"
-              placeholder="https://demo.ejemplo.com"
-            >
-              URL inválida (http/https)
-            </app-input>
-          </div>
-
-          <!-- Repo URL -->
-          <div class="projects-admin__field-group--span-3">
-            <app-input
-              label="Repo URL (opcional)"
-              id="repoUrl"
-              type="url"
-              formControlName="repoUrl"
-              placeholder="https://github.com/usuario/repo"
-            >
-              URL inválida (http/https)
-            </app-input>
-          </div>
-
-          <!-- Categoría -->
-          <div class="projects-admin__field-group--span-2">
-            <app-input
-              label="Categoría (opcional)"
-              id="category"
-              formControlName="category"
-              placeholder="web, mobile, etc."
-            />
-          </div>
-
-          <!-- Año -->
-          <div class="projects-admin__field-group--span-2">
-            <app-input label="Año (opcional)" id="year" type="number" formControlName="year" placeholder="2024">
-              Entre 1900 y 2100
-            </app-input>
-          </div>
-
-          <!-- ID Imagen Previa -->
-          <div class="projects-admin__field-group--span-2">
-            <app-input
-              label="ID imagen previa (opcional)"
-              id="previewImageId"
-              type="number"
-              formControlName="previewImageId"
-              placeholder="Ej: 12"
-            >
-              Debe ser un entero >= 1
-            </app-input>
-          </div>
-
-          <!-- Tecnologías -->
-          <div class="projects-admin__field-group--span-4">
-            <app-select
-              label="Tecnologías"
-              id="technologyIds"
-              formControlName="technologyIds"
-              [options]="getTechnologyOptions()"
-              [multiple]="true"
-              placeholder="Seleccionar tecnologías..."
-            ></app-select>
-          </div>
-
-          <!-- Destacado -->
-          <div class="projects-admin__checkbox-group">
-            <app-checkbox id="isFeatured" formControlName="isFeatured">
-              Destacado
-            </app-checkbox>
-          </div>
-        </fieldset>
+        <app-project-form
+          [form]="form"
+        ></app-project-form>
 
         <!-- Botón de envío -->
         <div class="projects-admin__submit-wrapper">
@@ -182,7 +79,6 @@
 <app-project-edit-modal
   [isOpen]="isEditModalOpen()"
   [project]="selectedProject()"
-  [technologies]="technologies()"
   (save)="onSaveProject($event)"
   (closeModal)="onCloseModal()"
 ></app-project-edit-modal>

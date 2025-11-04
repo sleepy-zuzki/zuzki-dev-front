@@ -11,9 +11,7 @@ import { ProjectEntity, TechnologyEntity } from '@core/domain';
 import { UpdateProjectDto } from '@app/application';
 import { toSlug } from '@shared/utils/slug.util';
 
-import { AppInputComponent } from '@shared/components/input/app-input.component';
-import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
-import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
+import { ProjectFormComponent } from '@features/admin/projects/components/project-form/project-form.component';
 import { ModalComponent } from '@components/modal/modal.component';
 import { UpdateProjectForm } from '@core/interfaces/forms/project.forms';
 
@@ -23,10 +21,8 @@ import { UpdateProjectForm } from '@core/interfaces/forms/project.forms';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    AppInputComponent,
-    AppCheckboxComponent,
-    AppSelectComponent,
-    ModalComponent
+    ModalComponent,
+    ProjectFormComponent,
   ],
   templateUrl: './project-edit-modal.component.html',
   styleUrls: ['./project-edit-modal.component.css'],
@@ -36,7 +32,6 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
   private fb = inject(NonNullableFormBuilder);
 
   @Input({ required: true }) isOpen = false;
-  @Input({ required: true }) technologies: TechnologyEntity[] = [];
   @Input() project: ProjectEntity | null = null;
 
   @Output() save = new EventEmitter<{ id: number; data: UpdateProjectDto }>();
@@ -61,6 +56,7 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
         name: [this.project.name, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
         slug: [{ value: this.project.slug, disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
         description: [this.project.description ?? null, [Validators.maxLength(1000)]],
+        details: [this.project.details ?? null, [Validators.maxLength(5000)]],
         repoUrl: [this.project.repoUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
         liveUrl: [this.project.liveUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
         category: [this.project.category ?? null],
@@ -100,6 +96,7 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
       name: raw.name,
       slug: raw.slug,
       description: raw.description,
+      details: raw.details,
       repoUrl: raw.repoUrl,
       liveUrl: raw.liveUrl,
       category: raw.category,
@@ -114,13 +111,6 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
 
   onClose(): void {
     this.closeModal.emit();
-  }
-
-  getTechnologyOptions(): Option[] {
-    return this.technologies.map((technology): Option => ({
-      label: technology.name,
-      value: technology.slug
-    }));
   }
 
   private parseNumber(value: number | string | null | undefined): number | null {

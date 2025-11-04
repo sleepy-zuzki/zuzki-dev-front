@@ -1,0 +1,125 @@
+<fieldset class="form-fieldset" [formGroup]="form">
+  <legend class="sr-only">Detalles del Proyecto</legend>
+
+  <!-- Nombre -->
+  <div class="form-field-group--span-3">
+    <app-input label="Nombre" id="name" formControlName="name" placeholder="Mi proyecto">
+      Nombre requerido (2-150 caracteres)
+    </app-input>
+  </div>
+
+  <!-- Slug (Visible pero deshabilitado) -->
+  <div class="form-field-group--span-3">
+    <app-input label="Slug (auto-generado)" id="slug" formControlName="slug" placeholder="mi-proyecto">
+      Slug requerido (kebab-case, 2-160)
+    </app-input>
+  </div>
+
+  <!-- Descripción -->
+  <div class="form-field-group--span-6">
+    <app-input
+      label="Descripción (opcional)"
+      id="description"
+      formControlName="description"
+      placeholder="Resumen del proyecto (máx. 1000)"
+      controlType="textarea"
+      [rows]="3"
+    >
+      Máximo 1000 caracteres
+    </app-input>
+  </div>
+
+  <!-- Detalles -->
+  <div class="form-field-group--span-6">
+    <app-input
+      label="Detalles (opcional)"
+      id="details"
+      formControlName="details"
+      placeholder="Información detallada del proyecto (máx. 5000)"
+      controlType="textarea"
+      [rows]="6"
+    >
+      Máximo 5000 caracteres
+    </app-input>
+  </div>
+
+  <!-- Live URL -->
+  <div class="form-field-group--span-3">
+    <app-input
+      label="Live URL (opcional)"
+      id="liveUrl"
+      type="url"
+      formControlName="liveUrl"
+      placeholder="https://demo.ejemplo.com"
+    >
+      URL inválida (http/https)
+    </app-input>
+  </div>
+
+  <!-- Repo URL -->
+  <div class="form-field-group--span-3">
+    <app-input
+      label="Repo URL (opcional)"
+      id="repoUrl"
+      type="url"
+      formControlName="repoUrl"
+      placeholder="https://github.com/usuario/repo"
+    >
+      URL inválida (http/https)
+    </app-input>
+  </div>
+
+  <!-- Categoría -->
+  <div class="form-field-group--span-2">
+    <app-select
+      label="Categoría (opcional)"
+      id="category"
+      formControlName="category"
+      [options]="categoryOptions"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Seleccionar categoría..."
+    ></app-select>
+  </div>
+
+  <!-- Año -->
+  <div class="form-field-group--span-2">
+    <app-input label="Año (opcional)" id="year" type="number" formControlName="year" placeholder="2024">
+      Entre 1900 y 2100
+    </app-input>
+  </div>
+
+  <!-- ID Imagen Previa -->
+  <div class="form-field-group--span-2">
+    <app-input
+      label="ID imagen previa (opcional)"
+      id="previewImageId"
+      type="number"
+      formControlName="previewImageId"
+      placeholder="Ej: 12"
+    >
+      Debe ser un entero >= 1
+    </app-input>
+  </div>
+
+  <!-- Tecnologías -->
+  <div class="form-field-group--span-4">
+    <app-select
+      label="Tecnologías"
+      id="technologyIds"
+      formControlName="technologyIds"
+      [options]="getTechnologyOptions"
+      [multiple]="true"
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Seleccionar tecnologías..."
+    ></app-select>
+  </div>
+
+  <!-- Destacado -->
+  <div class="form-field-group--span-6">
+    <app-checkbox id="isFeatured" formControlName="isFeatured">
+      Destacado
+    </app-checkbox>
+  </div>
+</fieldset>
