@@ -23,7 +23,7 @@
 }
 
 @utility form-input-base {
-  @apply block w-full rounded-md border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus-brand;
+  @apply block w-full rounded-md border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm placeholder-gray-500 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-400 focus-brand;
 }
 
 /* Utilidades Tailwind v4 (@utility) para construir tarjetas de forma composable */

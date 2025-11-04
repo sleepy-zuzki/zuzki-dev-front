@@ -21,7 +21,7 @@
 
 /* Placeholder para el texto dentro del trigger */
 .select-placeholder {
-  @apply text-gray-500;
+  @apply text-gray-500 dark:text-gray-400;
 }
 
 /* Icono de flecha en el trigger */
