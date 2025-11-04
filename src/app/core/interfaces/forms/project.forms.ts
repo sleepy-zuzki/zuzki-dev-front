@@ -4,6 +4,7 @@ export interface CreateProjectForm {
   name: FormControl<string>;
   slug: FormControl<string>;
   description: FormControl<string | null>;
+  details: FormControl<string | null>;
   repoUrl: FormControl<string | null>;
   liveUrl: FormControl<string | null>;
   category: FormControl<string | null>;

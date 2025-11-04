@@ -32,6 +32,7 @@ export interface ProjectResponseDto {
   name: string;
   slug: string;
   description?: string;
+  details?: string | null;
   liveUrl?: string | null;
   repoUrl?: string | null;
   category?: string | null;

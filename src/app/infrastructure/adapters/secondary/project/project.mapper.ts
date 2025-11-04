@@ -13,6 +13,7 @@ export class ProjectMapper {
       dto.category ?? undefined,
       dto.year ?? undefined,
       dto.isFeatured ?? undefined,
+      dto.details ?? undefined,
       dto.previewImageId ?? undefined,
       dto.technologies.map(tech => new TechnologyEntity(
         tech.id,

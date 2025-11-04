@@ -13,6 +13,7 @@ export class ProjectEntity implements Project {
     public readonly category: string | undefined,
     public readonly year: number | undefined,
     public readonly isFeatured: boolean | undefined,
+    public readonly details: string | undefined,
     public readonly previewImageId: number | undefined,
     public readonly technologies: Technology[],
     public readonly carouselImages: File[],
