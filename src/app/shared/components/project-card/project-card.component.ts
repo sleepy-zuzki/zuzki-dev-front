@@ -13,6 +13,7 @@ import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project-card',
@@ -25,6 +26,7 @@ import { ButtonComponent } from '@shared/components/button/button.component';
     TypographyTitleComponent,
     ProjectInfoModalComponent,
     ButtonComponent,
+    TitleCasePipe
   ],
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css'],

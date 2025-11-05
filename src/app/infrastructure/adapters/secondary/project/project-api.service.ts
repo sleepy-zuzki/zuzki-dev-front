@@ -80,6 +80,7 @@ export class ProjectApiService {
       name: request.name,
       slug: request.slug,
       description: request.description ?? null,
+      details: request.details ?? null,
       repoUrl: request.repoUrl ?? null,
       liveUrl: request.liveUrl ?? null,
       category: request.category ?? null,

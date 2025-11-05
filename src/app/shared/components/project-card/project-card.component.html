@@ -12,7 +12,7 @@
     }
     @if (project.category) {
       <span class="project-card__badge project-card__badge--category">
-        {{ project.category }}
+        {{ project.category | titlecase }}
       </span>
     }
 

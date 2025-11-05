@@ -73,22 +73,27 @@
             }
           </div>
 
-          @if (project.category || project.year) {
+          @if (project.category || project.year || project.details) {
             <div aria-labelledby="details-title">
               <app-typography-title id="details-title" [level]="3" variant="subsection">Detalles</app-typography-title>
               <app-typography-text variant="base" extraClasses="text-sm leading-relaxed">{{ project.details }}</app-typography-text>
               <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
                 @if (project.category) {
-                  <ng-template>
-                    <dt class="opacity-70">Categoría:</dt>
-                    <dd>{{ project.category }}</dd>
-                  </ng-template>
+                  <dt class="opacity-70">
+                    <app-typography-text>Categoría:</app-typography-text>
+                  </dt>
+                  <dd>
+                    <app-typography-text>{{ project.category | titlecase }}</app-typography-text>
+                  </dd>
                 }
+
                 @if (project.year) {
-                  <ng-template>
-                    <dt class="opacity-70">Año:</dt>
-                    <dd>{{ project.year }}</dd>
-                  </ng-template>
+                  <dt class="opacity-70">
+                    <app-typography-text>Año:</app-typography-text>
+                  </dt>
+                  <dd>
+                    <app-typography-text>{{ project.year }}</app-typography-text>
+                  </dd>
                 }
               </dl>
             </div>
