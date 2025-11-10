@@ -1,6 +1,6 @@
 {
   "name": "zuzki-dev-front",
-  "version": "1.0.0",
+  "version": "3.0.0",
   "engines": {
     "npm": ">=9.0.0 <10.9.0",
     "node": ">=20.0.0 <22.14.0"
