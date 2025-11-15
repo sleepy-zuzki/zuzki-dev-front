@@ -1,47 +1,68 @@
-<form #formDir="ngForm" (ngSubmit)="onSubmitForm()" [formGroup]="contactForm">
-  <div class="flex flex-col gap-2 w-full md:w-1/2">
+<div class="cf-card">
+  <form [formGroup]="contactForm"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        class="cf-form"
+        aria-label="Formulario de contacto">
 
-    <div>
-      <app-input formControlName="name"
-                 name="name"
-                 placeholder="Sleepy Zuzki">
-      </app-input>
-
-      @if (name && name.invalid && (name.dirty || name.touched)) {
-        <div class="text-red-500">
-          <fa-icon [icon]="faCircleExclamation"/> El nombre no es valido
-        </div>
+    <div class="cf-field">
+      <label for="cf-name" class="cf-label">Nombre</label>
+      <input id="cf-name"
+             name="name"
+             formControlName="name"
+             type="text"
+             class="cf-input"
+             [attr.aria-invalid]="name.invalid && (name.dirty || name.touched)"
+             [attr.aria-describedby]="name.invalid ? 'cf-name-error' : null"
+             autocomplete="name"
+             placeholder="Ingrese su nombre" />
+      @if (name.invalid && (name.dirty || name.touched)) {
+        <p id="cf-name-error" class="cf-error">
+          @if (name.errors?.['required']) { El nombre es obligatorio. }
+          @else if (name.errors?.['minlength']) { Debe tener al menos 3 caracteres. }
+        </p>
       }
     </div>
 
-    <div>
-      <app-input email
-                 formControlName="email"
-                 name="email" placeholder="zuzki@sleepy.com">
-      </app-input>
-
-      @if (email && email.invalid && (email.dirty || email.touched)) {
-        <div class="text-red-500">
-          <fa-icon [icon]="faCircleExclamation"/> El correo no es valido
-        </div>
+    <div class="cf-field">
+      <label for="cf-email" class="cf-label">Email</label>
+      <input id="cf-email"
+             name="email"
+             formControlName="email"
+             type="email"
+             class="cf-input"
+             [attr.aria-invalid]="email.invalid && (email.dirty || email.touched)"
+             [attr.aria-describedby]="email.invalid ? 'cf-email-error' : null"
+             autocomplete="email"
+             placeholder="Ingrese su correo" />
+      @if (email.invalid && (email.dirty || email.touched)) {
+        <p id="cf-email-error" class="cf-error">
+          @if (email.errors?.['required']) { El email es obligatorio. }
+          @else if (email.errors?.['email']) { Ingresa un email válido. }
+        </p>
       }
     </div>
 
-    <div>
-      <app-textarea [rows]="5"
-                    formControlName="message"
-                    label="Mensaje"
-                    name="message"
-                    placeholder="Escribe tu mensaje aquí" required>
-      </app-textarea>
-
-      @if (message && message.invalid && (message.dirty || message.touched)) {
-        <div class="text-red-500">
-          <fa-icon [icon]="faCircleExclamation"/> El mensaje es requerido
-        </div>
+    <div class="cf-field">
+      <label for="cf-message" class="cf-label">Mensaje</label>
+      <textarea id="cf-message"
+                name="message"
+                formControlName="message"
+                rows="4"
+                class="cf-textarea"
+                [attr.aria-invalid]="message.invalid && (message.dirty || message.touched)"
+                [attr.aria-describedby]="message.invalid ? 'cf-message-error' : null"></textarea>
+      @if (message.invalid && (message.dirty || message.touched)) {
+        <p id="cf-message-error" class="cf-error">
+          @if (message.errors?.['required']) { El mensaje es obligatorio. }
+          @else if (message.errors?.['minlength']) { Debe tener al menos 3 caracteres. }
+          @else if (message.errors?.['maxlength']) { Máximo 500 caracteres. }
+        </p>
       }
     </div>
 
-    <app-button class="w-full md:w-1/3" type="submit">Enviar</app-button>
-  </div>
-</form>
+    <button type="submit" class="cf-button" [disabled]="contactForm.invalid">
+      Enviar Mensaje
+    </button>
+  </form>
+</div>

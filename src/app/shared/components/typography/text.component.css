@@ -1,0 +1,36 @@
+@reference "tailwindcss";
+
+/* Base class for the component */
+.typography-text {
+  @apply antialiased;
+}
+
+/* Variant modifiers */
+.typography-text--variant-base {
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+.typography-text--variant-muted {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+.typography-text--variant-lead {
+  @apply text-lg text-gray-600 dark:text-gray-300;
+}
+
+.typography-text--variant-caption {
+  @apply text-xs text-gray-500 dark:text-gray-400;
+}
+
+/* Alignment modifiers */
+.typography-text--align-left {
+  @apply text-left;
+}
+
+.typography-text--align-center {
+  @apply text-center;
+}
+
+.typography-text--align-right {
+  @apply text-right;
+}

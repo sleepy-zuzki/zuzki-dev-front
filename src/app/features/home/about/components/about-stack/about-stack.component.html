@@ -1,0 +1,23 @@
+<section class="as-section" aria-labelledby="stack-title">
+  <header class="as-header">
+    <h3 id="stack-title" class="as-title">{{ heading }}</h3>
+    <p class="as-subtitle">{{ subheading }}</p>
+  </header>
+
+  <ul class="as-grid" role="list">
+    @for (cat of categories; track cat.name) {
+      <li class="as-card" [style.--as-accent]="cat.color || null">
+        <div class="as-card-head">
+          @if (cat.icon) {
+            <div class="as-icon-container">
+              <ng-icon [name]="cat.icon" aria-hidden="true" class="as-icon"></ng-icon>
+            </div>
+          }
+          <h4 class="as-card-title">{{ cat.name }}</h4>
+        </div>
+
+        <app-tags-list [tags]="cat.tags"></app-tags-list>
+      </li>
+    }
+  </ul>
+</section>

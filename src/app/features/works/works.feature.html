@@ -1,27 +1,67 @@
-<section id="works">
-  <header>
-    <div class="flex flex-row gap-5 justify-between items-center">
-      <div class="flex flex-col gap-2">
-        <h1 class="text-5xl font-bold">Ultimos Proyectos</h1>
-        <p class="text-secondary">Drive into our latest work, each project showcasing innovative solutions and design</p>
-      </div>
+<main class="page-container">
+  <!-- Title Section -->
+  <section class="content-container text-center">
+    <app-typography-title [level]="1" variant="page" align="center">
+      Todos Mis <span class="text-accent">Proyectos</span>
+    </app-typography-title>
 
-<!--      <app-button type="button" variant="secondary">-->
-<!--        Filtros-->
-<!--      </app-button>-->
+    <app-typography-text variant="lead" align="center">
+      Explora mi portafolio completo de proyectos, desde aplicaciones web hasta diseños creativos.
+    </app-typography-text>
+
+    <app-typography-text variant="lead" align="center">
+      Cada proyecto representa un desafío único y una solución innovadora.
+    </app-typography-text>
+
+    <div class="search-bar-wrapper">
+      <input type="search" placeholder="Buscar proyectos..." class="search-bar-input" />
+      <ng-icon class="search-bar-icon" name="featherSearch"></ng-icon>
     </div>
-  </header>
-
-  <section class="flex flex-row flex-wrap mt-8 gap-3 justify-between">
-    @for (project of projects(); track project.id) {
-      <a class="w-[176px] no-underline hover:no-underline focus:ring-0 m-0"
-         routerLink="/works/{{ project.id }}">
-        <app-project-card
-          [project]="project"
-          [showDescription]="false"
-          variant="square">
-        </app-project-card>
-      </a>
-    }
   </section>
-</section>
+
+  <!-- Main Content -->
+  <div class="content-container main-content-grid">
+    <!-- Left Column: Filters -->
+    <aside class="filters-sidebar">
+      <div class="filter-group">
+        <app-typography-title [level]="3" variant="subsection">Categorías</app-typography-title>
+        <div class="filter-buttons">
+          <app-button variant="brand" size="sm">Todos</app-button>
+          <app-button variant="secondary" size="sm">Full-Stack</app-button>
+          <app-button variant="secondary" size="sm">Frontend</app-button>
+          <app-button variant="secondary" size="sm">Design</app-button>
+          <app-button variant="secondary" size="sm">Mobile</app-button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <app-typography-title [level]="3" variant="subsection">Tecnologías</app-typography-title>
+        <app-tags-list
+          [tags]="technologyNames()"
+          (tagClick)="handleTechnologyFilter($event)"
+          [clickable]="true"
+          ariaLabel="Filtrar por tecnología"
+        ></app-tags-list>
+      </div>
+    </aside>
+
+    <!-- Right Column: Projects Grid -->
+    <section class="projects-grid">
+      @for (project of projects(); track project.id) {
+        <app-project-card [project]="project"></app-project-card>
+      }
+    </section>
+  </div>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="content-container text-center">
+      <app-typography-title [level]="2" variant="section" align="center">¿Te gusta lo que ves?</app-typography-title>
+      <app-typography-text align="center">Trabajemos juntos en tu próximo proyecto</app-typography-text>
+      <div class="cta-buttons">
+        <app-button variant="brand" size="lg">Iniciar Proyecto</app-button>
+        <app-button variant="secondary" size="lg">Volver al Inicio</app-button>
+      </div>
+    </div>
+  </section>
+</main>
+

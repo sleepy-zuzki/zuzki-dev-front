@@ -1,64 +1,50 @@
-<section class="flex flex-col gap-10" id="landing">
-  <section class="flex gap-0 lg:gap-10 flex-wrap lg:flex-nowrap" id="introduction">
-    <img alt="Zuzki Trabajando, Arte realizado por @pixelhorn"
-         class="w-[460px] h-[479px]"
-         height="479"
-         ngSrc="/https://cdn.zuzki.dev/images/zuzki-icon/zuzki-icon-460.webp"
-         placeholder
-         priority
-         width="460"
-    />
+<main id="main" class="block text-gray-900 dark:text-gray-100">
+  <!-- Hero Section -->
+  <app-section [id]="'inicio'"
+               [ariaLabel]="'Inicio'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="min-h-screen flex items-center justify-center">
+    <app-home-hero></app-home-hero>
+  </app-section>
 
-    <div class="flex flex-row flex-wrap gap-5">
-      <div class="w-full text-5xl">
-        <h1>De mis Delirios a la Vida</h1>
-      </div>
-      <div class="w-full">
-        <p>Hola, soy Zuzki, un Ingeniero de Software apasionado por crear soluciones creativas.</p>
-        <p>Al explorar mi trabajo podrás ver de lo que soy capaz.</p>
-        <p>¡Espero te guste y podamos realizar algo juntos pronto!</p>
-      </div>
-      <div class="w-full self-end">
-        <app-button ariaLabel="Explora Mis Trabajos" routerLink="/works">
-          <button-text>Explora Mis Trabajos</button-text>
-        </app-button>
-      </div>
-    </div>
-  </section>
+  <!-- Servicios Section -->
+  <app-section [id]="'servicios'"
+               variant="coffee"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
+    <app-home-services [services]="services"></app-home-services>
+  </app-section>
 
-  <section id="about-me">
-    <h2 class="text-[1.75rem]">Sobre mí</h2>
-    <p>Soy Zuzki, Ingeniero de Software con pasión por crear experiencias accesibles y visualmente atractivas.</p>
-    <p>Además, cuento con una sólida base en arquitecturas escalables, lo que me permite abordar cada proyecto con precisión y creatividad.</p>
-    <p>Siempre estoy explorando nuevas tecnologías para perfeccionar mi trabajo y ofrecer soluciones funcionales y memorables.</p>
-  </section>
+  <!-- Sobre Mí Section -->
+  <app-section [id]="'sobre-mi'"
+               [ariaLabel]="'Sobre mí'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
+    <app-home-about></app-home-about>
+  </app-section>
 
-  <section id="technologies">
-    <h2 class="text-[1.75rem]">Tecnologias</h2>
+  <!-- Proyectos Section -->
+  <app-section [id]="'proyectos'"
+               [ariaLabel]="'Proyectos destacados'"
+               variant="coffee"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
+    <app-home-projects></app-home-projects>
+  </app-section>
 
-    <app-badge [badges]="technologies"></app-badge>
-  </section>
-
-  <section class="flex flex-col gap-2" id="projects">
-    <h2 class="text-[1.75rem]">Trabajos</h2>
-
-    @for (project of projects(); track project.id) {
-      <app-project-card
-        class="w-full"
-        [project]="project"
-        [variant]="windowWidth < 426 ? 'square' : 'elongated'"
-        buttonText="Ver Trabajo">
-      </app-project-card>
-    }
-  </section>
-
-  <section id="contact">
-    <h2 class="text-[1.75rem]">Contacto</h2>
-
-    <p class="mb-3">¡Estoy emocionado por escuchar sobre posibles colaboraciones!</p>
-
-    <app-contact-form (onSubmit)="onSubmit($event)"></app-contact-form>
-  </section>
-</section>
-
-<app-structured-data [schema]="schema" />
+  <!-- Contacto Section -->
+  <app-section [id]="'contacto'"
+               [ariaLabel]="'Contacto'"
+               variant="transparent"
+               padding="none"
+               [container]="false"
+               extraClasses="py-20">
+    <app-home-contact></app-home-contact>
+  </app-section>
+</main>

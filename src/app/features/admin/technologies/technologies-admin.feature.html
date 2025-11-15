@@ -1,0 +1,84 @@
+<main class="page-container" aria-label="Gestión de Tecnologías">
+  <header class="page-header">
+    <app-typography-title [level]="1" variant="page">
+      Gestión de Tecnologías
+    </app-typography-title>
+    <app-typography-text variant="muted">
+      Aquí podrás crear y editar las tecnologías del portfolio.
+    </app-typography-text>
+  </header>
+
+  <section class="create-section" aria-label="Crear nueva tecnología">
+    <app-typography-title [level]="2" variant="section" class="section-title">
+      Crear nueva tecnología
+    </app-typography-title>
+
+    <div class="form-wrapper">
+      <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
+        <fieldset class="form-fieldset">
+          <legend class="sr-only">Detalles de la Tecnología</legend>
+
+          <!-- Nombre -->
+          <div class="field-group--span-3">
+            <app-input label="Nombre" id="name" formControlName="name" placeholder="Ej: Angular">
+              Nombre requerido (2-100 caracteres)
+            </app-input>
+          </div>
+
+          <!-- Slug -->
+          <div class="field-group--span-3">
+            <app-input label="Slug (auto-generado)" id="slug" formControlName="slug" placeholder="ej-angular" />
+          </div>
+
+          <!-- Website URL -->
+          <div class="field-group--span-6">
+            <app-input label="Website (opcional)" id="website" type="url" formControlName="website" placeholder="https://angular.io">
+              Debe ser una URL válida
+            </app-input>
+          </div>
+
+        </fieldset>
+
+        <div class="submit-wrapper">
+          <button
+            type="submit"
+            [disabled]="form.invalid || loading()"
+            class="submit-button"
+            aria-label="Crear tecnología"
+          >
+            Crear tecnología
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section aria-label="Listado de tecnologías">
+    @if (loading() && technologies().length === 0) {
+      <app-typography-text variant="muted">Cargando tecnologías…</app-typography-text>
+    } @else if (error()) {
+      <div role="alert" class="alert">
+        <app-typography-text [class]="'alert__text'">{{ error() }}</app-typography-text>
+        <button
+          type="button"
+          (click)="reload()"
+          class="alert__reload-button"
+          aria-label="Reintentar cargar tecnologías"
+        >
+          Reintentar
+        </button>
+      </div>
+    } @else if (technologies().length === 0) {
+      <app-typography-text>No hay tecnologías aún.</app-typography-text>
+    } @else {
+      <div class="technology-list">
+        @for (tech of technologies(); track tech.id) {
+          <div class="technology-list-item">
+            <span class="technology-list-item__name">{{ tech.name }}</span>
+            <!-- Aquí se podrían añadir botones de editar/eliminar en el futuro -->
+          </div>
+        }
+      </div>
+    }
+  </section>
+</main>

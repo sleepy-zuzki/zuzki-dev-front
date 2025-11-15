@@ -1,0 +1,84 @@
+<div class="container mx-auto px-6">
+  <header class="text-center max-w-2xl mx-auto mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold tracking-tight">
+      Sobre mí
+    </h2>
+    <p class="mt-3 text-base md:text-lg opacity-80">
+      Más que un desarrollador, soy un artesano digital. Aquí te cuento un poco sobre mi historia, mi filosofía y las herramientas que uso para crear.
+    </p>
+  </header>
+
+  <!-- Métricas -->
+  <ul class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12" role="list">
+    @for (s of stats; track s.label) {
+      <li class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-coffee  p-6 text-center">
+        <p class="text-3xl md:text-4xl font-bold text-zuzki-500">{{ s.value }}</p>
+        <p class="mt-1 text-sm opacity-80 text-gray-600 dark:text-gray-400">{{ s.label }}</p>
+      </li>
+    }
+  </ul>
+
+  <!-- Contenido principal -->
+  <div class="grid lg:grid-cols-2 gap-10 items-start">
+    <!-- Columna izquierda: artículos -->
+    <article aria-labelledby="porque-title">
+      <h3 id="porque-title" class="text-xl md:text-2xl font-semibold">¿Por qué “Sleepy” Zuzki?</h3>
+      <p class="mt-3 opacity-90">
+        El nombre viene de mis días universitarios programando hasta altas horas. Siempre andaba con mucho sueño y dormia poco
+        por las horas de entrada y salida. “Sleepy” se volvió mi marca personal: trabajo mejor en las madrugadas cuando
+        el mundo está en silencio y puedo concentrarme al 100%.
+      </p>
+
+      <h3 class="mt-8 text-xl md:text-2xl font-semibold">Mi Filosofía</h3>
+      <p class="mt-3 opacity-90">
+        Creo que el mejor código es el que resuelve problemas reales de personas reales. No me interesa la complejidad por
+        la complejidad, sino crear soluciones elegantes que funcionen y que la gente realmente quiera usar.
+      </p>
+
+      <h3 class="mt-8 text-xl md:text-2xl font-semibold">Datos Curiosos</h3>
+      <ul class="mt-4 space-y-2 list-disc pl-5" role="list">
+        @for (item of curiosities; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+
+      <nav class="mt-8 flex flex-wrap gap-3" aria-label="Acciones de perfil">
+<!--        <a-->
+<!--          class="inline-flex items-center justify-center rounded-lg border px-4 py-2 font-medium hover:bg-black/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"-->
+<!--          href="/assets/cv.pdf"-->
+<!--          target="_blank"-->
+<!--          rel="noopener"-->
+<!--        >-->
+<!--          <ng-icon name="featherExternalLink"/>-->
+<!--          <span class="ms-2">Ver CV Completo</span>-->
+<!--        </a>-->
+        <a
+          class="inline-flex items-center justify-center rounded-lg bg-zuzki-500 text-white px-4 py-2 font-medium hover:bg-zuzki-500/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+          href="/#contacto"
+        >
+          <ng-icon name="featherMail"/>
+          <span class="ms-2">Hablemos</span>
+        </a>
+      </nav>
+    </article>
+
+    <!-- Columna derecha: trayectoria y setup -->
+    <div class="space-y-8">
+      <app-about-timeline [items]="timeline"></app-about-timeline>
+
+      <aside aria-labelledby="setup-title" class="rounded-xl border p-5 border-gray-200 dark:border-gray-700 bg-white dark:bg-coffee">
+        <h3 id="setup-title" class="text-lg font-semibold">Mi Setup</h3>
+        <ul class="mt-3 flex flex-col gap-1" role="list">
+          @for (row of setup; track row.key) {
+            <li class="flex items-start justify-between gap-4">
+              <span class="opacity-70">{{ row.key }}:</span>
+              <span class="font-medium text-right">{{ row.value }}</span>
+            </li>
+          }
+        </ul>
+      </aside>
+    </div>
+  </div>
+
+  <app-about-stack [categories]="stack"></app-about-stack>
+</div>

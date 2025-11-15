@@ -1,0 +1,15 @@
+<div class="footer-social" [ngClass]="alignmentClass" aria-label="Redes sociales">
+  @for (item of items; track item.key) {
+    <a
+      class="footer-social-link"
+      [href]="item.href"
+      target="_blank"
+      rel="noopener noreferrer"
+      [attr.aria-label]="item.aria"
+    >
+      <div class="footer-social-icon" [ngClass]="hoverClass(item.key)">
+        <ng-icon [name]="item.icon" aria-hidden="true" class="w-5 h-5"></ng-icon>
+      </div>
+    </a>
+  }
+</div>

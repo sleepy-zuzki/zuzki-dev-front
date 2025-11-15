@@ -1,0 +1,210 @@
+---
+apply: always
+---
+
+### Reglas de Desarrollo para el Agente de IA (Gemini)
+
+Este documento define las reglas y convenciones que el agente de IA debe seguir al desarrollar en el proyecto `zuzki-dev-front`.
+
+#### **1. Arquitectura y Estructura de Código**
+
+*   **Arquitectura Principal**: El proyecto sigue una **Arquitectura Hexagonal**. Debes respetar estrictamente la separación de capas:
+    *   `core/domain`: Lógica de negocio pura. Sin dependencias de Angular o librerías externas. Contiene entidades, repositorios (interfaces) y servicios de dominio.
+    *   `application`: Orquesta los casos de uso. Usa DTOs y puertos para comunicarse.
+    *   `infrastructure`: Implementa los puertos del `domain` y `application` (ej. repositorios que llaman a una API HTTP). Aquí es donde se interactúa con el mundo exterior.
+    *   `features`: Contiene componentes de Angular que implementan una funcionalidad específica (ej. `home`, `works`).
+    *   `pages`: Ensambla los componentes de `features` para crear páginas completas.
+    *   `shared`: Componentes, servicios y directivas reutilizables y agnósticos a las `features`.
+*   **Componentes de Angular**: Todos los nuevos componentes deben ser **Standalone**. Utiliza la opción `--standalone` al generar componentes con Angular CLI.
+*   **Inyección de Dependencias**: Utiliza el constructor para la inyección de dependencias. Para valores de configuración, usa los `InjectionToken` definidos en `src/app/core/tokens`.
+
+#### **2. Lenguaje y Estilo de Código**
+
+*   **Lenguaje**: Todo el código debe ser escrito en **TypeScript**.
+*   **Estilo y Formato**: Sigue el estilo de código existente. Utiliza el linter para asegurar la consistencia.
+*   **Linting**: Antes de finalizar una tarea, ejecuta `pnpm run lint` y corrige todos los errores.
+*   **Nomenclatura**: Sigue las convenciones de Angular para nombrar archivos:
+    *   Componentes: `nombre.component.ts`
+    *   Servicios: `nombre.service.ts`
+    *   Guardianes: `nombre.guard.ts`
+    *   Interfaces: `nombre.interface.ts`
+
+#### **3. Gestión de Dependencias y Comandos**
+
+*   **Gestor de Paquetes**: Utiliza siempre **`pnpm`** para instalar o gestionar dependencias.
+    *   Añadir dependencia: `pnpm add [paquete]`
+    *   Añadir dependencia de desarrollo: `pnpm add -D [paquete]`
+*   **Comandos del Proyecto**: Utiliza los scripts definidos en `package.json`:
+    *   Desarrollo local (SSR): `pnpm start`
+    *   Compilación de producción: `pnpm run build`
+    *   Ejecutar pruebas: `pnpm run test`
+
+#### **4. Estilos y UI**
+
+*   **Framework de Estilos**: El proyecto utiliza **Tailwind CSS v4**.
+*   **Metodología de Estilos**: **No se deben usar clases de utilidad directamente en los archivos HTML**. En su lugar, el flujo de trabajo es el siguiente:
+    1.  Para cada componente, crea su archivo CSS correspondiente (ej. `mi-componente.component.css`).
+    2.  En el archivo CSS, define clases semánticas para los elementos del componente.
+    3.  Dentro de estas clases, utiliza la directiva `@apply` para componer las utilidades de Tailwind.
+*   **Importar Utilidades en CSS**: Para que `@apply` funcione correctamente en la v4, es necesario importar las utilidades de Tailwind al inicio del archivo CSS usando `@reference`. Ejemplo:
+    ```css
+    /* Al inicio del archivo CSS del componente */
+    @reference "../../../../../styles/utilities.css";
+
+    .card-container {
+      @apply block p-4 border rounded-lg shadow-sm;
+    }
+
+    .card-title {
+      @apply text-xl font-bold;
+    }
+    ```
+*   **Variables de Color**: Utiliza las clases de color de Tailwind con `@apply`. Los colores base están definidos en `src/styles/colors.css`.
+
+#### **5. Pruebas (Testing)**
+
+*   **Pruebas Unitarias**: Es obligatorio añadir pruebas unitarias para cualquier nueva funcionalidad o corrección de bug.
+*   **Framework de Pruebas**: Las pruebas se escriben con **Karma** y **Jasmine**.
+*   **Ubicación de Pruebas**: Los archivos de prueba (`.spec.ts`) deben estar junto a los archivos que prueban.
+*   **Ejecución de Pruebas**: Ejecuta `pnpm run test` para verificar que todas las pruebas pasan antes de considerar una tarea completada.
+
+#### **6. Commits y Control de Versiones**
+
+*   **Mensajes de Commit**: Sigue la convención de **Conventional Commits**.
+    *   `feat:` para nuevas funcionalidades.
+    *   `fix:` para correcciones de bugs.
+    *   `docs:` para cambios en la documentación.
+    *   `style:` para cambios de formato.
+    *   `refactor:` para refactorizaciones de código.
+    *   `test:` para añadir o modificar pruebas.
+    *   `chore:` para tareas de mantenimiento.
+*   **Revisión de Cambios**: Antes de hacer commit, revisa tus cambios con `git diff`.
+
+#### **7. Despliegue**
+
+*   **Plataforma**: La aplicación se despliega en **Cloudflare Pages/Workers**.
+*   **Configuración**: La configuración de Cloudflare se encuentra en `wrangler.jsonc`.
+*   **Proceso de Despliegue**: El despliegue se realiza con `pnpm run deploy`, que primero construye la aplicación.
+
+#### **8. SEO y Semántica HTML**
+
+*   **HTML Semántico**: Utiliza siempre las etiquetas HTML semánticas apropiadas para estructurar el contenido (`<main>`, `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`, etc.). Esto es crucial para la accesibilidad y el SEO.
+*   **Títulos de Página y Metadatos**: Para cada página, utiliza el `SeoService` inyectable (`@core/services/seo.service.ts`) para establecer un título único y una meta descripción relevante. No dejes los valores por defecto.
+*   **Jerarquía de Encabezados**: Asegúrate de que cada página tenga una estructura de encabezados lógica, comenzando con una sola etiqueta `<h1>` para el título principal.
+*   **Accesibilidad de Imágenes**: Todas las etiquetas `<img>` deben incluir un atributo `alt` descriptivo, a menos que sean puramente decorativas, en cuyo caso el `alt` debe estar vacío (`alt=""`).
+
+#### **9. Gestión de Estado y Flujo de Datos (Arquitectura de Store)**
+
+*   **Principio de Responsabilidad Única (SRP)**: Para una clara separación de responsabilidades, la obtención de datos y la gestión de estado deben dividirse en dos servicios distintos.
+
+    1.  **Servicio de API (Stateless)**:
+        *   **Responsabilidad**: Únicamente comunicarse con el `HttpClient` y conocer los endpoints. Es "tonto" y no guarda estado.
+        *   **Implementación**: Sus métodos deben devolver `Observables` puros obtenidos de `HttpClient`.
+        *   **Ejemplo**: `ProjectApiService`.
+
+    2.  **Servicio de Estado / Store (Stateful)**:
+        *   **Responsabilidad**: Únicamente gestionar el estado de un dominio (`projects`, `loading`, `error`) usando `Signals`. Es "inteligente" respecto al estado, pero no sabe de dónde vienen los datos.
+        *   **Implementación**: **No inyecta `HttpClient`**. Inyecta el **Servicio de API** correspondiente. Sus métodos llaman al servicio de API, se suscriben al `Observable` y actualizan sus `WritableSignal`s internos.
+        *   **Ejemplo**: `ProjectStore`.
+
+*   **Flujo de Datos (Regla Obligatoria)**:
+    1.  Un **Componente** necesita datos, así que llama a un método en el **Servicio de Estado / Store** (ej. `projectStore.loadProjects()`).
+    2.  El **Store** llama al método correspondiente en el **Servicio de API** (ej. `projectApi.fetchProjects()`).
+    3.  El **Servicio de API** realiza la llamada HTTP y devuelve un `Observable`.
+    4.  El **Store** se suscribe a ese `Observable` y actualiza sus `Signals` internos, usando un `Mapper` para la transformación de datos.
+    5.  El **Componente**, que ya está conectado a los `Signals` públicos del Store, se actualiza automáticamente de forma reactiva.
+
+*   **Ejemplo de Implementación**:
+
+    ```typescript
+    // 1. Servicio de API (Stateless)
+    @Injectable({ providedIn: 'root' })
+    export class ProjectApiService {
+      constructor(private http: HttpClient) {}
+      fetchProjects = (): Observable<ProjectDto[]> => this.http.get<ProjectDto[]>('api/projects');
+    }
+
+    // 2. Mapper (Stateless, solo transformación)
+    export class ProjectMapper {
+      static toEntity(dto: ProjectDto): ProjectEntity {
+        // ...lógica de mapeo
+        return new ProjectEntity(/*...*/);
+      }
+    }
+
+    // 3. Servicio de Estado / Store (Stateful)
+    @Injectable({ providedIn: 'root' })
+    export class ProjectStore {
+      private _projects = signal<ProjectEntity[]>([]);
+      public readonly projects = this._projects.asReadonly();
+
+      constructor(private apiService: ProjectApiService) {} // Inyecta el API Service
+
+      loadProjects(): void {
+        this.apiService.fetchProjects().subscribe({
+          next: (dtos) => this._projects.set(dtos.map(ProjectMapper.toEntity)), // Usa el Mapper
+          // ...
+        });
+      }
+    }
+
+    // 4. Componente (Consumidor)
+    @Component({...})
+    export class MyComponent {
+      private projectStore = inject(ProjectStore);
+      projects = this.projectStore.projects; // Se conecta al Signal
+
+      constructor() {
+        this.projectStore.loadProjects(); // Dispara la acción
+      }
+    }
+    ```
+
+#### **10. Manejo de Errores**
+
+*   **Errores de API**: Todas las llamadas a la API realizadas con `HttpClient` deben manejar los posibles errores. Utiliza el operador `catchError` de RxJS.
+*   **Feedback al Usuario**: Cuando un error ocurra (ej. fallo en una petición de red), la UI debe comunicarlo de forma clara al usuario. Utiliza un servicio de notificaciones (como el ya instalado `HotToast`) para mostrar mensajes de error.
+*   **Logging**: Considera la implementación de un servicio de logging centralizado para reportar errores a un sistema externo en producción.
+
+#### **11. Interacción con API**
+
+*   **Servicios Tipados**: La interacción con la API debe estar encapsulada en servicios específicos (`Servicios de API`) dentro de la capa de `infrastructure`. Estos servicios deben usar el `HttpClient` de Angular y devolver `Observable` fuertemente tipados.
+*   **DTOs**: Utiliza los Data Transfer Objects (DTOs) definidos en `src/app/application/dtos` para modelar las respuestas de la API.
+
+#### **12. Seguridad Básica (Frontend)**
+
+*   **Sanitización**: Confía en la sanitización automática de Angular para prevenir ataques XSS. No intentes desactivarla usando `bypassSecurityTrust...` a menos que sea absolutamente necesario y se entienda el riesgo.
+*   **Información Sensible**: Nunca almacenes información sensible (como tokens de larga duración o datos de usuario privados) en `localStorage`. Para la gestión de tokens de sesión, utiliza `sessionStorage` o una cookie segura (`HttpOnly`, `Secure`).
+
+#### **13. Ubicación y Reutilización de Estructuras de Datos**
+
+*   **Principio de Única Fuente de Verdad (Single Source of Truth)**: Todas las estructuras de datos (interfaces, DTOs, entidades) deben tener una única ubicación centralizada según su propósito arquitectónico. Queda estrictamente prohibido definir estas estructuras a nivel de componente si son reutilizables.
+
+*   **Reglas de Ubicación Obligatorias**:
+    *   **Entidades (`Entity`)**:
+        *   **Ubicación**: `src/app/core/domain/entities/`
+        *   **Propósito**: Representan los objetos de negocio principales (ej. `ProjectEntity`).
+    *   **Interfaces de Repositorio**:
+        *   **Ubicación**: `src/app/core/domain/repositories/`
+        *   **Propósito**: Definen los contratos (`puertos`) que los adaptadores de infraestructura deben implementar (ej. `ProjectRepository`).
+    *   **DTOs (Data Transfer Objects)**:
+        *   **Ubicación**: `src/app/application/dtos/`
+        *   **Propósito**: Son objetos planos para transferir datos entre capas, especialmente para la API (ej. `ProjectResponseDto`).
+    *   **Interfaces Genéricas/UI**:
+        *   **Ubicación**: `src/app/core/interfaces/`
+        *   **Propósito**: Para contratos de datos compartidos que no son entidades ni DTOs.
+
+*   **Regla de Oro y Deber de Refactorización**:
+    *   **Búsqueda Obligatoria**: Antes de crear una nueva `interface`, `type`, `DTO`, o `Entity`, el agente **DEBE** buscar si ya existe una estructura que cumpla la misma función en su ubicación designada. La duplicación es un error grave.
+    *   **Deber de Refactorización**: Si durante su trabajo el agente encuentra una de estas estructuras definida en una ubicación incorrecta (ej. una `interface` dentro de un archivo de componente), **DEBE** refactorizar el código de la siguiente manera:
+        1.  **Mover** la estructura a su directorio correcto según las reglas de ubicación.
+        2.  **Actualizar** el archivo original y cualquier otro consumidor para que importen la estructura desde su nueva y única ubicación centralizada.
+
+#### **14. Mapeo de Datos (Patrón Mapper)**
+
+*   **Responsabilidad del Mapeo**: La lógica de transformación de datos entre capas (ej. de un `ProjectResponseDto` a una `ProjectEntity`) es una responsabilidad única y no debe residir dentro de los Servicios de Estado (Stores) o de API.
+*   **Uso de Clases `Mapper`**:
+    *   **Creación**: Para cualquier transformación de datos compleja, se debe crear una clase `Mapper` dedicada.
+    *   **Ubicación**: Los mappers deben ubicarse junto a la capa que los utiliza, típicamente en `infrastructure/adapters/mappers/` o junto al adaptador/store correspondiente (ej. `project.mapper.ts`).
+    *   **Implementación**: Un `Mapper` debe ser una clase simple, a menudo con métodos estáticos, que recibe un objeto de una capa y devuelve el objeto transformado para la otra capa. No debe tener estado ni dependencias de gestión de estado o API.
+*   **Delegación en el Store**: El Servicio de Estado (Store) debe delegar la tarea de mapeo a la clase `Mapper` correspondiente, manteniendo su propio código enfocado exclusivamente en la gestión de los `signals`.

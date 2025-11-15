@@ -1,0 +1,84 @@
+<main id="projects-admin" aria-label="Gestión de Proyectos" class="projects-admin">
+  <header class="projects-admin__header">
+    <app-typography-title [level]="1" variant="page">
+      Gestión de Proyectos
+    </app-typography-title>
+    <app-typography-text variant="muted">
+      Aquí podrás crear y editar la información de los proyectos.
+    </app-typography-text>
+  </header>
+
+  <section aria-label="Crear nuevo proyecto" class="projects-admin__create-section">
+    <app-typography-title [level]="2" variant="section" class="projects-admin__section-title">
+      Crear nuevo proyecto
+    </app-typography-title>
+
+    <div class="projects-admin__form-wrapper">
+      <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
+        <app-project-form
+          [form]="form"
+        ></app-project-form>
+
+        <!-- Botón de envío -->
+        <div class="projects-admin__submit-wrapper">
+          <button
+            type="submit"
+            [disabled]="form.invalid || loading()"
+            class="projects-admin__submit-button"
+            aria-label="Crear proyecto"
+          >
+            Crear proyecto
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section aria-label="Listado de proyectos" class="projects-admin__list-section">
+    @if (loading()) {
+      <app-typography-text variant="muted">Cargando proyectos…</app-typography-text>
+    } @else if (error()) {
+      <div role="alert" class="projects-admin__alert">
+
+        <app-typography-text [class]="'projects-admin__alert-text'">{{ error() }}</app-typography-text>
+
+        <button
+
+          type="button"
+
+          (click)="reload()"
+
+          class="projects-admin__reload-button"
+
+          aria-label="Reintentar cargar proyectos"
+
+        >
+
+          Reintentar
+
+        </button>
+
+      </div>
+    } @else if (projects().length === 0) {
+      <app-typography-text>No hay proyectos aún.</app-typography-text>
+    } @else {
+      <ul role="list" class="projects-admin__project-list">
+        @for (p of projects(); track p.id) {
+          <app-project-card
+            [project]="p"
+            [isAdmin]="true"
+            (edit)="onEditProject($event)"
+            (delete)="onDeleteProject($event)"
+          ></app-project-card>
+        }
+      </ul>
+    }
+  </section>
+</main>
+
+<app-project-edit-modal
+  [isOpen]="isEditModalOpen()"
+  [project]="selectedProject()"
+  (save)="onSaveProject($event)"
+  (closeModal)="onCloseModal()"
+></app-project-edit-modal>

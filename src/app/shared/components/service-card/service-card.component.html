@@ -1,0 +1,20 @@
+<article class="card card-group">
+  <div class="card__icon" [ngClass]="iconColorClasses">
+    <ng-icon [name]="service.icon" class="w-6 h-6" aria-hidden="true"></ng-icon>
+  </div>
+
+  <h3 class="card__title">{{ service.title }}</h3>
+
+  <p class="card__description">
+    {{ service.description }}
+  </p>
+
+  <ul class="card__list">
+    @for (feature of service.features; track feature) {
+      <li class="card__list-item">
+        <span class="card__bullet"></span>
+        {{ feature }}
+      </li>
+    }
+  </ul>
+</article>

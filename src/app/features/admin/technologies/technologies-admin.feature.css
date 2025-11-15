@@ -1,0 +1,65 @@
+@reference "../../../../styles/utilities.css";
+
+.page-container {
+  @apply p-4 sm:p-6 md:p-8;
+}
+
+.page-header {
+  @apply mb-8;
+}
+
+.create-section {
+  @apply mb-12;
+}
+
+.section-title {
+  @apply mb-4;
+}
+
+.form-wrapper {
+  @apply rounded-lg bg-neutral-800/50 p-6;
+}
+
+.form-fieldset {
+  @apply grid grid-cols-6 gap-x-4 gap-y-5;
+}
+
+.field-group--span-3 {
+  @apply col-span-6 sm:col-span-3;
+}
+
+.field-group--span-6 {
+  @apply col-span-6;
+}
+
+.submit-wrapper {
+  @apply mt-6 flex justify-end;
+}
+
+.submit-button {
+  @apply rounded-md bg-orange-500 px-4 py-2 text-white hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.alert {
+  @apply flex items-center justify-between gap-4 rounded-md bg-red-500/20 p-4;
+}
+
+.alert__text {
+  @apply text-red-400;
+}
+
+.alert__reload-button {
+  @apply rounded-md bg-red-500/30 px-3 py-1.5 text-white hover:bg-red-500/40;
+}
+
+.technology-list {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+}
+
+.technology-list-item {
+  @apply flex items-center justify-between rounded-md bg-neutral-800/50 p-4;
+}
+
+.technology-list-item__name {
+  @apply font-medium;
+}

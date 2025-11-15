@@ -1,0 +1,74 @@
+@reference "../../../../../styles/utilities.css";
+
+.carousel-manager-container {
+  @apply block p-4 sm:p-6 bg-background-section rounded-lg shadow-md;
+}
+
+.manager-header {
+  @apply flex items-center justify-between pb-4 mb-4 border-b border-background-surface;
+}
+
+.title {
+  @apply text-xl font-bold text-zuzki-800 dark:text-zuzki-200;
+}
+
+.file-input {
+  @apply hidden;
+}
+
+.upload-label {
+  @apply cursor-pointer;
+}
+
+.icon {
+  @apply w-4 h-4;
+}
+
+.icon-delete {
+  @apply w-5 h-5 text-red-500;
+}
+
+.feedback-message {
+  @apply py-8 text-center text-zuzki-600 dark:text-zuzki-400;
+}
+
+.feedback-message.error {
+  @apply text-red-600 dark:text-red-400;
+}
+
+.image-list {
+  @apply flex flex-col gap-3;
+}
+
+.image-item {
+  @apply flex items-center gap-4 p-3 rounded-md bg-background-surface border border-transparent;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.image-item.cdk-drag-preview {
+  @apply shadow-xl;
+}
+
+.image-item.cdk-drag-placeholder {
+  @apply opacity-50;
+}
+
+.image-item:hover {
+  @apply bg-background-default;
+}
+
+.drag-handle {
+  @apply cursor-move text-zuzki-500 dark:text-zuzki-400;
+}
+
+.image-preview {
+  @apply w-16 h-16 object-cover rounded-md bg-background-section;
+}
+
+.image-details {
+  @apply flex-grow;
+}
+
+.alt-text-input {
+  @apply w-full p-2 text-sm rounded-md bg-background-default border border-background-surface focus:ring-2 focus:ring-brand-primary focus:border-transparent;
+}

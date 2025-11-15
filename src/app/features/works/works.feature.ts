@@ -1,29 +1,71 @@
-import { Component, effect, Signal } from '@angular/core';
-import { ProjectCardComponent } from '@components/ui';
-import { Overlay } from '@core/models/overlay.model';
-import { RouterLink } from '@angular/router';
-import { OverlayApiService } from '@services/overlay-api.service';
+import { Component, computed, inject, OnInit, signal, Signal, WritableSignal } from '@angular/core';
+import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
+import { ProjectEntity } from '@domain/entities';
+import { ProjectCardComponent } from '@shared/components/project-card/project-card.component';
+import { CommonModule } from '@angular/common';
+import { TypographyTitleComponent } from '@shared/components/typography/title.component';
+import { TypographyTextComponent } from '@shared/components/typography/text.component';
+import { NgIcon, provideIcons } from '@ng-icons/core';
+import { featherSearch } from '@ng-icons/feather-icons';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
+import { TagsListComponent } from '@shared/components/tags-list/tags-list.component';
 
 @Component({
   selector: 'app-works-feature',
   imports: [
+    CommonModule,
     ProjectCardComponent,
-    RouterLink
+    TypographyTitleComponent,
+    TypographyTextComponent,
+    NgIcon,
+    ButtonComponent,
+    TagsListComponent
   ],
   templateUrl: './works.feature.html',
   standalone: true,
-  styleUrl: './works.feature.css'
+  styleUrl: './works.feature.css',
+  providers: [provideIcons({ featherSearch })]
 })
-export class WorksFeature {
-  projects: Signal<Overlay[]>;
+export class WorksFeature implements OnInit {
+  private readonly projectStore = inject(ProjectStore);
+  private readonly technologyStore = inject(TechnologyStore);
 
-  constructor(private overlayApiService: OverlayApiService) {
-    this.projects = this.overlayApiService.data;
+  private readonly allProjects: Signal<ProjectEntity[]>;
+  public readonly projects: Signal<ProjectEntity[]>;
+  public readonly technologyNames: Signal<string[]>;
+  public readonly selectedTechnology: WritableSignal<string | null> = signal<string | null>(null);
 
-    effect(() => {
-      if (this.projects().length === 0) {
-        this.overlayApiService.fetchOverlays();
+  constructor() {
+    this.allProjects = this.projectStore.projects;
+    this.technologyNames = computed(() =>
+      this.technologyStore.technologies().map(t => t.name)
+    );
+
+    this.projects = computed(() => {
+      const selectedTech = this.selectedTechnology();
+      const projects = this.allProjects();
+
+      if (!selectedTech) {
+        return projects;
       }
+
+      return projects.filter(project =>
+        project.technologies.some(tech => tech.name === selectedTech)
+      );
     });
+  }
+
+  ngOnInit(): void {
+    this.projectStore.getProjects();
+    this.technologyStore.getTechnologies();
+  }
+
+  public handleTechnologyFilter(technologyName: string): void {
+    if (this.selectedTechnology() === technologyName) {
+      this.selectedTechnology.set(null);
+    } else {
+      this.selectedTechnology.set(technologyName);
+    }
   }
 }

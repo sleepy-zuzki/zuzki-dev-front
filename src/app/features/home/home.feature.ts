@@ -1,143 +1,85 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, HostListener, Inject, PLATFORM_ID, Signal, DOCUMENT } from '@angular/core';
-import { ButtonComponent, ProjectCardComponent } from '@components/ui';
-import { BadgeComponent } from '@components/ui/badge/badge.component';
-import { Overlay } from '@core/models/overlay.model';
-import { FormGroup, FormsModule } from '@angular/forms';
-import { catchError, throwError } from 'rxjs';
-import { HotToastService } from '@ngxpert/hot-toast';
-import { ContactFormComponent } from '@components/forms/contact-form/contact-form.component';
-import { isPlatformBrowser, NgOptimizedImage } from '@angular/common';
-import { OverlayApiService } from '@services/overlay-api.service';
-import { StructuredDataComponent } from '@components/structured-data/structured-data.component';
-import { ApiService } from '@core/services/api.service';
+import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
+import { provideIcons } from '@ng-icons/core';
+import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
+import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons';
+import { ServiceCard } from '@shared/components/service-card/service-card.component';
+import { SectionComponent } from '@components/section/section.component';
+import { HomeHeroComponent } from '@features/home/hero/home-hero.component';
+import { HomeAboutComponent } from '@features/home/about/home-about.component';
+import { HomeServicesComponent } from '@features/home/services/home-services.component';
+import { HomeContactComponent } from '@features/home/contact/home-contact.component';
+import { HomeProjectsComponent } from '@features/home/projects/home-projects.component';
 
 @Component({
   selector: 'app-home-feature',
   standalone: true,
   imports: [
-    ButtonComponent,
-    BadgeComponent,
-    ProjectCardComponent,
     FormsModule,
-    ContactFormComponent,
-    NgOptimizedImage,
-    StructuredDataComponent
+    SectionComponent,
+    HomeHeroComponent,
+    HomeAboutComponent,
+    HomeServicesComponent,
+    HomeContactComponent,
+    HomeProjectsComponent
   ],
-  templateUrl: './home.feature.html',
-  styleUrl: './home.feature.css',
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  providers: [provideIcons({featherMail, featherArrowRight, featherZap, bootstrapPalette, bootstrapCodeSlash})],
+  templateUrl: './home.feature.html'
 })
 /**
  * Componente que representa la característica de la página de inicio (Home Page) de la aplicación.
  * Muestra componentes como Proyectos y Redes Sociales.
  */
 export class HomeFeatureComponent {
-  technologies: string[] = ['Javascript', 'React', 'Node.js', 'Express', 'HTML5', 'CSS3', 'MongoDB', 'PostgreSQL', 'Git', 'AWS', 'Docker', 'Webpack'];
-  projects: Signal<Overlay[]>;
   windowWidth: number = 0;
 
-  schema: Record<string, any>[] = [
+  services: ServiceCard[] = [
     {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Sleepy Zuzki",
-      "alternateName": "Zuzki",
-      "url": "https://zuzki.dev",
-      "dateModified": '',
-      "sameAs": [
-        "https://x.com/sleepy_zuzki",
-        "https://twitter.com/sleepy_zuzki",
-        "https://twitch.tv/sleepy_zuzki",
-        "https://youtube.com/@sleepy_zuzki",
-        "https://github.com/sleepy-zuzki"
-      ],
-      "image": "https://cdn.zuzki.dev/large_zuzki_christmas_c4ace767dc.jpg",
-      "description": "VTuber and creative technologist.",
-      "jobTitle": "Streamer / Developer"
+      icon: 'bootstrapCodeSlash',
+      iconColor: 'purple',
+      title: 'Desarrollo Web',
+      description: 'Aplicaciones web modernas y responsivas con las últimas tecnologías. Desde landing pages hasta aplicaciones complejas.',
+      features: [
+        'Angular, React, Vue.js',
+        'Node.js, Express',
+        'Bases de datos relacionales y NoSQL'
+      ]
     },
     {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Zuzki Dev",
-      "url": "https://zuzki.dev",
-      "inLanguage": "es",
-      "description": "Portafolio de Sleepy Zuzki, desarrollador y VTuber.",
-      "dateModified": '',
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://zuzki.dev/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
+      icon: 'bootstrapPalette',
+      iconColor: 'blue',
+      title: 'Overlays & Widgets',
+      description: 'Overlays personalizados para streamers que potencian la interacción con tu audiencia. Diseños únicos y funcionalidades avanzadas.',
+      features: [
+        'Overlays animados',
+        'Widgets interactivos',
+        'Integración con OBS/Streamlabs'
+      ]
     },
     {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Sleepy Zuzki",
-      "url": "https://zuzki.dev",
-      "dateModified": '',
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://cdn.zuzki.dev/large_zuzki_christmas_c4ace767dc.jpg"
-      },
-      "sameAs": [
-        "https://x.com/sleepy_zuzki",
-        "https://twitch.tv/sleepy_zuzki",
-        "https://youtube.com/@sleepy_zuzki"
+      icon: 'featherZap',
+      iconColor: 'green',
+      title: 'Consultoría Técnica',
+      description: 'Asesoramiento especializado para optimizar tu setup de streaming y mejorar la experiencia técnica de tu canal.',
+      features: [
+        'Setup de streaming optimizado',
+        'Automatización de workflows',
+        'Optimización de rendimiento'
       ]
     }
   ];
 
-
-  constructor(
-    private overlayApiService: OverlayApiService,
-    private toast: HotToastService,
-    private apiService: ApiService,
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {
-    this.projects = this.overlayApiService.data;
-    if (isPlatformBrowser(this.platformId)) {
-      this.windowWidth = window.innerWidth;
-
-      this.schema.forEach(schema => {
-        schema['dateModified'] = new Date(document.lastModified).toISOString();
-      })
-    }
-
-    effect(() => {
-      if (this.projects().length === 0) {
-        this.overlayApiService.fetchOverlays();
-      }
-    });
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
     if (isPlatformBrowser(this.platformId)) {
       this.windowWidth = window.innerWidth;
     }
   }
 
-  onSubmit(form: FormGroup) {
-    const endpoint = "zl0p2vv4190wklivjadktnec326qzqs6";
-    const values = form.value;
-
-    this.apiService.postToMake<any>(endpoint, values)
-    .pipe(
-      catchError(error => {
-        console.error(error);
-        return throwError(() => new Error('Ocurrió un error al enviar el formulario. Por favor, inténtalo de nuevo.'));
-      })
-    )
-    .subscribe({
-      next: data => {
-        this.toast.show('Tu mensaje ha sido enviado correctamente. Gracias por contactarnos.');
-      },
-      error: err => {
-        // Aquí puedes manejar el error que fue relanzado o uno nuevo
-        console.error('Error en la suscripción:', err);
-        // Podrías mostrar un mensaje de error al usuario aquí
-      }
-    });
+  @HostListener('window:resize')
+  onResize(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.windowWidth = window.innerWidth;
+    }
   }
 }

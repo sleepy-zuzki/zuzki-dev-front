@@ -1,0 +1,55 @@
+@reference "../../../../styles/utilities.css";
+
+/* Contenedor principal */
+.select-container {
+  @apply relative w-full;
+}
+
+/* Etiqueta del select */
+.select-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1;
+}
+
+/* Botón que muestra la selección y abre el desplegable */
+.select-trigger {
+  @apply relative w-full cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-left text-gray-900 shadow-sm dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus-brand;
+}
+
+.select-trigger-disabled {
+  @apply cursor-not-allowed bg-gray-100 dark:bg-gray-800 opacity-70;
+}
+
+/* Placeholder para el texto dentro del trigger */
+.select-placeholder {
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+/* Icono de flecha en el trigger */
+.select-arrow {
+  @apply pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2;
+}
+
+/* Panel desplegable que contiene las opciones */
+.select-panel {
+  @apply absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-gray-800 dark:ring-gray-700;
+}
+
+/* Cada una de las opciones en el desplegable */
+.select-option {
+  @apply relative cursor-pointer select-none py-2 pl-3 pr-9 text-gray-900 dark:text-gray-100;
+}
+
+/* Estado hover para las opciones */
+.select-option-hover {
+  @apply bg-zuzki-100 dark:bg-zuzki-900;
+}
+
+/* Opción que está actualmente seleccionada */
+.select-option-selected {
+  @apply font-semibold bg-zuzki-50 dark:bg-zuzki-950;
+}
+
+/* Icono de check para la opción seleccionada */
+.option-check-icon {
+  @apply absolute inset-y-0 right-0 flex items-center pr-4 text-zuzki-600;
+}

@@ -1,0 +1,21 @@
+<app-modal title="Editar Proyecto" size="lg" (close)="onClose()">
+  @if (form) {
+    <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+      <app-project-form
+        [form]="form"
+      ></app-project-form>
+
+      <!-- Botones de acción -->
+      <div class="form-actions">
+        <button type="button" (click)="onClose()" class="form-button form-button--secondary">
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="form.invalid" class="form-button form-button--primary">
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  } @else {
+    <p>Cargando datos del proyecto...</p>
+  }
+</app-modal>

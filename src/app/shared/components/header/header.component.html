@@ -1,57 +1,98 @@
-<header class="border-b border-sleepy-light-border dark:border-sleepy-dark-border">
-  <a class="banner"
-     #banner
-     href="https://twitch.tv/sleepy_zuzki"
-     target="_blank"
-     rel="noopener">
-    <span>
-      <span class="live-animation">
-        <span style="--delay: 0;"></span>
-        <span style="--delay: 1;"></span>
-        <span style="--delay: 2;"></span>
-      </span>
-      Zuzki esta en vivo, ven a verlo
-    </span>
-  </a>
-  <nav class="container mx-auto flex items-center justify-between h-16 px-0 md:px-4" id='navbar' role="navigation">
-    <app-link class="logo flex items-center text-xl font-medium select-none" routerLink="/" routerLinkActiveClass="" variant="nav">
-      @if (faCode) {
-        <fa-icon [icon]="faCode" class="mr-2 text-sleepy-accent" size="2xl"></fa-icon>
-      }
-      <span class="text-2xl font-bold">Sleepy Zuzki</span>
-    </app-link>
+<nav class="header">
+  <div class="header-container">
+    <div class="header-content">
+      <a routerLink="/" class="header-logo">
+        <img
+          src="https://cdn.zuzki.dev/public/logo/zuzki_logo.webp"
+          width="100"
+          height="100"
+          alt="Zuzki Logo"
+          class="header-logo-image"
+        />
+      </a>
 
-    <div class="flex items-center gap-8">
-      <ul class="hidden md:flex items-center gap-8">
-        <li><app-link routerLink="/about" variant="nav">Sobre Mi</app-link></li>
-        <li><app-link routerLink="/works" variant="nav">Trabajos</app-link></li>
-      </ul>
+      <div class="hidden md:flex items-center space-x-4">
+        <div class="header-nav">
+          <a routerLink="/"
+             class="header-nav-link"
+             [class.text-zuzki-600]="isActiveRoute('/')">
+            Inicio
+          </a>
 
-      <div class="flex items-center gap-3">
-        <app-theme-toggle class="hidden md:block"></app-theme-toggle>
-<!--        <app-button ariaLabel="Cambiar idioma" variant="secondary">-->
-<!--          🌐-->
-<!--        </app-button>-->
-        <app-button (click)="openMobileMenu()" ariaLabel="Menú móvil" class="pr-10 md:hidden" variant="secondary">
-          ☰
+          <a href="/#servicios"
+             class="header-nav-link">
+            Servicios
+          </a>
+
+          <a href="/#sobre-mi"
+             class="header-nav-link">
+            Sobre Mí
+          </a>
+
+          <a href="/#proyectos"
+             class="header-nav-link"
+             [class.text-zuzki-600]="isActiveRoute('/proyectos')"
+             [class.border-b-2]="isActiveRoute('/proyectos')"
+             [class.border-zuzki-600]="isActiveRoute('/proyectos')">
+            Proyectos
+          </a>
+
+          <app-button variant="brand" size="lg" type="button" (click)="navigateToContact()">
+            Contacto
+          </app-button>
+        </div>
+
+        <app-theme-toggle></app-theme-toggle>
+      </div>
+
+
+      <!-- Mobile menu button -->
+      <div class="flex items-center space-x-2 md:hidden">
+        <app-theme-toggle></app-theme-toggle>
+        <button
+          class="header-mobile-button"
+          (click)="toggleMobileMenu()"
+          [attr.aria-expanded]="isMobileMenuOpen"
+          aria-label="Toggle navigation menu">
+          <ng-icon
+            [name]="isMobileMenuOpen ? 'featherX' : 'featherMenu'"
+            class="w-6 h-6 text-gray-700">
+          </ng-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div
+      class="header-mobile-menu"
+      [class.hidden]="!isMobileMenuOpen">
+      <div class="header-mobile-nav">
+        <a routerLink="/"
+           class="header-mobile-nav-link"
+           [class.text-zuzki-600]="isActiveRoute('/')"
+           (click)="closeMobileMenu()">
+          Inicio
+        </a>
+        <a href="/#sobre-mi"
+           class="header-mobile-nav-link"
+           (click)="closeMobileMenu()">
+          Sobre Mí
+        </a>
+        <a href="/#servicios"
+           class="header-mobile-nav-link"
+           (click)="closeMobileMenu()">
+          Servicios
+        </a>
+        <a href="/#proyectos"
+           class="header-mobile-nav-link"
+           [class.text-zuzki-600]="isActiveRoute('/proyectos')"
+           (click)="closeMobileMenu()">
+          Proyectos
+        </a>
+        <app-button variant="brand" size="md" [block]="true" type="button" (click)="navigateToContact(); closeMobileMenu()">
+          Contacto
         </app-button>
       </div>
     </div>
-  </nav>
-</header>
-
-<!-- Diálogo para el menú móvil -->
-<dialog #mobileMenuDialog class="flex flex-col flex-wrap justify-between bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary">
-  <div>
-    <div class="flex justify-between items-center mb-4 border-b border-b-sleepy-light-border dark:border-b-sleepy-dark-border">
-      <h2 class="text-xl font-bold">Menú</h2>
-      <button (click)="closeMobileMenu()" aria-label="Cerrar menú" class="p-2">✖</button>
-    </div>
-    <ul class="flex flex-col gap-4">
-      <li><app-link (click)="closeMobileMenu()" routerLink="/about" variant="nav">Sobre Mi</app-link></li>
-      <li><app-link (click)="closeMobileMenu()" routerLink="/works" variant="nav">Trabajos</app-link></li>
-    </ul>
   </div>
-
-  <app-theme-toggle class="align-end"></app-theme-toggle>
-</dialog>
+</nav>

@@ -4,8 +4,6 @@ import { HttpContextToken } from '@angular/common/http';
  * Enumeración que define los tipos de API disponibles
  */
 export enum ApiType {
-  MAKE = 'make',
-  WORKER = 'worker',
   NONE = 'none'
 }
 

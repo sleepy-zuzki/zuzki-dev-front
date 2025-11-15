@@ -1,65 +1,79 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonComponent, InputComponent, TextareaComponent } from '@components/ui';
-import { faCircleExclamation } from '@awesome.me/kit-6cba0026a3/icons/duotone/solid';
-import { FaIconComponent, IconDefinition } from '@fortawesome/angular-fontawesome';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { HotToastService } from '@ngxpert/hot-toast';
+import { catchError, finalize, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-contact-form',
-  imports: [
-    ButtonComponent,
-    FormsModule,
-    InputComponent,
-    ReactiveFormsModule,
-    TextareaComponent,
-    FaIconComponent
-  ],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.css',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContactFormComponent {
-  faCircleExclamation: IconDefinition = faCircleExclamation;
+  loading = false;
 
-  @Output() onSubmit: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  constructor(
+    private http: HttpClient,
+    private toast: HotToastService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  contact = {
+  contactData = {
     name: '',
     email: '',
-    message: ''
+    message: '',
   };
 
-  contactForm: FormGroup = new FormGroup({
-    name: new FormControl(this.contact.name, [Validators.minLength(3)]),
-    email: new FormControl(this.contact.email, [Validators.required]),
-    message: new FormControl(this.contact.message, [Validators.required])
+  contactForm = new FormGroup({
+    name: new FormControl(this.contactData.name, {
+      validators: [Validators.required, Validators.minLength(3)],
+      nonNullable: true
+    }),
+    email: new FormControl(this.contactData.email, {
+      validators: [Validators.required, Validators.email],
+    }),
+    message: new FormControl(this.contactData.message, {
+      validators: [Validators.required, Validators.minLength(3), Validators.maxLength(500)],
+      nonNullable: true
+    })
   });
 
-  get name() {
-    return this.contactForm.get('name');
-  }
+  // Getters para simplificar la plantilla
+  get name() { return this.contactForm.controls.name; }
+  get email() { return this.contactForm.controls.email; }
+  get message() { return this.contactForm.controls.message; }
 
-  get email() {
-    return this.contactForm.get('email');
-  }
-
-  get message() {
-    return this.contactForm.get('message');
-  }
-
-  onSubmitForm(): void {
+  onSubmit(): void {
     if (this.contactForm.invalid) {
-      console.error('Formulario Invalido');
+      this.contactForm.markAllAsTouched();
+      this.toast.error('Por favor, completa todos los campos requeridos.');
       return;
     }
 
-    this.onSubmit.emit(this.contactForm);
-    this.contactForm.reset();
-    this.contactForm.setValue({
-      name: '',
-      email: '',
-      message: ''
-    })
+    this.loading = true;
+    const payload = this.contactForm.getRawValue();
+
+    this.http.post('/contact', payload).pipe(
+      catchError(err => {
+        console.error('Error al enviar el contacto:', err);
+        return throwError(() => new Error('Hubo un problema al enviar tu mensaje. Inténtalo de nuevo más tarde.'));
+      }),
+      finalize(() => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      })
+    ).subscribe({
+      next: () => {
+        this.toast.success('¡Gracias por tu mensaje! Te responderé pronto.');
+        this.contactForm.reset({ name: '', email: '', message: '' });
+      },
+      error: (error) => {
+        this.toast.error(error.message);
+      }
+    });
   }
 }

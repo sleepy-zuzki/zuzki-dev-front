@@ -1,7 +1,8 @@
 /**
  * Utility for generating dynamic sitemap.xml
  */
-import { SitemapRoute } from '../app/core/interfaces/sitemap.interface';
+import { SitemapRoute } from '@core/interfaces/sitemap.interface';
+import { AngularRouteForSitemap } from '@core/interfaces/angular-route.interface';
 
 /**
  * Genera el contenido XML del sitemap basado en las rutas proporcionadas
@@ -38,7 +39,7 @@ export function generateSitemapXml(baseUrl: string, routes: SitemapRoute[]): str
  * @returns Array de rutas para el sitemap
  * @param angularRoutes
  */
-export function getSitemapRoutesFromAngularRoutes(angularRoutes: any[]): SitemapRoute[] {
+export function getSitemapRoutesFromAngularRoutes(angularRoutes: AngularRouteForSitemap[]): SitemapRoute[] {
   const sitemapRoutes: SitemapRoute[] = [];
   const currentDate = new Date().toISOString().split('T')[0];
 

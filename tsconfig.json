@@ -3,7 +3,9 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
@@ -12,25 +14,51 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
-    "types": [
-        "./worker-configuration.d.ts"
+    "lib": [
+      "ES2022",
+      "dom"
     ],
-    "baseUrl": "./src",
+    "types": [
+      "./worker-configuration.d.ts"
+    ],
     "paths": {
-      "@components/*": ["app/shared/components/*"],
-      "@directives/*": ["app/shared/directives/*"],
-      "@services/*": ["app/shared/services/*"],
-      "@interceptors/*": ["app/shared/interceptors/*"],
-      "@pipes/*": ["app/shared/pipes/*"],
-      "@core/*": ["app/core/*"],
-      "@features/*": ["app/features/*"],
-      "@pages/*": ["app/pages/*"],
-      "@env/*": ["environments/*"],
+      "@/*": ["src/*"],
+      "@app/*": ["src/app/*"],
+      "@core/*": ["src/app/core/*"],
+      "@domain/*": ["src/app/core/domain/*"],
+      "@domain/entities/*": ["src/app/core/domain/entities/*"],
+      "@domain/interfaces/*": ["src/app/core/domain/interfaces/*"],
+      "@domain/enums/*": ["src/app/core/domain/enums/*"],
+      "@domain/repositories/*": ["src/app/core/domain/repositories/*"],
+      "@domain/services/*": ["src/app/core/domain/services/*"],
+      "@domain/value-objects/*": ["src/app/core/domain/value-objects/*"],
+      "@domain/events/*": ["src/app/core/domain/events/*"],
+      "@application/*": ["src/app/application/*"],
+      "@application/dtos/*": ["src/app/application/dtos/*"],
+      "@application/use-cases/*": ["src/app/application/use-cases/*"],
+      "@application/ports/*": ["src/app/application/ports/*"],
+      "@infrastructure/*": ["src/app/infrastructure/*"],
+      "@infrastructure/adapters/*": ["src/app/infrastructure/adapters/*"],
+      "@infrastructure/config/*": ["src/app/infrastructure/config/*"],
+      "@features/*": ["src/app/features/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@pages/*": ["src/app/pages/*"],
+      "@environments/*": ["src/environments/*"],
+      "@assets/*": ["src/assets/*"],
+      "@utils/*": ["src/utils/*"],
+      "@components/*": ["src/app/shared/components/*"],
+      "@directives/*": ["src/app/shared/directives/*"],
+      "@services/*": ["src/app/shared/services/*"],
+      "@interceptors/*": ["src/app/shared/interceptors/*"],
+      "@pipes/*": ["src/app/shared/pipes/*"],
+      "@ui": ["src/app/shared/components/ui/index.ts"]
     }
   },
   "angularCompilerOptions": {

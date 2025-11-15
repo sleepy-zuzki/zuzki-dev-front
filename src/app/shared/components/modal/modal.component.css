@@ -1,0 +1,57 @@
+@reference "../../../../styles/utilities.css";
+
+dialog {
+  @apply bg-white dark:bg-coffee m-auto;
+
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+  width: 500px;
+  max-width: 90%;
+
+  transition: scale 0.3s ease, display 0.3s ease allow-discrete;
+  scale: 0;
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+  }
+}
+
+/* Tamaños del modal: se aplican como clases en el elemento <dialog> */
+dialog.size-sm { width: 24rem; }   /* 384px */
+dialog.size-md { width: 32rem; }   /* 512px (por defecto similar a 500px) */
+dialog.size-lg { width: 48rem; }   /* 768px */
+dialog.size-xl { width: 64rem; }   /* 1024px */
+dialog.size-full { width: 90vw; max-width: 90vw; }
+
+dialog[open] {
+  scale: 1;
+  transition: scale 0.3s ease;
+
+  @starting-style {
+    scale: 0;
+  }
+}
+
+/* Header */
+.modal-header {
+  @apply text-xl font-bold text-black dark:text-white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

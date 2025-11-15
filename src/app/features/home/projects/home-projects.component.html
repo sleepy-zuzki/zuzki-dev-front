@@ -1,0 +1,39 @@
+<section class="hp-section">
+  <header class="hp-header">
+    <h2 class="hp-title">Proyectos Destacados</h2>
+    <p class="hp-subtitle">Una selección de mis trabajos más recientes e importantes.</p>
+  </header>
+
+  @if (loading()) {
+    <app-typography-text variant="muted">Cargando proyectos...</app-typography-text>
+  } @else if (error()) {
+    <div role="alert" class="flex items-center justify-between gap-4 rounded-md bg-red-500/20 p-4">
+      <app-typography-text class="text-red-400">{{ error() }}</app-typography-text>
+      <button
+        type="button"
+        (click)="reload()"
+        class="rounded-md bg-red-500/30 px-3 py-1.5 text-white hover:bg-red-500/40"
+        aria-label="Reintentar cargar proyectos"
+      >
+        Reintentar
+      </button>
+    </div>
+  } @else if (projects().length === 0) {
+    <app-typography-text>No hay proyectos destacados en este momento.</app-typography-text>
+  } @else {
+    <ul role="list" class="hp-grid">
+      @for (project of projects(); track project.id) {
+        <li>
+          <app-project-card [project]="project"></app-project-card>
+        </li>
+      }
+    </ul>
+  }
+
+  <nav aria-label="Navegación de proyectos" class="hp-nav">
+    <a class="hp-link" routerLink="/projects">
+      Ver Todos los Proyectos
+      <ng-icon name="bootstrapArrowRightShort" class="hp-link-icon"></ng-icon>
+    </a>
+  </nav>
+</section>

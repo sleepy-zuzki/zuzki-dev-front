@@ -1,0 +1,17 @@
+@reference "../../../styles/utilities.css";
+
+.form-actions {
+  @apply mt-6 flex justify-end gap-3;
+}
+
+.form-button {
+  @apply rounded-md px-4 py-2 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.form-button--secondary {
+  @apply bg-neutral-700 hover:bg-neutral-800;
+}
+
+.form-button--primary {
+  @apply bg-orange-500 hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-50;
+}

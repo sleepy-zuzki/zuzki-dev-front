@@ -1,0 +1,35 @@
+<div class="form-field">
+  <label [for]="id" class="form-label">{{ label }}</label>
+
+  @if (controlType === 'input') {
+    <input
+      [id]="id"
+      [type]="type"
+      [placeholder]="placeholder"
+      [value]="value"
+      [disabled]="isDisabled"
+      (input)="onInputChange($event)"
+      (blur)="onInputBlur()"
+      class="form-input"
+      [attr.aria-invalid]="isInvalid"
+    />
+  } @else if (controlType === 'textarea') {
+    <textarea
+      [id]="id"
+      [placeholder]="placeholder"
+      [value]="value"
+      [disabled]="isDisabled"
+      [rows]="rows || 3"
+      (input)="onInputChange($event)"
+      (blur)="onInputBlur()"
+      class="form-textarea"
+      [attr.aria-invalid]="isInvalid"
+    ></textarea>
+  }
+
+  @if (isInvalid) {
+    <div class="error-text" [id]="id + '-error'" role="alert">
+      <ng-content></ng-content>
+    </div>
+  }
+</div>

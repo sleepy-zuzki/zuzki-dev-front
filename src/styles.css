@@ -1,143 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Importar configuración de tema con @theme directive */
+@import "tailwindcss";
+@import "./styles/colors.css";
+@import "./styles/utilities.css";
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
-  /* Variables de color actualizadas a la nueva paleta */
-  --color-sleepy-accent: #ec8013;
-  --color-sleepy-accent-hover: #d4881c;
-
-  /* Modo claro */
-  --color-bg-primary-light: #fcfaf8;
-  --color-bg-surface-light: #f3ede7;
-  --color-text-primary-light: #1b140d;
-  --color-text-secondary-light: #9a734c;
-  --color-border-light: #e7dbcf;
-
-  /* Modo oscuro */
-  --color-bg-primary-dark: #221a11;
-  --color-bg-surface-dark: #483623;
-  --color-bg-input-dark: #332619;
-  --color-text-primary-dark: #ffffff;
-  --color-text-secondary-dark: #c9ad92;
-  --color-border-dark: #483623;
-  --color-border-input-dark: #674d32;
-
-  /* Variables para el toggler */
-  --toggler-scale: 1;
-  --toggler-width: calc(5rem * var(--toggler-scale));
-  --toggler-height: calc(2.5rem * var(--toggler-scale));
-  --toggler-knob-size: calc(1.25rem * var(--toggler-scale));
-  --toggler-knob-margin: calc(0.625rem * var(--toggler-scale));
-  --toggler-padding-left: calc(6.25rem * var(--toggler-scale));
+/* Estilos globales */
+html {
+  @apply scroll-smooth;
 }
 
-* {
-  scroll-behavior: smooth;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-  font-size: 16px;
-}
-
-html,
 body {
-  padding: 0;
-  margin: 0;
-  min-height: 100vh;
-
-  /* Nuevos tokens de color */
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-  @apply bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary;
+  @apply bg-background-default text-gray-900 font-sans transition-theme;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Estilos de tipografía base */
-h1, h2, h3, h4, h5, h6 {
-  @apply font-medium;
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-}
-
-p, span, a, label, input, button {
-  @apply font-normal;
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-}
-
-/* Texto secundario */
-.text-secondary {
-  @apply text-sleepy-light-text-secondary dark:text-sleepy-dark-text-secondary;
-}
-
-.text-primary {
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-}
-
-.text-accent {
-  @apply text-sleepy-light-text-onAccent dark:text-sleepy-dark-text-onAccent;
-}
-
-/* Links (solo para enlaces que no usan el componente app-link) */
-a:not(app-link a) {
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-  @apply hover:text-sleepy-accent hover:underline focus:outline-none focus:ring-2;
-  @apply focus:ring-sleepy-accent;
-  transition: color 0.2s;
-}
-
-/* === Superficies generales === */
-.bg-surface {
-  @apply bg-sleepy-light-bg-surface dark:bg-sleepy-dark-bg-surface;
-  @apply text-sleepy-light-text-primary dark:text-sleepy-dark-text-primary;
-  @apply border-sleepy-light-border dark:border-sleepy-dark-border;
-}
-
-/* === Utilidades de color de fondo === */
-.bg-primary {
-  @apply bg-sleepy-light-bg-primary dark:bg-sleepy-dark-bg-primary;
-}
-
-.bg-accent {
-  @apply bg-sleepy-accent text-sleepy-light-text-onAccent dark:text-sleepy-dark-text-onAccent;
-}
-
-/* === Utilidades para bordes === */
-.border-default {
-  @apply border border-sleepy-light-border dark:border-sleepy-dark-border;
-}
-
-.border-input {
-  @apply border border-sleepy-light-border dark:border-sleepy-dark-border-input;
-}
-
-/* === Utilidades para sombras === */
-.shadow-sleepy {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.dark .shadow-sleepy {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.18);
-}
-
-@font-face {
-  font-family: Inter;
-  src: url('/fonts/Inter-Variable.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  src: url('/fonts/SpaceGrotesk.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url('/fonts/JetBrainsMono.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+/* Print styles */
+@media print {
+  body {
+    @apply bg-white text-gray-900;
+  }
 }

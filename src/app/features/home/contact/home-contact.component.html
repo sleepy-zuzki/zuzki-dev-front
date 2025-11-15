@@ -1,0 +1,23 @@
+<div class="container mx-auto px-6">
+  <header class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4">¿Listo para crear algo increíble?</h2>
+    <p class="text-xl opacity-90 max-w-2xl mx-auto">
+      Colaboremos para dar vida a tu próximo proyecto. Te ayudo a convertir tus ideas en realidad digital.
+    </p>
+  </header>
+
+  <div class="grid md:grid-cols-2 gap-12 items-center">
+    <article class="space-y-6">
+      <h3 class="text-2xl font-bold">Hablemos</h3>
+      <p class="opacity-90 leading-relaxed">
+        Estoy siempre abierto a nuevos proyectos y colaboraciones interesantes.
+        Ya sea que necesites desarrollo web, overlays personalizados o consultoría técnica,
+        estoy aquí para ayudarte.
+      </p>
+
+      <app-social-icons [platforms]="['x', 'youtube', 'github']" align="start"></app-social-icons>
+    </article>
+
+    <app-contact-form></app-contact-form>
+  </div>
+</div>

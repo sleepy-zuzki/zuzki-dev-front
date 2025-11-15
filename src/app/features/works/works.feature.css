@@ -1,0 +1,53 @@
+@reference "../../../styles/utilities.css";
+
+.page-container {
+  @apply pt-16 md:pt-24;
+}
+
+.content-container {
+  @apply container mx-auto px-6;
+}
+
+.text-accent {
+  @apply text-brand-primary;
+}
+
+.search-bar-wrapper {
+  @apply relative mt-8 max-w-md mx-auto;
+}
+
+.search-bar-input {
+  @apply w-full rounded-lg border border-white/10 bg-white/5 py-3 pl-4 pr-10 text-white placeholder-gray-500 focus:border-b-brand-primary focus:ring-brand-primary;
+}
+
+.search-bar-icon {
+  @apply absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500;
+}
+
+.main-content-grid {
+  @apply grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-16;
+}
+
+.filters-sidebar {
+  @apply md:col-span-1 lg:col-span-1 flex flex-col gap-8;
+}
+
+.filter-group {
+  @apply flex flex-col gap-4;
+}
+
+.filter-buttons {
+  @apply flex flex-wrap items-start gap-2;
+}
+
+.projects-grid {
+  @apply md:col-span-3 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8;
+}
+
+.cta-section {
+  @apply mt-24 py-16 bg-background-surface;
+}
+
+.cta-buttons {
+  @apply mt-8 flex justify-center items-center gap-4;
+}

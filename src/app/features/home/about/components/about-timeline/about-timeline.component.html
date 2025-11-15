@@ -1,0 +1,37 @@
+<section aria-labelledby="trayectoria-title">
+  <header class="tl-header">
+    <h3 id="trayectoria-title" class="tl-title">
+      {{ heading }}
+    </h3>
+  </header>
+
+  <!-- Contenedor del timeline basado en divs -->
+  <div class="tl-container" role="list" aria-label="Línea de tiempo">
+    <!-- Línea vertical de fondo -->
+    <div class="tl-rail" aria-hidden="true"></div>
+
+    @for (t of items; track t.title; let i = $index) {
+      <div class="tl-row timeline-item" role="listitem">
+        <!-- Punto numerado (puedes variar color vía CSS variable o clase) -->
+        <div class="tl-bullet timeline-dot" [attr.aria-label]="'Hito '+(items.length - i)">
+          {{ items.length - i }}
+        </div>
+
+        <div class="tl-card">
+          <div class="tl-card-head">
+            <h4 class="tl-item-title">{{ t.title }}</h4>
+            <time class="tl-period">{{ t.period }}</time>
+          </div>
+
+          <p class="tl-item-desc">
+            {{ t.description }}
+          </p>
+
+          <div class="tl-tags" role="list" aria-label="Tecnologías">
+            <app-tags-list [tags]="t.tags"></app-tags-list>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>

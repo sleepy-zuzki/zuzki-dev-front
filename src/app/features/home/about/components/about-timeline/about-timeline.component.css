@@ -1,0 +1,87 @@
+/* AboutTimelineComponent: estilos con clases propias + Tailwind via @apply */
+@reference "../../../../../../styles/utilities.css"
+
+/* Host */
+:host {
+  display: block;
+}
+
+/* Encabezado */
+.tl-header {
+  @apply flex items-center justify-between mb-4;
+}
+.tl-title {
+  @apply text-xl md:text-2xl font-semibold;
+}
+
+/* Contenedor del timeline basado en divs */
+.tl-container {
+  @apply relative space-y-6;
+}
+
+/* Línea vertical (rail) del timeline */
+.tl-rail {
+  @apply absolute top-0 bottom-0 left-4 w-0.5 bg-gradient-to-b from-zuzki-500 to-zuzki-400;
+}
+
+/* Fila del timeline */
+.tl-row {
+  @apply relative flex items-start gap-4;
+  /* Permite que los anclajes no queden ocultos por headers sticky */
+  scroll-margin-top: 6rem;
+  /* Color por defecto del punto (sobrescribible con --dot-color en cada fila) */
+  --dot-color: theme(colors.zuzki.500);
+}
+
+/* Punto numerado (bullet) */
+.tl-bullet {
+  @apply w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-sm;
+  background-color: var(--dot-color);
+  /* Micro-interacción al hover/focus dentro de la fila */
+  transition: transform 150ms ease;
+}
+
+/* Tarjeta de contenido */
+.tl-card {
+  @apply flex-1 pb-6;
+}
+
+.tl-card-head {
+  @apply flex justify-between items-start mb-2;
+}
+
+.tl-item-title {
+  @apply font-semibold;
+}
+
+.tl-item-desc {
+  @apply mt-1 opacity-90;
+}
+
+/* Tags/tecnologías */
+.tl-tags {
+  @apply mt-2 flex flex-wrap gap-1;
+}
+.tl-tag {
+  @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold;
+}
+
+/* Periodo */
+.tl-period {
+  @apply text-sm opacity-70;
+}
+
+/* Estados de interacción accesibles */
+.timeline-item:hover .tl-bullet,
+.timeline-item:focus-within .tl-bullet {
+  transform: scale(1.12);
+  outline: 2px solid var(--dot-color);
+  outline-offset: 2px;
+}
+
+/* Respeta preferencias del usuario */
+@media (prefers-reduced-motion: reduce) {
+  .tl-bullet {
+    transition: none;
+  }
+}
