@@ -53,7 +53,11 @@ export class ApiConfig {
     },
 
     // Health
-    health: '/health'
+    health: '/health',
+
+    forms: {
+      contact: '/contact'
+    }
   };
 
   getFullUrl(endpoint: string): string {

@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { catchError, finalize, throwError } from 'rxjs';
+import { ApiConfig } from '@infrastructure/config/api.config';
 
 @Component({
   selector: 'app-contact-form',
@@ -15,12 +16,10 @@ import { catchError, finalize, throwError } from 'rxjs';
 })
 export class ContactFormComponent {
   loading = false;
-
-  constructor(
-    private http: HttpClient,
-    private toast: HotToastService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  private readonly apiConfig = inject(ApiConfig);
+  private http = inject(HttpClient);
+  private toast = inject(HotToastService);
+  private cdr = inject(ChangeDetectorRef);
 
   contactData = {
     name: '',
@@ -57,7 +56,7 @@ export class ContactFormComponent {
     this.loading = true;
     const payload = this.contactForm.getRawValue();
 
-    this.http.post('/contact', payload).pipe(
+    this.http.post(this.apiConfig.getFullUrl(this.apiConfig.endpoints.forms.contact), payload).pipe(
       catchError(err => {
         console.error('Error al enviar el contacto:', err);
         return throwError(() => new Error('Hubo un problema al enviar tu mensaje. Inténtalo de nuevo más tarde.'));
