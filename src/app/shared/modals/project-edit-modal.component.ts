@@ -7,7 +7,7 @@ import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } fr
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { ProjectEntity, TechnologyEntity } from '@core/domain';
+import { ProjectEntity } from '@core/domain';
 import { UpdateProjectDto } from '@app/application';
 import { toSlug } from '@shared/utils/slug.util';
 

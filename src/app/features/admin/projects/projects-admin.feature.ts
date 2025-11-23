@@ -6,7 +6,6 @@ import { TypographyTextComponent } from '@shared/components/typography/text.comp
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
-import { Option } from '@shared/components/select/app-select.component';
 import { toSlug } from '@shared/utils/slug.util';
 import { ProjectEditModalComponent } from '@shared/modals/project-edit-modal.component';
 import { ProjectEntity } from '@core/domain';

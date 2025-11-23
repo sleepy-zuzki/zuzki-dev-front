@@ -7,7 +7,6 @@ import { HotToastService } from '@ngxpert/hot-toast';
 import { StackRepository, CreateStackRequest, UpdateStackRequest } from '@domain/repositories/stack.repository.interface';
 import { StackEntity } from '@domain/entities/stack/stack.entity';
 import { TechnologyEntity } from '@domain/entities/technology/technology.entity';
-import { TechnologyCategory } from '@domain/enums/technology-category.enum';
 import { CreateStackDto, UpdateStackDto, StackResponseDto } from '@application/dtos/stack/stack.dto';
 import { ApiConfig } from '@infrastructure/config/api.config';
 

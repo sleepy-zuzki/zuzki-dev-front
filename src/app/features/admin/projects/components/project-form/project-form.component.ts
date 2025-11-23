@@ -8,7 +8,7 @@ import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/t
 
 interface SelectOption {
   label: string;
-  value: any;
+  value: string;
 }
 
 @Component({

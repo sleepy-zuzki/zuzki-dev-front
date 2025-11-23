@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, Inject, OnDestroy, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnDestroy, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { WorksFeature } from '@features/works/works.feature';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
@@ -26,7 +26,7 @@ export class WorksPage implements OnDestroy {
     effect(() => {
       const projects = this.projectStore.projects();
       if (projects.length > 0 && isPlatformBrowser(this.platformId)) {
-        const schema = this.buildSchema(projects);
+        const schema = this.buildSchema();
         this.injectJsonLd(schema);
       }
     });
@@ -38,7 +38,7 @@ export class WorksPage implements OnDestroy {
     }
   }
 
-  private buildSchema(projects: any[]): WithContext<CollectionPage> {
+  private buildSchema(): WithContext<CollectionPage> {
     return {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
