@@ -13,7 +13,7 @@ import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
-import { TitleCasePipe } from '@angular/common';
+import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project-card',
@@ -26,7 +26,8 @@ import { TitleCasePipe } from '@angular/common';
     TypographyTitleComponent,
     ProjectInfoModalComponent,
     ButtonComponent,
-    TitleCasePipe
+    TitleCasePipe,
+    NgOptimizedImage
   ],
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css'],
@@ -38,6 +39,14 @@ import { TitleCasePipe } from '@angular/common';
       bootstrapGithub,
       bootstrapTrash,
     }),
+    {
+      provide: IMAGE_LOADER,
+      useValue: (config: ImageLoaderConfig) => {
+        // Reemplaza con la URL base de tu CDN
+        // Nota: Asegúrate de que termine con '/' si tus src no lo tienen
+        return `${config.src}`;
+      }
+    }
   ],
 })
 export class ProjectCardComponent {

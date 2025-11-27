@@ -1,7 +1,7 @@
 <article class="project-card">
   <figure class="project-card__figure">
     @if (imageUrl) {
-      <img [src]="imageUrl" class="project-card__image" [alt]="'Imagen del proyecto ' + project.name">
+      <img [ngSrc]="imageUrl" class="project-card__image" [alt]="'Imagen del proyecto ' + project.name" fill>
       <div class="project-card__gradient-overlay"></div>
     } @else {
       <div class="project-card__placeholder-bg"></div>
