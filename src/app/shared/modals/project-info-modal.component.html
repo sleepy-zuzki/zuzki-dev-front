@@ -1,59 +1,38 @@
 <app-modal [title]="project.name" size="xl">
-  <section class="project-modal-content grid gap-6">
-    <figure class="carousel relative" aria-roledescription="carousel" aria-label="Galería del proyecto">
-      @if (project.carouselImages.length) {
-        <img
-          [src]="currentImageUrl"
-          [alt]="(project.carouselImages[currentImageIndex]?.alt ?? project.carouselImages[currentImageIndex]?.originalName ?? '') ?? project.name"
-          class="carousel-image w-full rounded-md object-cover"
-        />
-      } @else {
-        <div class="h-48 sm:h-60 md:h-64 w-full rounded-md bg-gradient-to-br from-zuzki-400 to-zuzki-600"></div>
-      }
-
-      <figcaption class="mt-2 text-center">
-        @if (project.carouselImages.length) {
-          <app-typography-text as="span" variant="caption" extraClasses="opacity-70">
-            Imagen {{ currentImageIndex + 1 }} de {{ project.carouselImages.length }} — {{ project.name }}
-          </app-typography-text>
-        } @else {
-          <app-typography-text as="span" variant="caption" extraClasses="opacity-70">
-            Banner visual del proyecto {{ project.name }}
-          </app-typography-text>
-        }
-      </figcaption>
-
-      @if (project.carouselImages.length > 1) {
-        <nav class="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-2" aria-label="Controles del carrusel">
-          <button
-            type="button"
-            class="prev inline-flex items-center justify-center rounded-full p-2 bg-black/50 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            (click)="prevImage()"
-            aria-label="Imagen anterior"
+  <section class="grid gap-6">
+      @if (project.carouselImages.length > 0) {
+        <div class="w-full min-w-0 overflow-hidden">
+          <swiper-container
+            slides-per-view="1"
+            navigation="true"
+            observer="true"
+            observe-parents="true"
+            pagination="false"
+            style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
           >
-            <ng-icon name="bootstrapChevronLeft" size="24"></ng-icon>
-          </button>
+            @for (img of project.carouselImages; track img.id; let i = $index) {
+              <swiper-slide>
+                <figure>
+                  <img
+                    [ngSrc]="img.url"
+                    [alt]="img.alt ?? project.name"
+                    [priority]="i === 0"
+                    class="m-auto rounded-md object-cover"
+                    width="960"
+                    height="572"
+                  />
 
-          <button
-            type="button"
-            class="next inline-flex items-center justify-center rounded-full p-2 bg-black/50 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            (click)="nextImage()"
-            aria-label="Imagen siguiente"
-          >
-            <ng-icon name="bootstrapChevronRight" size="24"></ng-icon>
-          </button>
-        </nav>
-      }
-
-      @if (project.carouselImages.length && project.carouselImages.length > 1) {
-        <div class="mt-2 flex items-center justify-center gap-1" aria-hidden="true">
-          @for (img of project.carouselImages; track $index; let i = $index) {
-            <span class="h-1.5 w-1.5 rounded-full" [class.bg-white]="i === currentImageIndex" [class.bg-white/40]="i !== currentImageIndex"></span>
-          }
+                  <figcaption class="mt-2 text-center">
+                    <app-typography-text as="span" variant="caption" extraClasses="opacity-70">
+                      Imagen {{ i + 1 }} de {{ project.carouselImages.length }} — {{ project.name }}
+                    </app-typography-text>
+                  </figcaption>
+                </figure>
+              </swiper-slide>
+            }
+          </swiper-container>
         </div>
       }
-    </figure>
-
     <article class="project-details grid grid-cols-1 sm:grid-cols-2 gap-4">
       @if (project.description) {
         <section aria-labelledby="desc-title">
