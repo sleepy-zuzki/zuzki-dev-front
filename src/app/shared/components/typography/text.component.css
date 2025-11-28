@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+@reference "../../../../styles/utilities.css";
 
 /* Base class for the component */
 .typography-text {
