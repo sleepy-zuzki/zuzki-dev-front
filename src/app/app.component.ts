@@ -26,7 +26,8 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title: string = 'Sleepy Zuzki';
-  showIntro: boolean = true;
+  // Initialize to false to prevent SSR hydration mismatch (Server renders false, Client checks LS)
+  showIntro: boolean = false;
   introKey = 'intro_animation';
 
   /**
@@ -38,19 +39,29 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      this.showIntro = localStorage.getItem(this.introKey) === 'true';
+      // Show intro only if it hasn't been seen before (handling legacy 'false' value)
+      const introStatus: string | null = localStorage.getItem(this.introKey);
+      if (introStatus !== 'seen') {
+        this.showIntro = true;
+      }
     }
   }
 
   ngOnInit() {
     // Inicializar el servicio SEO para la actualización automática de metadatos
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        this.showIntro = false;
-        localStorage.setItem(this.introKey, 'false');
-      }, 3000);
-    }
     this.seoService.init();
+  }
+
+  /**
+   * Called when the brand intro animation is finished.
+   * Hides the intro and sets a flag in localStorage so it's not shown again.
+   */
+  onIntroAnimationDone(): void {
+    this.showIntro = false;
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('Animation Ended...');
+      localStorage.setItem(this.introKey, 'seen');
+    }
   }
 
   ngOnDestroy() {

@@ -1,5 +1,5 @@
 @if (showIntro) {
-  <app-brand-intro></app-brand-intro>
+  <app-brand-intro (animationDone)="onIntroAnimationDone()"></app-brand-intro>
 }
 
 <app-header></app-header>

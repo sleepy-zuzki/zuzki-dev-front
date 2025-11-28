@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit, output, OutputEmitterRef } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 @Component({
@@ -12,10 +12,12 @@ import { NgOptimizedImage } from '@angular/common';
 })
 export class BrandIntroComponent implements OnInit {
   @HostBinding('class.fade-out') isFadingOut = false;
+  readonly animationDone: OutputEmitterRef<void> = output<void>();
 
   ngOnInit() {
     setTimeout(() => {
       this.isFadingOut = true;
-    }, 2000); // Start fading out after 2 seconds
+      this.animationDone.emit();
+    }, 3000);
   }
 }
