@@ -58,8 +58,8 @@
       <app-typography-title [level]="2" variant="section" align="center">¿Te gusta lo que ves?</app-typography-title>
       <app-typography-text align="center">Trabajemos juntos en tu próximo proyecto</app-typography-text>
       <div class="cta-buttons">
-        <app-button variant="brand" size="lg">Iniciar Proyecto</app-button>
-        <app-button variant="secondary" size="lg">Volver al Inicio</app-button>
+        <app-button variant="brand" size="lg" (click)="navigateToContact()">Iniciar Proyecto</app-button>
+        <app-button variant="secondary" size="lg" (click)="navigateToHome()">Volver al Inicio</app-button>
       </div>
     </div>
   </section>

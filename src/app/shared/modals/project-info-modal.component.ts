@@ -9,7 +9,7 @@ import { TypographyTitleComponent } from '@components/typography/title.component
 import { TypographyTextComponent } from '@components/typography/text.component';
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
 import { register } from 'swiper/element/bundle';
-import { Swiper } from 'swiper/types';
+
 
 register();
 
@@ -46,8 +46,8 @@ export class ProjectInfoModalComponent {
     this.modal.openModal();
   }
 
-  onProgress(event: CustomEvent<[Swiper, number]>) {
-    const [swiper, progress] = event.detail;
+  onProgress(event: CustomEvent<[unknown, number]>) {
+    const [, progress] = event.detail;
     console.log(progress);
   }
 

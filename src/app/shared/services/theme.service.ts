@@ -30,7 +30,7 @@ export class ThemeService {
     if (typeof window !== 'undefined' && window.matchMedia) {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
       // Modern addEventListener
-      mediaQuery.addEventListener('change', (e) => {
+      mediaQuery.addEventListener('change', () => {
         if (this.currentTheme.value === 'auto') {
           this.applyTheme('auto');
         }

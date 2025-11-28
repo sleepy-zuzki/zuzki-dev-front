@@ -1,4 +1,5 @@
-import { Component, computed, inject, OnInit, signal, Signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, OnInit, PLATFORM_ID, signal, Signal, WritableSignal } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
 import { ProjectEntity } from '@domain/entities';
 import { ProjectCardComponent } from '@shared/components/project-card/project-card.component';
@@ -10,6 +11,7 @@ import { featherSearch } from '@ng-icons/feather-icons';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
 import { TagsListComponent } from '@shared/components/tags-list/tags-list.component';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-works-feature',
@@ -29,6 +31,8 @@ import { TagsListComponent } from '@shared/components/tags-list/tags-list.compon
 export class WorksFeature implements OnInit {
   private readonly projectStore = inject(ProjectStore);
   private readonly technologyStore = inject(TechnologyStore);
+  private readonly router = inject(Router);
+  private platformId = inject(PLATFORM_ID);
 
   private readonly allProjects: Signal<ProjectEntity[]>;
   public readonly projects: Signal<ProjectEntity[]>;
@@ -67,4 +71,17 @@ export class WorksFeature implements OnInit {
       this.selectedTechnology.set(technologyName);
     }
   }
+
+  public navigateToContact(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.location.href = '/#contacto';
+    }
+  }
+
+  public navigateToHome(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.location.href = '/';
+    }
+  }
 }
+
