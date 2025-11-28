@@ -27,9 +27,10 @@ export class ThemeService {
   }
 
   private listenToSystemTheme(): void {
-    if (window.matchMedia) {
+    if (typeof window !== 'undefined' && window.matchMedia) {
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-      mediaQuery.addListener(() => {
+      // Modern addEventListener
+      mediaQuery.addEventListener('change', (e) => {
         if (this.currentTheme.value === 'auto') {
           this.applyTheme('auto');
         }
@@ -50,19 +51,16 @@ export class ThemeService {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const root = document.documentElement;
-
-    // Remove existing theme attributes
-    root.removeAttribute('class');
-
-    if (theme === 'light') {
-      return;
-    }
+    let isDark = theme === 'dark';
 
     if (theme === 'auto') {
-      // Let CSS handle auto theme based on system preference
-      // The CSS media query will apply dark theme if needed
+      isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    if (isDark) {
+      root.classList.add('dark');
     } else {
-      root.setAttribute('class', theme);
+      root.classList.remove('dark');
     }
   }
 
@@ -79,10 +77,13 @@ export class ThemeService {
         next = 'dark';
         break;
       case 'dark':
+        next = 'auto';
+        break;
+      case 'auto':
         next = 'light';
         break;
       default:
-        next = 'light';
+        next = 'auto';
         break;
     }
 

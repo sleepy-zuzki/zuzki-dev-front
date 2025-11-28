@@ -47,6 +47,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="canonical" href="https://zuzki.dev">
   <script src="https://analytics.ahrefs.com/analytics.js" data-key="IJcsADQozG4xPGmmY2CmfQ" async></script>
+  <script>
+    (function () {
+      const THEME_KEY = 'app-theme';
+      const html = document.documentElement;
+
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          html.classList.add('dark');
+        } else {
+          html.classList.remove('dark');
+        }
+      }
+
+      try {
+        const savedTheme = localStorage.getItem(THEME_KEY);
+        if (savedTheme === 'dark') {
+          applyTheme('dark');
+        } else if (savedTheme === 'light') {
+          applyTheme('light');
+        } else if (savedTheme === 'auto' || !savedTheme) { // 'auto' or no saved theme
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          applyTheme(prefersDark ? 'dark' : 'light');
+        }
+      } catch (e) {
+        // Fallback for environments where localStorage might not be available or fails
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark ? 'dark' : 'light');
+      }
+    })();
+  </script>
 </head>
 <body>
   <app-root></app-root>
