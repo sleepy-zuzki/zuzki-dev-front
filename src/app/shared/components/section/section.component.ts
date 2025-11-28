@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 type SectionVariant = 'primary' | 'secondary' | 'muted' | 'transparent' | 'coffee';
 type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
@@ -7,7 +7,7 @@ type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
 @Component({
   selector: 'app-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './section.component.html'
 })
 export class SectionComponent {

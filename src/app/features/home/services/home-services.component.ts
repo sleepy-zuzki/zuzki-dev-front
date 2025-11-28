@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ServiceCard, ServiceCardComponent } from '@shared/components/service-card/service-card.component';
 
 @Component({
   selector: 'app-home-services',
   standalone: true,
-  imports: [CommonModule, ServiceCardComponent],
+  imports: [ServiceCardComponent],
   templateUrl: './home-services.component.html'
 })
 export class HomeServicesComponent {

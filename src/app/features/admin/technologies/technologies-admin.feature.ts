@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
@@ -13,12 +13,11 @@ import { CreateTechnologyForm } from '@core/interfaces/forms/technology.forms';
   standalone: true,
   selector: 'app-technologies-admin-feature',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TypographyTitleComponent,
     TypographyTextComponent,
-    AppInputComponent,
-  ],
+    AppInputComponent
+],
   templateUrl: './technologies-admin.feature.html',
   styleUrls: ['./technologies-admin.feature.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

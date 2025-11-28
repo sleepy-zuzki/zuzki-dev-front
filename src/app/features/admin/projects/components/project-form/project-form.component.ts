@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
@@ -15,12 +15,11 @@ interface SelectOption {
   selector: 'app-project-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     AppInputComponent,
     AppSelectComponent,
-    AppCheckboxComponent,
-  ],
+    AppCheckboxComponent
+],
   templateUrl: './project-form.component.html',
   styleUrls: ['./project-form.component.css'],
 })

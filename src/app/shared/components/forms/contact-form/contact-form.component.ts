@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HotToastService } from '@ngxpert/hot-toast';
@@ -9,7 +9,7 @@ import { ApiConfig } from '@infrastructure/config/api.config';
 @Component({
   selector: 'app-contact-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './contact-form.component.html',
   styleUrl: './contact-form.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

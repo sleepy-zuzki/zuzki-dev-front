@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
@@ -18,14 +18,13 @@ import { ProjectFormComponent } from '@features/admin/projects/components/projec
   standalone: true,
   selector: 'app-projects-admin-feature',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TypographyTitleComponent,
     TypographyTextComponent,
     ProjectCardComponent,
     ProjectEditModalComponent,
-    ProjectFormComponent,
-  ],
+    ProjectFormComponent
+],
   templateUrl: './projects-admin.feature.html',
   styleUrls: ['./projects-admin.feature.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,

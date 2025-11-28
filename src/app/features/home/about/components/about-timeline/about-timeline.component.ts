@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
 
 type TimelineInputItem = {
@@ -12,7 +12,7 @@ type TimelineInputItem = {
 @Component({
   selector: 'app-about-timeline',
   standalone: true,
-  imports: [CommonModule, TagsListComponent],
+  imports: [TagsListComponent],
   templateUrl: './about-timeline.component.html',
   styleUrl: './about-timeline.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

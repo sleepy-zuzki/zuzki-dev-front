@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ButtonComponent } from '@components/button/button.component';
@@ -13,7 +13,7 @@ import { ProjectStore } from '@infrastructure/adapters/secondary/project/project
 @Component({
   selector: 'app-carousel-manager',
   standalone: true,
-  imports: [CommonModule, DragDropModule, ButtonComponent, NgIcon],
+  imports: [DragDropModule, ButtonComponent, NgIcon],
   templateUrl: './carousel-manager.component.html',
   styleUrl: './carousel-manager.component.css',
   providers: [provideIcons({ featherUpload, featherTrash2, lucideGripVertical })],

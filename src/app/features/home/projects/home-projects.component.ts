@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
@@ -11,7 +11,7 @@ import { TypographyTextComponent } from '@components/typography/text.component';
 @Component({
   selector: 'app-home-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule, ProjectCardComponent, NgIcon, TypographyTextComponent],
+  imports: [RouterModule, ProjectCardComponent, NgIcon, TypographyTextComponent],
   templateUrl: './home-projects.component.html',
   styleUrl: './home-projects.component.css',
   providers: [provideIcons({ bootstrapArrowRightShort })],

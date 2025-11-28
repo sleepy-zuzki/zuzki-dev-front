@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AboutTimelineComponent } from './components/about-timeline/about-timeline.component';
 import { AboutStackComponent } from './components/about-stack/about-stack.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -13,7 +13,7 @@ type StackCategory = { name: string; tags: string[]; icon?: string; color?: stri
 @Component({
   selector: 'app-home-about',
   standalone: true,
-  imports: [CommonModule, AboutTimelineComponent, AboutStackComponent, NgIcon],
+  imports: [AboutTimelineComponent, AboutStackComponent, NgIcon],
   templateUrl: './home-about.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [provideIcons({ featherLayout, featherDatabase, featherServer, featherPenTool, featherMail, featherExternalLink })]

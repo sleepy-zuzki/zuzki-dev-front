@@ -1,6 +1,6 @@
 import { Component, Input, Self, Optional, HostListener, ElementRef, computed, Signal, WritableSignal, signal } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { bootstrapChevronExpand } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 
@@ -17,7 +17,7 @@ export interface Option {
 @Component({
   selector: 'app-select',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, NgIcon],
+  imports: [ReactiveFormsModule, NgIcon],
   templateUrl: './app-select.component.html',
   styleUrls: ['./app-select.component.css'],
   providers: [provideIcons({bootstrapChevronExpand})]

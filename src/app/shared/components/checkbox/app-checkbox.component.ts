@@ -1,11 +1,11 @@
 import { Component, Input, Self, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-checkbox',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './app-checkbox.component.html',
   styleUrls: ['./app-checkbox.component.css'],
 })

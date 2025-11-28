@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, effect } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthHttpAdapter } from '@infrastructure/adapters/secondary/auth/auth-http.adapter';
@@ -7,7 +7,7 @@ import { AuthHttpAdapter } from '@infrastructure/adapters/secondary/auth/auth-ht
 @Component({
   standalone: true,
   selector: 'app-login-feature',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.feature.html',
   styleUrl: './login.feature.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

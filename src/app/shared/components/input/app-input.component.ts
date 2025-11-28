@@ -1,11 +1,11 @@
 import { Component, Input, Self, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './app-input.component.html',
   styleUrls: ['./app-input.component.css'],
 })

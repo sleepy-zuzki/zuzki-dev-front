@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
@@ -7,7 +7,7 @@ import { TypographyTextComponent } from '@shared/components/typography/text.comp
 @Component({
   standalone: true,
   selector: 'app-dashboard-feature',
-  imports: [CommonModule, RouterLink, TypographyTitleComponent, TypographyTextComponent],
+  imports: [RouterLink, TypographyTitleComponent, TypographyTextComponent],
   template: `
     <main id="dashboard" aria-label="Panel principal" class="min-h-[60vh] p-6">
       <header class="mb-6">

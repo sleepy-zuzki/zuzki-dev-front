@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, signal, Signal, WritableSignal } f
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
 import { ProjectEntity } from '@domain/entities';
 import { ProjectCardComponent } from '@shared/components/project-card/project-card.component';
-import { CommonModule } from '@angular/common';
+
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
@@ -14,14 +14,13 @@ import { TagsListComponent } from '@shared/components/tags-list/tags-list.compon
 @Component({
   selector: 'app-works-feature',
   imports: [
-    CommonModule,
     ProjectCardComponent,
     TypographyTitleComponent,
     TypographyTextComponent,
     NgIcon,
     ButtonComponent,
     TagsListComponent
-  ],
+],
   templateUrl: './works.feature.html',
   standalone: true,
   styleUrl: './works.feature.css',

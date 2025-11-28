@@ -1,5 +1,5 @@
 import { Component, Input, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherLoader } from '@ng-icons/feather-icons';
 
@@ -10,7 +10,7 @@ export type ButtonType = 'button' | 'submit' | 'reset';
 @Component({
   selector: 'app-button',
   standalone: true,
-  imports: [CommonModule, NgIcon],
+  imports: [NgIcon],
   providers: [provideIcons({ featherLoader })],
   templateUrl: './button.component.html',
   styleUrl: './button.component.css',

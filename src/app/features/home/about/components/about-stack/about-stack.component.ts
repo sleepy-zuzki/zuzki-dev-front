@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NgIconComponent } from '@ng-icons/core';
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
 
@@ -13,7 +13,7 @@ type StackCategory = {
 @Component({
   selector: 'app-about-stack',
   standalone: true,
-  imports: [CommonModule, NgIconComponent, TagsListComponent, TagsListComponent],
+  imports: [NgIconComponent, TagsListComponent, TagsListComponent],
   templateUrl: './about-stack.component.html',
   styleUrl: './about-stack.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush

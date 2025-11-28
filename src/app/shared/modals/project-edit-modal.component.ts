@@ -4,7 +4,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { Subscription } from 'rxjs';
 
 import { ProjectEntity } from '@core/domain';
@@ -19,11 +19,10 @@ import { UpdateProjectForm } from '@core/interfaces/forms/project.forms';
   standalone: true,
   selector: 'app-project-edit-modal',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     ModalComponent,
-    ProjectFormComponent,
-  ],
+    ProjectFormComponent
+],
   templateUrl: './project-edit-modal.component.html',
   styleUrls: ['./project-edit-modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
