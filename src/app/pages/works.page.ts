@@ -1,8 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnDestroy, PLATFORM_ID, Renderer2 } from '@angular/core';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { WorksFeature } from '@features/works/works.feature';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
 import { CollectionPage, WithContext } from 'schema-dts';
+import { SeoService } from '@core/services/seo.service';
 
 @Component({
   selector: 'app-works',
@@ -13,29 +13,28 @@ import { CollectionPage, WithContext } from 'schema-dts';
   template: `<app-works-feature />`,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class WorksPage implements OnDestroy {
+export class WorksPage implements OnInit, OnDestroy {
   private readonly projectStore = inject(ProjectStore);
-  private readonly renderer = inject(Renderer2);
-  private readonly document = inject(DOCUMENT);
-  private readonly platformId = inject(PLATFORM_ID);
-
-  private jsonLdScript: HTMLScriptElement | null = null;
+  private readonly seoService = inject(SeoService);
 
   constructor() {
-    // Effect that reacts to project changes to update the JSON-LD schema
     effect(() => {
       const projects = this.projectStore.projects();
-      if (projects.length > 0 && isPlatformBrowser(this.platformId)) {
+      if (projects.length > 0) {
         const schema = this.buildSchema();
-        this.injectJsonLd(schema);
+        this.seoService.setJsonLd(schema);
       }
     });
   }
 
+  ngOnInit(): void {
+    // Carga inicial del schema (opcional, si el effect tarda o para SSR inmediato)
+    const initialSchema = this.buildSchema();
+    this.seoService.setJsonLd(initialSchema);
+  }
+
   ngOnDestroy(): void {
-    if (this.jsonLdScript) {
-      this.jsonLdScript.remove();
-    }
+    this.seoService.removeJsonLd();
   }
 
   private buildSchema(): WithContext<CollectionPage> {
@@ -47,7 +46,7 @@ export class WorksPage implements OnDestroy {
       'url': 'https://zuzki.dev/projects',
       // 'mainEntity': {
       //   '@type': 'ItemList',
-      //   'itemListElement': projects.map((project, index) => ({
+      //   'itemListElement': this.projectStore.projects().map((project, index) => ({
       //     '@type': 'ListItem',
       //     'position': index + 1,
       //     'item': {
@@ -59,15 +58,5 @@ export class WorksPage implements OnDestroy {
       //   }))
       // }
     };
-  }
-
-  private injectJsonLd(schema: WithContext<CollectionPage>): void {
-    if (this.jsonLdScript) {
-      this.jsonLdScript.remove();
-    }
-    this.jsonLdScript = this.renderer.createElement('script') as HTMLScriptElement;
-    this.jsonLdScript.type = 'application/ld+json';
-    this.jsonLdScript.text = JSON.stringify(schema);
-    this.renderer.appendChild(this.document.head, this.jsonLdScript);
   }
 }

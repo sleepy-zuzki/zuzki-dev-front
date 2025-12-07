@@ -8,6 +8,8 @@ export const routes: Routes = [
     data: {
       description: "Conoce a Sleepy Zuzki y su portafolio de desarrollo web y experiencias creativas. Descubre proyectos inspiradores y contacta para impulsar tu proxima idea.",
       keywords: ["sleepy zuzki", "portafolio", "desarrollo web", "experiencias creativas"],
+      type: 'website',
+      image: 'https://zuzki.dev/assets/logo/47_2.png'
     },
     loadComponent: () => import('@pages/home.page').then(m => m.HomePage)
   },
@@ -17,6 +19,8 @@ export const routes: Routes = [
     data: {
       description: "Sleepy Zuzki muestra proyectos con soluciones interactivas y disenos a medida. Revisa sus overlays y descubre como mejorar tu presencia en linea.",
       keywords: ["sleepy zuzki", "proyectos", "soluciones interactivas", "overlays", "disenos a medida"],
+      type: 'website',
+      image: 'https://zuzki.dev/assets/logo/47_2.png'
     },
     loadComponent: () => import('@pages/works.page').then(m => m.WorksPage)
   },
