@@ -71,7 +71,11 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '',
-    pathMatch: 'full'
+    title: 'Página no encontrada - Zuzki Dev',
+    data: {
+      description: "La página que buscas no existe.",
+      robots: "noindex, nofollow"
+    },
+    loadComponent: () => import('@pages/not-found.page').then(m => m.NotFoundPage)
   }
 ];
