@@ -81,8 +81,7 @@ async function fetchDynamicRoutes() {
 async function generate() {
   console.log(`🗺️  Generando Sitemap para ${BASE_URL}...`);
 
-  // const dynamicRoutes = await fetchDynamicRoutes();
-  const dynamicRoutes = [];
+  const dynamicRoutes = await fetchDynamicRoutes();
   const allRoutes = [...staticRoutes, ...dynamicRoutes];
 
   const currentDate = new Date().toISOString().split('T')[0];
