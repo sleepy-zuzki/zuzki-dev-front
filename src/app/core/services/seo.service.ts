@@ -1,4 +1,4 @@
-import { inject, Injectable, Inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -191,7 +191,7 @@ export class SeoService {
    * Inyecta o actualiza datos estructurados (JSON-LD) en el head.
    * @param data Objeto o Array de objetos con el esquema Schema.org
    */
-  public setJsonLd(data: any): void {
+  public setJsonLd(data: Record<string, unknown> | Record<string, unknown>[]): void {
     if (!this.jsonLdScript) {
       this.jsonLdScript = this.document.createElement('script');
       this.jsonLdScript.type = 'application/ld+json';

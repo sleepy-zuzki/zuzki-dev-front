@@ -1,7 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { WorksFeature } from '@features/works/works.feature';
 import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
-import { CollectionPage, WithContext } from 'schema-dts';
 import { SeoService } from '@core/services/seo.service';
 
 @Component({
@@ -37,7 +36,7 @@ export class WorksPage implements OnInit, OnDestroy {
     this.seoService.removeJsonLd();
   }
 
-  private buildSchema(): WithContext<CollectionPage> {
+  private buildSchema(): Record<string, unknown> | Record<string, unknown>[] {
     return {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
