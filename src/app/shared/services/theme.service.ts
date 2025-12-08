@@ -39,11 +39,15 @@ export class ThemeService {
   }
 
   setTheme(theme: Theme): void {
-    this.currentTheme.next(theme);
-    this.applyTheme(theme);
+    try {
+      this.currentTheme.next(theme);
+      this.applyTheme(theme);
 
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(this.THEME_KEY, theme);
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem(this.THEME_KEY, theme);
+      }
+    } catch (e) {
+      console.error('No ha sido posible cambiar el tema')
     }
   }
 
@@ -51,6 +55,11 @@ export class ThemeService {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const root = document.documentElement;
+
+    if (!root) {
+      return;
+    }
+
     let isDark = theme === 'dark';
 
     if (theme === 'auto') {

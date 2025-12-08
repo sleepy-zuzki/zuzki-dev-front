@@ -15,7 +15,11 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    <app-home-services [services]="services"></app-home-services>
+    @defer (on viewport) {
+      <app-home-services [services]="services"></app-home-services>
+    } @placeholder {
+      <div class="h-[500px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
+    }
   </app-section>
 
   <!-- Sobre Mí Section -->
@@ -25,7 +29,11 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    <app-home-about></app-home-about>
+    @defer (on viewport) {
+      <app-home-about></app-home-about>
+    } @placeholder {
+      <div class="h-[500px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
+    }
   </app-section>
 
   <!-- Proyectos Section -->
@@ -35,7 +43,11 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    <app-home-projects></app-home-projects>
+    @defer (on viewport) {
+      <app-home-projects></app-home-projects>
+    } @placeholder {
+      <div class="h-[500px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
+    }
   </app-section>
 
   <!-- Contacto Section -->
@@ -45,6 +57,10 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    <app-home-contact></app-home-contact>
+    @defer (on viewport) {
+      <app-home-contact></app-home-contact>
+    } @placeholder {
+      <div class="h-[300px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
+    }
   </app-section>
 </main>
