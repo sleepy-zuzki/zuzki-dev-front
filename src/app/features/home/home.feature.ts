@@ -1,6 +1,7 @@
-import { Component, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, HostListener, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, ViewportScroller } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
 import { featherMail, featherArrowRight, featherZap } from '@ng-icons/feather-icons';
 import { bootstrapPalette, bootstrapCodeSlash } from '@ng-icons/bootstrap-icons';
@@ -31,7 +32,11 @@ import { HomeProjectsComponent } from '@features/home/projects/home-projects.com
  * Componente que representa la característica de la página de inicio (Home Page) de la aplicación.
  * Muestra componentes como Proyectos y Redes Sociales.
  */
-export class HomeFeatureComponent {
+export class HomeFeatureComponent implements OnInit {
+  private platformId = inject(PLATFORM_ID);
+  private route = inject(ActivatedRoute);
+  private viewportScroller = inject(ViewportScroller);
+
   windowWidth: number = 0;
 
   services: ServiceCard[] = [
@@ -70,9 +75,22 @@ export class HomeFeatureComponent {
     }
   ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: object) {
+  constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.windowWidth = window.innerWidth;
+    }
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.route.fragment.subscribe((fragment: any) => {
+        if (fragment) {
+          // Pequeño delay para permitir que @defer (on idle) cargue y expanda el contenido
+          setTimeout(() => {
+            this.viewportScroller.scrollToAnchor(fragment);
+          }, 100);
+        }
+      });
     }
   }
 

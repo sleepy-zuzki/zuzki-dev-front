@@ -15,7 +15,7 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    @defer (on viewport) {
+    @defer (on idle) {
       <app-home-services [services]="services"></app-home-services>
     } @placeholder {
       <div class="h-[500px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
@@ -29,7 +29,7 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    @defer (on viewport) {
+    @defer (on idle) {
       <app-home-about></app-home-about>
     } @placeholder {
       <div class="h-[500px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
@@ -43,7 +43,7 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    @defer (on viewport) {
+    @defer (on idle) {
       <app-home-projects></app-home-projects>
     } @placeholder {
       <div class="h-[500px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
@@ -57,7 +57,7 @@
                padding="none"
                [container]="false"
                extraClasses="py-20">
-    @defer (on viewport) {
+    @defer (on idle) {
       <app-home-contact></app-home-contact>
     } @placeholder {
       <div class="h-[300px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
