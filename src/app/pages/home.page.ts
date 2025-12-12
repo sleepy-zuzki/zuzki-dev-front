@@ -23,19 +23,29 @@ export class HomePage implements OnInit, OnDestroy {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Sleepy Zuzki",
-      "alternateName": "Zuzki",
       "url": "https://zuzki.dev",
-      "dateModified": '',
+      "image": "https://cdn.zuzki.dev/public/images/zuzki/bust-yellow-2.webp",
+      "description": "Ingeniero de Sistemas, Consultor TI y VTuber creativo.",
+      "jobTitle": ["Ingeniero de Software", "VTuber", "Consultor"],
+      "knowsAbout": [
+        "Angular",
+        "Desarrollo Web",
+        "Nest Js",
+        "VTubing"
+      ],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universidad Tecnológica de Panamá",
+        "sameAs": "https://utp.ac.pa/"
+      },
       "sameAs": [
         "https://x.com/sleepy_zuzki",
         "https://twitter.com/sleepy_zuzki",
         "https://twitch.tv/sleepy_zuzki",
         "https://youtube.com/@sleepy_zuzki",
-        "https://github.com/sleepy-zuzki"
-      ],
-      "image": "https://cdn.zuzki.dev/large_zuzki_christmas_c4ace767dc.jpg",
-      "description": "VTuber and creative technologist.",
-      "jobTitle": "Streamer / Developer"
+        "https://github.com/sleepy-zuzki",
+        "https://zuzki.dev"
+      ]
     },
     {
       "@context": "https://schema.org",
@@ -43,29 +53,11 @@ export class HomePage implements OnInit, OnDestroy {
       "name": "Zuzki Dev",
       "url": "https://zuzki.dev",
       "inLanguage": "es",
-      "description": "Portafolio de Sleepy Zuzki, Desarrollador y VTuber.",
-      "dateModified": '',
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://zuzki.dev/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
+      "description": "Portafolio oficial de Sleepy Zuzki. Proyectos de ingeniería, desarrollo Angular y creación de contenido.",
+      "author": {
+        "@type": "Person",
+        "name": "Sleepy Zuzki"
       }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Sleepy Zuzki",
-      "url": "https://zuzki.dev",
-      "dateModified": '',
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://cdn.zuzki.dev/large_zuzki_christmas_c4ace767dc.jpg"
-      },
-      "sameAs": [
-        "https://x.com/sleepy_zuzki",
-        "https://twitch.tv/sleepy_zuzki",
-        "https://youtube.com/@sleepy_zuzki"
-      ]
     }
   ];
 
