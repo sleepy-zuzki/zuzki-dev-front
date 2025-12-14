@@ -25,12 +25,12 @@ export class ApiConfig {
     // Portfolio - Projects
     portfolio: {
       projects: {
-        base: '/portfolio/projects',
-        featured: '/portfolio/projects/featured',
-        bySlug: (slug: string) => `/portfolio/projects/${slug}`,
-        byId: (id: number) => `/portfolio/projects/${id}`,
-        images: (id: number) => `/portfolio/projects/${id}/images`,
-        removeImage: (id: number, fileId: number) => `/portfolio/projects/${id}/images/${fileId}`
+        base: '/projects/showcases',
+        featured: '/projects/showcases/featured',
+        bySlug: (slug: string) => `/projects/showcases/${slug}`,
+        byId: (id: number) => `/projects/showcases/${id}`,
+        images: (id: number) => `/projects/showcases/${id}/images`,
+        removeImage: (id: number, fileId: number) => `/projects/showcases/${id}/images/${fileId}`
       },
       files: {
         base: '/portfolio/files',
@@ -38,17 +38,17 @@ export class ApiConfig {
       }
     },
 
-    // Catalog
-    catalog: {
+    // Stack
+    stack: {
       technologies: {
-        base: '/catalog/technologies',
-        bySlug: (slug: string) => `/catalog/technologies/${slug}`,
-        byId: (id: number) => `/catalog/technologies/${id}`
+        base: '/stack/technologies',
+        bySlug: (slug: string) => `/stack/technologies/${slug}`,
+        byId: (id: number) => `/stack/technologies/${id}`
       },
-      stacks: {
-        base: '/catalog/stacks',
-        bySlug: (slug: string) => `/catalog/stacks/${slug}`,
-        byId: (id: number) => `/catalog/stacks/${id}`
+      areas: {
+        base: '/stack/areas',
+        bySlug: (slug: string) => `/stack/areas/${slug}`,
+        byId: (id: number) => `/stack/areas/${id}`
       }
     },
 

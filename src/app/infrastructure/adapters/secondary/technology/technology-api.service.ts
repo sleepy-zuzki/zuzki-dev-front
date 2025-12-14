@@ -21,7 +21,7 @@ export class TechnologyApiService {
     private readonly http: HttpClient,
     private readonly apiConfig: ApiConfig
   ) {
-    this.baseUrl = this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.technologies.base);
+    this.baseUrl = this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.technologies.base);
   }
 
   getTechnologies(): Observable<TechnologyResponseDto[]> {
@@ -34,7 +34,7 @@ export class TechnologyApiService {
   }
 
   getTechnologyBySlug(slug: string): Observable<TechnologyResponseDto> {
-    const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.technologies.bySlug(slug));
+    const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.technologies.bySlug(slug));
     return this.http.get<TechnologyResponseDto>(url).pipe(
       catchError(err => {
         console.error(`Error fetching technology with slug ${slug}:`, err);
@@ -53,7 +53,7 @@ export class TechnologyApiService {
   }
 
   updateTechnology(id: number, request: UpdateTechnologyRequest): Observable<TechnologyResponseDto> {
-    const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.technologies.byId(id));
+    const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.technologies.byId(id));
     return this.http.patch<TechnologyResponseDto>(url, request).pipe(
       catchError(err => {
         console.error(`Error updating technology ${id}:`, err);
@@ -63,7 +63,7 @@ export class TechnologyApiService {
   }
 
   deleteTechnology(id: number): Observable<{ success: boolean }> {
-    const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.technologies.byId(id));
+    const url = this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.technologies.byId(id));
     return this.http.delete<{ success: boolean }>(url).pipe(
       catchError(err => {
         console.error(`Error deleting technology ${id}:`, err);
