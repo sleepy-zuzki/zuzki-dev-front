@@ -43,7 +43,7 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al cargar archivos';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -65,7 +65,7 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al cargar archivo';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -86,7 +86,7 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al subir archivo';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -110,7 +110,7 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al actualizar archivo';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -132,7 +132,7 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al eliminar archivo';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });

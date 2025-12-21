@@ -1,8 +1,6 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, throwError } from 'rxjs';
-import { HotToastService } from '@ngxpert/hot-toast';
 
 import { User, CreateUserDto } from '@core/interfaces/user.interface';
 import { ApiConfig } from '@core/config/api.config';
@@ -21,8 +19,7 @@ export class UserService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly apiConfig: ApiConfig,
-    private readonly toast: HotToastService
+    private readonly apiConfig: ApiConfig
   ) {}
 
   getUserById(id: string): void {
@@ -32,10 +29,6 @@ export class UserService {
     this.http.get<User>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.users.byId(id))
     ).pipe(
-      catchError(err => {
-        console.error(`Error fetching user ${id}:`, err);
-        return throwError(() => new Error('No se pudo cargar el usuario.'));
-      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (user) => {
@@ -43,9 +36,7 @@ export class UserService {
         this._loading.set(false);
       },
       error: (error) => {
-        const errorMessage = error.message || 'Error al cargar usuario';
-        this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        this._error.set(error.message || 'Error al cargar usuario');
         this._loading.set(false);
       }
     });
@@ -59,10 +50,6 @@ export class UserService {
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.users.base),
       request
     ).pipe(
-      catchError(err => {
-        console.error('Error creating user:', err);
-        return throwError(() => new Error('No se pudo crear el usuario.'));
-      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (user) => {
@@ -70,9 +57,7 @@ export class UserService {
         this._loading.set(false);
       },
       error: (error) => {
-        const errorMessage = error.message || 'Error al crear usuario';
-        this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        this._error.set(error.message || 'Error al crear usuario');
         this._loading.set(false);
       }
     });

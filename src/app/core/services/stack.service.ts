@@ -1,8 +1,6 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { catchError, throwError } from 'rxjs';
-import { HotToastService } from '@ngxpert/hot-toast';
 
 import { Stack, CreateStackDto, UpdateStackDto } from '@core/interfaces/stack.interface';
 import { ApiConfig } from '@core/config/api.config';
@@ -23,8 +21,7 @@ export class StackService {
 
   constructor(
     private readonly http: HttpClient,
-    private readonly apiConfig: ApiConfig,
-    private readonly toast: HotToastService
+    private readonly apiConfig: ApiConfig
   ) {}
 
   getStacks(): void {
@@ -34,10 +31,6 @@ export class StackService {
     this.http.get<Stack[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.base)
     ).pipe(
-      catchError(err => {
-        console.error('Error fetching stacks:', err);
-        return throwError(() => new Error('No se pudieron cargar los stacks.'));
-      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stacks) => {
@@ -45,9 +38,7 @@ export class StackService {
         this._loading.set(false);
       },
       error: (error) => {
-        const errorMessage = error.message || 'Error al cargar stacks';
-        this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        this._error.set(error.message || 'Error al cargar stacks');
         this._loading.set(false);
       }
     });
@@ -60,10 +51,6 @@ export class StackService {
     this.http.get<Stack>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.bySlug(slug))
     ).pipe(
-      catchError(err => {
-        console.error(`Error fetching stack ${slug}:`, err);
-        return throwError(() => new Error('No se pudo cargar el stack.'));
-      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
@@ -71,9 +58,7 @@ export class StackService {
         this._loading.set(false);
       },
       error: (error) => {
-        const errorMessage = error.message || 'Error al cargar stack';
-        this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        this._error.set(error.message || 'Error al cargar stack');
         this._loading.set(false);
       }
     });
@@ -87,10 +72,6 @@ export class StackService {
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.base),
       request
     ).pipe(
-      catchError(err => {
-        console.error('Error creating stack:', err);
-        return throwError(() => new Error('No se pudo crear el stack.'));
-      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
@@ -99,15 +80,13 @@ export class StackService {
         this._loading.set(false);
       },
       error: (error) => {
-        const errorMessage = error.message || 'Error al crear stack';
-        this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        this._error.set(error.message || 'Error al crear stack');
         this._loading.set(false);
       }
     });
   }
 
-  updateStack(id: number, request: UpdateStackDto): void {
+  updateStack(id: string, request: UpdateStackDto): void {
     this._loading.set(true);
     this._error.set(null);
 
@@ -115,10 +94,6 @@ export class StackService {
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.byId(id)),
       request
     ).pipe(
-      catchError(err => {
-        console.error(`Error updating stack ${id}:`, err);
-        return throwError(() => new Error('No se pudo actualizar el stack.'));
-      }),
       takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
@@ -127,25 +102,19 @@ export class StackService {
         this._loading.set(false);
       },
       error: (error) => {
-        const errorMessage = error.message || 'Error al actualizar stack';
-        this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        this._error.set(error.message || 'Error al actualizar stack');
         this._loading.set(false);
       }
     });
   }
 
-  deleteStack(id: number): void {
+  deleteStack(id: string): void {
     this._loading.set(true);
     this._error.set(null);
 
     this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.byId(id))
     ).pipe(
-      catchError(err => {
-        console.error(`Error deleting stack ${id}:`, err);
-        return throwError(() => new Error('No se pudo eliminar el stack.'));
-      }),
       takeUntilDestroyed()
     ).subscribe({
       next: () => {
@@ -153,9 +122,7 @@ export class StackService {
         this._loading.set(false);
       },
       error: (error) => {
-        const errorMessage = error.message || 'Error al eliminar stack';
-        this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        this._error.set(error.message || 'Error al eliminar stack');
         this._loading.set(false);
       }
     });

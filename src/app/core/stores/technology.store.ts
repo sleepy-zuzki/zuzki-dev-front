@@ -33,7 +33,7 @@ export class TechnologyStore {
       error: (err) => {
         const errorMessage = err.message || 'Error al cargar tecnologías';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -51,7 +51,7 @@ export class TechnologyStore {
       error: (err) => {
         const errorMessage = err.message || 'Error al cargar la tecnología';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -69,7 +69,7 @@ export class TechnologyStore {
       error: (err) => {
         const errorMessage = err.message || 'Error al crear la tecnología';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -90,7 +90,7 @@ export class TechnologyStore {
       error: (err) => {
         const errorMessage = err.message || 'Error al actualizar la tecnología';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -111,7 +111,7 @@ export class TechnologyStore {
       error: (err) => {
         const errorMessage = err.message || 'Error al eliminar la tecnología';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });

@@ -44,7 +44,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al cargar proyectos';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -62,7 +62,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al cargar proyectos destacados';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -80,7 +80,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al cargar proyecto';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -99,7 +99,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al crear proyecto';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -120,7 +120,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al actualizar proyecto';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -141,7 +141,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al eliminar proyecto';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -162,7 +162,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al añadir imagen al carrusel';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -183,7 +183,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al eliminar imagen del carrusel';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -204,7 +204,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al reordenar imágenes del carrusel';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -222,7 +222,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al subir la imagen';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });
@@ -243,7 +243,7 @@ export class ProjectStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al establecer la imagen de portada';
         this._error.set(errorMessage);
-        this.toast.error(errorMessage);
+        
         this._loading.set(false);
       }
     });

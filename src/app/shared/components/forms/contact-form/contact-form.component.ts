@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { HotToastService } from '@ngxpert/hot-toast';
-import { catchError, finalize, throwError } from 'rxjs';
+import { finalize } from "rxjs";
 import { ApiConfig } from '@core/config/api.config';
 
 @Component({
@@ -57,10 +57,6 @@ export class ContactFormComponent {
     const payload = this.contactForm.getRawValue();
 
     this.http.post(this.apiConfig.getFullUrl(this.apiConfig.endpoints.forms.contact), payload).pipe(
-      catchError(err => {
-        console.error('Error al enviar el contacto:', err);
-        return throwError(() => new Error('Hubo un problema al enviar tu mensaje. Inténtalo de nuevo más tarde.'));
-      }),
       finalize(() => {
         this.loading = false;
         this.cdr.detectChanges();
@@ -69,9 +65,6 @@ export class ContactFormComponent {
       next: () => {
         this.toast.success('¡Gracias por tu mensaje! Te responderé pronto.');
         this.contactForm.reset({ name: '', email: '', message: '' });
-      },
-      error: (error) => {
-        this.toast.error(error.message);
       }
     });
   }
