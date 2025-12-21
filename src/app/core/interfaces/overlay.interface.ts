@@ -1,5 +1,5 @@
-import { Creator } from '@core/models/creator.model';
-import { LayoutModel } from '@core/models/layout.model';
+import { Creator } from './creator.interface';
+import { Layout } from './layout.interface';
 import { OverlayStatus } from '@core/enums/overlays.enum';
 
 /**
@@ -22,8 +22,8 @@ export interface Overlay {
   creator: string | Creator;
   /** Cadena que representa las tecnologías utilizadas (formato por definir). */
   technologies: string;
-  /** Layouts asociados al overlay (puede ser un ID o un array de objetos LayoutModel). */
-  layouts: string | LayoutModel[];
+  /** Layouts asociados al overlay (puede ser un ID o un array de objetos Layout). */
+  layouts: string | Layout[];
   /** Fecha de creación del overlay. */
   creation_date: Date;
 }

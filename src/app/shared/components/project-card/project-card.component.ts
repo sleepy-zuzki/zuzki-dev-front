@@ -59,8 +59,8 @@ export class ProjectCardComponent {
   get imageUrl(): string | undefined {
     if (!this.project) return undefined;
     const primaryImage = this.project.previewImageId
-      ? this.project.carouselImages.find(f => f.id === this.project.previewImageId) ?? this.project.carouselImages[0]
-      : this.project.carouselImages[0];
+      ? this.project.images.find(f => f.id === this.project.previewImageId) ?? this.project.images[0]
+      : this.project.images[0];
     return primaryImage?.url ?? undefined;
   }
 
