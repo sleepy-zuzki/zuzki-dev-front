@@ -1,10 +1,10 @@
 <fieldset class="form-fieldset" [formGroup]="form">
   <legend class="sr-only">Detalles del Proyecto</legend>
 
-  <!-- Nombre -->
+  <!-- Título -->
   <div class="form-field-group--span-3">
-    <app-input label="Nombre" id="name" formControlName="name" placeholder="Mi proyecto">
-      Nombre requerido (2-150 caracteres)
+    <app-input label="Título" id="title" formControlName="title" placeholder="Mi proyecto">
+      Título requerido (2-150 caracteres)
     </app-input>
   </div>
 
@@ -29,17 +29,17 @@
     </app-input>
   </div>
 
-  <!-- Detalles -->
+  <!-- Contenido -->
   <div class="form-field-group--span-6">
     <app-input
-      label="Detalles (opcional)"
-      id="details"
-      formControlName="details"
-      placeholder="Información detallada del proyecto (máx. 5000)"
+      label="Contenido (opcional)"
+      id="content"
+      formControlName="content"
+      placeholder="Información detallada del proyecto"
       controlType="textarea"
       [rows]="6"
     >
-      Máximo 5000 caracteres
+      Información del proyecto
     </app-input>
   </div>
 
@@ -72,9 +72,9 @@
   <!-- Categoría -->
   <div class="form-field-group--span-2">
     <app-select
-      label="Categoría (opcional)"
-      id="category"
-      formControlName="category"
+      label="Categoría"
+      id="categoryId"
+      formControlName="categoryId"
       [options]="categoryOptions"
       optionLabel="label"
       optionValue="value"
@@ -94,11 +94,11 @@
     <app-input
       label="ID imagen previa (opcional)"
       id="previewImageId"
-      type="number"
+      type="text"
       formControlName="previewImageId"
-      placeholder="Ej: 12"
+      placeholder="UUID de la imagen"
     >
-      Debe ser un entero >= 1
+      UUID de la imagen
     </app-input>
   </div>
 

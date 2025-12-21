@@ -3,13 +3,12 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
-import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
+import { ProjectStore } from '@core/stores/project.store';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { toSlug } from '@shared/utils/slug.util';
 import { ProjectEditModalComponent } from '@shared/modals/project-edit-modal.component';
-import { ProjectEntity } from '@core/domain';
-import { UpdateProjectDto } from '@app/application';
+import { Project, UpdateProjectDto } from '@core/interfaces';
 import { CreateProjectForm } from '@core/interfaces/forms/project.forms';
 
 import { ProjectFormComponent } from '@features/admin/projects/components/project-form/project-form.component';
@@ -41,10 +40,10 @@ export class ProjectsAdminFeatureComponent {
   selectedProject = signal<Project | null>(null);
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+    title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
     slug: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
     description: this.fb.control<string | null>(null, [Validators.maxLength(1000)]),
-    details: this.fb.control<string | null>(null, [Validators.maxLength(5000)]),
+    content: this.fb.control<any>(null),
     repoUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     liveUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     categoryId: this.fb.control<string>('', [Validators.required]),
@@ -60,10 +59,10 @@ export class ProjectsAdminFeatureComponent {
   }
 
   private setupSlugGeneration(): void {
-    this.form.controls.name.valueChanges
+    this.form.controls.title.valueChanges
       .pipe(takeUntilDestroyed())
-      .subscribe(name => {
-        const slug = toSlug(name);
+      .subscribe(title => {
+        const slug = toSlug(title);
         this.form.controls.slug.setValue(slug, { emitEvent: false });
       });
   }
@@ -80,13 +79,13 @@ export class ProjectsAdminFeatureComponent {
     const raw = this.form.getRawValue();
 
     this.projectStore.createProject({
-      name: raw.name,
+      title: raw.title,
       slug: raw.slug,
       description: raw.description ?? null,
-      details: raw.details ?? null,
+      content: raw.content ?? null,
       repoUrl: raw.repoUrl ?? null,
       liveUrl: raw.liveUrl ?? null,
-      category: raw.category ?? null,
+      categoryId: raw.categoryId,
       year: this.parseNumber(raw.year),
       isFeatured: !!raw.isFeatured,
       technologyIds: raw.technologyIds,

@@ -7,8 +7,7 @@ import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } fr
 
 import { Subscription } from 'rxjs';
 
-import { ProjectEntity } from '@core/domain';
-import { UpdateProjectDto } from '@app/application';
+import { Project, UpdateProjectDto } from '@core/interfaces';
 import { toSlug } from '@shared/utils/slug.util';
 
 import { ProjectFormComponent } from '@features/admin/projects/components/project-form/project-form.component';
@@ -52,13 +51,13 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
 
     if (changes['project'] && this.project) {
       this.form = this.fb.group({
-        name: [this.project.name, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+        title: [this.project.title, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
         slug: [{ value: this.project.slug, disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
         description: [this.project.description ?? null, [Validators.maxLength(1000)]],
-        details: [this.project.details ?? null, [Validators.maxLength(5000)]],
+        content: [this.project.content ?? null],
         repoUrl: [this.project.repoUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
         liveUrl: [this.project.liveUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
-        category: [this.project.category ?? null],
+        categoryId: [this.project.categoryId ?? ''],
         year: [this.project.year ?? null, [Validators.min(1900), Validators.max(2100)]],
         isFeatured: [this.project.isFeatured ?? false],
         technologyIds: [this.project.technologies.map(t => t.id)],
@@ -80,9 +79,9 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
 
   private setupSlugGeneration(): void {
     this.slugSubscription?.unsubscribe();
-    this.slugSubscription = this.form.controls.name.valueChanges
-      .subscribe(name => {
-        const slug = toSlug(name);
+    this.slugSubscription = this.form.controls.title.valueChanges
+      .subscribe(title => {
+        const slug = toSlug(title);
         this.form.controls.slug.setValue(slug, { emitEvent: false });
       });
   }
@@ -92,13 +91,13 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
 
     const raw = this.form.getRawValue();
     const payload: UpdateProjectDto = {
-      name: raw.name,
+      title: raw.title,
       slug: raw.slug,
       description: raw.description,
-      details: raw.details,
+      content: raw.content,
       repoUrl: raw.repoUrl,
       liveUrl: raw.liveUrl,
-      category: raw.category,
+      categoryId: raw.categoryId,
       year: this.parseNumber(raw.year),
       isFeatured: raw.isFeatured,
       technologyIds: raw.technologyIds,

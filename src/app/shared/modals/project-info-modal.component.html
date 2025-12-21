@@ -1,6 +1,6 @@
-<app-modal [title]="project.name" size="xl">
+<app-modal [title]="project.title" size="xl">
   <section class="grid gap-6">
-      @if (project.carouselImages.length > 0) {
+      @if (project.images.length > 0) {
         <div class="w-full min-w-0 overflow-hidden">
           <swiper-container
             slides-per-view="1"
@@ -10,12 +10,12 @@
             pagination="false"
             style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
           >
-            @for (img of project.carouselImages; track img.id; let i = $index) {
+            @for (img of project.images; track img.id; let i = $index) {
               <swiper-slide>
                 <figure>
                   <img
                     [ngSrc]="img.url"
-                    [alt]="img.alt ?? project.name"
+                    [alt]="project.title"
                     [priority]="i === 0"
                     class="m-auto rounded-md object-cover"
                     width="960"
@@ -24,7 +24,7 @@
 
                   <figcaption class="mt-2 text-center">
                     <app-typography-text as="span" variant="caption" extraClasses="opacity-70">
-                      Imagen {{ i + 1 }} de {{ project.carouselImages.length }} — {{ project.name }}
+                      Imagen {{ i + 1 }} de {{ project.images.length }} — {{ project.title }}
                     </app-typography-text>
                   </figcaption>
                 </figure>
@@ -52,20 +52,13 @@
             }
           </div>
 
-          @if (project.category || project.year || project.details) {
+          @if (project.categoryId || project.year || project.content) {
             <div aria-labelledby="details-title">
               <app-typography-title id="details-title" [level]="3" variant="subsection">Detalles</app-typography-title>
-              <app-typography-text variant="base" extraClasses="text-sm leading-relaxed">{{ project.details }}</app-typography-text>
+              @if (project.content) {
+                <app-typography-text variant="base" extraClasses="text-sm leading-relaxed">{{ project.content }}</app-typography-text>
+              }
               <dl class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-sm">
-                @if (project.category) {
-                  <dt class="opacity-70">
-                    <app-typography-text>Categoría:</app-typography-text>
-                  </dt>
-                  <dd>
-                    <app-typography-text>{{ project.category | titlecase }}</app-typography-text>
-                  </dd>
-                }
-
                 @if (project.year) {
                   <dt class="opacity-70">
                     <app-typography-text>Año:</app-typography-text>
@@ -86,7 +79,7 @@
               [href]="project.liveUrl"
               target="_blank"
               rel="noopener noreferrer"
-              [attr.aria-label]="'Abrir demo de ' + project.name"
+              [attr.aria-label]="'Abrir demo de ' + project.title"
             >
               Ver demo
             </a>
@@ -97,7 +90,7 @@
               [href]="project.repoUrl"
               target="_blank"
               rel="noopener noreferrer"
-              [attr.aria-label]="'Abrir repositorio de ' + project.name"
+              [attr.aria-label]="'Abrir repositorio de ' + project.title"
             >
               <ng-icon name="featherGithub" class="mr-2"></ng-icon>
               Repositorio
