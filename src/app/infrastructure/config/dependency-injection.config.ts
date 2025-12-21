@@ -13,7 +13,7 @@ import { AuthHttpAdapter } from '../adapters/secondary/auth/auth-http.adapter';
 import { UserHttpAdapter } from '../adapters/secondary/user/user-http.adapter';
 import { ProjectStore } from '../adapters/secondary/project/project.store';
 import { FileHttpAdapter } from '../adapters/secondary/file/file-http.adapter';
-import { TechnologyHttpAdapter } from '../adapters/secondary/technology/technology-http.adapter';
+import { TechnologyApiService } from '../adapters/secondary/technology/technology-api.service';
 import { StackHttpAdapter } from '../adapters/secondary/stack/stack-http.adapter';
 
 /**
@@ -49,7 +49,7 @@ export const REPOSITORY_PROVIDERS: Provider[] = [
   // Technology Repository
   {
     provide: TechnologyRepository,
-    useClass: TechnologyHttpAdapter
+    useClass: TechnologyApiService
   },
 
   // Stack Repository

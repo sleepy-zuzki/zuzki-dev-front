@@ -38,7 +38,7 @@ export class StackHttpAdapter extends StackRepository {
     this._error.set(null);
 
     this.http.get<StackResponseDto[]>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.base)
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.base)
     ).pipe(
       catchError(err => {
         console.error('Error fetching stacks:', err);
@@ -65,7 +65,7 @@ export class StackHttpAdapter extends StackRepository {
     this._error.set(null);
 
     this.http.get<StackResponseDto>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.bySlug(slug))
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.bySlug(slug))
     ).pipe(
       catchError(err => {
         console.error(`Error fetching stack ${slug}:`, err);
@@ -102,7 +102,7 @@ export class StackHttpAdapter extends StackRepository {
     };
 
     this.http.post<StackResponseDto>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.base),
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.base),
       createDto
     ).pipe(
       catchError(err => {
@@ -142,7 +142,7 @@ export class StackHttpAdapter extends StackRepository {
     };
 
     this.http.patch<StackResponseDto>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.byId(id)),
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.byId(id)),
       updateDto
     ).pipe(
       catchError(err => {
@@ -173,7 +173,7 @@ export class StackHttpAdapter extends StackRepository {
     this._error.set(null);
 
     this.http.delete<{ success: boolean }>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.catalog.stacks.byId(id))
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.byId(id))
     ).pipe(
       catchError(err => {
         console.error(`Error deleting stack ${id}:`, err);
