@@ -7,8 +7,8 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherUpload, featherTrash2 } from '@ng-icons/feather-icons';
 import { lucideGripVertical } from '@ng-icons/lucide';
 import { LoadState } from '@core/enums/load-state.enum';
-import { FileResponseDto } from '@app/application';
-import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
+import { FileEntity } from '@core/interfaces/file.interface';
+import { ProjectStore } from '@core/stores/project.store';
 
 @Component({
   selector: 'app-carousel-manager',
@@ -24,7 +24,7 @@ export class CarouselManagerComponent implements OnInit {
 
   private projectSlug!: string;
 
-  readonly images = computed(() => this.projectStore.currentProject()?.carouselImages ?? []);
+  readonly images = computed(() => this.projectStore.currentProject()?.images ?? []);
   readonly loadState = computed(() => {
     if (this.projectStore.loading()) return LoadState.LOADING;
     if (this.projectStore.error()) return LoadState.ERROR;
@@ -52,18 +52,18 @@ export class CarouselManagerComponent implements OnInit {
     input.value = ''; // Reset file input
   }
 
-  onDrop(event: CdkDragDrop<FileResponseDto[]>) {
+  onDrop(event: CdkDragDrop<FileEntity[]>) {
     const currentProject = this.projectStore.currentProject();
     if (!currentProject) return;
 
     const updatedImages = [...this.images()];
     moveItemInArray(updatedImages, event.previousIndex, event.currentIndex);
 
-    const reorderRequest = { images: updatedImages.map((img, index) => ({ fileId: img.id, position: index })) };
+    const reorderRequest = { items: updatedImages.map((img, index) => ({ fileId: img.id, order: index })) };
     this.projectStore.reorderCarouselImages(currentProject.id, reorderRequest);
   }
 
-  onDelete(fileId: number): void {
+  onDelete(fileId: string): void {
     const currentProject = this.projectStore.currentProject();
     if (currentProject && confirm('Are you sure you want to delete this image?')) {
       this.projectStore.removeImageFromCarousel(currentProject.id, fileId);

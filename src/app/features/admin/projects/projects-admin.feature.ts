@@ -38,7 +38,7 @@ export class ProjectsAdminFeatureComponent {
   error = this.projectStore.error;
 
   isEditModalOpen = signal(false);
-  selectedProject = signal<ProjectEntity | null>(null);
+  selectedProject = signal<Project | null>(null);
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
@@ -47,11 +47,11 @@ export class ProjectsAdminFeatureComponent {
     details: this.fb.control<string | null>(null, [Validators.maxLength(5000)]),
     repoUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     liveUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
-    category: this.fb.control<string | null>(null),
+    categoryId: this.fb.control<string>('', [Validators.required]),
     year: this.fb.control<number | null>(null, [Validators.min(1900), Validators.max(2100)]),
     isFeatured: this.fb.control<boolean>(false),
-    technologyIds: this.fb.control<number[]>([]),
-    previewImageId: this.fb.control<number | null>(null, [Validators.min(1)]),
+    technologyIds: this.fb.control<string[]>([]),
+    previewImageId: this.fb.control<string | null>(null),
   });
 
   constructor() {
@@ -90,23 +90,22 @@ export class ProjectsAdminFeatureComponent {
       year: this.parseNumber(raw.year),
       isFeatured: !!raw.isFeatured,
       technologyIds: raw.technologyIds,
-      previewImageId: this.parseNumber(raw.previewImageId),
     });
     this.form.reset();
   }
 
-  onEditProject(project: ProjectEntity): void {
+  onEditProject(project: Project): void {
     this.selectedProject.set(project);
     this.isEditModalOpen.set(true);
   }
 
-  onDeleteProject(id: number): void {
+  onDeleteProject(id: string): void {
     if (confirm('¿Estás seguro de que quieres eliminar este proyecto?')) {
       this.projectStore.deleteProject(id);
     }
   }
 
-  onSaveProject(event: { id: number; data: UpdateProjectDto }): void {
+  onSaveProject(event: { id: string; data: UpdateProjectDto }): void {
     this.projectStore.updateProject(event.id, event.data);
     this.onCloseModal();
   }

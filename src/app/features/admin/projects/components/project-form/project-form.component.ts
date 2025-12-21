@@ -4,7 +4,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
-import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
+import { TechnologyStore } from '@core/stores/technology.store';
 
 interface SelectOption {
   label: string;
@@ -36,18 +36,18 @@ export class ProjectFormComponent {
 
   get categoryOptions(): Option[] {
     return [
-      {label: 'Frontend', value: 'front'},
-      {label: 'Backend', value: 'back'},
-      {label: 'Mobile', value: 'mobile'},
-      {label: 'DevOps', value: 'devops'},
-      {label: 'Design', value: 'design'}
+      {label: 'Frontend', value: 'uuid-front-placeholder'},
+      {label: 'Backend', value: 'uuid-back-placeholder'},
+      {label: 'Mobile', value: 'uuid-mobile-placeholder'},
+      {label: 'DevOps', value: 'uuid-devops-placeholder'},
+      {label: 'Design', value: 'uuid-design-placeholder'}
     ]
   };
 
   get getTechnologyOptions(): Option[] {
     return this.technologies().map((technology): Option => ({
       label: technology.name,
-      value: technology.slug
+      value: technology.id
     }));
   }
 }

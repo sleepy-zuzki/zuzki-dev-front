@@ -31,9 +31,9 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
   private fb = inject(NonNullableFormBuilder);
 
   @Input({ required: true }) isOpen = false;
-  @Input() project: ProjectEntity | null = null;
+  @Input() project: Project | null = null;
 
-  @Output() save = new EventEmitter<{ id: number; data: UpdateProjectDto }>();
+  @Output() save = new EventEmitter<{ id: string; data: UpdateProjectDto }>();
   @Output() closeModal = new EventEmitter<void>();
 
   @ViewChild(ModalComponent) private modalComponent!: ModalComponent;
@@ -62,7 +62,7 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
         year: [this.project.year ?? null, [Validators.min(1900), Validators.max(2100)]],
         isFeatured: [this.project.isFeatured ?? false],
         technologyIds: [this.project.technologies.map(t => t.id)],
-        previewImageId: [this.project.previewImageId ?? null, [Validators.min(1)]],
+        previewImageId: [this.project.previewImageId ?? null],
       });
       this.setupSlugGeneration();
     }
@@ -102,7 +102,7 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
       year: this.parseNumber(raw.year),
       isFeatured: raw.isFeatured,
       technologyIds: raw.technologyIds,
-      previewImageId: this.parseNumber(raw.previewImageId),
+      previewImageId: raw.previewImageId,
     };
 
     this.save.emit({ id: this.project.id, data: payload });

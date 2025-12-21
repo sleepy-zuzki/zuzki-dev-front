@@ -8,7 +8,7 @@ import {
   bootstrapTrash,
 } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ProjectEntity } from '@core/domain';
+import { Project } from '@core/interfaces';
 import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
@@ -50,11 +50,11 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from
   ],
 })
 export class ProjectCardComponent {
-  @Input({ required: true }) project!: ProjectEntity;
+  @Input({ required: true }) project!: Project;
   @Input() isAdmin = false;
 
-  @Output() edit = new EventEmitter<ProjectEntity>();
-  @Output() delete = new EventEmitter<number>();
+  @Output() edit = new EventEmitter<Project>();
+  @Output() delete = new EventEmitter<string>();
 
   get imageUrl(): string | undefined {
     if (!this.project) return undefined;
