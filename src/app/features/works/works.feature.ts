@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, PLATFORM_ID, signal, Signal, WritableSignal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
-import { ProjectEntity } from '@domain/entities';
+import { ProjectStore } from '@core/stores/project.store';
+import { Project } from '@core/interfaces';
 import { ProjectCardComponent } from '@shared/components/project-card/project-card.component';
 
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
@@ -9,7 +9,7 @@ import { TypographyTextComponent } from '@shared/components/typography/text.comp
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherSearch } from '@ng-icons/feather-icons';
 import { ButtonComponent } from '@shared/components/button/button.component';
-import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
+import { TechnologyStore } from '@core/stores/technology.store';
 import { TagsListComponent } from '@shared/components/tags-list/tags-list.component';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -34,8 +34,8 @@ export class WorksFeature implements OnInit {
   private readonly router = inject(Router);
   private platformId = inject(PLATFORM_ID);
 
-  private readonly allProjects: Signal<ProjectEntity[]>;
-  public readonly projects: Signal<ProjectEntity[]>;
+  private readonly allProjects: Signal<Project[]>;
+  public readonly projects: Signal<Project[]>;
   public readonly technologyNames: Signal<string[]>;
   public readonly selectedTechnology: WritableSignal<string | null> = signal<string | null>(null);
 

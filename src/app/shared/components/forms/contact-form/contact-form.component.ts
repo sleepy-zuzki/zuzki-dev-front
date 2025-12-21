@@ -4,7 +4,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { catchError, finalize, throwError } from 'rxjs';
-import { ApiConfig } from '@infrastructure/config/api.config';
+import { ApiConfig } from '@core/config/api.config';
 
 @Component({
   selector: 'app-contact-form',

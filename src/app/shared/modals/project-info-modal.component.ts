@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, ViewChild } from '@angular/core';
 import { CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
-import { ProjectEntity } from '@core/domain';
+import { Project } from '@core/interfaces';
 import { ModalComponent } from '@components/modal/modal.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { bootstrapChevronLeft, bootstrapChevronRight } from '@ng-icons/bootstrap-icons';
@@ -32,7 +32,7 @@ register();
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProjectInfoModalComponent {
-  @Input({ required: true }) project!: ProjectEntity;
+  @Input({ required: true }) project!: Project;
   @ViewChild(ModalComponent) modal!: ModalComponent;
 
   currentImageIndex = 0;
