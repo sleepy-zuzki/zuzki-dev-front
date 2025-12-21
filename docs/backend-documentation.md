@@ -184,7 +184,14 @@ Endpoints para gestionar el portafolio de proyectos.
 ### **Obtener Proyecto por Slug**
 - **Endpoint**: `GET /projects/showcases/:slug`
 - **Autenticación**: Requerida.
-- **Respuesta Exitosa (`200 OK`)**: Devuelve un `ShowcaseResponseDto`.
+- **Respuesta Exitosa (`200 OK`)**: Devuelve un `ShowcaseResponseDto` que incluye:
+  - Datos básicos (id, title, slug, description, content, year, isFeatured).
+  - `technologies`: Array de tecnologías utilizadas.
+  - `images`: Array de objetos con las imágenes asociadas:
+    - `id`: ID del archivo.
+    - `url`: URL pública del archivo.
+    - `type`: Contexto/Tipo de imagen (ej: `cover`, `hero-slide`, `gallery`).
+    - `order`: Orden de visualización.
 
 ### **Crear Proyecto**
 - **Endpoint**: `POST /projects/showcases`
@@ -216,6 +223,30 @@ Endpoints para gestionar el portafolio de proyectos.
 - **Endpoint**: `DELETE /projects/showcases/:id`
 - **Autenticación**: Requerida.
 - **Respuesta Exitosa (`200 OK`)**: Devuelve `{ "success": true }`.
+
+### **Gestión de Archivos de Proyecto**
+
+#### **Adjuntar Archivo**
+- **Endpoint**: `POST /projects/showcases/:id/files`
+- **Autenticación**: Requerida.
+- **Cuerpo** (`application/json`):
+  - `fileId` (uuid): ID del archivo previamente subido.
+  - `contextSlug` (string): Contexto (`cover`, `hero-slide`, `gallery`).
+  - `order` (number, opcional): Posición en la lista.
+
+#### **Desvincular Archivo**
+- **Endpoint**: `DELETE /projects/showcases/:id/files/:fileId`
+- **Autenticación**: Requerida.
+
+#### **Reordenar Archivos**
+- **Endpoint**: `PATCH /projects/showcases/:id/files/order`
+- **Autenticación**: Requerida.
+- **Cuerpo**: `{"items": [{"fileId": "uuid", "order": 1}, ...]}`
+
+#### **Establecer Portada (Cover)**
+- **Endpoint**: `PUT /projects/showcases/:id/cover/:fileId`
+- **Autenticación**: Requerida.
+- **Nota**: Al establecer una nueva portada, la anterior pasará automáticamente a ser de tipo `gallery`.
 
 ---
 
