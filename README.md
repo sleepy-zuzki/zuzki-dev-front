@@ -1,6 +1,15 @@
-# ZuzkiDevFront
+# Zuzki Dev - Frontend
 
-Frontend para el **portafolio de Zuzki**, construido con Angular 20 y renderizado del lado del servidor (SSR). La aplicación se ejecuta en un Worker de Cloudflare y utiliza Tailwind CSS para los estilos. El desarrollo se gestiona con **pnpm**.
+Frontend para el **portafolio de Zuzki**, construido con **Angular 21** y renderizado del lado del servidor (SSR). La aplicación está optimizada para ejecutarse en **Cloudflare Pages** (Workers) y utiliza una arquitectura **Core-Centric** moderna con **Signals** y **Zoneless**.
+
+## 🚀 Tecnologías
+
+- **Framework:** [Angular 21.x](https://angular.dev) (Standalone, Signals, Zoneless).
+- **Estilos:** [Tailwind CSS 4.x](https://tailwindcss.com) (PostCSS).
+- **Runtime:** [Cloudflare Pages](https://pages.cloudflare.com) + [Wrangler](https://developers.cloudflare.com/workers/wrangler/).
+- **Estado:** [@ngrx/signals](https://ngrx.io/guide/signals).
+- **Iconos:** [@ng-icons](https://ng-icons.github.io/ng-icons/).
+- **Package Manager:** `pnpm`.
 
 ## Licensing
 - **Code:** MIT License – see [LICENSE](./LICENSE) (with [translations](./LICENSE.TRANSLATIONS.md))
