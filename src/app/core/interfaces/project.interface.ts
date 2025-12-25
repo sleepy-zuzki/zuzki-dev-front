@@ -1,6 +1,11 @@
 import { Technology } from './technology.interface';
 import { FileEntity } from './file.interface';
 
+export interface ProjectFile extends FileEntity {
+  type?: string; // 'cover' | 'hero-slide' | 'gallery'
+  order?: number;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -9,12 +14,12 @@ export interface Project {
   content?: any;
   liveUrl?: string | null;
   repoUrl?: string | null;
-  categoryId?: string | null;
+  areaId?: string | null;
   year?: number | null;
   isFeatured?: boolean;
   previewImageId?: string | null;
   technologies: Technology[];
-  images: FileEntity[];
+  images: ProjectFile[];
   createdAt: string;
   updatedAt: string;
 }
@@ -26,7 +31,7 @@ export interface CreateProjectDto {
   content?: any;
   repoUrl?: string | null;
   liveUrl?: string | null;
-  categoryId: string;
+  areaId: string;
   year?: number | null;
   isFeatured?: boolean;
   technologyIds?: string[];
@@ -39,7 +44,7 @@ export interface UpdateProjectDto {
   content?: any;
   repoUrl?: string | null;
   liveUrl?: string | null;
-  categoryId?: string;
+  areaId?: string;
   year?: number | null;
   isFeatured?: boolean;
   technologyIds?: string[] | null;

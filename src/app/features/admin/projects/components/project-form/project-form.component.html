@@ -69,16 +69,16 @@
     </app-input>
   </div>
 
-  <!-- Categoría -->
+  <!-- Área -->
   <div class="form-field-group--span-2">
     <app-select
-      label="Categoría"
-      id="categoryId"
-      formControlName="categoryId"
-      [options]="categoryOptions"
+      label="Área"
+      id="areaId"
+      formControlName="areaId"
+      [options]="areaOptions()"
       optionLabel="label"
       optionValue="value"
-      placeholder="Seleccionar categoría..."
+      placeholder="Seleccionar área..."
     ></app-select>
   </div>
 
@@ -86,19 +86,6 @@
   <div class="form-field-group--span-2">
     <app-input label="Año (opcional)" id="year" type="number" formControlName="year" placeholder="2024">
       Entre 1900 y 2100
-    </app-input>
-  </div>
-
-  <!-- ID Imagen Previa -->
-  <div class="form-field-group--span-2">
-    <app-input
-      label="ID imagen previa (opcional)"
-      id="previewImageId"
-      type="text"
-      formControlName="previewImageId"
-      placeholder="UUID de la imagen"
-    >
-      UUID de la imagen
     </app-input>
   </div>
 

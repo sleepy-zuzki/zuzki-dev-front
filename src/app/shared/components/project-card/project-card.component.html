@@ -10,9 +10,9 @@
     @if (project.isFeatured) {
       <span class="project-card__badge project-card__badge--featured">Destacado</span>
     }
-    @if (project.categoryId) {
+    @if (project.areaId) {
       <span class="project-card__badge project-card__badge--category">
-        {{ project.categoryId | titlecase }}
+        {{ project.areaId | titlecase }}
       </span>
     }
 

@@ -7,11 +7,10 @@ export interface CreateProjectForm {
   content: FormControl<any>;
   repoUrl: FormControl<string | null>;
   liveUrl: FormControl<string | null>;
-  categoryId: FormControl<string>;
+  areaId: FormControl<string>;
   year: FormControl<number | null>;
   isFeatured: FormControl<boolean>;
   technologyIds: FormControl<string[]>;
-  previewImageId: FormControl<string | null>;
 }
 
 export type UpdateProjectForm = CreateProjectForm;
