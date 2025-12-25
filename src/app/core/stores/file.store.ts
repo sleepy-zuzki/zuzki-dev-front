@@ -1,9 +1,8 @@
 import { Injectable, signal, computed, WritableSignal, Signal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HotToastService } from '@ngxpert/hot-toast';
 
-import { FileEntity, UpdateFileDto } from '@core/interfaces/file.interface';
+import { FileEntity, UpdateFileDto, UploadFileResponseDto } from '@core/interfaces/file.interface';
 import { ApiConfig } from '@core/config/api.config';
 import { FileService } from '@core/services/file.service';
 
@@ -31,32 +30,28 @@ export class FileStore {
     this._loading.set(true);
     this._error.set(null);
 
-    this.http.get<FileEntity[]>(
+    this.http.get<UploadFileResponseDto>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.base)
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (files) => {
-        this._files.set(files);
+        this._files.set(files.data);
         this._loading.set(false);
       },
       error: (error) => {
         const errorMessage = error.message || 'Error al cargar archivos';
         this._error.set(errorMessage);
-        
+
         this._loading.set(false);
       }
     });
   }
 
-  getFileById(id: number): void {
+  getFileById(id: string): void {
     this._loading.set(true);
     this._error.set(null);
 
     this.http.get<FileEntity>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.byId(id))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (file) => {
         this._currentFile.set(file);
@@ -65,7 +60,7 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al cargar archivo';
         this._error.set(errorMessage);
-        
+
         this._loading.set(false);
       }
     });
@@ -75,9 +70,7 @@ export class FileStore {
     this._loading.set(true);
     this._error.set(null);
 
-    this.fileService.uploadFile(file).pipe(
-      takeUntilDestroyed()
-    ).subscribe({
+    this.fileService.uploadFile(file).subscribe({
       next: (uploadedFile) => {
         this._files.update(current => [...current, uploadedFile]);
         this._currentFile.set(uploadedFile);
@@ -86,21 +79,19 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al subir archivo';
         this._error.set(errorMessage);
-        
+
         this._loading.set(false);
       }
     });
   }
 
-  updateFile(id: number, request: UpdateFileDto): void {
+  updateFile(id: string, request: UpdateFileDto): void {
     this._loading.set(true);
     this._error.set(null);
 
     this.http.patch<FileEntity>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.byId(id)),
       request
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (file) => {
         this._files.update(current => current.map(f => f.id === id ? file : f));
@@ -110,20 +101,18 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al actualizar archivo';
         this._error.set(errorMessage);
-        
+
         this._loading.set(false);
       }
     });
   }
 
-  deleteFile(id: number): void {
+  deleteFile(id: string): void {
     this._loading.set(true);
     this._error.set(null);
 
     this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.portfolio.files.byId(id))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         this._files.update(current => current.filter(f => f.id !== id));
@@ -132,7 +121,7 @@ export class FileStore {
       error: (error) => {
         const errorMessage = error.message || 'Error al eliminar archivo';
         this._error.set(errorMessage);
-        
+
         this._loading.set(false);
       }
     });

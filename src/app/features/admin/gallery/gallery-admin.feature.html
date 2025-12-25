@@ -1,0 +1,56 @@
+<section class="gallery-admin">
+  <header class="gallery-admin__header">
+    <div class="flex flex-col">
+      <h2 class="gallery-admin__title">Galería de Imágenes</h2>
+      <app-typography-text variant="muted">Formatos permitidos: JPEG, PNG, WebP (Máx. 5MB)</app-typography-text>
+    </div>
+    
+    <app-button variant="brand" size="sm" type="button" (click)="fileUpload.click()" [disabled]="loading()">
+      <ng-icon name="featherUpload" class="gallery-admin__icon mr-2"></ng-icon>
+      <span>Subir Imagen</span>
+    </app-button>
+    
+    <input 
+      #fileUpload 
+      id="file-upload" 
+      type="file" 
+      (change)="onFileSelected($event)" 
+      accept="image/jpeg,image/png,image/webp" 
+      class="gallery-admin__file-input"
+    >
+  </header>
+
+  @if (loading() && files().length === 0) {
+    <div class="gallery-admin__feedback-message">
+      <app-typography-text>Cargando galería...</app-typography-text>
+    </div>
+  } @else if (error()) {
+    <div class="gallery-admin__feedback-message gallery-admin__feedback-message--error">
+      <app-typography-text>{{ error() }}</app-typography-text>
+      <app-button variant="outline" size="sm" class="mt-4" (click)="reload()">Reintentar</app-button>
+    </div>
+  } @else {
+    @if (files().length === 0) {
+      <div class="gallery-admin__feedback-message">
+        <app-typography-text>No hay imágenes en la galería. ¡Sube tu primera imagen!</app-typography-text>
+      </div>
+    } @else {
+      <div class="gallery-admin__grid">
+        @for (file of files(); track file.id) {
+          <article class="gallery-admin__item">
+            <img [src]="file.url" [alt]="'Imagen de galería'" class="gallery-admin__image" loading="lazy">
+            <button 
+              type="button"
+              class="gallery-admin__delete-btn" 
+              (click)="onDelete(file.id)" 
+              title="Eliminar imagen"
+              aria-label="Eliminar imagen"
+            >
+              <ng-icon name="featherTrash2" class="w-4 h-4"></ng-icon>
+            </button>
+          </article>
+        }
+      </div>
+    }
+  }
+</section>

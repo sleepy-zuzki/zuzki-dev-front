@@ -19,6 +19,11 @@ export interface UpdateFileDto {
 }
 
 export interface UploadFileResponseDto {
-  success: boolean;
-  file: FileEntity;
+  data: FileEntity[];
+  meta: {
+    lastPage: number;
+    limit: number;
+    page: number;
+    total: number;
+  }
 }

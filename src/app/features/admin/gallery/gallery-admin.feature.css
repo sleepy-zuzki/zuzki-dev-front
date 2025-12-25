@@ -1,0 +1,49 @@
+@reference "../../../../styles/utilities.css";
+
+.gallery-admin {
+  @apply block p-4 sm:p-6 bg-background-section rounded-lg shadow-md;
+}
+
+.gallery-admin__header {
+  @apply flex items-center justify-between pb-4 mb-6 border-b border-background-surface;
+}
+
+.gallery-admin__title {
+  @apply text-xl font-bold text-zuzki-800 dark:text-zuzki-200;
+}
+
+.gallery-admin__file-input {
+  @apply hidden;
+}
+
+.gallery-admin__feedback-message {
+  @apply py-8 text-center text-zuzki-600 dark:text-zuzki-400;
+}
+
+.gallery-admin__feedback-message--error {
+  @apply text-red-600 dark:text-red-400;
+}
+
+.gallery-admin__grid {
+  @apply grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6;
+}
+
+.gallery-admin__item {
+  @apply relative aspect-square overflow-hidden rounded-lg bg-background-surface border border-background-surface transition-transform hover:scale-[1.02];
+}
+
+.gallery-admin__image {
+  @apply h-full w-full object-cover;
+}
+
+.gallery-admin__delete-btn {
+  @apply absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded-full bg-red-500/80 text-white opacity-0 transition-opacity hover:bg-red-600 focus:opacity-100;
+}
+
+.gallery-admin__item:hover .gallery-admin__delete-btn {
+  @apply opacity-100;
+}
+
+.gallery-admin__icon {
+  @apply w-4 h-4;
+}
