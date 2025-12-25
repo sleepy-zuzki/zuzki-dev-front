@@ -57,7 +57,7 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
         content: [this.project.content ?? null],
         repoUrl: [this.project.repoUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
         liveUrl: [this.project.liveUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
-        areaId: [this.project.areaId ?? ''],
+        areaId: [this.project.area?.id ?? ''],
         year: [this.project.year ?? null, [Validators.min(1900), Validators.max(2100)]],
         isFeatured: [this.project.isFeatured ?? false],
         technologyIds: [this.project.technologies.map(t => t.id)],

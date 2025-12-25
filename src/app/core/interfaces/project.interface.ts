@@ -14,7 +14,7 @@ export interface Project {
   content?: any;
   liveUrl?: string | null;
   repoUrl?: string | null;
-  areaId?: string | null;
+  area?: { id: string; name: string; slug: string };
   year?: number | null;
   isFeatured?: boolean;
   previewImageId?: string | null;
