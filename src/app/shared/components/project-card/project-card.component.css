@@ -5,41 +5,50 @@
 }
 
 .project-card__figure {
-  @apply relative h-48 w-full md:h-56 lg:h-60;
+  @apply relative h-48 w-full md:h-56 lg:h-60 overflow-hidden;
 }
 
 .project-card__image {
-  @apply absolute inset-0 h-full w-full object-cover;
+  @apply absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out;
 }
 
+/* Efecto Zoom suave en hover */
+.project-card:hover .project-card__image {
+  @apply scale-105;
+}
+
+/* Overlay sutil para unificar tonos, pero permite ver la imagen */
 .project-card__gradient-overlay {
-  @apply absolute inset-0 bg-gradient-to-b from-black/10 to-black/50;
+  @apply absolute inset-0 bg-black/10;
 }
 
 .project-card__placeholder-bg {
   @apply absolute inset-0 bg-gradient-to-br from-zuzki-400 to-zuzki-600;
 }
 
+/* Badges */
 .project-card__badge {
-  @apply absolute text-[11px] font-medium px-2.5 py-1 rounded-full;
+  @apply absolute text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide z-10;
 }
 
 .project-card__badge--featured {
-  @apply top-3 left-3 bg-zuzki-500 text-white shadow-md;
+  @apply top-3 left-3 bg-zuzki-500 text-white shadow-md shadow-zuzki-500/20;
 }
 
 .project-card__badge--category {
-  @apply top-3 right-3 bg-black/30 text-white backdrop-blur border border-white/10;
+  @apply top-3 right-3 bg-white/20 text-white backdrop-blur-md border border-white/20 shadow-sm;
 }
 
-.project-card__bottom-text {
-  @apply absolute left-4 bottom-4 text-white drop-shadow-md;
+/* --- ADAPTIVE GLASS SCRIM (Compact Year Badge) --- */
+.project-card__glass-scrim {
+  @apply absolute bottom-3 left-3 px-3 py-1 z-10 rounded-full glass-scrim;
 }
 
 .project-card__year {
-  @apply text-xs opacity-90;
+  @apply text-[11px] font-bold opacity-90 uppercase tracking-wider;
 }
 
+/* Contenido Principal */
 .project-card__content {
   @apply p-5 flex flex-col gap-4 grow;
 }
@@ -58,5 +67,5 @@
 
 /* --- Button Overrides --- */
 .project-card__delete-button {
-  @apply bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500 rounded;
+  @apply bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded;
 }

@@ -10,18 +10,17 @@
     @if (project.isFeatured) {
       <span class="project-card__badge project-card__badge--featured">Destacado</span>
     }
-    @if (project.areaId) {
+    @if (project.area) {
       <span class="project-card__badge project-card__badge--category">
-        {{ project.areaId | titlecase }}
+        {{ project.area.name }}
       </span>
     }
 
-    <div class="project-card__bottom-text" aria-hidden="true">
-      @if (project.year) {
+    @if (project.year) {
+      <div class="project-card__glass-scrim">
         <p class="project-card__year">{{ project.year }}</p>
-      }
-      <app-typography-text as="p">{{ project.title }}</app-typography-text>
-    </div>
+      </div>
+    }
 
     <figcaption class="sr-only">Banner visual del proyecto {{ project.title }}</figcaption>
   </figure>
