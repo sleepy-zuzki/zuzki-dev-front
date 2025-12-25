@@ -1,6 +1,5 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { User, CreateUserDto } from '@core/interfaces/user.interface';
 import { ApiConfig } from '@core/config/api.config';
@@ -28,8 +27,6 @@ export class UserService {
 
     this.http.get<User>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.users.byId(id))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (user) => {
         this._currentUser.set(user);
@@ -49,8 +46,6 @@ export class UserService {
     this.http.post<User>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.users.base),
       request
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (user) => {
         this._currentUser.set(user);

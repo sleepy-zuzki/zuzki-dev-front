@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { ProjectStore } from '@core/stores/project.store';
@@ -60,7 +59,6 @@ export class ProjectsAdminFeatureComponent {
 
   private setupSlugGeneration(): void {
     this.form.controls.title.valueChanges
-      .pipe(takeUntilDestroyed())
       .subscribe(title => {
         const slug = toSlug(title);
         this.form.controls.slug.setValue(slug, { emitEvent: false });

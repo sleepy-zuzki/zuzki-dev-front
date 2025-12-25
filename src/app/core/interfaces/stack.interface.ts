@@ -1,7 +1,7 @@
 import { Technology } from './technology.interface';
 
 export interface Stack {
-  id: number;
+  id: string;
   name: string;
   slug: string;
   description?: string;
@@ -20,7 +20,7 @@ export interface CreateStackDto {
   iconUrl?: string;
   websiteUrl?: string;
   color?: string;
-  technologyIds?: number[];
+  technologyIds?: string[];
 }
 
 export interface UpdateStackDto {
@@ -30,7 +30,7 @@ export interface UpdateStackDto {
   iconUrl?: string;
   websiteUrl?: string;
   color?: string;
-  technologyIds?: number[];
+  technologyIds?: string[];
 }
 
 export type StackResponseDto = Stack;

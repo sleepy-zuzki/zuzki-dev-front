@@ -1,6 +1,5 @@
 import { Injectable, signal, computed, WritableSignal, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { Stack, CreateStackDto, UpdateStackDto } from '@core/interfaces/stack.interface';
 import { ApiConfig } from '@core/config/api.config';
@@ -30,8 +29,6 @@ export class StackService {
 
     this.http.get<Stack[]>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.base)
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (stacks) => {
         this._stacks.set(stacks);
@@ -50,8 +47,6 @@ export class StackService {
 
     this.http.get<Stack>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.bySlug(slug))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
         this._currentStack.set(stack);
@@ -71,8 +66,6 @@ export class StackService {
     this.http.post<Stack>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.base),
       request
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
         this._stacks.update(current => [...current, stack]);
@@ -93,8 +86,6 @@ export class StackService {
     this.http.patch<Stack>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.byId(id)),
       request
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: (stack) => {
         this._stacks.update(current => current.map(s => s.id === id ? stack : s));
@@ -114,8 +105,6 @@ export class StackService {
 
     this.http.delete<{ success: boolean }>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.stack.areas.byId(id))
-    ).pipe(
-      takeUntilDestroyed()
     ).subscribe({
       next: () => {
         this._stacks.update(current => current.filter(s => s.id !== id));
