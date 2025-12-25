@@ -1,10 +1,11 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, computed } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
 import { TechnologyStore } from '@core/stores/technology.store';
+import { StackService } from '@core/services/stack.service';
 
 interface SelectOption {
   label: string;
@@ -28,21 +29,22 @@ export class ProjectFormComponent {
   @Input() technologyOptions: SelectOption[] = [];
 
   private technologyStore = inject(TechnologyStore);
+  private stackService = inject(StackService);
+
   technologies = this.technologyStore.technologies;
+  stacks = this.stackService.stacks;
 
   constructor() {
     this.technologyStore.getTechnologies();
+    this.stackService.getStacks();
   }
 
-  get categoryOptions(): Option[] {
-    return [
-      {label: 'Frontend', value: 'uuid-front-placeholder'},
-      {label: 'Backend', value: 'uuid-back-placeholder'},
-      {label: 'Mobile', value: 'uuid-mobile-placeholder'},
-      {label: 'DevOps', value: 'uuid-devops-placeholder'},
-      {label: 'Design', value: 'uuid-design-placeholder'}
-    ]
-  };
+  areaOptions = computed((): Option[] => {
+    return this.stacks().map(stack => ({
+      label: stack.name,
+      value: stack.id
+    }));
+  });
 
   get getTechnologyOptions(): Option[] {
     return this.technologies().map((technology): Option => ({
