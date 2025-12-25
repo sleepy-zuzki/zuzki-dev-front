@@ -12,3 +12,4 @@ export * from './environment.interface';
 export * from './error-message.interface';
 export * from './sitemap.interface';
 export * from './streaming.interface';
+export * from './blog.interface';

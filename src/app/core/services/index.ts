@@ -6,3 +6,4 @@ export * from './seo.service';
 export * from './stack.service';
 export * from './technology.service';
 export * from './user.service';
+export * from './blog.service';

@@ -27,7 +27,6 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from
     TypographyTitleComponent,
     ProjectInfoModalComponent,
     ButtonComponent,
-    TitleCasePipe,
     NgOptimizedImage
   ],
   templateUrl: './project-card.component.html',
