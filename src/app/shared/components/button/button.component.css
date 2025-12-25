@@ -1,9 +1,11 @@
 @reference "../../../../styles/utilities.css";
 
+/* Base Button Styles */
 .btn {
-  @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg focus-brand select-none hover:cursor-pointer
-  disabled:opacity-60 disabled:cursor-not-allowed disabled:shadow-none
-  transition-colors duration-200;
+  @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg select-none cursor-pointer
+  transition-all duration-200 ease-in-out
+  disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-background-default;
 }
 
 .btn--block {
@@ -11,34 +13,68 @@
 }
 
 /* Tamaños */
-.btn--sm { @apply text-sm px-3 py-1.5; }
-.btn--md { @apply text-sm px-4 py-2; }
-.btn--lg { @apply text-base px-5 py-3; }
-.btn--icon { @apply p-2 rounded-lg; }
+.btn--sm { @apply text-xs px-3 py-1.5 h-8; }
+.btn--md { @apply text-sm px-4 py-2 h-10; }
+.btn--lg { @apply text-base px-6 py-2.5 h-12; }
+.btn--icon { @apply p-2 aspect-square h-auto; }
 
-/* Variantes (tokens del tema) */
+/* Variantes */
+
+/* BRAND: Color de marca con gradiente sutil */
 .btn--brand {
-  @apply bg-gradient-brand text-white shadow-sm hover:shadow-md transition-all duration-200 hover:brightness-95;
+  @apply bg-gradient-brand text-white border border-zuzki-600/10 shadow-sm;
+  
+  /* Resplandor muy sutil */
+  @apply shadow-zuzki-500/10;
+
+  /* Hover: Brillo suave sin movimiento */
+  @apply hover:brightness-105 hover:shadow-md hover:shadow-zuzki-500/15;
+
+  /* Active: Feedback de pulsación mínimo */
+  @apply active:scale-[0.99] active:brightness-100;
 }
 
+/* SECONDARY: Integración limpia con el fondo */
 .btn--secondary {
-  @apply bg-background-section text-zuzki-700 border border-zuzki-200
-  dark:text-zuzki-200 dark:border-zuzki-800
-  hover:bg-background-surface;
+  @apply bg-white border border-gray-200 text-gray-700
+  dark:bg-white/5 dark:border-white/10 dark:text-gray-300;
+
+  @apply hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900
+  dark:hover:bg-white/10 dark:hover:border-white/20 dark:hover:text-white;
+
+  @apply active:scale-[0.99];
 }
 
+/* OUTLINE: Fino y definido */
 .btn--outline {
-  @apply border border-brand-primary text-brand-primary bg-transparent hover:bg-brand-primary/10;
+  @apply bg-transparent border border-zuzki-500/50 text-zuzki-600 dark:text-zuzki-400;
+
+  @apply hover:bg-zuzki-500 hover:text-white hover:border-zuzki-500;
+
+  @apply active:scale-[0.99];
 }
 
+/* GHOST: Mínima intrusión */
 .btn--ghost {
-  @apply bg-transparent text-ui-accent;
+  @apply bg-transparent text-gray-500 dark:text-gray-400;
+
+  @apply hover:bg-gray-100 hover:text-zuzki-600 
+  dark:hover:bg-white/10 dark:hover:text-zuzki-400;
+
+  @apply active:scale-[0.97];
 }
 
+/* LINK: Estilo puramente textual */
 .btn--link {
-  @apply bg-transparent text-brand-primary underline underline-offset-2 hover:text-brand-primary-hover;
+  @apply p-0 h-auto bg-transparent text-zuzki-600 dark:text-zuzki-400;
+  @apply hover:text-zuzki-500 hover:underline underline-offset-4;
 }
 
-/* Elementos internos */
-.btn__spinner { @apply inline-flex; }
-.btn__content { @apply inline-flex items-center; }
+/* Elementos Internos */
+.btn__spinner {
+  @apply inline-flex animate-spin mr-2;
+}
+
+.btn__content {
+  @apply inline-flex items-center gap-2;
+}

@@ -17,7 +17,7 @@ import { GallerySelectorModalComponent } from '@shared/modals/gallery-selector-m
   imports: [DragDropModule, ButtonComponent, NgIcon, GallerySelectorModalComponent],
   templateUrl: './carousel-manager.component.html',
   styleUrl: './carousel-manager.component.css',
-  providers: [provideIcons({ featherUpload, featherTrash2, lucideGripVertical })],
+  providers: [provideIcons({ featherUpload, featherTrash2, lucideGripVertical, featherImage, featherGrid })],
 })
 export class CarouselManagerComponent implements OnInit {
   private readonly projectStore = inject(ProjectStore);

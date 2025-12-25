@@ -6,6 +6,7 @@ import {
   bootstrapArrowUpRight,
   bootstrapGithub,
   bootstrapTrash,
+  bootstrapImages
 } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { Project } from '@core/interfaces';
@@ -38,6 +39,7 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from
       bootstrapArrowUpRight,
       bootstrapGithub,
       bootstrapTrash,
+      bootstrapImages
     }),
     {
       provide: IMAGE_LOADER,
