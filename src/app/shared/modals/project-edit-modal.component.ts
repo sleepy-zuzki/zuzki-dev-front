@@ -61,7 +61,6 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
         year: [this.project.year ?? null, [Validators.min(1900), Validators.max(2100)]],
         isFeatured: [this.project.isFeatured ?? false],
         technologyIds: [this.project.technologies.map(t => t.id)],
-        previewImageId: [this.project.previewImageId ?? null],
       });
       this.setupSlugGeneration();
     }
@@ -101,7 +100,6 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
       year: this.parseNumber(raw.year),
       isFeatured: raw.isFeatured,
       technologyIds: raw.technologyIds,
-      previewImageId: raw.previewImageId,
     };
 
     this.save.emit({ id: this.project.id, data: payload });

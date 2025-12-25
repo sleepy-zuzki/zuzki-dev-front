@@ -49,7 +49,6 @@ export class ProjectsAdminFeatureComponent {
     year: this.fb.control<number | null>(null, [Validators.min(1900), Validators.max(2100)]),
     isFeatured: this.fb.control<boolean>(false),
     technologyIds: this.fb.control<string[]>([]),
-    previewImageId: this.fb.control<string | null>(null),
   });
 
   constructor() {

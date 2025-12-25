@@ -57,11 +57,18 @@ export class ProjectCardComponent {
   @Output() delete = new EventEmitter<string>();
 
   get imageUrl(): string | undefined {
-    if (!this.project) return undefined;
-    const primaryImage = this.project.previewImageId
-      ? this.project.images.find(f => f.id === this.project.previewImageId) ?? this.project.images[0]
-      : this.project.images[0];
-    return primaryImage?.url ?? undefined;
+    if (!this.project || !this.project.images || this.project.images.length === 0) return undefined;
+    
+    // 1. Try to find explicit 'cover'
+    const cover = this.project.images.find(img => img.type === 'cover');
+    if (cover) return cover.url;
+
+    // 2. Fallback to 'hero-slide' (often high quality)
+    const hero = this.project.images.find(img => img.type === 'hero-slide');
+    if (hero) return hero.url;
+
+    // 3. Fallback to any 'gallery' or first image
+    return this.project.images[0].url;
   }
 
   get actionUrl(): string | null {
