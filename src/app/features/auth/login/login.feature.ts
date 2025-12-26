@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, effect } from '@angular/cor
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthHttpAdapter } from '@infrastructure/adapters/secondary/auth/auth-http.adapter';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   standalone: true,
@@ -15,7 +15,7 @@ import { AuthHttpAdapter } from '@infrastructure/adapters/secondary/auth/auth-ht
 export class LoginFeatureComponent {
   private fb = inject(FormBuilder);
   private router = inject(Router);
-  private auth = inject(AuthHttpAdapter);
+  private auth = inject(AuthService);
 
   // Conectar UI a las signals del adaptador (source of truth)
   loading = this.auth.loading;

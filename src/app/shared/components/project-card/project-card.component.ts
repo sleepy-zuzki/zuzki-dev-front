@@ -6,9 +6,10 @@ import {
   bootstrapArrowUpRight,
   bootstrapGithub,
   bootstrapTrash,
+  bootstrapImages
 } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ProjectEntity } from '@core/domain';
+import { Project } from '@core/interfaces';
 import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
@@ -26,7 +27,6 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from
     TypographyTitleComponent,
     ProjectInfoModalComponent,
     ButtonComponent,
-    TitleCasePipe,
     NgOptimizedImage
   ],
   templateUrl: './project-card.component.html',
@@ -38,6 +38,7 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from
       bootstrapArrowUpRight,
       bootstrapGithub,
       bootstrapTrash,
+      bootstrapImages
     }),
     {
       provide: IMAGE_LOADER,
@@ -50,18 +51,25 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from
   ],
 })
 export class ProjectCardComponent {
-  @Input({ required: true }) project!: ProjectEntity;
+  @Input({ required: true }) project!: Project;
   @Input() isAdmin = false;
 
-  @Output() edit = new EventEmitter<ProjectEntity>();
-  @Output() delete = new EventEmitter<number>();
+  @Output() edit = new EventEmitter<Project>();
+  @Output() delete = new EventEmitter<string>();
 
   get imageUrl(): string | undefined {
-    if (!this.project) return undefined;
-    const primaryImage = this.project.previewImageId
-      ? this.project.carouselImages.find(f => f.id === this.project.previewImageId) ?? this.project.carouselImages[0]
-      : this.project.carouselImages[0];
-    return primaryImage?.url ?? undefined;
+    if (!this.project || !this.project.images || this.project.images.length === 0) return undefined;
+    
+    // 1. Try to find explicit 'cover'
+    const cover = this.project.images.find(img => img.type === 'cover');
+    if (cover) return cover.url;
+
+    // 2. Fallback to 'hero-slide' (often high quality)
+    const hero = this.project.images.find(img => img.type === 'hero-slide');
+    if (hero) return hero.url;
+
+    // 3. Fallback to any 'gallery' or first image
+    return this.project.images[0].url;
   }
 
   get actionUrl(): string | null {

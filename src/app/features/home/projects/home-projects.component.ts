@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { bootstrapArrowRightShort } from '@ng-icons/bootstrap-icons';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
+import { ProjectStore } from '@core/stores/project.store';
 import { TypographyTextComponent } from '@components/typography/text.component';
 
 @Component({

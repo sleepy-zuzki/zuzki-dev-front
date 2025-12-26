@@ -1,6 +1,6 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnDestroy, OnInit } from '@angular/core';
 import { WorksFeature } from '@features/works/works.feature';
-import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
+import { ProjectStore } from '@core/stores/project.store';
 import { SeoService } from '@core/services/seo.service';
 
 @Component({

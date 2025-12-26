@@ -1,45 +1,16 @@
-# Componentes Compartidos
+# Shared (Recursos Compartidos)
 
-Este directorio contiene componentes, directivas, pipes y otros elementos que se utilizan en múltiples partes de la aplicación.
-
-## Estructura
-
-```
-shared/
-├── components/     # Componentes reutilizables (botones, tarjetas, etc.)
-├── directives/     # Directivas personalizadas
-├── pipes/          # Pipes para transformación de datos
-├── layouts/        # Componentes de diseño (headers, footers, etc.)
-└── models/         # Interfaces y tipos compartidos
-```
-
-## Componentes
-# Shared
-
-Esta carpeta contiene **elementos compartidos** entre diferentes capas y features.
+El directorio `shared/` contiene elementos transversales que son utilizados por múltiples features o páginas. Su objetivo es mantener la consistencia visual y funcional (DRY - Don't Repeat Yourself).
 
 ## Estructura
-- **Components**: Componentes UI reutilizables
-- **Utils**: Utilidades y helpers
-- **Constants**: Constantes de la aplicación
-- **Types**: Tipos TypeScript compartidos
-- **Validators**: Validadores comunes
 
-## Ejemplo de estructura:
-Los componentes compartidos están diseñados para ser reutilizables y mantener una experiencia de usuario consistente en toda la aplicación.
+- **components/**: UI Atómica y componentes altamente reutilizables (Botones, Inputs, Cards, Header, Footer).
+- **modals/**: Componentes específicos para ventanas modales y diálogos.
+- **services/**: Servicios auxiliares que no pertenecen a la lógica de negocio (ej: scroll, notificaciones visuales).
+- **utils/**: Helpers, funciones puras y utilidades de TypeScript.
 
-## Uso
+## Reglas de Shared
 
-Para utilizar estos componentes en otras partes de la aplicación:
-
-```typescript
-import { ButtonComponent } from '@shared/components/button/button.component';
-
-@Component({
-  // ...
-  imports: [ButtonComponent]
-})
-export class MyComponent {
-  // ...
-}
-```
+1. **Sin Lógica de Negocio**: Los componentes en `shared/` deben ser "puros" o de presentación. No deben inyectar Stores del Core directamente si esto compromete su reutilización.
+2. **Altamente Parametrizables**: Deben usar `@Input` y `@Output` (o las nuevas `input()` y `output()` de Angular) para comunicarse.
+3. **Independencia**: Un componente shared no debería depender de una feature específica.

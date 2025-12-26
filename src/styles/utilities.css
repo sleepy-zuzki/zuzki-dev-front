@@ -69,3 +69,14 @@
 @utility bg-gradient-brand {
   @apply bg-gradient-to-br from-zuzki-400 to-zuzki-600;
 }
+
+/* --- ADAPTIVE GLASS SCRIM --- */
+/* Efecto de cristal esmerilado que se adapta automáticamente al tema claro/oscuro
+   para garantizar legibilidad sobre fondos complejos. */
+@utility glass-scrim {
+  @apply backdrop-blur-md border transition-colors duration-300 shadow-sm;
+  /* Light Mode */
+  @apply bg-white/70 border-white/40 text-gray-900;
+  /* Dark Mode */
+  @apply dark:bg-black/60 dark:border-white/10 dark:text-white;
+}

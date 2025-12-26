@@ -1,7 +1,11 @@
-# Interfaces
+# Domain Repositories
 
-Este directorio contiene interfaces de TypeScript que definen los "contratos de datos" o las formas (shapes) de los objetos utilizados en la aplicación.
+Esta carpeta contiene las **interfaces de repositorios** del dominio (puertos de salida).
 
-Estas interfaces son cruciales para asegurar la consistencia de los datos y para aprovechar el sistema de tipado estático de TypeScript, lo que ayuda a prevenir errores en tiempo de desarrollo.
+## Estructura
+- Define contratos para el acceso a datos
+- Son interfaces puras sin implementación
+- Permiten la inversión de dependencias
+- La implementación real se encuentra en `infrastructure/adapters`
 
-A diferencia de las interfaces en la capa de `domain`, estas pueden estar más orientadas a la estructura de datos que maneja la UI o los servicios de la aplicación, no necesariamente a las reglas de negocio.
+## Ejemplo de estructura:

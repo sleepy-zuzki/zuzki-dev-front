@@ -1,64 +1,30 @@
-# Módulo Core
+# Core Module
 
-Este directorio contiene servicios, interceptores y utilidades fundamentales para el funcionamiento de la aplicación. Estos elementos son esenciales y generalmente se cargan una sola vez al inicio de la aplicación.
+El directorio `core/` es el núcleo de la aplicación. Contiene todos los recursos esenciales que deben estar disponibles globalmente.
 
 ## Estructura
 
-```
+```text
 core/
-├── http/                  # Clientes HTTP personalizados
-├── interceptors/          # Interceptores HTTP
-│   ├── github-data.interceptor.ts
-│   └── make.interceptor.ts
-├── services/              # Servicios principales
-│   └── api.service.ts
-├── models/                # Modelos de datos core
-├── enums/                 # Enumeraciones
-├── utils/                 # Utilidades específicas del core
-├── tokens/                # Tokens de inyección
-│   └── api-type.token.ts
-└── interfaces/            # Interfaces core
+├── config/       # Configuraciones globales (API endpoints, etc.)
+├── enums/        # Enumeraciones de negocio y UI
+├── guards/       # Protectores de rutas funcionales
+├── interceptors/ # Interceptores HTTP funcionales
+├── interfaces/   # Modelos de datos y contratos
+├── services/     # Servicios de comunicación y lógica
+├── stores/       # Gestión de estado con NgRx Signals
+└── tokens/       # InjectionTokens para DI
 ```
 
-## Servicios Core
+## Patrones en Core
 
-Los servicios en este directorio proporcionan funcionalidades fundamentales como:
+### Gestión de Estado
+Utilizamos `@ngrx/signals` para crear almacenes de estado (Stores) reactivos y ligeros. Ejemplo:
+- `ProjectStore`: Gestiona la lista de proyectos y filtros.
+- `AuthStore`: Gestiona el estado de la sesión.
 
-- Autenticación y autorización
-- Comunicación con APIs externas
-- Gestión de estado global
-- Manejo de errores
+### Comunicación API
+Los servicios consumen directamente las APIs. El tipo de API (por ejemplo, si va a GitHub o a nuestro Backend) se gestiona mediante el `api-type.token.ts` y los interceptores en `interceptors/`.
 
-## Interceptores HTTP
-
-Los interceptores permiten consumir múltiples APIs externas de forma limpia y modular. Cada interceptor está condicionado para actuar solo cuando el contexto HTTP contiene el tipo de API específico.
-
-### Ejemplos de uso
-
-```typescript
-// Importar el servicio API
-import { ApiService } from '@core/services/api.service';
-
-@Component({
-  // ...
-})
-export class MyComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
-
-  ngOnInit(): void {
-    // Consumir la API de GitHub
-    this.apiService.getFromGithub<any>('users/octocat').subscribe(user => {
-      console.log('GitHub User:', user);
-    });
-
-    // Consumir la API de Make.com
-    this.apiService.getFromMake<any>('scenarios').subscribe(scenarios => {
-      console.log('Make Scenarios:', scenarios);
-    });
-  }
-}
-```
-
-## Configuración
-
-Los interceptores están configurados en el archivo `app.config.ts` y utilizan variables de entorno para las URLs base de las APIs, definidas en `environment.ts`.
+### Reactividad
+Se prefiere el uso de `signal` y `computed` sobre `BehaviorSubject` o `Observable` cuando el estado es local o de UI.

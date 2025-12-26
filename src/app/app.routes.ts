@@ -74,6 +74,27 @@ export const routes: Routes = [
     loadComponent: () => import('@pages/technologies-admin.page').then(m => m.TechnologiesAdminPage)
   },
   {
+    path: 'dashboard/gallery',
+    title: 'Galería de Imágenes - Zuzki Dev',
+    canActivate: [authGuard],
+    data: {
+      description: "Gestiona la galería de imágenes del portafolio.",
+      robots: "noindex, nofollow"
+    },
+    loadComponent: () => import('@pages/gallery-admin.page').then(m => m.GalleryAdminPage)
+  },
+  {
+    path: 'blog',
+    title: 'Blog - Zuzki Dev',
+    data: {
+      description: "Explora artículos, tutoriales y pensamientos sobre desarrollo web, Angular y tecnología en el blog de Zuzki Dev.",
+      keywords: ["blog", "desarrollo web", "angular", "tutoriales", "tecnología"],
+      type: 'website',
+      image: 'https://zuzki.dev/assets/logo/47_2.png'
+    },
+    loadChildren: () => import('./features/blog/blog.routes').then(m => m.BLOG_ROUTES)
+  },
+  {
     path: '**',
     title: 'Página no encontrada - Zuzki Dev',
     data: {

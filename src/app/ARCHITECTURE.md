@@ -1,43 +1,42 @@
-# Arquitectura Hexagonal - Documentación
+# Arquitectura del Proyecto - Zuzki Dev Front
 
 ## Visión General
-Este proyecto implementa la **Arquitectura Hexagonal** (también conocida como Ports & Adapters), que permite crear aplicaciones más mantenibles y testeable separando las preocupaciones en capas bien definidas.
+Este proyecto sigue una arquitectura **Core-Centric** simplificada, diseñada para aprovechar al máximo las capacidades modernas de **Angular (Signals, Standalone, Zoneless)** y optimizar el rendimiento en **Cloudflare Pages**.
+
+Se ha abandonado la complejidad de la Arquitectura Hexagonal en favor de un flujo de datos más directo y menos verboso, manteniendo una separación clara de responsabilidades.
 
 ## Estructura de Capas
 
-### 🔵 Core/Domain (Centro del Hexágono)
-**Ubicación**: `src/app/core/domain/`
+### 🔵 Core (`src/app/core/`)
+Es el motor de la aplicación. Contiene toda la lógica de negocio, estado y servicios fundamentales.
+- **Stores**: Gestión de estado reactivo utilizando `@ngrx/signals`. Es la "fuente de la verdad".
+- **Services**: Servicios de comunicación con APIs externas y lógica compartida.
+- **Interfaces**: Definiciones de contratos de datos.
+- **Interceptors**: Lógica funcional para interceptar peticiones HTTP (Auth, API Selection).
+- **Guards**: Protección de rutas mediante funciones.
+- **Tokens**: `InjectionTokens` para desacoplar configuraciones y servicios.
+- **Config & Enums**: Constantes y enumeraciones globales.
 
-La capa más interna, contiene la lógica de negocio pura:
-- **Entities**: Objetos centrales del dominio con identidad
-- **Value Objects**: Objetos inmutables identificados por su valor
-- **Repositories**: Interfaces para acceso a datos (puertos)
-- **Services**: Servicios de dominio para lógica compleja
-- **Events**: Eventos de dominio para comunicación desacoplada
+### 🟡 Features (`src/app/features/`)
+Contiene los módulos funcionales de la aplicación. Cada feature es independiente y agrupa:
+- Componentes inteligentes y de presentación.
+- Lógica específica de la funcionalidad.
+- Estilos y assets locales.
 
-### 🟡 Application (Casos de Uso)
-**Ubicación**: `src/app/application/`
+### 🟠 Shared (`src/app/shared/`)
+Recursos reutilizables en toda la aplicación:
+- **Components**: UI Atómica (Botones, Inputs, Modales, Cards).
+- **Utils**: Funciones puras y helpers.
+- **Services**: Servicios auxiliares de UI (notificaciones, scroll).
 
-Orquesta las operaciones del dominio:
-- **Use Cases**: Implementan los flujos de negocio específicos
-- **DTOs**: Objetos de transferencia de datos
-- **Ports**: Interfaces de entrada y salida de la aplicación
+### 🟢 Pages (`src/app/pages/`)
+Actúan como contenedores de alto nivel para el router. Su única responsabilidad es:
+- Definir el layout de la página.
+- Orquestar una o varias **Features**.
 
-### 🟠 Infrastructure (Adaptadores)
-**Ubicación**: `src/app/infrastructure/`
-
-Implementa detalles técnicos:
-- **Adapters**: Implementaciones concretas de puertos
-  - **Primary**: Controllers, GraphQL resolvers (entrada)
-  - **Secondary**: Repositories, servicios externos (salida)
-- **Config**: Configuración de infraestructura
-
-### 🟢 Features (Presentación)
-**Ubicación**: `src/app/features/`
-
-Capa de presentación Angular:
-- **Components**: Componentes UI específicos de funcionalidad
-- **Containers**: Componentes inteligentes que coordinan
-- **Services**: Servicios de presentación que usan casos de uso
-
-## Flujo de Dependencias
+## Principios Técnicos
+- **Signals**: Uso mandatorio para la reactividad y gestión de estado.
+- **Standalone**: 100% de los componentes, directivas y pipes son standalone.
+- **Inyección de Dependencias**: Preferencia por la función `inject()` sobre el constructor.
+- **Zoneless**: Preparado para funcionar sin `Zone.js`, optimizando el ciclo de vida de Angular.
+- **Multi-API**: Uso de interceptores condicionales para consumir diferentes backends (GitHub, Make, Custom API).

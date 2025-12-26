@@ -1,4 +1,4 @@
-import { Overlay } from '@core/models/overlay.model';
+import { Overlay } from './overlay.interface';
 import { LayoutStatus } from '@core/enums/layout.enum';
 
 /**
