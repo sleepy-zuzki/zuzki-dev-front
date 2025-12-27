@@ -1,0 +1,13 @@
+<div class="form-field">
+  @if (label()) {
+    <label [for]="id()" class="form-label">{{ label() }}</label>
+  }
+
+  <div #editorContainer class="editor-container" [class.is-invalid]="isInvalid"></div>
+
+  @if (isInvalid) {
+    <div class="error-text" [id]="id() + '-error'" role="alert">
+      <ng-content></ng-content>
+    </div>
+  }
+</div>

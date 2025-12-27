@@ -17,30 +17,26 @@
 
   <!-- Descripción -->
   <div class="form-field-group--span-6">
-    <app-input
+    <app-editor
       label="Descripción (opcional)"
       id="description"
       formControlName="description"
       placeholder="Resumen del proyecto (máx. 1000)"
-      controlType="textarea"
-      [rows]="3"
     >
       Máximo 1000 caracteres
-    </app-input>
+    </app-editor>
   </div>
 
   <!-- Contenido -->
   <div class="form-field-group--span-6">
-    <app-input
+    <app-editor
       label="Contenido (opcional)"
       id="content"
       formControlName="content"
       placeholder="Información detallada del proyecto"
-      controlType="textarea"
-      [rows]="6"
     >
       Información del proyecto
-    </app-input>
+    </app-editor>
   </div>
 
   <!-- Live URL -->

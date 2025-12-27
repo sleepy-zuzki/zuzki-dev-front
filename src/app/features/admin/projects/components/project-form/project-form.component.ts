@@ -4,6 +4,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
+import EditorComponent from '@shared/components/editor/editor.component';
 import { TechnologyStore } from '@core/stores/technology.store';
 import { StackService } from '@core/services/stack.service';
 
@@ -19,7 +20,8 @@ interface SelectOption {
     ReactiveFormsModule,
     AppInputComponent,
     AppSelectComponent,
-    AppCheckboxComponent
+    AppCheckboxComponent,
+    EditorComponent
 ],
   templateUrl: './project-form.component.html',
   styleUrls: ['./project-form.component.css'],
