@@ -2,9 +2,9 @@
   <ng-content></ng-content>
 </ng-template>
 
-@switch (this.as) {
-  @case ('p')     { <p     [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></p> }
-  @case ('span')  { <span  [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></span> }
-  @case ('small') { <small [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></small> }
-  @default        { <div   [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></div> }
+@switch (element()) {
+  @case ('p')     { <p     [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></p> }
+  @case ('span')  { <span  [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></span> }
+  @case ('small') { <small [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></small> }
+  @default        { <div   [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></div> }
 }

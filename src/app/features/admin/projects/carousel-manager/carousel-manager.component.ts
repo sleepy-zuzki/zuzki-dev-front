@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, computed, Signal, ViewChild } from '@angular/core';
+import { Component, OnInit, inject, computed, Signal, viewChild } from '@angular/core';
 
 import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -23,7 +23,7 @@ export class CarouselManagerComponent implements OnInit {
   private readonly projectStore = inject(ProjectStore);
   private readonly route = inject(ActivatedRoute);
 
-  @ViewChild(GallerySelectorModalComponent) galleryModal!: GallerySelectorModalComponent;
+  galleryModal = viewChild.required(GallerySelectorModalComponent);
 
   private projectSlug!: string;
 
@@ -43,7 +43,7 @@ export class CarouselManagerComponent implements OnInit {
   }
 
   openGalleryModal(): void {
-    this.galleryModal.open();
+    this.galleryModal().open();
   }
 
   onGallerySelection(ids: string[]): void {
@@ -97,4 +97,3 @@ export class CarouselManagerComponent implements OnInit {
     }
   }
 }
-

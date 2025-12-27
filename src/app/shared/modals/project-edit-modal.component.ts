@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, OnDestroy, Output, SimpleChanges,
-  ViewChild
+  ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy, output, viewChild
 } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -26,50 +25,54 @@ import { UpdateProjectForm } from '@core/interfaces/forms/project.forms';
   styleUrls: ['./project-edit-modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterViewInit {
+export class ProjectEditModalComponent implements OnDestroy, AfterViewInit {
   private fb = inject(NonNullableFormBuilder);
 
-  @Input({ required: true }) isOpen = false;
-  @Input() project: Project | null = null;
+  isOpen = input.required<boolean>();
+  project = input<Project | null>(null);
 
-  @Output() save = new EventEmitter<{ id: string; data: UpdateProjectDto }>();
-  @Output() closeModal = new EventEmitter<void>();
+  save = output<{ id: string; data: UpdateProjectDto }>();
+  closeModal = output<void>();
 
-  @ViewChild(ModalComponent) private modalComponent!: ModalComponent;
+  modalComponent = viewChild(ModalComponent);
 
   form!: FormGroup<UpdateProjectForm>;
   private slugSubscription?: Subscription;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.modalComponent && changes['isOpen'] && !changes['isOpen'].firstChange) {
-      if (this.isOpen) {
-        this.modalComponent.openModal();
-      } else {
-        this.modalComponent.closeModal();
-      }
-    }
+  constructor() {
+    effect(() => {
+        const modal = this.modalComponent();
+        if (modal) {
+            if (this.isOpen()) {
+                modal.openModal();
+            } else {
+                modal.closeModal();
+            }
+        }
+    });
 
-    if (changes['project'] && this.project) {
-      this.form = this.fb.group({
-        title: [this.project.title, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
-        slug: [{ value: this.project.slug, disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
-        description: [this.project.description ?? null, [Validators.maxLength(1000)]],
-        content: [this.project.content ?? null],
-        repoUrl: [this.project.repoUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
-        liveUrl: [this.project.liveUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
-        areaId: [this.project.area?.id ?? ''],
-        year: [this.project.year ?? null, [Validators.min(1900), Validators.max(2100)]],
-        isFeatured: [this.project.isFeatured ?? false],
-        technologyIds: [this.project.technologies.map(t => t.id)],
-      });
-      this.setupSlugGeneration();
-    }
+    effect(() => {
+        const p = this.project();
+        if (p) {
+            this.form = this.fb.group({
+                title: [p.title, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+                slug: [{ value: p.slug, disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
+                description: [p.description ?? null, [Validators.maxLength(1000)]],
+                content: [p.content ?? null],
+                repoUrl: [p.repoUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
+                liveUrl: [p.liveUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
+                areaId: [p.area?.id ?? ''],
+                year: [p.year ?? null, [Validators.min(1900), Validators.max(2100)]],
+                isFeatured: [p.isFeatured ?? false],
+                technologyIds: [p.technologies.map(t => t.id)],
+            });
+            this.setupSlugGeneration();
+        }
+    });
   }
 
   ngAfterViewInit(): void {
-    if (this.isOpen) {
-      this.modalComponent.openModal();
-    }
+    // Logic handled by effect
   }
 
   ngOnDestroy(): void {
@@ -86,7 +89,8 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
   }
 
   onSave(): void {
-    if (!this.form.valid || !this.project) return;
+    const p = this.project();
+    if (!this.form.valid || !p) return;
 
     const raw = this.form.getRawValue();
     const payload: UpdateProjectDto = {
@@ -102,7 +106,7 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
       technologyIds: raw.technologyIds,
     };
 
-    this.save.emit({ id: this.project.id, data: payload });
+    this.save.emit({ id: p.id, data: payload });
   }
 
   onClose(): void {

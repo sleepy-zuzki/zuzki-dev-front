@@ -1,4 +1,4 @@
-import { Component, Input, computed, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherLoader } from '@ng-icons/feather-icons';
@@ -16,25 +16,25 @@ export type ButtonType = 'button' | 'submit' | 'reset';
   styleUrl: './button.component.css',
 })
 export class ButtonComponent {
-  @Input() variant: ButtonVariant = 'brand';
-  @Input() size: ButtonSize = 'md';
-  @Input() type: ButtonType = 'button';
-  @Input() block = false;
-  @Input() disabled = false;
-  @Input() loading = false;
+  variant = input<ButtonVariant>('brand');
+  size = input<ButtonSize>('md');
+  type = input<ButtonType>('button');
+  block = input(false);
+  disabled = input(false);
+  loading = input(false);
 
   // Accesibilidad
-  @Input() ariaLabel: string | null = null;
-  @Input() title: string | null = null;
+  ariaLabel = input<string | null>(null);
+  title = input<string | null>(null);
 
   private _base = signal('btn');
 
   classes = computed(() => {
     const cls = [
       this._base(),
-      `btn--${this.variant}`,
-      `btn--${this.size}`,
-      this.block ? 'btn--block' : ''
+      `btn--${this.variant()}`,
+      `btn--${this.size()}`,
+      this.block() ? 'btn--block' : ''
     ];
     return cls.filter(Boolean).join(' ');
   });

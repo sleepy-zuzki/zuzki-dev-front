@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
 import {
@@ -51,46 +51,49 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from
   ],
 })
 export class ProjectCardComponent {
-  @Input({ required: true }) project!: Project;
-  @Input() isAdmin = false;
+  project = input.required<Project>();
+  isAdmin = input(false);
 
-  @Output() edit = new EventEmitter<Project>();
-  @Output() delete = new EventEmitter<string>();
+  edit = output<Project>();
+  delete = output<string>();
 
-  get imageUrl(): string | undefined {
-    if (!this.project || !this.project.images || this.project.images.length === 0) return undefined;
+  imageUrl = computed(() => {
+    const proj = this.project();
+    if (!proj || !proj.images || proj.images.length === 0) return undefined;
     
     // 1. Try to find explicit 'cover'
-    const cover = this.project.images.find(img => img.type === 'cover');
+    const cover = proj.images.find(img => img.type === 'cover');
     if (cover) return cover.url;
 
     // 2. Fallback to 'hero-slide' (often high quality)
-    const hero = this.project.images.find(img => img.type === 'hero-slide');
+    const hero = proj.images.find(img => img.type === 'hero-slide');
     if (hero) return hero.url;
 
     // 3. Fallback to any 'gallery' or first image
-    return this.project.images[0].url;
-  }
+    return proj.images[0].url;
+  });
 
-  get actionUrl(): string | null {
-    if (!this.project) return null;
-    return this.project.liveUrl ?? this.project.repoUrl ?? null;
-  }
+  actionUrl = computed(() => {
+    const proj = this.project();
+    if (!proj) return null;
+    return proj.liveUrl ?? proj.repoUrl ?? null;
+  });
 
-  get tags(): string[] {
-    if (!this.project) return [];
-    return this.project.technologies.map(t => t.name);
-  }
+  tags = computed(() => {
+    const proj = this.project();
+    if (!proj) return [];
+    return proj.technologies.map(t => t.name);
+  });
 
   openProjectModal(modal: ProjectInfoModalComponent) {
     modal.open();
   }
 
   onEdit(): void {
-    this.edit.emit(this.project);
+    this.edit.emit(this.project());
   }
 
   onDelete(): void {
-    this.delete.emit(this.project.id);
+    this.delete.emit(this.project().id);
   }
 }

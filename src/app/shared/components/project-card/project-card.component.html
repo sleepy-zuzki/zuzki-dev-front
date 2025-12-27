@@ -1,56 +1,56 @@
 <article class="project-card">
   <figure class="project-card__figure">
-    @if (imageUrl) {
-      <img [ngSrc]="imageUrl" class="project-card__image" [alt]="'Imagen del proyecto ' + project.title" fill>
+    @if (imageUrl()) {
+      <img [ngSrc]="imageUrl()!" class="project-card__image" [alt]="'Imagen del proyecto ' + project().title" fill>
       <div class="project-card__gradient-overlay"></div>
     } @else {
       <div class="project-card__placeholder-bg"></div>
     }
 
-    @if (project.isFeatured) {
+    @if (project().isFeatured) {
       <span class="project-card__badge project-card__badge--featured">Destacado</span>
     }
-    @if (project.area) {
+    @if (project().area) {
       <span class="project-card__badge project-card__badge--category">
-        {{ project.area.name }}
+        {{ project().area?.name }}
       </span>
     }
 
-    @if (project.year) {
+    @if (project().year) {
       <div class="project-card__glass-scrim">
-        <p class="project-card__year">{{ project.year }}</p>
+        <p class="project-card__year">{{ project().year }}</p>
       </div>
     }
 
-    <figcaption class="sr-only">Banner visual del proyecto {{ project.title }}</figcaption>
+    <figcaption class="sr-only">Banner visual del proyecto {{ project().title }}</figcaption>
   </figure>
 
   <div class="project-card__content">
     <header>
-      <app-typography-title [level]="3" variant="card" align="left">{{ project.title }}</app-typography-title>
+      <app-typography-title [level]="3" variant="card" align="left">{{ project().title }}</app-typography-title>
     </header>
 
-    <app-typography-text as="p" variant="caption" extraClasses="line-clamp-3">{{ project.description }}</app-typography-text>
+    <app-typography-text as="p" variant="caption" extraClasses="line-clamp-3">{{ project().description }}</app-typography-text>
 
-    <app-tags-list [tags]="tags"></app-tags-list>
+    <app-tags-list [tags]="tags()"></app-tags-list>
 
     <nav class="project-card__actions" aria-label="Acciones del proyecto">
-      @if (isAdmin) {
+      @if (isAdmin()) {
         <div class="project-card__admin-actions">
           <div class="project-card__admin-actions-btn-group">
             <app-button
               variant="brand"
               size="sm"
               (click)="onEdit()"
-              [ariaLabel]="'Editar proyecto ' + project.title">
+              [ariaLabel]="'Editar proyecto ' + project().title">
               Editar
             </app-button>
 
             <app-button
               variant="secondary"
               size="sm"
-              [routerLink]="['/dashboard/projects', project.slug, 'carousel']"
-              [ariaLabel]="'Gestionar galería del proyecto ' + project.title">
+              [routerLink]="['/dashboard/projects', project().slug, 'carousel']"
+              [ariaLabel]="'Gestionar galería del proyecto ' + project().title">
               <ng-icon name="bootstrapImages" class="mr-1"></ng-icon> Galería
             </app-button>
           </div>
@@ -59,7 +59,7 @@
             variant="ghost"
             size="icon"
             (click)="onDelete()"
-            [ariaLabel]="'Eliminar proyecto ' + project.title"
+            [ariaLabel]="'Eliminar proyecto ' + project().title"
             class="project-card__delete-button">
             <ng-icon name="bootstrapTrash" />
           </app-button>
@@ -70,7 +70,7 @@
           size="md"
           [block]="true"
           (click)="openProjectModal(projectModal)"
-          [ariaLabel]="'Ver detalles del proyecto ' + project.title">
+          [ariaLabel]="'Ver detalles del proyecto ' + project().title">
           Ver Detalles <ng-icon name="bootstrapArrowRightShort"></ng-icon>
         </app-button>
       }
@@ -79,4 +79,4 @@
 </article>
 
 
-<app-project-info-modal #projectModal [project]="project"></app-project-info-modal>
+<app-project-info-modal #projectModal [project]="project()"></app-project-info-modal>

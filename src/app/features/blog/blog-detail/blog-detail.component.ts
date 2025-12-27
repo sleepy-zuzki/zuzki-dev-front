@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, input, OnInit, OnDestroy, effect } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { BlogStore } from '@core/stores/blog.store';
@@ -70,16 +70,19 @@ import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '
     </app-section>
   `
 })
-export class BlogDetailComponent implements OnInit, OnDestroy {
+export class BlogDetailComponent implements OnDestroy {
   readonly store = inject(BlogStore);
 
   // Router Input Binding
-  @Input()
-  set slug(value: string) {
-    this.store.setSelectedSlug(value);
-  }
+  slug = input<string>();
 
-  ngOnInit() {
+  constructor() {
+    effect(() => {
+        const s = this.slug();
+        if (s) {
+            this.store.setSelectedSlug(s);
+        }
+    });
   }
 
   ngOnDestroy() {

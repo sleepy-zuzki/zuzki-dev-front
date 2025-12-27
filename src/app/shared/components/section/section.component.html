@@ -1,10 +1,10 @@
 <section
-  [attr.id]="id || null"
+  [attr.id]="id() || null"
   role="region"
-  [attr.aria-label]="ariaLabel || null"
-  [class]="hostClasses">
+  [attr.aria-label]="ariaLabel() || null"
+  [class]="hostClasses()">
   <div class="max-w-7xl mx-auto px-4">
-    @if (container) {
+    @if (container()) {
       <header class="section__header">
         <div class="section__title">
           <ng-content select="[section-title]"></ng-content>

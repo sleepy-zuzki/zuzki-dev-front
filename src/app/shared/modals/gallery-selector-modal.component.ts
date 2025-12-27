@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, inject, signal, viewChild, output } from '@angular/core';
 import { FileStore } from '@core/stores/file.store';
 import { ModalComponent } from '@components/modal/modal.component';
 import { ButtonComponent } from '@components/button/button.component';
@@ -73,8 +73,8 @@ import { featherCheck } from '@ng-icons/feather-icons';
 export class GallerySelectorModalComponent {
   private fileStore = inject(FileStore);
 
-  @ViewChild(ModalComponent) modal!: ModalComponent;
-  @Output() selected = new EventEmitter<string[]>();
+  modal = viewChild.required(ModalComponent);
+  selected = output<string[]>();
 
   readonly files = this.fileStore.files;
   readonly loading = this.fileStore.loading;
@@ -90,11 +90,11 @@ export class GallerySelectorModalComponent {
   open() {
     this.selectedIds.set([]); // Resetear selección al abrir
     this.fileStore.getFiles(); // Refrescar por si hubo cambios
-    this.modal.openModal();
+    this.modal().openModal();
   }
 
   closeModal() {
-    this.modal.closeModal();
+    this.modal().closeModal();
   }
 
   onClose() {

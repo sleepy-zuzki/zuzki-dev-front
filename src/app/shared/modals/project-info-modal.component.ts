@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, computed, input, viewChild } from '@angular/core';
 import { CommonModule, IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
 import { Project } from '@core/interfaces';
 import { ModalComponent } from '@components/modal/modal.component';
@@ -32,18 +32,18 @@ register();
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProjectInfoModalComponent {
-  @Input({ required: true }) project!: Project;
-  @ViewChild(ModalComponent) modal!: ModalComponent;
+  project = input.required<Project>();
+  modal = viewChild.required(ModalComponent);
 
   currentImageIndex = 0;
 
-  get projectTags(): string[] {
-    return this.project.technologies.map(t => t.name);
-  }
+  projectTags = computed(() => {
+    return this.project().technologies.map(t => t.name);
+  });
 
   open() {
     this.currentImageIndex = 0;
-    this.modal.openModal();
+    this.modal().openModal();
   }
 
   onProgress(event: CustomEvent<[unknown, number]>) {

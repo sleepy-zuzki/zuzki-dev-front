@@ -1,4 +1,4 @@
-<fieldset class="form-fieldset" [formGroup]="form">
+<fieldset class="form-fieldset" [formGroup]="form()">
   <legend class="sr-only">Detalles del Proyecto</legend>
 
   <!-- Título -->
@@ -95,7 +95,7 @@
       label="Tecnologías"
       id="technologyIds"
       formControlName="technologyIds"
-      [options]="getTechnologyOptions"
+      [options]="technologyOptionsList()"
       [multiple]="true"
       optionLabel="label"
       optionValue="value"

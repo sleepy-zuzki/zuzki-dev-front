@@ -1,4 +1,4 @@
-import { Component, inject, Input, computed } from '@angular/core';
+import { Component, inject, input, computed } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { AppInputComponent } from '@shared/components/input/app-input.component';
@@ -25,8 +25,8 @@ interface SelectOption {
   styleUrls: ['./project-form.component.css'],
 })
 export class ProjectFormComponent {
-  @Input({ required: true }) form!: FormGroup;
-  @Input() technologyOptions: SelectOption[] = [];
+  form = input.required<FormGroup>();
+  technologyOptions = input<SelectOption[]>([]);
 
   private technologyStore = inject(TechnologyStore);
   private stackService = inject(StackService);
@@ -46,10 +46,10 @@ export class ProjectFormComponent {
     }));
   });
 
-  get getTechnologyOptions(): Option[] {
+  technologyOptionsList = computed((): Option[] => {
     return this.technologies().map((technology): Option => ({
       label: technology.name,
       value: technology.id
     }));
-  }
+  });
 }

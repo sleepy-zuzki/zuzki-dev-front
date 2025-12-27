@@ -1,0 +1,14 @@
+@reference "../../../../styles/utilities.css";
+
+.section__header {
+  @apply flex items-start justify-between gap-4 mb-6;
+}
+.section__title {
+  @apply text-balance;
+}
+.section__actions {
+  @apply flex items-center gap-2;
+}
+.section__body {
+  @apply w-full;
+}
