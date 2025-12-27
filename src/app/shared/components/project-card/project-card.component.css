@@ -1,8 +1,13 @@
 @reference "../../../../styles/utilities.css";
 
 .project-card {
-  @apply card-group h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-background-surface/60 flex flex-col focus-within:ring-2 focus-within:ring-ui-accent;
+  @apply card-group card-interactive h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-background-surface/60 flex flex-col;
 }
+
+.project-card:focus-within {
+  @apply ring-2 ring-ui-accent;
+}
+
 
 .project-card__figure {
   @apply relative h-48 w-full md:h-56 lg:h-60 overflow-hidden;
@@ -23,12 +28,12 @@
 }
 
 .project-card__placeholder-bg {
-  @apply absolute inset-0 bg-gradient-to-br from-zuzki-400 to-zuzki-600;
+  @apply absolute inset-0 bg-gradient-brand;
 }
 
-/* Badges */
+/* Badges (Usando utilidad badge) */
 .project-card__badge {
-  @apply absolute text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide z-10;
+  @apply badge absolute z-10;
 }
 
 .project-card__badge--featured {
@@ -45,7 +50,7 @@
 }
 
 .project-card__year {
-  @apply text-[11px] font-bold opacity-90 uppercase tracking-wider;
+  @apply text-muted-sm opacity-100; /* Opacidad 100 porque ya el glass scrim maneja el contraste */
 }
 
 /* Contenido Principal */

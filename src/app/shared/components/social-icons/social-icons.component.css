@@ -16,11 +16,11 @@
 }
 
 .footer-social-link {
-  @apply text-zuzki-600 hover:text-zuzki-900 dark:text-zuzki-900 dark:hover:text-zuzki-100;
+  @apply text-zuzki-600 hover:text-zuzki-900 dark:text-zuzki-900 dark:hover:text-zuzki-100 transition-colors;
 }
 
 .footer-social-icon {
-  @apply w-10 h-10 bg-background-default rounded-lg flex items-center justify-center dark:bg-zuzki-500 transition-transform;
+  @apply icon-box icon-box-md bg-background-default dark:bg-zuzki-500;
 }
 
 /* Elevación individual al hover */
@@ -53,6 +53,7 @@
     gap: 1rem;
   }
   .footer-social-icon {
+    /* Ajuste manual para móviles si icon-box-md es muy grande, o reutilizar clases */
     width: 2.5rem;
     height: 2.5rem;
   }

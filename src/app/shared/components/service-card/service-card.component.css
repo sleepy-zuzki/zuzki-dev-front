@@ -1,16 +1,14 @@
 @reference "../../../../styles/utilities.css";
 
 
-/* Contenedor base de tarjeta */
+/* Contenedor base de tarjeta (Usando utilidades card) */
 .card {
-  @apply bg-background-default rounded-xl shadow-lg
-  border border-background-section/60
-  p-6 md:p-8 duration-300 min-h-[380px];
+  @apply card-surface card-rounded card-shadow card-border card-padding duration-300 min-h-[380px];
 }
 
 /* Interacciones por defecto para tarjetas clicables */
 .card--interactive {
-  @apply hover:shadow-xl hover:-translate-y-1 focus-brand cursor-pointer;
+  @apply card-interactive;
 }
 
 /* Resaltar contenedor cuando elementos internos reciben foco */
@@ -20,8 +18,7 @@
 
 /* Elementos internos comunes */
 .card__icon {
-  @apply w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center mb-6
-  transition-transform duration-300 group-hover:scale-110;
+  @apply icon-box w-10 h-10 md:icon-box-lg mb-6 group-hover:scale-110;
   position: relative;
   overflow: hidden;
 }
@@ -73,13 +70,11 @@
   animation: card-loading 1.5s infinite;
 }
 
-/* Compatibilidad: aplicar estilos de card a tarjetas existentes (sin @apply de componentes) */
+/* Compatibilidad */
 .service-card {
-  @apply bg-background-surface rounded-xl shadow-lg
-  border border-background-section/60
-  p-6 md:p-8 duration-300;
+  @apply card-surface card-rounded card-shadow card-border card-padding duration-300;
 }
 
 .service-card--interactive {
-  @apply hover:shadow-xl hover:-translate-y-1 focus-brand cursor-pointer;
+  @apply card-interactive;
 }

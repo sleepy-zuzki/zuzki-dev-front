@@ -12,6 +12,15 @@
   @apply border-red-500 focus-within:border-red-500 focus-within:ring-red-500;
 }
 
+/* Utilidades de formulario estandarizadas */
+.form-label {
+  @apply form-label;
+}
+
+.error-text {
+  @apply form-error;
+}
+
 /* 
    ESTILOS GLOBALES (Sin ::ng-deep porque encapsulation es None) 
    Scopeados a .editor-container para evitar fugas.
