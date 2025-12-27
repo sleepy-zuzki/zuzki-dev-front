@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, resource } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@core/config/api.config';
@@ -10,6 +10,21 @@ import { BlogEntryEntity, CreateBlogDto, UpdateBlogDto } from '@core/interfaces/
 export class BlogService {
   private readonly http = inject(HttpClient);
   private readonly apiConfig = inject(ApiConfig);
+
+  blogsResource = resource({
+    params: () => ({}),
+    loader: async ({params, abortSignal}) => {
+      const response = await fetch(this.apiConfig.getFullUrl(this.apiConfig.endpoints.blog.entries.base), {
+        signal: abortSignal
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error loading blog entries: ${response.statusText}`);
+      }
+
+      return (await response.json()) as BlogEntryEntity[];
+    },
+  });
 
   getEntries(): Observable<BlogEntryEntity[]> {
     return this.http.get<BlogEntryEntity[]>(

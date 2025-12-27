@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, resource } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { of, Subject } from 'rxjs';
 import { switchMap, catchError, startWith, tap, shareReplay } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class BlogStore {
 
   // --- State ---
   readonly selectedSlug = signal<string | null>(null);
-  
+
   // Triggers for reloading
   private readonly refreshEntries$ = new Subject<void>();
   private readonly refreshCurrent$ = new Subject<void>();
@@ -65,7 +65,7 @@ export class BlogStore {
   );
 
   // --- Signals ---
-  
+
   readonly entries = toSignal(this.entries$, { initialValue: [] });
   readonly currentEntry = toSignal(this.currentEntry$, { initialValue: null });
 
@@ -107,7 +107,7 @@ export class BlogStore {
            // For now, simple re-assignment of same slug to trigger stream:
            const current = this.selectedSlug();
            this.selectedSlug.set(null);
-           setTimeout(() => this.selectedSlug.set(current), 0); 
+           setTimeout(() => this.selectedSlug.set(current), 0);
         }
         this.isLoading.set(false);
       },
