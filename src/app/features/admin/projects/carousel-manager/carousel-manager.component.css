@@ -1,11 +1,11 @@
 @reference "../../../../../styles/utilities.css";
 
 .carousel-manager-container {
-  @apply block p-4 sm:p-6 bg-background-section rounded-lg shadow-md;
+  @apply block p-4 sm:p-6 bg-surface-100 rounded-lg shadow-md;
 }
 
 .manager-header {
-  @apply flex items-center justify-between pb-4 mb-6 border-b border-background-surface;
+  @apply flex items-center justify-between pb-4 mb-6 border-b border-surface-200;
 }
 
 .title {
@@ -35,7 +35,7 @@
 
 /* Card Styles */
 .image-card {
-  @apply relative flex flex-col rounded-xl overflow-hidden bg-background-surface border border-transparent shadow-sm hover:shadow-md transition-all duration-200;
+  @apply relative flex flex-col rounded-xl overflow-hidden bg-surface-200 border border-transparent shadow-sm hover:shadow-md transition-all duration-200;
 }
 
 .image-card:hover {
@@ -43,7 +43,7 @@
 }
 
 .image-wrapper {
-  @apply relative aspect-square w-full bg-background-default;
+  @apply relative aspect-square w-full bg-canvas;
 }
 
 .image-preview {
@@ -69,7 +69,7 @@
 
 /* Actions Footer */
 .card-actions {
-  @apply p-2 flex items-center justify-between bg-background-surface border-t border-background-default;
+  @apply p-2 flex items-center justify-between bg-surface-200 border-t border-canvas;
 }
 
 .icon-action {

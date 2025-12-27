@@ -1,7 +1,7 @@
 import { Component, computed, input } from '@angular/core';
 
 
-type SectionVariant = 'primary' | 'secondary' | 'muted' | 'transparent' | 'coffee';
+type SectionVariant = 'base' | 'raised' | 'overlay' | 'transparent' | 'coffee';
 type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
 
 @Component({
@@ -12,7 +12,7 @@ type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
   styleUrls: ['./section.component.css']
 })
 export class SectionComponent {
-  variant = input<SectionVariant>('primary');
+  variant = input<SectionVariant>('base');
   padding = input<SectionPadding>('md');
   container = input(true);
 
@@ -27,11 +27,11 @@ export class SectionComponent {
     const base = ['w-full'];
     // Variante de superficie
     const surfaceMap: Record<SectionVariant, string> = {
-      primary: 'surface-primary',
-      secondary: 'surface-secondary',
-      muted: 'surface-muted',
+      base: 'bg-canvas',
+      raised: 'bg-surface-100',
+      overlay: 'bg-surface-200',
       transparent: 'bg-transparent',
-      coffee: 'surface-coffee'
+      coffee: 'bg-coffee-mix'
     };
     base.push(surfaceMap[this.variant()]);
 

@@ -1,11 +1,14 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/cards.css";
+@reference "../../../../styles/utils/badges.css";
+@reference "../../../../styles/utils/layout.css";
+@reference "../../../../styles/utils/typography.css";
 
 .project-card {
-  @apply card-group card-interactive h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-background-surface/60 flex flex-col;
+  @apply card-group card-interactive h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-surface-200/60 flex flex-col;
 }
 
 .project-card:focus-within {
-  @apply ring-2 ring-ui-accent;
+  @apply ring-2 ring-zuzki-500;
 }
 
 

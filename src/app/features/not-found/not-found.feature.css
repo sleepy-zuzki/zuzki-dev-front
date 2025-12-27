@@ -1,7 +1,7 @@
 @reference "../../../styles/utilities.css";
 
-.not-found {
-  @apply min-h-[calc(100vh-4rem)] flex items-center justify-center bg-background-default px-6 py-24 sm:py-32 lg:px-8;
+.nf-container {
+  @apply min-h-[calc(100vh-4rem)] flex items-center justify-center bg-canvas px-6 py-24 sm:py-32 lg:px-8;
 }
 
 .not-found__container {

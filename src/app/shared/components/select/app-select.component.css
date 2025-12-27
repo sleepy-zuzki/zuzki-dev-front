@@ -1,4 +1,5 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/forms.css";
+@reference "../../../../styles/utils/panels.css";
 
 /* Contenedor principal */
 .select-container {

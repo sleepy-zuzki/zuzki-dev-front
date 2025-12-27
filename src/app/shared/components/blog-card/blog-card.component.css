@@ -1,4 +1,5 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/cards.css";
+@reference "../../../../styles/utils/typography.css";
 
 .blog-card {
   @apply h-full card-surface card-border rounded-xl overflow-hidden card-interactive;

@@ -1,4 +1,4 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/colors.css";
 
 .section__header {
   @apply flex items-start justify-between gap-4 mb-6;

@@ -1,4 +1,5 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/badges.css";
+@reference "../../../../styles/colors.css";
 
 /* Contenedor de la lista */
 .tlst-list {

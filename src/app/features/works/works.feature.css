@@ -44,8 +44,8 @@
   @apply md:col-span-3 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8;
 }
 
-.cta-section {
-  @apply mt-24 py-16 bg-background-surface;
+.w-footer {
+  @apply mt-24 py-16 bg-surface-200;
 }
 
 .cta-buttons {

@@ -1,0 +1,39 @@
+@reference "./core.css";
+
+/* --- CARD UTILITIES --- */
+@utility card-surface {
+  @apply bg-surface-200;
+}
+
+@utility card-rounded {
+  @apply rounded-xl;
+}
+
+@utility card-shadow {
+  @apply shadow-lg;
+}
+
+@utility card-border {
+  @apply border border-border-subtle/60;
+}
+
+@utility card-padding {
+  @apply p-6 md:p-8;
+}
+
+@utility card-hover {
+  @apply hover:shadow-xl hover:-translate-y-0.5;
+}
+
+@utility card-focus {
+  @apply focus-brand;
+}
+
+@utility card-interactive {
+  @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1 focus-brand cursor-pointer;
+}
+
+@utility card-group {
+  isolation: isolate;
+  will-change: transform, box-shadow;
+}

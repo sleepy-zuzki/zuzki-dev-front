@@ -1,11 +1,11 @@
 @reference "../../../../styles/utilities.css";
 
 .gallery-admin {
-  @apply block p-4 sm:p-6 bg-background-section rounded-lg shadow-md;
+  @apply block p-4 sm:p-6 bg-surface-100 rounded-lg shadow-md;
 }
 
 .gallery-admin__header {
-  @apply flex items-center justify-between pb-4 mb-6 border-b border-background-surface;
+  @apply flex items-center justify-between pb-4 mb-6 border-b border-surface-200;
 }
 
 .gallery-admin__title {
@@ -29,7 +29,7 @@
 }
 
 .gallery-admin__item {
-  @apply relative aspect-square overflow-hidden rounded-lg bg-background-surface border border-background-surface transition-transform hover:scale-[1.02];
+  @apply relative aspect-square overflow-hidden rounded-lg bg-surface-200 border border-surface-200 transition-transform hover:scale-[1.02];
 }
 
 .gallery-admin__image {

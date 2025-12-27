@@ -1,0 +1,6 @@
+@reference "./core.css";
+
+/* --- NAVIGATION UTILITIES --- */
+@utility nav-link {
+  @apply text-zuzki-700 hover:text-zuzki-600 font-medium dark:text-zuzki-300 dark:hover:text-zuzki-500 transition-colors duration-200;
+}

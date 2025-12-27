@@ -1,5 +1,5 @@
-@reference "../../../../styles/utilities.css";
-
+@reference "../../../../styles/utils/cards.css";
+@reference "../../../../styles/utils/icons.css";
 
 /* Contenedor base de tarjeta (Usando utilidades card) */
 .card {
@@ -13,7 +13,7 @@
 
 /* Resaltar contenedor cuando elementos internos reciben foco */
 .card:focus-within {
-  @apply ring-2 ring-zuzki-500 ring-offset-2 ring-offset-background-default;
+  @apply ring-2 ring-zuzki-500 ring-offset-2 ring-offset-canvas;
 }
 
 /* Elementos internos comunes */

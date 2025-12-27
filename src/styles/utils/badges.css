@@ -1,0 +1,6 @@
+@reference "./core.css";
+
+/* --- BADGE UTILITIES --- */
+@utility badge {
+  @apply inline-flex items-center justify-center rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide;
+}

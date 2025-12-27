@@ -1,4 +1,5 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/icons.css";
+@reference "../../../../styles/colors.css";
 
 /* Contenedor de iconos sociales */
 .footer-social {
@@ -20,7 +21,7 @@
 }
 
 .footer-social-icon {
-  @apply icon-box icon-box-md bg-background-default dark:bg-zuzki-500;
+  @apply icon-box icon-box-md bg-canvas dark:bg-zuzki-500;
 }
 
 /* Elevación individual al hover */

@@ -6,7 +6,7 @@ import { GalleryAdminFeatureComponent } from '@features/admin/gallery/gallery-ad
   selector: 'app-gallery-admin-page',
   imports: [GalleryAdminFeatureComponent],
   template: `
-    <main class="min-h-screen bg-background-default">
+    <main class="min-h-screen bg-canvas">
       <app-gallery-admin-feature />
     </main>
   `,

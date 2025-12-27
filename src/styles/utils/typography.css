@@ -1,0 +1,6 @@
+@reference "./core.css";
+
+/* --- TYPOGRAPHY UTILITIES --- */
+@utility text-muted-sm {
+  @apply text-xs font-semibold text-zuzki-500 uppercase tracking-wider opacity-90;
+}

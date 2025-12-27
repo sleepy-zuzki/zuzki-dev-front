@@ -1,10 +1,13 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/forms.css";
+@reference "../../../../styles/utils/core.css";
+@reference "../../../../styles/utils/panels.css";
 
-/* Contenedor principal */
+/* Contenedor principal - Sincronizado con form-input-base */
 .editor-container {
-  @apply min-h-[300px] w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 transition-all duration-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100;
-  @apply focus-within:outline-none focus-within:ring-2 focus-within:ring-zuzki-500 focus-within:ring-offset-2 focus-within:ring-offset-background-default focus-within:border-zuzki-500;
+  @apply min-h-[350px] w-full rounded-md border border-border-strong bg-surface-200 px-4 py-2 text-gray-900 transition-all duration-200 dark:text-white;
+  @apply focus-within:outline-none focus-within:ring-2 focus-within:ring-zuzki-500 focus-within:ring-offset-2 focus-within:ring-offset-canvas focus-within:border-zuzki-500;
   position: relative;
+  z-index: 1;
 }
 
 /* Estado inválido */
@@ -12,19 +15,7 @@
   @apply border-red-500 focus-within:border-red-500 focus-within:ring-red-500;
 }
 
-/* Utilidades de formulario estandarizadas */
-.form-label {
-  @apply form-label;
-}
-
-.error-text {
-  @apply form-error;
-}
-
-/* 
-   ESTILOS GLOBALES (Sin ::ng-deep porque encapsulation es None) 
-   Scopeados a .editor-container para evitar fugas.
-*/
+/* --- ESTILOS INTERNOS DE EDITOR.JS --- */
 
 .editor-container .codex-editor__redactor {
   @apply pb-10;
@@ -35,81 +26,91 @@
   @apply max-w-full;
 }
 
-/* Ajustes de color para la UI del editor */
-.editor-container .ce-inline-tool,
-.editor-container .ce-conversion-tool,
-.editor-container .ce-settings,
+/* --- TOOLBAR & UI ELEMENTS --- */
+
 .editor-container .ce-toolbar__plus,
 .editor-container .ce-toolbar__settings-btn {
-  @apply text-gray-800 dark:text-gray-200 transition-colors duration-200;
+  @apply text-gray-600 dark:text-gray-100 hover:bg-surface-300 hover:text-zuzki-600 dark:hover:text-zuzki-400 transition-all duration-200 rounded-md;
 }
 
-/* Hover de botones de la Toolbar */
-.editor-container .ce-toolbar__plus:hover,
-.editor-container .ce-toolbar__settings-btn:hover {
-  @apply bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white;
+.editor-container .ce-toolbar__plus svg,
+.editor-container .ce-toolbar__settings-btn svg {
+  @apply fill-current scale-110;
 }
 
-/* Asegurar que el icono SVG interno herede el color en hover */
-.editor-container .ce-toolbar__plus:hover svg,
-.editor-container .ce-toolbar__settings-btn:hover svg {
-  @apply fill-current;
+/* --- POPOVERS & MENUS (Dropdowns de configuración) --- */
+/* NOTA: No usar 'floating-panel' aquí para no romper el posicionamiento dinámico de Editor.js */
+
+.editor-container .ce-popover,
+.editor-container .ce-inline-toolbar {
+  @apply bg-white dark:bg-surface-300 border border-border-strong shadow-2xl rounded-lg overflow-hidden;
+  @apply text-gray-900 dark:text-white;
 }
 
-/* Menús desplegables (Dropdowns) en modo oscuro */
-.editor-container .ce-popover {
-  @apply dark:bg-gray-900 dark:border-gray-700;
+/* Items dentro del popover */
+.editor-container .ce-popover__item,
+.editor-container .ce-inline-tool {
+  @apply transition-colors duration-150 py-2;
 }
 
-.editor-container .ce-popover__item:hover {
-  @apply dark:bg-gray-800;
+.editor-container .ce-popover__item:hover,
+.editor-container .ce-inline-tool:hover {
+  @apply bg-zuzki-50 dark:bg-zuzki-900/30 text-zuzki-700 dark:text-zuzki-300;
 }
 
-.editor-container .ce-popover__item-icon {
-  @apply dark:bg-gray-800 dark:text-gray-200;
+/* Iconos de herramientas en el popover */
+.editor-container .ce-popover__item-icon,
+.editor-container .ce-conversion-tool__icon {
+  @apply bg-surface-100 dark:bg-surface-200 shadow-none border border-border-subtle dark:border-border-strong rounded-md;
+  @apply text-gray-800 dark:text-gray-200;
 }
 
 .editor-container .ce-popover__item-label {
-  @apply dark:text-gray-200;
+  @apply text-sm font-semibold;
 }
 
-/* --- Estilización de Headers (Ganando al reset de Tailwind) --- */
+/* --- CONTENIDO TIPOGRÁFICO --- */
 
 .editor-container .ce-header {
-  @apply font-bold tracking-tight text-gray-900 dark:text-gray-100;
-  padding: 0.7em 0 0.3em;
-  line-height: 1.25;
-  display: block;
+  @apply font-bold tracking-tight text-black dark:text-white mb-3 mt-6;
+  line-height: 1.2;
 }
 
-/* Selectores específicos por nivel */
 .editor-container h1.ce-header { @apply text-4xl; }
 .editor-container h2.ce-header { @apply text-3xl; }
 .editor-container h3.ce-header { @apply text-2xl; }
-.editor-container h4.ce-header { @apply text-xl; }
 
-/* Párrafos */
 .editor-container .ce-paragraph {
-  @apply leading-relaxed text-base;
-  padding: 0.5em 0;
+  @apply leading-relaxed text-base text-gray-900 dark:text-gray-100;
+  padding: 0.6em 0;
 }
 
-/* Placeholder */
+/* Placeholder - Color más visible para contraste */
 .editor-container [data-placeholder]:empty::before {
-  @apply text-gray-400 font-normal opacity-50;
-  content: attr(data-placeholder);
+  @apply text-gray-500 dark:text-gray-400 font-normal opacity-70;
+}
+
+/* Selección de texto */
+.editor-container ::selection {
+  @apply bg-zuzki-500/30 text-inherit;
 }
 
 /* Listas */
 .editor-container .cdx-list {
-  @apply list-disc pl-5 py-2;
+  @apply list-disc pl-6 py-2;
 }
 
 .editor-container .cdx-list__item {
-  @apply py-1;
+  @apply py-1.5 pl-1;
 }
 
-/* Citas */
+/* Citas - Diseño más elegante */
 .editor-container .cdx-quote {
-  @apply border-l-4 border-brand-primary pl-4 italic my-4 bg-gray-50 dark:bg-gray-800/50 py-2;
+  @apply border-l-4 border-zuzki-500 pl-6 italic my-6 bg-surface-100/50 py-4 rounded-r-lg shadow-sm;
+  @apply text-gray-800 dark:text-gray-200;
+}
+
+/* Enlaces dentro del editor */
+.editor-container a {
+  @apply text-zuzki-600 dark:text-zuzki-400 underline decoration-zuzki-500/30 underline-offset-4 hover:text-zuzki-500 transition-colors;
 }

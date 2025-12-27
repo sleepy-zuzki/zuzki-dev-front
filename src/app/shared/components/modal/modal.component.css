@@ -1,4 +1,4 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/colors.css";
 
 dialog {
   @apply bg-white dark:bg-coffee m-auto;

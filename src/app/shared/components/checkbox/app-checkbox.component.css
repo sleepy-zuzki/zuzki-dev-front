@@ -1,4 +1,4 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/forms.css";
 
 .checkbox-label {
   @apply inline-flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-200;
