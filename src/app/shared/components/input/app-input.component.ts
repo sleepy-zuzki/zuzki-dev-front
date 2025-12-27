@@ -1,4 +1,4 @@
-import { Component, Input, Self, Optional } from '@angular/core';
+import { Component, input, Self, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -10,12 +10,12 @@ import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/f
   styleUrls: ['./app-input.component.css'],
 })
 export class AppInputComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() type = 'text';
-  @Input() placeholder = '';
-  @Input() id = '';
-  @Input() controlType: 'input' | 'textarea' = 'input';
-  @Input() rows: number | null = null;
+  label = input('');
+  type = input('text');
+  placeholder = input('');
+  id = input('');
+  controlType = input<'input' | 'textarea'>('input');
+  rows = input<number | null>(null);
 
   value: string | number | null = null;
   isDisabled = false;

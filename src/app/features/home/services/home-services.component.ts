@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 import { ServiceCard, ServiceCardComponent } from '@shared/components/service-card/service-card.component';
 
@@ -9,12 +9,12 @@ import { ServiceCard, ServiceCardComponent } from '@shared/components/service-ca
   templateUrl: './home-services.component.html'
 })
 export class HomeServicesComponent {
-  @Input() services: ServiceCard[] = [];
+  services = input<ServiceCard[]>([]);
 
   // SEO: encabezado y descripción personalizables
-  @Input() heading: string = 'Servicios';
-  @Input() description: string = 'Soluciones personalizadas que transforman tu presencia digital';
+  heading = input('Servicios');
+  description = input('Soluciones personalizadas que transforman tu presencia digital');
 
   // SEO/A11y: id del encabezado para aria-labelledby
-  @Input() headingId: string = 'services-heading';
+  headingId = input('services-heading');
 }

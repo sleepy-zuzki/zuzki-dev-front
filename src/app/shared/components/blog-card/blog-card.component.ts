@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { BlogEntryEntity } from '@core/interfaces/blog.interface';
@@ -24,23 +24,23 @@ import { featherArrowRight } from '@ng-icons/feather-icons';
     <article class="blog-card group">
       <div class="blog-card__content">
         <header class="blog-card__header">
-          <time [dateTime]="entry.publishDate" class="blog-card__date">
-            {{ entry.publishDate | date:'longDate' }}
+          <time [dateTime]="entry().publishDate" class="blog-card__date">
+            {{ entry().publishDate | date:'longDate' }}
           </time>
           <app-typography-title [level]="3" variant="card" class="group-hover:text-zuzki-500 transition-colors">
-            {{ entry.title }}
+            {{ entry().title }}
           </app-typography-title>
         </header>
 
         <app-typography-text variant="base" extraClasses="line-clamp-3 mb-4">
-          {{ entry.description }}
+          {{ entry().description }}
         </app-typography-text>
 
         <div class="blog-card__footer">
           <app-button 
             variant="link" 
-            [routerLink]="['/blog', entry.slug]"
-            ariaLabel="Leer artículo completo: {{ entry.title }}">
+            [routerLink]="['/blog', entry().slug]"
+            ariaLabel="Leer artículo completo: {{ entry().title }}">
             Leer artículo <ng-icon name="featherArrowRight" class="ml-1 group-hover:translate-x-1 transition-transform"></ng-icon>
           </app-button>
         </div>
@@ -74,5 +74,5 @@ import { featherArrowRight } from '@ng-icons/feather-icons';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BlogCardComponent {
-  @Input({ required: true }) entry!: BlogEntryEntity;
+  entry = input.required<BlogEntryEntity>();
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, output, OutputEmitterRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, OutputEmitterRef } from '@angular/core';
 
 
 @Component({
@@ -10,9 +10,9 @@ import { ChangeDetectionStrategy, Component, Input, output, OutputEmitterRef } f
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TagsListComponent {
-  @Input({ required: true }) tags: ReadonlyArray<string> = [];
-  @Input() ariaLabel = 'Etiquetas';
-  @Input() clickable = false;
+  tags = input.required<ReadonlyArray<string>>();
+  ariaLabel = input('Etiquetas');
+  clickable = input(false);
 
-  tagClick: OutputEmitterRef<string> = output<string>();
+  tagClick = output<string>();
 }

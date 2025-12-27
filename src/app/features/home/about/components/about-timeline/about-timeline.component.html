@@ -1,7 +1,7 @@
 <section aria-labelledby="trayectoria-title">
   <header class="tl-header">
     <h3 id="trayectoria-title" class="tl-title">
-      {{ heading }}
+      {{ heading() }}
     </h3>
   </header>
 
@@ -10,11 +10,11 @@
     <!-- Línea vertical de fondo -->
     <div class="tl-rail" aria-hidden="true"></div>
 
-    @for (t of items; track t.title; let i = $index) {
+    @for (t of items(); track t.title; let i = $index) {
       <div class="tl-row timeline-item" role="listitem">
         <!-- Punto numerado (puedes variar color vía CSS variable o clase) -->
-        <div class="tl-bullet timeline-dot" [attr.aria-label]="'Hito '+(items.length - i)">
-          {{ items.length - i }}
+        <div class="tl-bullet timeline-dot" [attr.aria-label]="'Hito '+(items().length - i)">
+          {{ items().length - i }}
         </div>
 
         <div class="tl-card">

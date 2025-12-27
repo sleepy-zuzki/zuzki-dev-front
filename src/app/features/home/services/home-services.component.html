@@ -7,7 +7,7 @@
   </header>
 
   <ul class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" role="list" aria-labelledby="services-heading">
-    @for (service of services; track service.title) {
+    @for (service of services(); track service.title) {
       <li role="listitem">
         <app-service-card [service]="service"></app-service-card>
       </li>

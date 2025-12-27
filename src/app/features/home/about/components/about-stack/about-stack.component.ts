@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { NgIconComponent } from '@ng-icons/core';
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
@@ -19,7 +19,7 @@ type StackCategory = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutStackComponent {
-  @Input({ required: true }) categories: ReadonlyArray<StackCategory> = [];
-  @Input() heading = 'Stack Tecnológico';
-  @Input() subheading = 'Las herramientas que uso para dar vida a las ideas';
+  categories = input.required<ReadonlyArray<StackCategory>>();
+  heading = input('Stack Tecnológico');
+  subheading = input('Las herramientas que uso para dar vida a las ideas');
 }
