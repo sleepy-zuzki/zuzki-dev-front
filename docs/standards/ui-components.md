@@ -1,30 +1,46 @@
 # Componentes de UI e Implementación
 
-Guía de construcción de elementos visuales y layouts.
+Guía de construcción de elementos visuales y layouts utilizando el sistema de utilidades modular.
 
 ## 1. Iconografía
 - **Componente:** Usar `<ng-icon>`.
-- **Tamaño:** Por defecto `w-5 h-5` (20px).
-- **Colores:** Usar `text-ui-accent` por defecto y `hover:text-brand-primary` para estados activos.
-- **Animación:** Preferir `transition-all duration-300` o `transition-theme`.
+- **Contenedor:** Usar utilidad `icon-box` (en `icons.css`).
+- **Tamaño:** `icon-box-md` (default) o `icon-box-lg`.
+- **Colores:** `text-ui-accent` por defecto.
 
 ## 2. Botones y Enlaces
-- **CTA Principal:** Clase `btn-cta`.
-- **Botones de Icono:** 
-  - Clase base: `p-2 rounded-lg`.
-  - Estados: `hover:bg-background-section` y `focus-brand`.
-- **Enlaces:** Usar `text-brand-primary` con `hover:underline-offset-2`.
+Referencia: `src/styles/utils/buttons.css`
+- **Botón Base:** `@utility btn-base`.
+- **Variantes:**
+  - `btn-brand`: Acción principal (Gradiente).
+  - `btn-secondary`: Acciones secundarias (Surface).
+  - `btn-outline`: Bordes definidos.
+  - `btn-ghost`: Solo texto/icono, fondo al hover.
+- **Enlaces:** Usar utilidad `nav-link` (en `navigation.css`).
 
-## 3. Layout y Espaciado
-- **Contenedores:** Usar utilidades de Tailwind (`p-*`, `m-*`, `gap-*`).
-- **Grid/Flex:** Preferir `grid` con `auto-fit`/`auto-fill` para listas reactivas de elementos (como cards).
-- **Bordes:** Mantener consistencia con `rounded-lg` para la mayoría de los contenedores.
+## 3. Tarjetas (Cards)
+Referencia: `src/styles/utils/cards.css`
+- **Estructura:**
+  ```css
+  .mi-tarjeta {
+    @apply card-group card-interactive card-surface card-rounded card-border card-padding;
+  }
+  ```
+- **Interacción:** `card-interactive` maneja hover y focus automáticamente.
 
-## 4. Transiciones y Animaciones
-- **Hover/Active:** Duración de 150-200ms.
-- **Cambios de Estado:** 300ms.
-- **Bezier:** `cubic-bezier(0.4, 0, 0.2, 1)`.
+## 4. Formularios
+Referencia: `src/styles/utils/forms.css`
+- **Inputs:** `form-input-base` (Cubre background, border, text, placeholder y focus).
+- **Labels:** `form-label`.
+- **Errores:** `form-error`.
+- **Selects:** `form-select-trigger`.
 
-## 5. Sombras
-- Usar sombras nativas de Tailwind: `shadow-sm`, `shadow-md`, `shadow-lg`.
-- No usar sombras de colores, priorizar el contraste y la elevación natural.
+## 5. Paneles Flotantes
+Referencia: `src/styles/utils/panels.css`
+- **Contenedor:** `floating-panel` (Sombra, borde, fondo surface-300).
+- **Items:** `floating-item` y `floating-item-hover`.
+
+## 6. Layout y Espaciado
+- **Modales:** Usar estructura Flex vertical con `max-height` y `overflow-y-auto` en el cuerpo para evitar recortes de popovers.
+- **Transiciones:** `transition-all duration-200` o `transition-theme`.
+- **Sombras:** Usar sombras nativas (`shadow-md`, `shadow-xl`) o las incluidas en las utilidades `card-*` y `floating-*`.

@@ -1,33 +1,39 @@
 # Sistema de Diseño y Tokens
 
-Guía para el uso consistente de colores, superficies y temas.
+Guía para el uso consistente de colores, superficies y temas basada en OKLCH.
 
-## 1. Tokens de Color
-No hardcodear colores (HEX, RGB). Usar exclusivamente los tokens definidos:
+## 1. Tokens de Color (Semánticos)
+No hardcodear colores (HEX, RGB). Usar exclusivamente los tokens definidos o las utilidades semánticas.
+
+### Niveles de Superficie (Surface Levels)
+El sistema utiliza una escala de elevación para manejar el contraste y la profundidad en modo claro y oscuro.
+
+- **Nivel 0: `bg-canvas`** (`--surface-canvas`)
+  - Fondo global de la aplicación.
+- **Nivel 1: `bg-surface-100`** (`--surface-100`)
+  - Secciones de contenido principales, sidebars, headers de tablas.
+- **Nivel 2: `bg-surface-200`** (`--surface-200`)
+  - Tarjetas (`cards`), inputs de formulario, elementos elevados.
+- **Nivel 3: `bg-surface-300`** (`--surface-300`)
+  - Elementos flotantes, dropdowns, modales, tooltips.
 
 ### Marca y Acento
-- `text-brand-primary`: Color principal de la marca.
-- `bg-brand-primary`: Fondo con el color de la marca.
-- `text-ui-accent`: Color para detalles y acentos de UI.
-- `hover:text-brand-primary-hover`: Variación para interacciones.
+- **`text-brand-primary`**: Color principal (Naranja Zuzki).
+- **`bg-gradient-brand`**: Gradiente oficial (de Naranja Claro a Rojizo).
+- **`focus-brand`**: Anillo de foco accesible y consistente.
 
-### Superficies y Fondos
-- `bg-background-default`: Fondo principal de la página.
-- `bg-background-section`: Fondo para secciones diferenciadas.
-- `bg-background-surface`: Fondo para tarjetas o elementos elevados.
-
-### Escala Zuzki
-Para casos de diseño granular: `bg-zuzki-500`, `text-zuzki-600`, etc.
+### Bordes
+- **`border-border-subtle`**: Divisores suaves.
+- **`border-border-strong`**: Bordes de inputs o tarjetas.
 
 ## 2. Modo Oscuro
-- El tema se gestiona de forma global. Los tokens anteriores son "theme-aware".
-- **Regla:** Evitar el uso excesivo de `dark:`. Si el token `bg-background-default` cambia correctamente entre temas, no es necesario forzarlo.
-- Usar `dark:` solo para excepciones visuales específicas que el sistema de tokens no cubra.
+- El tema se gestiona de forma global. Los tokens semánticos (`surface-*`, `canvas`) se adaptan automáticamente.
+- **Regla:** **Nunca** usar `bg-white` o `bg-gray-*` para contenedores estructurales. Usar siempre `bg-surface-*`.
 
 ## 3. Utilidades Personalizadas
-- `transition-theme`: Aplicar a cualquier elemento que cambie de color al alternar el modo oscuro.
-- `focus-brand`: Anillo de foco estandarizado para accesibilidad.
-- `surface-*`: Atajos para los fondos (`surface-primary`, `surface-secondary`).
+- **`transition-theme`**: Transición suave de colores (300ms).
+- **`glass-header` / `glass-scrim`**: Efectos de cristal esmerilado adaptables.
+- **`text-muted-sm`**: Texto secundario en mayúsculas pequeño.
 
 ## 4. Extensión
-Para añadir nuevos tokens, deben definirse en `src/styles/colors.css` bajo el esquema de variables CSS y luego registrarse en el sistema de Tailwind si es necesario.
+Para añadir nuevos tokens, deben definirse en `src/styles/colors.css` dentro de `:root` (Light) y `:root.dark` (Dark), y luego mapearse en el bloque `@theme`.
