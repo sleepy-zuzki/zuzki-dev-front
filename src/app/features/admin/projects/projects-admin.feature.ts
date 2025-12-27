@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
@@ -28,15 +28,15 @@ import { ProjectFormComponent } from '@features/admin/projects/components/projec
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsAdminFeatureComponent {
-  private projectStore = inject(ProjectStore);
-  private fb = inject(NonNullableFormBuilder);
+  private projectStore: ProjectStore = inject(ProjectStore);
+  private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
 
-  projects = this.projectStore.projects;
-  loading = this.projectStore.loading;
-  error = this.projectStore.error;
+  projects: Signal<Project[]> = this.projectStore.projects;
+  loading: Signal<boolean> = this.projectStore.loading;
+  error: Signal<string | null> = this.projectStore.error;
 
-  isEditModalOpen = signal(false);
-  selectedProject = signal<Project | null>(null);
+  isEditModalOpen: WritableSignal<boolean> = signal(false);
+  selectedProject: WritableSignal<Project | null> = signal<Project | null>(null);
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
     title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],

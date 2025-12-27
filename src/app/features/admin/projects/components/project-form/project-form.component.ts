@@ -1,4 +1,4 @@
-import { Component, inject, input, computed } from '@angular/core';
+import { Component, inject, input, computed, InputSignal, Signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { AppInputComponent } from '@shared/components/input/app-input.component';
@@ -7,6 +7,7 @@ import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.c
 import EditorComponent from '@shared/components/editor/editor.component';
 import { TechnologyStore } from '@core/stores/technology.store';
 import { StackService } from '@core/services/stack.service';
+import { Stack, Technology } from '@core/interfaces';
 
 interface SelectOption {
   label: string;
@@ -27,28 +28,28 @@ interface SelectOption {
   styleUrls: ['./project-form.component.css'],
 })
 export class ProjectFormComponent {
-  form = input.required<FormGroup>();
-  technologyOptions = input<SelectOption[]>([]);
+  form: InputSignal<FormGroup> = input.required<FormGroup>();
+  technologyOptions: InputSignal<SelectOption[]> = input<SelectOption[]>([]);
 
-  private technologyStore = inject(TechnologyStore);
-  private stackService = inject(StackService);
+  private technologyStore: TechnologyStore = inject(TechnologyStore);
+  private stackService: StackService = inject(StackService);
 
-  technologies = this.technologyStore.technologies;
-  stacks = this.stackService.stacks;
+  technologies: Signal<Technology[]> = this.technologyStore.technologies;
+  stacks: Signal<Stack[]> = this.stackService.stacks;
 
   constructor() {
     this.technologyStore.getTechnologies();
     this.stackService.getStacks();
   }
 
-  areaOptions = computed((): Option[] => {
+  areaOptions: Signal<Option[]> = computed((): Option[] => {
     return this.stacks().map(stack => ({
       label: stack.name,
       value: stack.id
     }));
   });
 
-  technologyOptionsList = computed((): Option[] => {
+  technologyOptionsList: Signal<Option[]> = computed((): Option[] => {
     return this.technologies().map((technology): Option => ({
       label: technology.name,
       value: technology.id

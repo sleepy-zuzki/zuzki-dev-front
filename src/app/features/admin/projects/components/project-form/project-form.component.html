@@ -17,14 +17,16 @@
 
   <!-- Descripción -->
   <div class="form-field-group--span-6">
-    <app-editor
+    <app-input
       label="Descripción (opcional)"
       id="description"
       formControlName="description"
+      controlType="textarea"
+      [rows]="4"
       placeholder="Resumen del proyecto (máx. 1000)"
     >
       Máximo 1000 caracteres
-    </app-editor>
+    </app-input>
   </div>
 
   <!-- Contenido -->

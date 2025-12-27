@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, effect, inject, input, OnDestroy, output, viewChild
+  ChangeDetectionStrategy, Component, effect, inject, input, InputSignal, OnDestroy, output, OutputEmitterRef,
+  Signal, viewChild
 } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -26,22 +27,22 @@ import { UpdateProjectForm } from '@core/interfaces/forms/project.forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectEditModalComponent implements OnDestroy, AfterViewInit {
-  private fb = inject(NonNullableFormBuilder);
+  private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
 
-  isOpen = input.required<boolean>();
-  project = input<Project | null>(null);
+  isOpen: InputSignal<boolean> = input.required<boolean>();
+  project: InputSignal<Project | null> = input<Project | null>(null);
 
-  save = output<{ id: string; data: UpdateProjectDto }>();
-  closeModal = output<void>();
+  save: OutputEmitterRef<{id: string, data: UpdateProjectDto}> = output<{ id: string; data: UpdateProjectDto }>();
+  closeModal: OutputEmitterRef<void> = output<void>();
 
-  modalComponent = viewChild(ModalComponent);
+  modalComponent: Signal<ModalComponent | undefined> = viewChild(ModalComponent);
 
   form!: FormGroup<UpdateProjectForm>;
   private slugSubscription?: Subscription;
 
   constructor() {
     effect(() => {
-        const modal = this.modalComponent();
+        const modal: ModalComponent | undefined = this.modalComponent();
         if (modal) {
             if (this.isOpen()) {
                 modal.openModal();
@@ -52,7 +53,7 @@ export class ProjectEditModalComponent implements OnDestroy, AfterViewInit {
     });
 
     effect(() => {
-        const p = this.project();
+        const p: Project | null = this.project();
         if (p) {
             this.form = this.fb.group({
                 title: [p.title, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],

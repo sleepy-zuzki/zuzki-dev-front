@@ -1,16 +1,24 @@
 @reference "../../../../styles/colors.css";
 
 dialog {
-  @apply bg-white dark:bg-coffee m-auto;
+  @apply bg-white dark:bg-coffee m-auto rounded-xl shadow-2xl;
 
-  padding: 20px;
-  border-radius: 5px;
-  border: none;
+  /* Flex layout para header fijo + body scrollable */
+  @apply flex flex-col;
+
+  /* Límites de tamaño */
   width: 500px;
   max-width: 90%;
+  max-height: 90vh; /* Límite vertical viewport */
+
+  padding: 0; /* Padding movido a los hijos */
+  border: none;
 
   transition: scale 0.3s ease, display 0.3s ease allow-discrete;
   scale: 0;
+
+  /* El dialog en sí no hace scroll, lo hace el contenido */
+  overflow: hidden;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.6);
@@ -18,12 +26,12 @@ dialog {
   }
 }
 
-/* Tamaños del modal: se aplican como clases en el elemento <dialog> */
+/* Tamaños del modal */
 dialog.size-sm { width: 24rem; }   /* 384px */
-dialog.size-md { width: 32rem; }   /* 512px (por defecto similar a 500px) */
+dialog.size-md { width: 32rem; }   /* 512px */
 dialog.size-lg { width: 48rem; }   /* 768px */
 dialog.size-xl { width: 64rem; }   /* 1024px */
-dialog.size-full { width: 90vw; max-width: 90vw; }
+dialog.size-full { width: 95vw; max-width: 95vw; height: 95vh; }
 
 dialog[open] {
   scale: 1;
@@ -34,24 +42,16 @@ dialog[open] {
   }
 }
 
-/* Header */
+/* Header Fijo */
 .modal-header {
-  @apply text-xl font-bold text-black dark:text-white;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  @apply text-xl font-bold text-black dark:text-white shrink-0;
+  @apply flex justify-between items-center;
+  @apply p-5 border-b border-gray-200 dark:border-gray-700;
+  @apply bg-white dark:bg-coffee;
+  z-index: 10;
 }
 
-.close-button {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Cuerpo Scrollable */
+.modal-body {
+  @apply overflow-y-auto p-6;
 }
