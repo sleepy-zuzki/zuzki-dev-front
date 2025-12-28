@@ -8,22 +8,40 @@
     </app-typography-text>
   </header>
 
-  <section class="blog-admin__create-section" aria-label="Crear nuevo artículo">
+  <section class="blog-admin__create-section" aria-label="Crear o editar artículo">
     <app-typography-title [level]="2" variant="section" class="blog-admin__section-title">
-      Crear nuevo artículo
+      {{ selectedEntryId() ? 'Editar artículo' : 'Crear nuevo artículo' }}
     </app-typography-title>
 
     <div class="blog-admin__form-wrapper">
       <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
-        <app-blog-form [form]="form"></app-blog-form>
+        <app-blog-form 
+          [form]="form" 
+          (coverImageSelected)="onUploadCover($event)"
+          (galleryImageSelected)="onSelectFromGallery($event)"
+        ></app-blog-form>
 
-        <div class="blog-admin__submit-wrapper">
+        <div class="blog-admin__submit-wrapper gap-2">
+          @if (selectedEntryId()) {
+            <app-button
+              variant="outline"
+              type="button"
+              (click)="onCancel()"
+              [disabled]="loading() || uploading()"
+            >
+              Cancelar
+            </app-button>
+          }
           <app-button
             type="submit"
-            [disabled]="form.invalid || loading()"
+            [disabled]="form.invalid || loading() || uploading()"
             class="blog-admin__submit-button"
           >
-            Crear Borrador
+            @if (uploading()) {
+              Subiendo imagen...
+            } @else {
+              {{ selectedEntryId() ? 'Guardar Cambios' : 'Crear Borrador' }}
+            }
           </app-button>
         </div>
       </form>
@@ -47,10 +65,12 @@
             <div class="blog-admin__item-content">
               <div class="flex items-center gap-2 mb-1">
                 <span class="px-2 py-0.5 text-xs font-medium rounded-full"
-                      [class.bg-yellow-100]="entry.status === 'draft'"
-                      [class.text-yellow-800]="entry.status === 'draft'"
-                      [class.bg-green-100]="entry.status === 'published'"
-                      [class.text-green-800]="entry.status === 'published'">
+                      [class.bg-yellow-100]="entry.status === BlogStatus.DRAFT"
+                      [class.text-yellow-800]="entry.status === BlogStatus.DRAFT"
+                      [class.bg-green-100]="entry.status === BlogStatus.PUBLISHED"
+                      [class.text-green-800]="entry.status === BlogStatus.PUBLISHED"
+                      [class.bg-gray-100]="entry.status === BlogStatus.ARCHIVED"
+                      [class.text-gray-800]="entry.status === BlogStatus.ARCHIVED">
                   {{ entry.status | uppercase }}
                 </span>
                 <h3 class="blog-admin__item-title m-0">{{ entry.title }}</h3>
@@ -65,7 +85,14 @@
               <p class="blog-admin__item-desc">{{ entry.description }}</p>
             </div>
             <div class="blog-admin__item-actions flex gap-2">
-              @if (entry.status === 'draft') {
+              <button
+                type="button"
+                (click)="onEdit(entry)"
+                class="text-sm font-medium text-blue-600 hover:text-blue-800"
+              >
+                Editar
+              </button>
+              @if (entry.status === BlogStatus.DRAFT) {
                 <button
                   type="button"
                   (click)="onPublish(entry.id)"
