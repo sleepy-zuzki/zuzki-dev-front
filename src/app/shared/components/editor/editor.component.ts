@@ -21,6 +21,8 @@ import type { API, BlockToolConstructable, OutputData } from '@editorjs/editorjs
 // Estos plugins suelen ser ligeros, pero podrías cargarlos dinámicamente si fuera necesario
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
+import Paragraph from '@editorjs/paragraph';
+import createGenericInlineTool from 'editorjs-inline-tool';
 
 @Component({
   selector: 'app-editor',
@@ -87,8 +89,23 @@ class EditorComponent implements ControlValueAccessor, AfterViewInit, OnDestroy 
             },
             inlineToolbar: true,
           },
+          paragraph: {
+            class: Paragraph as unknown as BlockToolConstructable,
+            inlineToolbar: true,
+          },
+          bold: {
+            class: createGenericInlineTool({
+              sanitize: {
+                strong: {},
+              },
+              shortcut: 'CMD+B',
+              tagName: 'STRONG',
+              toolboxIcon:
+                '<svg class="icon icon--bold" width="12px" height="14px"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#bold"></use></svg>',
+            })
+          },
           list: {
-            class: List as any,
+            class: List as unknown as BlockToolConstructable,
             inlineToolbar: true,
             config: {
               defaultStyle: 'unordered'
