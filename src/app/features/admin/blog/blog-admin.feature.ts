@@ -8,6 +8,7 @@ import { BlogStore } from '@core/stores/blog.store';
 import { toSlug } from '@shared/utils/slug.util';
 import { BlogFormComponent } from './components/blog-form/blog-form.component';
 import type { OutputData } from '@editorjs/editorjs';
+import { ButtonComponent } from '@components/button/button.component';
 
 @Component({
   selector: 'app-blog-admin-feature',
@@ -17,7 +18,8 @@ import type { OutputData } from '@editorjs/editorjs';
     TypographyTitleComponent,
     TypographyTextComponent,
     BlogFormComponent,
-    DatePipe
+    DatePipe,
+    ButtonComponent
   ],
   templateUrl: './blog-admin.feature.html',
   styleUrls: ['./blog-admin.feature.css'],
@@ -35,8 +37,7 @@ export class BlogAdminFeatureComponent {
     title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
     slug: ['', [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)]],
     description: ['', [Validators.required]],
-    content: [null],
-    publishDate: ['', [Validators.required]]
+    content: [null]
   });
 
   constructor() {
@@ -69,8 +70,7 @@ export class BlogAdminFeatureComponent {
       title: raw.title,
       slug: raw.slug,
       description: raw.description,
-      content: raw.content as OutputData,
-      publishDate: raw.publishDate
+      content: raw.content as OutputData
     });
 
     this.form.reset();

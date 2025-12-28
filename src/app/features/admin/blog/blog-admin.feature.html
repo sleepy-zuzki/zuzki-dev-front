@@ -18,13 +18,13 @@
         <app-blog-form [form]="form"></app-blog-form>
 
         <div class="blog-admin__submit-wrapper">
-          <button
+          <app-button
             type="submit"
             [disabled]="form.invalid || loading()"
             class="blog-admin__submit-button"
           >
             Publicar artículo
-          </button>
+          </app-button>
         </div>
       </form>
     </div>
