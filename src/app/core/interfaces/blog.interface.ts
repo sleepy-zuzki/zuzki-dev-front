@@ -2,14 +2,14 @@ import type { OutputData } from '@editorjs/editorjs';
 
 export interface BlogEntryEntity {
   id: string;
+  status: 'draft' | 'published' | 'archived';
   title: string;
   slug: string;
   description: string;
   content?: OutputData | null; // EditorJS output object
-  publishDate: string;
+  publishDate: string | null;
   createdAt: string;
   updatedAt: string;
-  // Agrega campos opcionales si existen en la respuesta real pero no en la doc básica (ej: author, coverImage)
 }
 
 export interface CreateBlogDto {

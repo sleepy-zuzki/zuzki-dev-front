@@ -23,7 +23,7 @@
             [disabled]="form.invalid || loading()"
             class="blog-admin__submit-button"
           >
-            Publicar artículo
+            Crear Borrador
           </app-button>
         </div>
       </form>
@@ -39,19 +39,41 @@
         <button type="button" (click)="reload()" class="blog-admin__reload-button">Reintentar</button>
       </div>
     } @else if (entries().length === 0) {
-      <app-typography-text>No hay artículos publicados aún.</app-typography-text>
+      <app-typography-text>No hay artículos creados aún.</app-typography-text>
     } @else {
       <div class="blog-admin__list">
         @for (entry of entries(); track entry.id) {
           <article class="blog-admin__item">
             <div class="blog-admin__item-content">
-              <h3 class="blog-admin__item-title">{{ entry.title }}</h3>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="px-2 py-0.5 text-xs font-medium rounded-full"
+                      [class.bg-yellow-100]="entry.status === 'draft'"
+                      [class.text-yellow-800]="entry.status === 'draft'"
+                      [class.bg-green-100]="entry.status === 'published'"
+                      [class.text-green-800]="entry.status === 'published'">
+                  {{ entry.status | uppercase }}
+                </span>
+                <h3 class="blog-admin__item-title m-0">{{ entry.title }}</h3>
+              </div>
               <p class="blog-admin__item-meta">
-                Publicado: {{ entry.publishDate | date:'mediumDate' }}
+                @if (entry.publishDate) {
+                  Publicado: {{ entry.publishDate | date:'mediumDate' }}
+                } @else {
+                  Creado: {{ entry.createdAt | date:'mediumDate' }}
+                }
               </p>
               <p class="blog-admin__item-desc">{{ entry.description }}</p>
             </div>
-            <div class="blog-admin__item-actions">
+            <div class="blog-admin__item-actions flex gap-2">
+              @if (entry.status === 'draft') {
+                <button
+                  type="button"
+                  (click)="onPublish(entry.id)"
+                  class="text-sm font-medium text-brand-primary hover:text-brand-hover"
+                >
+                  Publicar
+                </button>
+              }
               <button
                 type="button"
                 (click)="onDelete(entry.id)"

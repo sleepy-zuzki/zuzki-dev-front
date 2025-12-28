@@ -47,7 +47,8 @@ export class ApiConfig {
       entries: {
         base: '/blog/entries',
         byId: (id: string) => `/blog/entries/${id}`,
-        bySlug: (slug: string) => `/blog/entries/slug/${slug}`
+        bySlug: (slug: string) => `/blog/entries/slug/${slug}`,
+        publish: (id: string) => `/blog/entries/${id}/publish`
       }
     },
 

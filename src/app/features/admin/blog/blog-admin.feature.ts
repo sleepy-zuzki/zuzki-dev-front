@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { DatePipe, UpperCasePipe } from '@angular/common';
 
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
@@ -19,7 +19,8 @@ import { ButtonComponent } from '@components/button/button.component';
     TypographyTextComponent,
     BlogFormComponent,
     DatePipe,
-    ButtonComponent
+    ButtonComponent,
+    UpperCasePipe
   ],
   templateUrl: './blog-admin.feature.html',
   styleUrls: ['./blog-admin.feature.css'],
@@ -77,8 +78,14 @@ export class BlogAdminFeatureComponent {
   }
 
   onDelete(id: string): void {
-    if (confirm('¿Estás seguro de que quieres eliminar este artículo?')) {
+    if (confirm('¿Estás seguro de que quieres eliminar esta entrada?')) {
       this.blogStore.deleteEntry(id);
+    }
+  }
+
+  onPublish(id: string): void {
+    if (confirm('¿Estás seguro de que quieres publicar esta entrada?')) {
+      this.blogStore.publishEntry(id);
     }
   }
 }

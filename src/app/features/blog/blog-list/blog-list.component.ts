@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { BlogService } from '@core/services/blog.service';
+import { BlogStore } from '@core/stores/blog.store';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { BlogCardComponent } from '@shared/components/blog-card/blog-card.component';
@@ -22,6 +22,6 @@ import { SectionComponent } from '@components/section/section.component';
   styleUrl: './blog-list.component.css'
 })
 export class BlogListComponent {
-  private readonly blogService = inject(BlogService);
-  readonly blogsResource = this.blogService.blogsResource;
+  private readonly blogStore = inject(BlogStore);
+  readonly blogsResource = this.blogStore.entriesResource;
 }

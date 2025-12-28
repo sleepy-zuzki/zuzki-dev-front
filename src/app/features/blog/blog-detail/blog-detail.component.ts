@@ -23,7 +23,7 @@ import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '
   ],
   providers: [provideIcons({ featherArrowLeft, featherCalendar, featherClock, featherLoader })],
   template: `
-    <app-section variant="transparent" padding="lg">
+    <app-section variant="transparent" padding="lg" [container]="false">
       <div class="max-w-3xl mx-auto">
         <!-- Back Button -->
         <div class="mb-8">
