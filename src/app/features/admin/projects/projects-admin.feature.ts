@@ -9,6 +9,7 @@ import { toSlug } from '@shared/utils/slug.util';
 import { ProjectEditModalComponent } from '@shared/modals/project-edit-modal.component';
 import { Project, UpdateProjectDto } from '@core/interfaces';
 import { CreateProjectForm } from '@core/interfaces/forms/project.forms';
+import type { OutputData } from '@editorjs/editorjs';
 
 import { ProjectFormComponent } from '@features/admin/projects/components/project-form/project-form.component';
 
@@ -42,7 +43,7 @@ export class ProjectsAdminFeatureComponent {
     title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
     slug: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
     description: this.fb.control<string | null>(null, [Validators.maxLength(1000)]),
-    content: this.fb.control<any>(null),
+    content: this.fb.control<OutputData | null>(null),
     repoUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     liveUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     areaId: this.fb.control<string>('', [Validators.required]),

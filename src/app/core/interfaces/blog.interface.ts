@@ -1,9 +1,11 @@
+import type { OutputData } from '@editorjs/editorjs';
+
 export interface BlogEntryEntity {
   id: string;
   title: string;
   slug: string;
   description: string;
-  content?: any; // EditorJS output object
+  content?: OutputData; // EditorJS output object
   publishDate: string;
   createdAt: string;
   updatedAt: string;
@@ -14,8 +16,9 @@ export interface CreateBlogDto {
   title: string;
   slug: string;
   description?: string;
-  content?: any;
+  content?: OutputData;
   publishDate?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface UpdateBlogDto extends Partial<CreateBlogDto> {}

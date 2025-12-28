@@ -1,5 +1,6 @@
 import { Technology } from './technology.interface';
 import { FileEntity } from './file.interface';
+import type { OutputData } from '@editorjs/editorjs';
 
 export interface ProjectFile extends FileEntity {
   type?: string; // 'cover' | 'hero-slide' | 'gallery'
@@ -11,7 +12,7 @@ export interface Project {
   title: string;
   slug: string;
   description?: string | null;
-  content?: any;
+  content?: OutputData;
   liveUrl?: string | null;
   repoUrl?: string | null;
   area?: { id: string; name: string; slug: string };
@@ -28,7 +29,7 @@ export interface CreateProjectDto {
   title: string;
   slug: string;
   description?: string | null;
-  content?: any;
+  content?: OutputData;
   repoUrl?: string | null;
   liveUrl?: string | null;
   areaId: string;
@@ -41,7 +42,7 @@ export interface UpdateProjectDto {
   title?: string;
   slug?: string;
   description?: string | null;
-  content?: any;
+  content?: OutputData;
   repoUrl?: string | null;
   liveUrl?: string | null;
   areaId?: string;
