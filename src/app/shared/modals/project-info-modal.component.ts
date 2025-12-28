@@ -8,6 +8,7 @@ import { featherGithub } from '@ng-icons/feather-icons';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { TypographyTextComponent } from '@components/typography/text.component';
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
+import { EditorRendererComponent } from '@components/editor-renderer/editor-renderer.component';
 import { register } from 'swiper/element/bundle';
 
 
@@ -16,7 +17,16 @@ register();
 @Component({
   selector: 'app-project-info-modal',
   standalone: true,
-  imports: [CommonModule, ModalComponent, NgIcon, TypographyTitleComponent, TypographyTextComponent, TagsListComponent, NgOptimizedImage],
+  imports: [
+    CommonModule,
+    ModalComponent,
+    NgIcon,
+    TypographyTitleComponent,
+    TypographyTextComponent,
+    TagsListComponent,
+    NgOptimizedImage,
+    EditorRendererComponent
+  ],
   templateUrl: './project-info-modal.component.html',
   providers: [
     provideIcons({ bootstrapChevronLeft, bootstrapChevronRight, featherGithub }),

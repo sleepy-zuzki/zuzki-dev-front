@@ -1,10 +1,11 @@
-import { Component, inject, input, OnInit, OnDestroy, effect } from '@angular/core';
+import { Component, inject, input, OnDestroy, effect } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { BlogStore } from '@core/stores/blog.store';
 import { SectionComponent } from '@shared/components/section/section.component';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
+import { EditorRendererComponent } from '@components/editor-renderer/editor-renderer.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '@ng-icons/feather-icons';
 
@@ -17,7 +18,8 @@ import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '
     SectionComponent,
     TypographyTitleComponent,
     ButtonComponent,
-    NgIcon
+    NgIcon,
+    EditorRendererComponent
   ],
   providers: [provideIcons({ featherArrowLeft, featherCalendar, featherClock, featherLoader })],
   template: `
@@ -58,11 +60,7 @@ import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '
                  {{ entry.description }}
                </p>
                
-               @if (isString(entry.content)) {
-                 <div [innerHTML]="entry.content"></div>
-               } @else {
-                 <p class="italic text-gray-500">[Contenido detallado no renderizable en esta versión preliminar]</p>
-               }
+               <app-editor-renderer [data]="entry.content"></app-editor-renderer>
             </div>
           </article>
         }
@@ -87,9 +85,5 @@ export class BlogDetailComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.store.setSelectedSlug(null);
-  }
-
-  isString(val: any): boolean {
-    return typeof val === 'string';
   }
 }
