@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfig } from '@core/config/api.config';
 import { BlogEntryEntity, CreateBlogDto, UpdateBlogDto } from '@core/interfaces/blog.interface';
+import { BlogStatus } from '@core/enums';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,15 @@ export class BlogService {
   private readonly http = inject(HttpClient);
   private readonly apiConfig = inject(ApiConfig);
 
-  getEntries(): Observable<BlogEntryEntity[]> {
+  getEntries(status?: BlogStatus): Observable<BlogEntryEntity[]> {
+    let params = new HttpParams();
+    if (status) {
+      params = params.set('status', status);
+    }
+    
     return this.http.get<BlogEntryEntity[]>(
-      this.apiConfig.getFullUrl(this.apiConfig.endpoints.blog.entries.base)
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.blog.entries.base),
+      { params }
     );
   }
 
@@ -53,6 +60,13 @@ export class BlogService {
     return this.http.post<void>(
       this.apiConfig.getFullUrl(this.apiConfig.endpoints.blog.entries.publish(id)),
       {}
+    );
+  }
+
+  attachFile(entryId: string, fileId: string, context: string, order: number): Observable<void> {
+    return this.http.post<void>(
+      this.apiConfig.getFullUrl(this.apiConfig.endpoints.blog.entries.files(entryId)),
+      { fileId, contextSlug: context, order }
     );
   }
 }

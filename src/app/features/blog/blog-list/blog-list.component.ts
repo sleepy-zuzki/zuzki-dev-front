@@ -6,6 +6,7 @@ import { BlogCardComponent } from '@shared/components/blog-card/blog-card.compon
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { featherLoader } from '@ng-icons/feather-icons';
 import { SectionComponent } from '@components/section/section.component';
+import { BlogStatus } from '@core/enums';
 
 @Component({
   selector: 'app-blog-list',
@@ -24,4 +25,8 @@ import { SectionComponent } from '@components/section/section.component';
 export class BlogListComponent {
   private readonly blogStore = inject(BlogStore);
   readonly blogsResource = this.blogStore.entriesResource;
+
+  constructor() {
+    this.blogStore.setFilterStatus(BlogStatus.PUBLISHED);
+  }
 }
