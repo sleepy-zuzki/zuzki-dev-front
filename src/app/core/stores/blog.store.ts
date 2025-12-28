@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, resource } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { of, Subject } from 'rxjs';
 import { switchMap, catchError, startWith, tap, shareReplay } from 'rxjs/operators';
@@ -111,7 +111,7 @@ export class BlogStore {
         }
         this.isLoading.set(false);
       },
-      error: (err) => {
+      error: () => {
         this.toast.error('Error al actualizar');
         this.isLoading.set(false);
       }
@@ -129,7 +129,7 @@ export class BlogStore {
         }
         this.isLoading.set(false);
       },
-      error: (err) => {
+      error: () => {
         this.toast.error('Error al eliminar');
         this.isLoading.set(false);
       }

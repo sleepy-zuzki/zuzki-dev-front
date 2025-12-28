@@ -14,7 +14,7 @@ import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
-import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage, TitleCasePipe } from '@angular/common';
+import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-project-card',

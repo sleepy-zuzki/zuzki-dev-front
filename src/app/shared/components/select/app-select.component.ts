@@ -1,4 +1,4 @@
-import { Component, Input, Self, Optional, HostListener, ElementRef, computed, Signal, WritableSignal, signal, input } from '@angular/core';
+import { Component, Self, Optional, HostListener, ElementRef, computed, Signal, WritableSignal, signal, input } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 
 import { bootstrapChevronExpand } from '@ng-icons/bootstrap-icons';

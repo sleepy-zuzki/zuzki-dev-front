@@ -13,7 +13,7 @@ export class ErrorService {
    * @param error Error a procesar.
    * @param customMessage Mensaje opcional para el usuario.
    */
-  handleError(error: any, customMessage?: string): void {
+  handleError(error: unknown, customMessage?: string): void {
     let message = customMessage || 'Ha ocurrido un error inesperado';
 
     if (error instanceof HttpErrorResponse) {
