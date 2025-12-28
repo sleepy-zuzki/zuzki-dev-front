@@ -1,11 +1,20 @@
 import type { OutputData } from '@editorjs/editorjs';
+import { BlogStatus } from '@core/enums';
+
+export interface BlogImage {
+  id: string;
+  url: string;
+  type: 'cover' | 'gallery';
+  order: number;
+}
 
 export interface BlogEntryEntity {
   id: string;
-  status: 'draft' | 'published' | 'archived';
+  status: BlogStatus;
   title: string;
   slug: string;
   description: string;
+  images: BlogImage[];
   content?: OutputData | null; // EditorJS output object
   publishDate: string | null;
   createdAt: string;
