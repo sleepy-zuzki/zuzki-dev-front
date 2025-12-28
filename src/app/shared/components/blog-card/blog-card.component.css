@@ -2,9 +2,9 @@
 @reference "../../../../styles/utils/typography.css";
 
 .blog-card {
-  @apply h-full card-surface card-border rounded-xl overflow-hidden card-interactive;
+  @apply h-full card-surface card-border border-zuzki-300/20 rounded-xl overflow-hidden card-interactive;
   /* Ajuste específico para blog: borde hover coloreado */
-  @apply hover:border-zuzki-500/30;
+  @apply hover:border-zuzki-500;
 }
 
 .blog-card__content {
@@ -20,5 +20,5 @@
 }
 
 .blog-card__footer {
-  @apply mt-auto pt-4 border-t border-gray-100 dark:border-gray-800;
+  @apply mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-end items-center;
 }

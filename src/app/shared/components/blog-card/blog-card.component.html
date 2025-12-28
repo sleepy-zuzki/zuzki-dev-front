@@ -1,5 +1,10 @@
-<article class="blog-card group">
-  <div class="blog-card__content">
+<a [routerLink]="['/blog', entry().slug]" class="blog-card group block no-underline focus:outline-none focus:ring-2 focus:ring-zuzki-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 rounded-xl">
+  @if (coverImage()) {
+    <div class="h-48 w-full overflow-hidden border-b border-gray-100 dark:border-gray-800/50">
+      <img [src]="coverImage()" [alt]="entry().title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+    </div>
+  }
+  <article class="blog-card__content h-full">
     <header class="blog-card__header">
       <time [dateTime]="entry().publishDate" class="blog-card__date">
         {{ entry().publishDate | date:'longDate' }}
@@ -13,13 +18,11 @@
       {{ entry().description }}
     </app-typography-text>
 
-    <div class="blog-card__footer">
-      <app-button
-        variant="link"
-        [routerLink]="['/blog', entry().slug]"
-        ariaLabel="Leer artículo completo: {{ entry().title }}">
-        Leer artículo <ng-icon name="featherArrowRight" class="ml-1 group-hover:translate-x-1 transition-transform"></ng-icon>
-      </app-button>
+    <div class="blog-card__footer text-zuzki-600 dark:text-zuzki-400 font-medium text-sm">
+      <span class="flex items-center group-hover:underline">
+        Leer artículo
+        <ng-icon name="featherArrowRight" class="ml-1 group-hover:translate-x-1 transition-transform"></ng-icon>
+      </span>
     </div>
-  </div>
-</article>
+  </article>
+</a>
