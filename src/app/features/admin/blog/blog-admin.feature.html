@@ -1,0 +1,69 @@
+<main class="blog-admin">
+  <header class="blog-admin__header">
+    <app-typography-title [level]="1" variant="page">
+      Gestión de Blog
+    </app-typography-title>
+    <app-typography-text variant="muted">
+      Crea, edita y gestiona tus artículos y tutoriales.
+    </app-typography-text>
+  </header>
+
+  <section class="blog-admin__create-section" aria-label="Crear nuevo artículo">
+    <app-typography-title [level]="2" variant="section" class="blog-admin__section-title">
+      Crear nuevo artículo
+    </app-typography-title>
+
+    <div class="blog-admin__form-wrapper">
+      <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
+        <app-blog-form [form]="form"></app-blog-form>
+
+        <div class="blog-admin__submit-wrapper">
+          <button
+            type="submit"
+            [disabled]="form.invalid || loading()"
+            class="blog-admin__submit-button"
+          >
+            Publicar artículo
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="blog-admin__list-section" aria-label="Listado de artículos">
+    @if (loading() && entries().length === 0) {
+      <app-typography-text variant="muted">Cargando artículos...</app-typography-text>
+    } @else if (error()) {
+      <div class="blog-admin__alert">
+        <span class="blog-admin__alert-text">{{ error() }}</span>
+        <button type="button" (click)="reload()" class="blog-admin__reload-button">Reintentar</button>
+      </div>
+    } @else if (entries().length === 0) {
+      <app-typography-text>No hay artículos publicados aún.</app-typography-text>
+    } @else {
+      <div class="blog-admin__list">
+        @for (entry of entries(); track entry.id) {
+          <article class="blog-admin__item">
+            <div class="blog-admin__item-content">
+              <h3 class="blog-admin__item-title">{{ entry.title }}</h3>
+              <p class="blog-admin__item-meta">
+                Publicado: {{ entry.publishDate | date:'mediumDate' }}
+              </p>
+              <p class="blog-admin__item-desc">{{ entry.description }}</p>
+            </div>
+            <div class="blog-admin__item-actions">
+              <button
+                type="button"
+                (click)="onDelete(entry.id)"
+                class="blog-admin__delete-button"
+                aria-label="Eliminar artículo"
+              >
+                Eliminar
+              </button>
+            </div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+</main>

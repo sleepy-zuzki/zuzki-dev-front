@@ -58,6 +58,20 @@ import { TypographyTextComponent } from '@shared/components/typography/text.comp
               <app-typography-text variant="muted">Subir, ver y eliminar imágenes globales para el portafolio.</app-typography-text>
             </a>
           </li>
+
+          <!-- Tarjeta de Blogs -->
+          <li>
+            <a
+              routerLink="/dashboard/blog"
+              class="block rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-5 shadow-sm hover:shadow-md focus:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-zuzki-500 dark:focus-visible:ring-zuzki-400 transition"
+              aria-label="Gestionar Blogs"
+            >
+              <header class="mb-2">
+                <app-typography-title [level]="2" variant="card">Blogs</app-typography-title>
+              </header>
+              <app-typography-text variant="muted">Crear Blogs para el portafolio.</app-typography-text>
+            </a>
+          </li>
         </ul>
       </section>
     </main>

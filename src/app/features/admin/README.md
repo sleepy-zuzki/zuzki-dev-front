@@ -9,3 +9,4 @@ Desde aquí se gestiona el contenido dinámico de la aplicación, como los proye
 -   **/projects**: Componente para la gestión (CRUD) de los proyectos del portafolio.
 -   **/technologies**: Componente para la gestión de tecnologías.
 -   **/gallery**: Componente para la gestión global de imágenes.
+-   **/blog**: Componente para la gestión (CRUD) de los artículos del blog.

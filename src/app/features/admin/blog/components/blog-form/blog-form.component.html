@@ -1,0 +1,50 @@
+<fieldset class="form-fieldset" [formGroup]="form()">
+  <legend class="sr-only">Detalles del Artículo</legend>
+
+  <!-- Título -->
+  <div class="form-field-group--span-3">
+    <app-input label="Título" id="title" formControlName="title" placeholder="Título del artículo">
+      Título requerido (2-150 caracteres)
+    </app-input>
+  </div>
+
+  <!-- Slug (Visible pero deshabilitado) -->
+  <div class="form-field-group--span-3">
+    <app-input label="Slug (SEO)" id="slug" formControlName="slug" placeholder="titulo-del-articulo">
+      Slug requerido (kebab-case, 2-160)
+    </app-input>
+  </div>
+
+  <!-- Fecha de Publicación -->
+  <div class="form-field-group--span-6">
+    <app-input label="Fecha de Publicación" id="publishDate" type="datetime-local" formControlName="publishDate" placeholder="">
+      Fecha requerida
+    </app-input>
+  </div>
+
+  <!-- Descripción -->
+  <div class="form-field-group--span-6">
+    <app-input
+      label="Descripción Corta"
+      id="description"
+      formControlName="description"
+      controlType="textarea"
+      [rows]="3"
+      placeholder="Resumen del artículo para SEO y listados"
+    >
+      Descripción requerida
+    </app-input>
+  </div>
+
+  <!-- Contenido -->
+  <div class="form-field-group--span-6">
+    <app-editor
+      label="Contenido"
+      id="content"
+      formControlName="content"
+      placeholder="Escribe tu artículo aquí..."
+    >
+      Contenido del artículo
+    </app-editor>
+  </div>
+</fieldset>

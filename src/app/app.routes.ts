@@ -84,6 +84,16 @@ export const routes: Routes = [
     loadComponent: () => import('@pages/gallery-admin.page').then(m => m.GalleryAdminPage)
   },
   {
+    path: 'dashboard/blog',
+    title: 'Gestión de Blog - Zuzki Dev',
+    canActivate: [authGuard],
+    data: {
+      description: "Gestiona los artículos del blog.",
+      robots: "noindex, nofollow"
+    },
+    loadComponent: () => import('@pages/blog-admin.page').then(m => m.BlogAdminPage)
+  },
+  {
     path: 'blog',
     title: 'Blog - Zuzki Dev',
     data: {
