@@ -48,7 +48,11 @@ export class ApiConfig {
         base: '/blog/entries',
         byId: (id: string) => `/blog/entries/${id}`,
         bySlug: (slug: string) => `/blog/entries/slug/${slug}`,
-        publish: (id: string) => `/blog/entries/${id}/publish`
+        publish: (id: string) => `/blog/entries/${id}/publish`,
+        files: (id: string) => `/blog/entries/${id}/files`,
+        removeFile: (id: string, fileId: string) => `/blog/entries/${id}/files/${fileId}`,
+        reorderFiles: (id: string) => `/blog/entries/${id}/files/order`,
+        cover: (id: string, fileId: string) => `/blog/entries/${id}/cover/${fileId}`
       }
     },
 

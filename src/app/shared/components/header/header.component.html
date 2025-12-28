@@ -37,6 +37,14 @@
             Proyectos
           </a>
 
+          <a href="/blog"
+             class="header-nav-link"
+             [class.text-zuzki-600]="isActiveRoute('/proyectos')"
+             [class.border-b-2]="isActiveRoute('/proyectos')"
+             [class.border-zuzki-600]="isActiveRoute('/proyectos')">
+            Blog
+          </a>
+
           <app-button variant="brand" size="lg" type="button" (click)="navigateToContact()">
             Contacto
           </app-button>
