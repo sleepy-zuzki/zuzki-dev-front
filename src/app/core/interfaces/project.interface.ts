@@ -12,7 +12,7 @@ export interface Project {
   title: string;
   slug: string;
   description?: string | null;
-  content?: OutputData;
+  content?: OutputData | null;
   liveUrl?: string | null;
   repoUrl?: string | null;
   area?: { id: string; name: string; slug: string };
@@ -29,7 +29,7 @@ export interface CreateProjectDto {
   title: string;
   slug: string;
   description?: string | null;
-  content?: OutputData;
+  content?: OutputData | null;
   repoUrl?: string | null;
   liveUrl?: string | null;
   areaId: string;
@@ -42,7 +42,7 @@ export interface UpdateProjectDto {
   title?: string;
   slug?: string;
   description?: string | null;
-  content?: OutputData;
+  content?: OutputData | null;
   repoUrl?: string | null;
   liveUrl?: string | null;
   areaId?: string;

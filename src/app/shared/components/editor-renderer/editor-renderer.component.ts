@@ -12,7 +12,7 @@ export class EditorRendererComponent {
   /**
    * Datos provenientes de EditorJS
    */
-  data: InputSignal<OutputData | null | undefined> = input<OutputData | null | undefined>(null);
+  data: InputSignal<OutputData | null> = input<OutputData | null>(null);
 
   /**
    * Permite añadir clases extra al contenedor

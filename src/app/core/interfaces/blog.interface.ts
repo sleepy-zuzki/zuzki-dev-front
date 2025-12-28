@@ -5,7 +5,7 @@ export interface BlogEntryEntity {
   title: string;
   slug: string;
   description: string;
-  content?: OutputData; // EditorJS output object
+  content?: OutputData | null; // EditorJS output object
   publishDate: string;
   createdAt: string;
   updatedAt: string;
@@ -16,7 +16,7 @@ export interface CreateBlogDto {
   title: string;
   slug: string;
   description?: string;
-  content?: OutputData;
+  content?: OutputData | null;
   publishDate?: string;
 }
 

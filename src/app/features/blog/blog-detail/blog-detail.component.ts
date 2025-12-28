@@ -49,7 +49,7 @@ import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '
                   {{ entry.publishDate | date:'longDate' }}
                 </span>
               </div>
-              
+
               <app-typography-title [level]="1" variant="page" align="left">
                 {{ entry.title }}
               </app-typography-title>
@@ -59,8 +59,8 @@ import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '
                <p class="text-xl leading-relaxed text-gray-600 dark:text-gray-300 mb-8 font-medium">
                  {{ entry.description }}
                </p>
-               
-               <app-editor-renderer [data]="entry.content"></app-editor-renderer>
+
+               <app-editor-renderer [data]="entry.content || null"></app-editor-renderer>
             </div>
           </article>
         }
