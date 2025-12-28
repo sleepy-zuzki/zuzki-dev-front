@@ -7,7 +7,7 @@ Frontend para el **portafolio de Zuzki**, construido con **Angular 21** y render
 - **Framework:** [Angular 21.x](https://angular.dev) (Standalone, Signals, Zoneless).
 - **Estilos:** [Tailwind CSS 4.x](https://tailwindcss.com) (PostCSS).
 - **Runtime:** [Cloudflare Pages](https://pages.cloudflare.com) + [Wrangler](https://developers.cloudflare.com/workers/wrangler/).
-- **Estado:** [@ngrx/signals](https://ngrx.io/guide/signals).
+- **Estado:** Native Angular Signals (Store Pattern).
 - **Iconos:** [@ng-icons](https://ng-icons.github.io/ng-icons/).
 - **Package Manager:** `pnpm`.
 
@@ -30,6 +30,20 @@ pnpm install
 ```
 
 Configura el endpoint de la API en `src/environments/environment.ts` (y `.development.ts`) antes de ejecutar la aplicación.
+
+## Características Principales
+
+### Pública
+- **Inicio**: Presentación general y servicios.
+- **Proyectos (Works)**: Portafolio interactivo con detalles técnicos.
+- **Blog**: Artículos y tutoriales sobre desarrollo web y tecnología.
+
+### Panel de Administración (Dashboard)
+Acceso protegido para gestión de contenido:
+- **Proyectos**: CRUD completo de proyectos con gestión de carrusel de imágenes.
+- **Tecnologías**: Administración del stack tecnológico.
+- **Galería**: Gestión centralizada de archivos multimedia.
+- **Blog**: Creación y edición de artículos con soporte para slugs SEO personalizados.
 
 ## Desarrollo
 
@@ -89,23 +103,21 @@ pnpm run deploy
 /
 ├── src/
 │   ├── app/                  # Código principal de la aplicación
-│   │   ├── core/             # Servicios e interceptores esenciales
-│   │   ├── features/         # Módulos de características (home, about, works)
-│   │   ├── pages/            # Componentes de página principales
-│   │   ├── shared/           # Componentes y utilidades compartidas
+│   │   ├── core/             # Servicios, Stores (Signals) e Interceptores
+│   │   ├── features/         # Módulos funcionales (admin, blog, home, works)
+│   │   ├── pages/            # Componentes de página (Rutas)
+│   │   ├── shared/           # Componentes UI reutilizables y utilidades
 │   │   └── worker/           # Código específico para Cloudflare Workers
-│   ├── assets/               # Recursos estáticos procesados por Angular
+│   ├── assets/               # Recursos estáticos
 │   ├── environments/         # Configuración de entornos
-│   ├── utils/                # Utilidades generales (ej: generador de sitemap)
+│   ├── utils/                # Utilidades generales
 │   ├── main.ts               # Punto de entrada para navegador
 │   ├── main.server.ts        # Punto de entrada para SSR
 │   └── server.ts             # Manejador para Cloudflare Workers
 ├── public/                   # Archivos estáticos servidos directamente
-├── tools/                    # Scripts y herramientas de desarrollo
-└── ... archivos de configuración (angular.json, tsconfig.json, etc.)
+├── tools/                    # Scripts de build y generación de sitemap
+└── ... archivos de configuración
 ```
-
-Cada carpeta principal contiene su propio archivo README.md con información específica sobre su propósito y estructura.
 
 ## Scripts Disponibles
 
@@ -115,7 +127,7 @@ Cada carpeta principal contiene su propio archivo README.md con información esp
 - `pnpm run test` – ejecuta pruebas unitarias
 - `pnpm run deploy` – despliega en Cloudflare Pages
 - `pnpm run cf-typegen` – actualiza las definiciones de tipos de Cloudflare
-- `pnpm run process` – ejecuta scripts de post-procesamiento (copy-files.mjs)
+- `pnpm run process` – ejecuta scripts de post-procesamiento (copy-files, sitemap)
 
 ## Lecturas Adicionales
 
