@@ -3,77 +3,51 @@
 @reference "../../../../styles/utils/layout.css";
 @reference "../../../../styles/utils/typography.css";
 
-.project-card {
-  @apply card-group card-interactive h-full overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-surface-200/60 flex flex-col;
-}
+/* Estructura Base manejada por app-card. Mantenemos especificidades visuales internas. */
 
-.project-card:focus-within {
-  @apply ring-2 ring-zuzki-500;
-}
-
-
+/* Ajuste de altura y posición para el slot de imagen */
 .project-card__figure {
-  @apply relative h-48 w-full md:h-56 lg:h-60 overflow-hidden;
+  @apply h-48 w-full md:h-56 lg:h-60 overflow-hidden relative block; 
+  /* block y relative son importantes para que ng-src fill funcione */
 }
 
 .project-card__image {
-  @apply absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out;
+  @apply object-cover transition-transform duration-700 ease-out;
 }
 
-/* Efecto Zoom suave en hover */
-.project-card:hover .project-card__image {
+/* Efecto Zoom suave en hover (Necesitamos apuntar al host o usar una clase que detecte el hover del padre app-card) */
+:host-context(.app-card--interactive:hover) .project-card__image {
   @apply scale-105;
 }
 
-/* Overlay sutil para unificar tonos, pero permite ver la imagen */
+/* Overlay sutil */
 .project-card__gradient-overlay {
-  @apply absolute inset-0 bg-black/10;
+  @apply absolute inset-0 bg-black/10 pointer-events-none;
 }
 
 .project-card__placeholder-bg {
   @apply absolute inset-0 bg-gradient-brand;
 }
 
-/* Badges (Usando utilidad badge) */
+/* Badges (Usando utilidad badge + posicionamiento relativo al slot) */
 .project-card__badge {
-  @apply badge absolute z-10;
+  @apply badge shadow-sm;
 }
 
 .project-card__badge--featured {
-  @apply top-3 left-3 bg-zuzki-500 text-white shadow-md shadow-zuzki-500/20;
+  @apply bg-zuzki-500 text-white shadow-zuzki-500/20;
 }
 
 .project-card__badge--category {
-  @apply top-3 right-3 bg-white/20 text-white backdrop-blur-md border border-white/20 shadow-sm;
+  @apply bg-white/20 text-white backdrop-blur-md border border-white/20;
 }
 
 /* --- ADAPTIVE GLASS SCRIM (Compact Year Badge) --- */
+/* Este elemento va DENTRO del slot de imagen, posicionado absolutamente respecto a él */
 .project-card__glass-scrim {
   @apply absolute bottom-3 left-3 px-3 py-1 z-10 rounded-full glass-scrim;
 }
 
 .project-card__year {
-  @apply text-muted-sm opacity-100; /* Opacidad 100 porque ya el glass scrim maneja el contraste */
-}
-
-/* Contenido Principal */
-.project-card__content {
-  @apply p-5 flex flex-col gap-4 grow;
-}
-
-.project-card__actions {
-  @apply mt-auto;
-}
-
-.project-card__admin-actions {
-  @apply flex justify-between items-center gap-2;
-}
-
-.project-card__admin-actions-btn-group {
-  @apply flex items-center gap-2;
-}
-
-/* --- Button Overrides --- */
-.project-card__delete-button {
-  @apply bg-red-100 text-red-600 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50 rounded;
+  @apply text-muted-sm opacity-100;
 }

@@ -11,6 +11,7 @@ import { BlogFormComponent } from './components/blog-form/blog-form.component';
 import type { OutputData } from '@editorjs/editorjs';
 import { ButtonComponent } from '@components/button/button.component';
 import { BlogStatus } from '@core/enums';
+import { BlogCardComponent } from '@shared/components/blog-card/blog-card.component';
 
 @Component({
   selector: 'app-blog-admin-feature',
@@ -22,7 +23,8 @@ import { BlogStatus } from '@core/enums';
     BlogFormComponent,
     DatePipe,
     ButtonComponent,
-    UpperCasePipe
+    UpperCasePipe,
+    BlogCardComponent
   ],
   templateUrl: './blog-admin.feature.html',
   styleUrls: ['./blog-admin.feature.css'],

@@ -1,45 +1,52 @@
-<article class="project-card">
-  <figure class="project-card__figure">
-    @if (imageUrl()) {
-      <img [ngSrc]="imageUrl()!" class="project-card__image" [alt]="'Imagen del proyecto ' + project().title" fill>
-      <div class="project-card__gradient-overlay"></div>
-    } @else {
-      <div class="project-card__placeholder-bg"></div>
-    }
-
+<app-card [interactive]="!isAdmin()" class="h-full block">
+  <!-- Badges Slot -->
+  <div slot="badges">
     @if (project().isFeatured) {
       <span class="project-card__badge project-card__badge--featured">Destacado</span>
     }
+    <!-- Espaciador si solo hay uno -->
+    <span></span> 
     @if (project().area) {
       <span class="project-card__badge project-card__badge--category">
         {{ project().area?.name }}
       </span>
     }
+  </div>
 
+  <!-- Image Slot -->
+  <div slot="image" class="project-card__figure relative h-full w-full">
+    @if (imageUrl()) {
+      <img [ngSrc]="imageUrl()!" class="project-card__image" [alt]="'Imagen del proyecto ' + project().title" fill>
+      <div class="project-card__gradient-overlay"></div>
+    } @else {
+      <div class="project-card__placeholder-bg h-full w-full"></div>
+    }
+
+    <!-- Glass Scrim (Año) - Elemento único de Proyectos -->
     @if (project().year) {
       <div class="project-card__glass-scrim">
         <p class="project-card__year">{{ project().year }}</p>
       </div>
     }
+  </div>
 
-    <figcaption class="sr-only">Banner visual del proyecto {{ project().title }}</figcaption>
-  </figure>
+  <!-- Content Slot -->
+  <header>
+    <app-typography-title [level]="3" variant="card" align="left">{{ project().title }}</app-typography-title>
+  </header>
 
-  <div class="project-card__content">
-    <header>
-      <app-typography-title [level]="3" variant="card" align="left">{{ project().title }}</app-typography-title>
-    </header>
+  <app-typography-text as="p" variant="caption" extraClasses="line-clamp-3 mb-4">{{ project().description }}</app-typography-text>
 
-    <app-typography-text as="p" variant="caption" extraClasses="line-clamp-3">{{ project().description }}</app-typography-text>
+  <app-tags-list [tags]="tags()"></app-tags-list>
 
-    <app-tags-list [tags]="tags()"></app-tags-list>
-
-    <nav class="project-card__actions" aria-label="Acciones del proyecto">
+  <!-- Footer Slot -->
+  <div slot="footer" class="w-full">
+    <nav aria-label="Acciones del proyecto">
       @if (isAdmin()) {
-        <div class="project-card__admin-actions">
-          <div class="project-card__admin-actions-btn-group">
+        <div class="flex justify-between items-center gap-2">
+          <div class="flex items-center gap-2">
             <app-button
-              variant="brand"
+              variant="secondary"
               size="sm"
               (click)="onEdit()"
               [ariaLabel]="'Editar proyecto ' + project().title">
@@ -60,7 +67,7 @@
             size="icon"
             (click)="onDelete()"
             [ariaLabel]="'Eliminar proyecto ' + project().title"
-            class="project-card__delete-button">
+            class="text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">
             <ng-icon name="bootstrapTrash" />
           </app-button>
         </div>
@@ -76,7 +83,6 @@
       }
     </nav>
   </div>
-</article>
-
+</app-card>
 
 <app-project-info-modal #projectModal [project]="project()"></app-project-info-modal>

@@ -30,6 +30,7 @@ export class BlogFormComponent {
   private readonly fileStore = inject(FileStore);
   
   form: InputSignal<FormGroup> = input.required<FormGroup>();
+  isEditing = input(false);
   coverImageSelected = output<File>();
   galleryImageSelected = output<{id: string, url: string}>();
 

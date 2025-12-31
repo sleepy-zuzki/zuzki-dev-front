@@ -6,5 +6,6 @@
   @case ('p')     { <p     [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></p> }
   @case ('span')  { <span  [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></span> }
   @case ('small') { <small [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></small> }
+  @case ('label') { <label [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></label> }
   @default        { <div   [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></div> }
 }

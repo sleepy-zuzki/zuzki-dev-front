@@ -1,24 +1,13 @@
 @reference "../../../../styles/utils/cards.css";
 @reference "../../../../styles/utils/typography.css";
 
-.blog-card {
-  @apply h-full card-surface card-border border-zuzki-300/20 rounded-xl overflow-hidden card-interactive;
-  /* Ajuste específico para blog: borde hover coloreado */
-  @apply hover:border-zuzki-500;
+/* Ya no necesitamos estilos de estructura de tarjeta, app-card lo maneja. 
+   Mantenemos solo especificidades si es necesario. */
+
+/* Ajuste para que el hover del anchor dispare efectos dentro de la tarjeta si es necesario */
+a:hover app-typography-title {
+  @apply text-zuzki-500;
 }
 
-.blog-card__content {
-  @apply p-6 flex flex-col h-full;
-}
-
-.blog-card__header {
-  @apply mb-4;
-}
-
-.blog-card__date {
-  @apply block text-muted-sm mb-2;
-}
-
-.blog-card__footer {
-  @apply mt-auto pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-end items-center;
-}
+/* El componente Card usa slot projection, así que los estilos locales 
+   aplican al contenido proyectado */

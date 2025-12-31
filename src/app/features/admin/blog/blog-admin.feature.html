@@ -17,6 +17,7 @@
       <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
         <app-blog-form 
           [form]="form" 
+          [isEditing]="!!selectedEntryId()"
           (coverImageSelected)="onUploadCover($event)"
           (galleryImageSelected)="onSelectFromGallery($event)"
         ></app-blog-form>
@@ -59,58 +60,16 @@
     } @else if (entries().length === 0) {
       <app-typography-text>No hay artículos creados aún.</app-typography-text>
     } @else {
-      <div class="blog-admin__list">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @for (entry of entries(); track entry.id) {
-          <article class="blog-admin__item">
-            <div class="blog-admin__item-content">
-              <div class="flex items-center gap-2 mb-1">
-                <span class="px-2 py-0.5 text-xs font-medium rounded-full"
-                      [class.bg-yellow-100]="entry.status === BlogStatus.DRAFT"
-                      [class.text-yellow-800]="entry.status === BlogStatus.DRAFT"
-                      [class.bg-green-100]="entry.status === BlogStatus.PUBLISHED"
-                      [class.text-green-800]="entry.status === BlogStatus.PUBLISHED"
-                      [class.bg-gray-100]="entry.status === BlogStatus.ARCHIVED"
-                      [class.text-gray-800]="entry.status === BlogStatus.ARCHIVED">
-                  {{ entry.status | uppercase }}
-                </span>
-                <h3 class="blog-admin__item-title m-0">{{ entry.title }}</h3>
-              </div>
-              <p class="blog-admin__item-meta">
-                @if (entry.publishDate) {
-                  Publicado: {{ entry.publishDate | date:'mediumDate' }}
-                } @else {
-                  Creado: {{ entry.createdAt | date:'mediumDate' }}
-                }
-              </p>
-              <p class="blog-admin__item-desc">{{ entry.description }}</p>
-            </div>
-            <div class="blog-admin__item-actions flex gap-2">
-              <button
-                type="button"
-                (click)="onEdit(entry)"
-                class="text-sm font-medium text-blue-600 hover:text-blue-800"
-              >
-                Editar
-              </button>
-              @if (entry.status === BlogStatus.DRAFT) {
-                <button
-                  type="button"
-                  (click)="onPublish(entry.id)"
-                  class="text-sm font-medium text-brand-primary hover:text-brand-hover"
-                >
-                  Publicar
-                </button>
-              }
-              <button
-                type="button"
-                (click)="onDelete(entry.id)"
-                class="blog-admin__delete-button"
-                aria-label="Eliminar artículo"
-              >
-                Eliminar
-              </button>
-            </div>
-          </article>
+          <app-blog-card
+            [entry]="entry"
+            [isAdmin]="true"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)"
+            (publish)="onPublish($event)"
+            class="h-full block"
+          ></app-blog-card>
         }
       </div>
     }

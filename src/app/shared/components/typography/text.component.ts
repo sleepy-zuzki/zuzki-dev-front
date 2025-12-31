@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-type TextAs = 'p' | 'span' | 'small' | 'div';
-type TextVariant = 'base' | 'muted' | 'lead' | 'caption';
+type TextAs = 'p' | 'span' | 'small' | 'div' | 'label';
+type TextVariant = 'base' | 'muted' | 'lead' | 'caption' | 'label';
 type Align = 'left' | 'center' | 'right';
 
 @Component({

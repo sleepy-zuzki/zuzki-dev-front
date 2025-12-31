@@ -15,6 +15,7 @@ import { TypographyTitleComponent } from '@components/typography/title.component
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
 import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
+import { CardComponent } from '@shared/components/card/card.component';
 
 @Component({
   selector: 'app-project-card',
@@ -27,7 +28,8 @@ import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/comm
     TypographyTitleComponent,
     ProjectInfoModalComponent,
     ButtonComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    CardComponent
   ],
   templateUrl: './project-card.component.html',
   styleUrls: ['./project-card.component.css'],

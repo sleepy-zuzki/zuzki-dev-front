@@ -22,6 +22,10 @@
   @apply text-xs text-gray-500 dark:text-gray-400;
 }
 
+.typography-text--variant-label {
+  @apply text-sm font-medium text-gray-900 dark:text-gray-100;
+}
+
 /* Alignment modifiers */
 .typography-text--align-left {
   @apply text-left;

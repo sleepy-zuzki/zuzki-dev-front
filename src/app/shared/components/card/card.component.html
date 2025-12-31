@@ -1,0 +1,20 @@
+<div class="card-container">
+  <!-- Zona de Imagen y Badges -->
+  <div class="card-media-wrapper">
+    <ng-content select="[slot=image]"></ng-content>
+    
+    <div class="card-badges">
+      <ng-content select="[slot=badges]"></ng-content>
+    </div>
+  </div>
+
+  <!-- Contenido Principal -->
+  <div class="card-body">
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Footer / Acciones -->
+  <div class="card-footer-wrapper">
+    <ng-content select="[slot=footer]"></ng-content>
+  </div>
+</div>
