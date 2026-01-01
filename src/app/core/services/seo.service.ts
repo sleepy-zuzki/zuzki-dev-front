@@ -10,7 +10,8 @@ export interface SEOData {
   description?: string;
   keywords?: string[];
   robots?: string;
-  image?: string; // URL de la imagen para compartir
+  image?: string; // URL de la imagen para compartir (OG)
+  twitterImage?: string; // URL específica para Twitter Card
   imageAlt?: string; // Texto alternativo para la imagen
   type?: string;  // website, article, profile, etc.
   author?: string;
@@ -60,6 +61,7 @@ export class SeoService {
         keywords: data['keywords'] as string[],
         robots: data['robots'] as string,
         image: data['image'] as string,
+        twitterImage: data['twitterImage'] as string,
         type: data['type'] as string,
         author: data['author'] as string
       };
@@ -166,7 +168,12 @@ export class SeoService {
       this.meta.updateTag({ name: 'twitter:description', content: data.description });
     }
 
-    this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
+    // Twitter Image específica o fallback a OG Image
+    let twitterImageUrl = imageUrl;
+    if (data.twitterImage) {
+      twitterImageUrl = data.twitterImage.startsWith('http') ? data.twitterImage : this.getAbsoluteUrl(data.twitterImage);
+    }
+    this.meta.updateTag({ name: 'twitter:image', content: twitterImageUrl });
   }
 
   /**
