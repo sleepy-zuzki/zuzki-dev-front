@@ -25,7 +25,7 @@ import { FooterComponent } from '@shared/components/footer/footer.component';
   standalone: true
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title: string = 'Sleepy Zuzki';
+  title: string = 'Portafolio de Sleepy Zuzki - Inicio';
   // Initialize to false to prevent SSR hydration mismatch (Server renders false, Client checks LS)
   showIntro: boolean = false;
   introKey = 'intro_animation';
