@@ -103,8 +103,10 @@ export class BlogDetailComponent implements OnDestroy {
           title: entry.title + ' | Zuzki Blog',
           description: entry.description,
           image: this.coverImage() || undefined,
+          imageAlt: 'Portada del artículo: ' + entry.title,
           type: 'article',
-          author: 'Zuzki'
+          author: 'Zuzki',
+          publishedTime: entry.publishDate || entry.createdAt
         });
       }
     });

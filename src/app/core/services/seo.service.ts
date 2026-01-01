@@ -11,8 +11,10 @@ export interface SEOData {
   keywords?: string[];
   robots?: string;
   image?: string; // URL de la imagen para compartir
+  imageAlt?: string; // Texto alternativo para la imagen
   type?: string;  // website, article, profile, etc.
   author?: string;
+  publishedTime?: string; // ISO String para artículos
 }
 
 @Injectable({
@@ -139,6 +141,16 @@ export class SeoService {
     }
 
     this.meta.updateTag({ property: 'og:image', content: imageUrl });
+
+    if (data.imageAlt) {
+      this.meta.updateTag({ property: 'og:image:alt', content: data.imageAlt });
+      this.meta.updateTag({ name: 'twitter:image:alt', content: data.imageAlt });
+    }
+
+    // Article Specifics
+    if (data.type === 'article' && data.publishedTime) {
+      this.meta.updateTag({ property: 'article:published_time', content: data.publishedTime });
+    }
 
     // --- TWITTER CARDS ---
 
