@@ -2,7 +2,7 @@ import { Component, computed, input } from '@angular/core';
 
 
 type SectionVariant = 'base' | 'raised' | 'overlay' | 'transparent' | 'coffee';
-type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
+type SectionSpacing = 'none' | 'sm' | 'md' | 'lg' | 'xl';
 
 @Component({
   selector: 'app-section',
@@ -13,7 +13,11 @@ type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
 })
 export class SectionComponent {
   variant = input<SectionVariant>('base');
-  padding = input<SectionPadding>('md');
+  
+  // Granular padding control
+  paddingY = input<SectionSpacing>('md');
+  paddingX = input<SectionSpacing>('none');
+
   container = input(true);
 
   // Accesibilidad / anclaje
@@ -35,14 +39,22 @@ export class SectionComponent {
     };
     base.push(surfaceMap[this.variant()]);
 
-    // Paddings verticales
-    const paddingMap: Record<SectionPadding, string> = {
-      none: 'py-0',
-      sm: 'py-6',
-      md: 'py-10',
-      lg: 'py-16'
+    // Paddings
+    const spacingMap: Record<SectionSpacing, string> = {
+      none: '0',
+      sm: '6', // 1.5rem
+      md: '10', // 2.5rem
+      lg: '16', // 4rem
+      xl: '24'  // 6rem
     };
-    base.push(paddingMap[this.padding()]);
+
+    if (this.paddingY() !== 'none') {
+        base.push(`py-${spacingMap[this.paddingY()]}`);
+    }
+    
+    if (this.paddingX() !== 'none') {
+        base.push(`px-${spacingMap[this.paddingX()]}`);
+    }
 
     // Clases extra para permitir fondos/layout sin wrappers
     const extras = Array.isArray(this.extraClasses()) ? (this.extraClasses() as string[]).join(' ') : (this.extraClasses() as string || '').trim();

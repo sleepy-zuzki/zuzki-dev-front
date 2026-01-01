@@ -19,8 +19,8 @@
 
     <!-- Image Slot -->
     @if (coverImage()) {
-      <div slot="image" class="h-48 w-full">
-        <img [src]="coverImage()" [alt]="entry().title" class="w-full h-full object-cover" loading="lazy">
+      <div slot="image" class="h-48 w-full relative overflow-hidden">
+        <img [ngSrc]="coverImage()!" [alt]="entry().title" fill class="object-cover">
       </div>
     }
 
@@ -34,7 +34,7 @@
       </app-typography-title>
     </header>
 
-    <app-typography-text variant="base" extraClasses="line-clamp-3 mb-4">
+    <app-typography-text variant="base" extraClasses="text-sm line-clamp-3 mb-4">
       {{ entry().description }}
     </app-typography-text>
 
@@ -74,12 +74,12 @@
 
 } @else {
   <!-- MODO USUARIO -->
-  <a [routerLink]="['/blog', entry().slug]" class="block h-full no-underline focus:outline-none focus:ring-2 focus:ring-zuzki-500 rounded-xl">
+  <a [routerLink]="['/blog', entry().slug]" class="group block h-full no-underline focus:outline-none focus:ring-2 focus:ring-zuzki-500 rounded-xl">
     <app-card [interactive]="true">
       <!-- Image Slot -->
       @if (coverImage()) {
-        <div slot="image" class="h-48 w-full overflow-hidden">
-          <img [src]="coverImage()" [alt]="entry().title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+        <div slot="image" class="h-48 w-full overflow-hidden relative">
+          <img [ngSrc]="coverImage()!" [alt]="entry().title" fill class="object-cover group-hover:scale-105 transition-transform duration-500">
         </div>
       }
 
@@ -93,7 +93,7 @@
         </app-typography-title>
       </header>
 
-      <app-typography-text variant="base" extraClasses="line-clamp-3 mb-4">
+      <app-typography-text variant="base" extraClasses="text-sm line-clamp-3 mb-4">
         {{ entry().description }}
       </app-typography-text>
 

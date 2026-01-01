@@ -2,19 +2,31 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, effect, inject, OnDestroy, OnInit } 
 import { WorksFeature } from '@features/works/works.feature';
 import { ProjectStore } from '@core/stores/project.store';
 import { SeoService } from '@core/services/seo.service';
+import { BreadcrumbComponent, BreadcrumbItem } from '@shared/components/breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-works',
   standalone: true,
   imports: [
-    WorksFeature
+    WorksFeature,
+    BreadcrumbComponent
   ],
-  template: `<app-works-feature />`,
+  template: `
+    <div class="container mx-auto px-6 pb-4">
+      <app-breadcrumb [items]="items" />
+    </div>
+    <app-works-feature />
+  `,
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class WorksPage implements OnInit, OnDestroy {
   private readonly projectStore = inject(ProjectStore);
   private readonly seoService = inject(SeoService);
+
+  items: BreadcrumbItem[] = [
+    { label: 'Home', link: '/', icon: 'featherHome' },
+    { label: 'Proyectos' }
+  ];
 
   constructor() {
     effect(() => {

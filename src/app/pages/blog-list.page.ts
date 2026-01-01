@@ -1,23 +1,22 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { GalleryAdminFeatureComponent } from '@features/admin/gallery/gallery-admin.feature';
+import { BlogListComponent } from '@features/blog/blog-list/blog-list.component';
 import { BreadcrumbComponent, BreadcrumbItem } from '@shared/components/breadcrumb/breadcrumb.component';
 
 @Component({
+  selector: 'app-blog-list-page',
   standalone: true,
-  selector: 'app-gallery-admin-page',
-  imports: [GalleryAdminFeatureComponent, BreadcrumbComponent],
+  imports: [BlogListComponent, BreadcrumbComponent],
   template: `
-    <main class="min-h-screen bg-canvas p-6">
+    <div class="container mx-auto px-6 pb-4">
       <app-breadcrumb [items]="items" />
-      <app-gallery-admin-feature />
-    </main>
+      <app-blog-list />
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GalleryAdminPage {
+export class BlogListPage {
   items: BreadcrumbItem[] = [
     { label: 'Home', link: '/', icon: 'featherHome' },
-    { label: 'Dashboard', link: '/dashboard' },
-    { label: 'Galería' }
+    { label: 'Blog' }
   ];
 }

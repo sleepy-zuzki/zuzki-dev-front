@@ -3,7 +3,7 @@
   <app-section [id]="'inicio'"
                [ariaLabel]="'Inicio'"
                variant="transparent"
-               padding="none"
+               paddingY="none"
                [container]="false"
                extraClasses="min-h-screen flex items-center justify-center">
     <app-home-hero></app-home-hero>
@@ -12,7 +12,7 @@
   <!-- Servicios Section -->
   <app-section [id]="'servicios'"
                variant="coffee"
-               padding="none"
+               paddingY="none"
                [container]="false"
                extraClasses="py-20">
     @defer (on idle) {
@@ -23,12 +23,10 @@
   </app-section>
 
   <!-- Sobre Mí Section -->
-  <app-section [id]="'sobre-mi'"
-               [ariaLabel]="'Sobre mí'"
-               variant="transparent"
-               padding="none"
-               [container]="false"
-               extraClasses="py-20">
+  <app-section id="sobre-mi"
+               variant="raised"
+               paddingY="md"
+               [container]="false">
     @defer (on idle) {
       <app-home-about></app-home-about>
     } @placeholder {
@@ -37,12 +35,10 @@
   </app-section>
 
   <!-- Proyectos Section -->
-  <app-section [id]="'proyectos'"
-               [ariaLabel]="'Proyectos destacados'"
-               variant="coffee"
-               padding="none"
-               [container]="false"
-               extraClasses="py-20">
+  <app-section id="proyectos"
+               variant="base"
+               paddingY="md"
+               [container]="false">
     @defer (on idle) {
       <app-home-projects></app-home-projects>
     } @placeholder {
@@ -54,7 +50,7 @@
   <app-section [id]="'contacto'"
                [ariaLabel]="'Contacto'"
                variant="transparent"
-               padding="none"
+               paddingY="none"
                [container]="false"
                extraClasses="py-20">
     @defer (on idle) {

@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DatePipe, UpperCasePipe } from '@angular/common';
-
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
 import { BlogStore } from '@core/stores/blog.store';
@@ -21,9 +19,7 @@ import { BlogCardComponent } from '@shared/components/blog-card/blog-card.compon
     TypographyTitleComponent,
     TypographyTextComponent,
     BlogFormComponent,
-    DatePipe,
     ButtonComponent,
-    UpperCasePipe,
     BlogCardComponent
   ],
   templateUrl: './blog-admin.feature.html',
@@ -94,10 +90,10 @@ export class BlogAdminFeatureComponent {
 
   onEdit(entry: any): void {
     this.selectedEntryId.set(entry.id);
-    
+
     // Find the cover image to populate the preview
     const cover = entry.images?.find((img: any) => img.type === 'cover');
-    
+
     this.form.patchValue({
       title: entry.title,
       slug: entry.slug,

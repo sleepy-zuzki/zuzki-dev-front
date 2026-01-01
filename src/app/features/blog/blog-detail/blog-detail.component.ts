@@ -1,39 +1,32 @@
-import { Component, inject, input, OnDestroy, effect, computed } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject, input, OnDestroy, effect, computed, InputSignal, Signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { BlogStore } from '@core/stores/blog.store';
 import { SeoService } from '@core/services/seo.service';
 import { SectionComponent } from '@shared/components/section/section.component';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
-import { ButtonComponent } from '@shared/components/button/button.component';
 import { EditorRendererComponent } from '@components/editor-renderer/editor-renderer.component';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '@ng-icons/feather-icons';
+import { featherCalendar, featherClock, featherLoader } from '@ng-icons/feather-icons';
+import { BlogEntryEntity } from '@core/interfaces';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-blog-detail',
   standalone: true,
   imports: [
-    RouterLink,
     DatePipe,
     SectionComponent,
     TypographyTitleComponent,
     TypographyTextComponent,
-    ButtonComponent,
     NgIcon,
-    EditorRendererComponent
+    EditorRendererComponent,
+    NgOptimizedImage
   ],
-  providers: [provideIcons({ featherArrowLeft, featherCalendar, featherClock, featherLoader })],
+  providers: [provideIcons({ featherCalendar, featherClock, featherLoader })],
   template: `
-    <app-section variant="transparent" padding="lg" [container]="false">
-      <div class="max-w-3xl mx-auto">
-        <!-- Back Button -->
-        <div class="mb-8">
-          <app-button variant="ghost" routerLink="/blog">
-            <ng-icon name="featherArrowLeft" class="mr-2"></ng-icon> Volver al blog
-          </app-button>
-        </div>
+    <app-section variant="transparent" paddingY="none" paddingX="none" [container]="false">
+      <div class="mx-auto">
 
         @if (store.isLoading() && !store.currentEntry()) {
            <div class="flex justify-center py-20">
@@ -46,8 +39,8 @@ import { featherArrowLeft, featherCalendar, featherClock, featherLoader } from '
         } @else if (store.currentEntry(); as entry) {
           <article>
             @if (coverImage()) {
-              <div class="mb-10 rounded-2xl overflow-hidden shadow-lg">
-                <img [src]="coverImage()" [alt]="entry.title" class="w-full h-auto object-cover max-h-[500px]">
+              <div class="mb-10 rounded-2xl overflow-hidden shadow-lg relative h-[300px] md:h-[500px]">
+                <img [ngSrc]="coverImage()!" [alt]="entry.title" fill priority class="object-fill">
               </div>
             }
 
@@ -82,22 +75,22 @@ export class BlogDetailComponent implements OnDestroy {
   private readonly seo = inject(SeoService);
 
   // Router Input Binding
-  slug = input<string>();
+  slug: InputSignal<string | undefined> = input<string>();
 
-  coverImage = computed(() => {
+  coverImage: Signal<string | null> = computed(() => {
     return this.store.currentEntry()?.images.find(img => img.type === 'cover')?.url || null;
   });
 
   constructor() {
-    effect(() => {
-        const s = this.slug();
-        if (s) {
-            this.store.setSelectedSlug(s);
+    effect((): void => {
+        const slug: string | undefined = this.slug();
+        if (slug) {
+            this.store.setSelectedSlug(slug);
         }
     });
 
     effect(() => {
-      const entry = this.store.currentEntry();
+      const entry: BlogEntryEntity | null = this.store.currentEntry();
       if (entry) {
         this.seo.update({
           title: entry.title + ' | Zuzki Blog',
