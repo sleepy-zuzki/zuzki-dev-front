@@ -40,6 +40,11 @@ files.forEach(filePath => {
   // Reduced options for server files to avoid URI malformed errors
   const isServerFile = filePath.includes('server.mjs') || filePath.includes('_worker.js');
   
+  if (filePath.includes('_worker.js')) {
+    console.log(`⏩ Skipping server file: ${path.relative(root, filePath)}`);
+    return;
+  }
+  
   const options = {
       compact: true,
       controlFlowFlattening: !isServerFile,
