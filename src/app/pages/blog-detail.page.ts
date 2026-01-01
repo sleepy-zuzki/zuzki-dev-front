@@ -7,7 +7,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '@shared/components/breadcru
   standalone: true,
   imports: [BlogDetailComponent, BreadcrumbComponent],
   template: `
-    <div class="container mx-auto px-6 pt-24 pb-4">
+    <div class="container mx-auto px-6 pb-4">
       <app-breadcrumb [items]="items" />
       <app-blog-detail />
     </div>

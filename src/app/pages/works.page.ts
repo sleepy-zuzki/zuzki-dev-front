@@ -12,7 +12,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '@shared/components/breadcru
     BreadcrumbComponent
   ],
   template: `
-    <div class="container mx-auto px-6 pt-24 pb-4">
+    <div class="container mx-auto px-6 pb-4">
       <app-breadcrumb [items]="items" />
     </div>
     <app-works-feature />
@@ -22,7 +22,7 @@ import { BreadcrumbComponent, BreadcrumbItem } from '@shared/components/breadcru
 export class WorksPage implements OnInit, OnDestroy {
   private readonly projectStore = inject(ProjectStore);
   private readonly seoService = inject(SeoService);
-  
+
   items: BreadcrumbItem[] = [
     { label: 'Home', link: '/', icon: 'featherHome' },
     { label: 'Proyectos' }
