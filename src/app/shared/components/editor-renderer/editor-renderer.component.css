@@ -1,0 +1,39 @@
+@reference "../../../../styles/utils/core.css";
+@reference "../../../../styles/utils/typography.css";
+
+.editor-renderer-content {
+  @apply text-gray-900 dark:text-gray-100 leading-relaxed;
+}
+
+.renderer-block {
+  @apply mb-4;
+}
+
+/* Tipografía de Encabezados */
+.editor-renderer-content h1 { @apply text-4xl font-bold mb-6 mt-8 text-black dark:text-white; }
+.editor-renderer-content h2 { @apply text-3xl font-bold mb-4 mt-6 text-black dark:text-white; }
+.editor-renderer-content h3 { @apply text-2xl font-bold mb-3 mt-4 text-black dark:text-white; }
+
+/* Párrafos */
+.editor-renderer-content p {
+  @apply mb-4 text-base;
+}
+
+/* Listas */
+.renderer-list-unordered { @apply list-disc pl-6 mb-4; }
+.renderer-list-ordered { @apply list-decimal pl-6 mb-4; }
+.editor-renderer-content li { @apply py-1; }
+
+/* Citas */
+.renderer-quote {
+  @apply border-l-4 border-zuzki-500 pl-6 italic my-8 bg-surface-100 dark:bg-surface-200/50 py-4 rounded-r-lg;
+}
+
+.renderer-quote cite {
+  @apply block mt-2 text-sm font-semibold not-italic text-gray-600 dark:text-gray-400;
+}
+
+/* Enlaces (EditorJS usa <a> dentro del texto) */
+.editor-renderer-content a {
+  @apply text-zuzki-600 dark:text-zuzki-400 underline decoration-zuzki-500/30 underline-offset-4 hover:text-zuzki-500 transition-colors;
+}

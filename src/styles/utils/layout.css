@@ -1,0 +1,14 @@
+@reference "./core.css";
+
+/* --- LAYOUT UTILITIES --- */
+@utility glass-header {
+  @apply fixed top-0 left-0 right-0 z-50 bg-canvas/80 backdrop-blur-md border-b border-border-subtle;
+}
+
+@utility glass-scrim {
+  @apply backdrop-blur-md border transition-colors duration-300 shadow-sm;
+  /* Light Mode */
+  @apply bg-white/70 border-white/40 text-gray-900;
+  /* Dark Mode */
+  @apply dark:bg-black/60 dark:border-white/10 dark:text-white;
+}

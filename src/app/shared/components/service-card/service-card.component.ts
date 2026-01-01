@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { NgIconComponent } from '@ng-icons/core';
 import { NgClass } from '@angular/common';
 
@@ -19,9 +19,9 @@ export interface ServiceCard {
   styleUrl: './service-card.component.css',
 })
 export class ServiceCardComponent {
-  @Input({ required: true }) service!: ServiceCard;
+  service = input.required<ServiceCard>();
 
-  get iconColorClasses(): string {
+  iconColorClasses = computed(() => {
     const colorMap = {
       purple: 'bg-purple-100 text-purple-600',
       blue: 'bg-blue-100 text-blue-600',
@@ -31,6 +31,6 @@ export class ServiceCardComponent {
       indigo: 'bg-indigo-100 text-indigo-600',
       pink: 'bg-pink-100 text-pink-600'
     };
-    return colorMap[this.service.iconColor] || colorMap.purple;
-  }
+    return colorMap[this.service().iconColor] || colorMap.purple;
+  });
 }

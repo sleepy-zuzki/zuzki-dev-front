@@ -2,12 +2,12 @@
   <ng-content></ng-content>
 </ng-template>
 
-@switch (this.level) {
-  @case (1) { <h1 [attr.id]="id" [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></h1> }
-  @case (2) { <h2 [attr.id]="id" [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></h2> }
-  @case (3) { <h3 [attr.id]="id" [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></h3> }
-  @case (4) { <h4 [attr.id]="id" [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></h4> }
-  @case (5) { <h5 [attr.id]="id" [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></h5> }
-  @case (6) { <h6 [attr.id]="id" [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></h6> }
-  @default  { <h2 [attr.id]="id" [class]="classes"><ng-container [ngTemplateOutlet]="projected"></ng-container></h2> }
+@switch (level()) {
+  @case (1) { <h1 [attr.id]="id()" [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></h1> }
+  @case (2) { <h2 [attr.id]="id()" [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></h2> }
+  @case (3) { <h3 [attr.id]="id()" [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></h3> }
+  @case (4) { <h4 [attr.id]="id()" [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></h4> }
+  @case (5) { <h5 [attr.id]="id()" [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></h5> }
+  @case (6) { <h6 [attr.id]="id()" [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></h6> }
+  @default  { <h2 [attr.id]="id()" [class]="classes()"><ng-container [ngTemplateOutlet]="projected"></ng-container></h2> }
 }

@@ -1,38 +1,39 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 
 
-type SectionVariant = 'primary' | 'secondary' | 'muted' | 'transparent' | 'coffee';
+type SectionVariant = 'base' | 'raised' | 'overlay' | 'transparent' | 'coffee';
 type SectionPadding = 'none' | 'sm' | 'md' | 'lg';
 
 @Component({
   selector: 'app-section',
   standalone: true,
   imports: [],
-  templateUrl: './section.component.html'
+  templateUrl: './section.component.html',
+  styleUrls: ['./section.component.css']
 })
 export class SectionComponent {
-  @Input() variant: SectionVariant = 'primary';
-  @Input() padding: SectionPadding = 'md';
-  @Input() container = true;
+  variant = input<SectionVariant>('base');
+  padding = input<SectionPadding>('md');
+  container = input(true);
 
   // Accesibilidad / anclaje
-  @Input() id: string | null = null;
-  @Input() ariaLabel: string | null = null;
+  id = input<string | null>(null);
+  ariaLabel = input<string | null>(null);
 
   // Clases adicionales para el <section> host (ej. fondos, layouts personalizados)
-  @Input() extraClasses: string | string[] = '';
+  extraClasses = input<string | string[]>('');
 
-  get hostClasses(): string {
+  hostClasses = computed(() => {
     const base = ['w-full'];
     // Variante de superficie
     const surfaceMap: Record<SectionVariant, string> = {
-      primary: 'surface-primary',
-      secondary: 'surface-secondary',
-      muted: 'surface-muted',
+      base: 'bg-canvas',
+      raised: 'bg-surface-100',
+      overlay: 'bg-surface-200',
       transparent: 'bg-transparent',
-      coffee: 'surface-coffee'
+      coffee: 'bg-coffee-mix'
     };
-    base.push(surfaceMap[this.variant]);
+    base.push(surfaceMap[this.variant()]);
 
     // Paddings verticales
     const paddingMap: Record<SectionPadding, string> = {
@@ -41,12 +42,12 @@ export class SectionComponent {
       md: 'py-10',
       lg: 'py-16'
     };
-    base.push(paddingMap[this.padding]);
+    base.push(paddingMap[this.padding()]);
 
     // Clases extra para permitir fondos/layout sin wrappers
-    const extras = Array.isArray(this.extraClasses) ? this.extraClasses.join(' ') : (this.extraClasses || '').trim();
+    const extras = Array.isArray(this.extraClasses()) ? (this.extraClasses() as string[]).join(' ') : (this.extraClasses() as string || '').trim();
     if (extras) base.push(extras);
 
     return base.join(' ');
-  }
+  });
 }

@@ -1,0 +1,45 @@
+@reference "../../../../styles/utils/cards.css";
+
+.card-container {
+  @apply h-full flex flex-col overflow-hidden relative;
+  @apply card-surface card-border card-rounded;
+}
+
+/* Estado Interactivo (Hover) */
+.app-card--interactive .card-container {
+  @apply card-interactive;
+  /* Borde coloreado en hover opcional, basado en el diseño del blog */
+  @apply hover:border-zuzki-500/50 transition-colors duration-300;
+}
+
+.card-media-wrapper {
+  @apply relative w-full;
+  /* Altura por defecto para imágenes, puede ser sobreescrita por el hijo */
+  min-height: 1px; 
+}
+
+/* Utilidad para asegurar que las imágenes ocupen el espacio correcto */
+.card-media-wrapper img {
+  @apply w-full h-48 object-cover md:h-56;
+}
+
+.card-badges {
+  @apply absolute top-3 left-3 right-3 flex justify-between pointer-events-none;
+}
+.card-badges > * {
+  @apply pointer-events-auto; /* Permitir interacción con badges si son botones */
+}
+
+.card-body {
+  @apply flex flex-col flex-grow p-6;
+}
+
+/* El footer solo tiene padding/borde si tiene contenido. 
+   :empty es tricky con ng-content, así que usamos un wrapper que el consumidor puede controlar o estilos internos */
+.card-footer-wrapper:empty {
+  display: none;
+}
+
+.card-footer-wrapper {
+  @apply mt-auto border-t border-gray-100 dark:border-gray-800 p-4;
+}

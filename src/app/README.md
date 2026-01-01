@@ -1,54 +1,19 @@
-# Interceptores HTTP para APIs externas
+# Zuzki Dev - Application Layer
 
-## Estructura de carpetas
+Este directorio contiene la lógica principal de la aplicación Angular, organizada siguiendo un enfoque **Core-Centric**.
 
-```
-src/app/core/
-├── interceptors/
-│   ├── github-data.interceptor.ts
-│   └── make.interceptor.ts
-├── tokens/
-│   └── api-type.token.ts
-└── services/
-    └── api.service.ts
-```
+## Estructura Principal
 
-## Uso de los interceptores
+- **core/**: Lógica de negocio, estado (Signals), servicios e infraestructura.
+- **features/**: Unidades funcionales y componentes de negocio.
+- **pages/**: Orquestadores de rutas y layouts.
+- **shared/**: Componentes de UI, modales y utilidades reutilizables.
 
-Los interceptores permiten consumir múltiples APIs externas de forma limpia y modular. Cada interceptor está condicionado para actuar solo cuando el contexto HTTP contiene el tipo de API específico.
+## Guía de Desarrollo Rápida
 
-### Ejemplos de uso
+1. **Estado**: Define el estado en `core/stores/` usando `signalStore`.
+2. **API**: Los servicios en `core/services/` deben manejar la comunicación.
+3. **Componentes**: Usa componentes `standalone` y prefiere `inject()`.
+4. **Rutas**: Configura las rutas en `app.routes.ts` apuntando a componentes en `pages/`.
 
-```typescript
-// Importar el servicio API
-import { ApiService } from '@core/services/api.service';
-
-@Component({
-  // ...
-})
-export class MyComponent implements OnInit {
-  constructor(private apiService: ApiService) {}
-
-  ngOnInit(): void {
-    // Consumir la API de GitHub
-    this.apiService.getFromGithub<any>('users/octocat').subscribe(user => {
-      console.log('GitHub User:', user);
-    });
-
-    // Consumir la API de Make.com
-    this.apiService.getFromMake<any>('scenarios').subscribe(scenarios => {
-      console.log('Make Scenarios:', scenarios);
-    });
-  }
-}
-```
-
-## Configuración
-
-Los interceptores están configurados en el archivo `app.config.ts` y utilizan variables de entorno para las URLs base de las APIs, definidas en `environment.ts`.
-
-## Notas
-
-- Las peticiones HTTP no necesitan incluir la base URL manualmente.
-- Se utiliza HttpContextToken para identificar el tipo de API.
-- Cada interceptor solo actúa si el contexto lo requiere.
+Para más detalles sobre la arquitectura, consulta [ARCHITECTURE.md](./ARCHITECTURE.md).

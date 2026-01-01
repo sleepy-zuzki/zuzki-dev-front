@@ -46,7 +46,7 @@ export class ThemeService {
       if (isPlatformBrowser(this.platformId)) {
         localStorage.setItem(this.THEME_KEY, theme);
       }
-    } catch (e) {
+    } catch {
       console.error('No ha sido posible cambiar el tema')
     }
   }

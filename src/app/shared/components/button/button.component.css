@@ -1,44 +1,37 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/utils/buttons.css";
 
+/* 
+  Button Styles are now centralized in utilities.css 
+  using @utility btn-* classes.
+*/
+
+/* Base Button Styles maps to @utility btn-base */
 .btn {
-  @apply inline-flex items-center justify-center gap-2 font-medium rounded-lg focus-brand select-none hover:cursor-pointer
-  disabled:opacity-60 disabled:cursor-not-allowed disabled:shadow-none
-  transition-colors duration-200;
+  @apply btn-base;
 }
 
 .btn--block {
-  @apply w-full;
+  @apply btn-block;
 }
 
-/* Tamaños */
-.btn--sm { @apply text-sm px-3 py-1.5; }
-.btn--md { @apply text-sm px-4 py-2; }
-.btn--lg { @apply text-base px-5 py-3; }
-.btn--icon { @apply p-2 rounded-lg; }
+/* Sizes */
+.btn--sm { @apply btn-sm; }
+.btn--md { @apply btn-md; }
+.btn--lg { @apply btn-lg; }
+.btn--icon { @apply btn-icon; }
 
-/* Variantes (tokens del tema) */
-.btn--brand {
-  @apply bg-gradient-brand text-white shadow-sm hover:shadow-md transition-all duration-200 hover:brightness-95;
+/* Variants */
+.btn--brand     { @apply btn-brand; }
+.btn--secondary { @apply btn-secondary; }
+.btn--outline   { @apply btn-outline; }
+.btn--ghost     { @apply btn-ghost; }
+.btn--link      { @apply btn-link; }
+
+/* Internal Elements */
+.btn__spinner {
+  @apply inline-flex animate-spin mr-2;
 }
 
-.btn--secondary {
-  @apply bg-background-section text-zuzki-700 border border-zuzki-200
-  dark:text-zuzki-200 dark:border-zuzki-800
-  hover:bg-background-surface;
+.btn__content {
+  @apply inline-flex items-center gap-2;
 }
-
-.btn--outline {
-  @apply border border-brand-primary text-brand-primary bg-transparent hover:bg-brand-primary/10;
-}
-
-.btn--ghost {
-  @apply bg-transparent text-ui-accent;
-}
-
-.btn--link {
-  @apply bg-transparent text-brand-primary underline underline-offset-2 hover:text-brand-primary-hover;
-}
-
-/* Elementos internos */
-.btn__spinner { @apply inline-flex; }
-.btn__content { @apply inline-flex items-center; }

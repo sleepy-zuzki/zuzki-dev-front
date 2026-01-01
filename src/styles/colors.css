@@ -2,106 +2,140 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Variables CSS base para colores OKLCH */
-:root {
-  /* Colores de marca base */
-  --brand-orange: oklch(69.59% 0.137 55.34);
-  --brand-orange-dark: oklch(62.80% 0.158 47.66);
-  --brand-amber: oklch(79.27% 0.132 85.52);
+/* 
+  🎨 ZUZKI DESIGN SYSTEM - COLOR PALETTE 
+  Based on OKLCH for perceptual uniformity and vibrant gamuts.
+*/
 
-  /* Fondos tema claro */
-  --background-light: oklch(98.61% 0.0034 67.78);
-  --section-light: oklch(95.69% 0.016 83.73);
-  --surface-light: oklch(96.84% 0.024 65.69);
+:root {
+  /* --- BRAND CORE --- */
+  /* Main identity color (Orange) */
+  --brand-500: oklch(69.59% 0.137 55.34);
+  --brand-600: oklch(62.80% 0.158 47.66);
+  --brand-400: oklch(79.27% 0.132 85.52);
+
+  /* --- NEUTRAL SURFACES (Light Mode) --- */
+  /* Level 0: Global Background (Canvas) - Slight tint of warmth */
+  --surface-canvas: oklch(99% 0.005 85); 
+  
+  /* Level 1: Sections / Sidebar - Subtle separation */
+  --surface-100: oklch(97.5% 0.01 85);
+  
+  /* Level 2: Cards / Input fields - Clear definition */
+  --surface-200: oklch(100% 0 0); 
+  
+  /* Level 3: Modals / Dropdowns / Elevated */
+  --surface-300: oklch(100% 0 0);
+
+  /* Borders & Dividers */
+  --border-subtle: oklch(92% 0.01 85);
+  --border-strong: oklch(85% 0.02 85);
 }
 
 :root.dark {
-  /* Fondos tema oscuro */
-  --background-light: oklch(22.46% 0.0207 69.76);
-  --section-light: oklch(16.86% 0.027 49.44);
-  --surface-light: oklch(20.78% 0.032 49.44);
+  /* --- NEUTRAL SURFACES (Dark Mode) --- */
+  /* Deep, rich darks avoiding pure black for better contrast handling */
+  
+  /* Level 0: Canvas (Deep Coffee/Gray tint) */
+  --surface-canvas: oklch(18% 0.015 55); 
+  
+  /* Level 1: Sections (Slightly lighter) */
+  --surface-100: oklch(21% 0.02 55);
+  
+  /* Level 2: Cards (Elevated) */
+  --surface-200: oklch(24% 0.025 55);
+  
+  /* Level 3: Modals (Highest elevation) */
+  --surface-300: oklch(28% 0.03 55);
+
+  /* Borders */
+  --border-subtle: oklch(30% 0.02 55);
+  --border-strong: oklch(40% 0.02 55);
 }
 
-/* Configuración de variables de tema usando @theme */
 @theme {
-  /* Paleta personalizada "zuzki" */
+  /* --- PALETTE MAPPING --- */
+  
+  /* Brand Scale */
   --color-zuzki-50: oklch(97.5% 0.015 65.69);
   --color-zuzki-100: oklch(94.2% 0.030 65.69);
   --color-zuzki-200: oklch(88.7% 0.060 58.52);
   --color-zuzki-300: oklch(82.1% 0.095 58.52);
-  --color-zuzki-400: oklch(79.27% 0.132 85.52);
-  --color-zuzki-500: var(--brand-orange);
-  --color-zuzki-600: var(--brand-orange-dark);
+  --color-zuzki-400: oklch(75% 0.15 60); /* Adjusted to be Orange-ish, not Amber */
+  --color-zuzki-500: var(--brand-500);
+  --color-zuzki-600: var(--brand-600);
   --color-zuzki-700: oklch(56.4% 0.142 42.18);
   --color-zuzki-800: oklch(47.8% 0.108 38.64);
   --color-zuzki-900: oklch(38.2% 0.078 35.12);
   --color-zuzki-950: oklch(25.1% 0.045 32.58);
 
-  /* Neutrales/ink para fondos oscuros */
-  --color-ink-900: oklch(22.46% 0.0207 69.76);
-
-  /* Brand colors que apuntan a la paleta zuzki */
+  /* Semantic Aliases */
   --color-brand-primary: var(--color-zuzki-500);
-  --color-brand-primary-hover: var(--color-zuzki-600);
-  --color-brand-secondary: var(--color-zuzki-400);
-
-  /* Theme-aware backgrounds usando variables CSS */
-  --color-background-default: var(--background-light);
-  --color-background-section: var(--section-light);
-  --color-background-surface: var(--surface-light);
-
-  /* UI element colors usando paleta zuzki */
-  --color-ui-badge: var(--color-zuzki-500);
+  --color-brand-hover: var(--color-zuzki-600);
+  
+  /* UI Elements */
   --color-ui-accent: var(--color-zuzki-500);
   --color-ui-cta: var(--color-zuzki-500);
-  --color-ui-cta-hover: var(--color-zuzki-600);
+  --color-ui-badge: var(--color-zuzki-500);
 
-  /* Color personalizado */
-  --color-coffee: #2a1f14;
+  /* Semantic Surfaces */
+  --color-canvas: var(--surface-canvas);
+  --color-surface-100: var(--surface-100);
+  --color-surface-200: var(--surface-200);
+  --color-surface-300: var(--surface-300);
+  
+  /* Special Surfaces */
+  --color-coffee: #2a1f14; /* Legacy/Special branding color */
+  
+  /* Semantic Borders */
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
 }
 
-/* Componentes personalizados */
-@layer components {
-  /* Theme-aware surfaces */
-  .surface-primary {
-    @apply bg-background-default;
-  }
+/* --- COMPONENT UTILITIES --- */
+/* Replacing @layer components with @utility for better V4 integration */
 
-  .surface-secondary {
-    @apply bg-background-section;
-  }
-
-  .surface-muted {
-    @apply bg-background-surface;
-  }
-
-  /* Superficie basada en el color personalizado coffee */
-  .surface-coffee {
-    @apply bg-background-section dark:bg-coffee;
-  }
+/* Background Levels */
+@utility bg-canvas {
+  background-color: var(--surface-canvas);
 }
 
-/* Custom scrollbar with brand colors */
+@utility bg-surface-100 {
+  background-color: var(--surface-100);
+}
+
+@utility bg-surface-200 {
+  background-color: var(--surface-200);
+}
+
+@utility bg-surface-300 {
+  background-color: var(--surface-300);
+}
+
+/* Special */
+@utility bg-coffee-mix {
+  @apply bg-surface-100 dark:bg-coffee;
+}
+
+/* Scrollbar Styling */
 ::-webkit-scrollbar {
   @apply w-2;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-background-section;
+  @apply bg-canvas;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: color-mix(in srgb, theme(--color-zuzki-500) 30%, transparent);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: color-mix(in srgb, theme(--color-zuzki-500) 50%, transparent);
 }
 
-/* Selection styling */
 ::selection {
   background-color: color-mix(in srgb, theme(--color-zuzki-500) 20%, transparent);
-  @apply text-black;
+  @apply text-black dark:text-white;
 }
-
-

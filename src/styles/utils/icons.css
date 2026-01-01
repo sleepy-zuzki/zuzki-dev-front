@@ -1,0 +1,14 @@
+@reference "./core.css";
+
+/* --- ICON BOX UTILITIES --- */
+@utility icon-box {
+  @apply flex items-center justify-center rounded-lg transition-transform duration-200;
+}
+
+@utility icon-box-md {
+  @apply w-10 h-10;
+}
+
+@utility icon-box-lg {
+  @apply w-12 h-12;
+}

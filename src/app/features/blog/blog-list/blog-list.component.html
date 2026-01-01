@@ -1,0 +1,35 @@
+<app-section
+  id="blogs"
+  variant="transparent"
+  padding="none"
+  [container]="false">
+  <div class="max-w-4xl mx-auto text-center mb-12">
+    <app-typography-title [level]="1" variant="page" class="mb-4">
+      Blog & <span class="text-zuzki-500">Artículos</span>
+    </app-typography-title>
+    <app-typography-text variant="lead">
+      Pensamientos, tutoriales y aprendizajes sobre desarrollo web y tecnología.
+    </app-typography-text>
+  </div>
+
+  @if (blogsResource.isLoading() && !blogsResource.value()) {
+    <div class="flex justify-center py-20">
+      <ng-icon name="featherLoader" class="animate-spin text-4xl text-zuzki-500"></ng-icon>
+    </div>
+  } @else if (blogsResource.error()) {
+    <div class="text-center py-10">
+      <p class="text-red-500">Hubo un error al cargar los artículos.</p>
+      <button (click)="blogsResource.reload()" class="mt-4 underline text-zuzki-500">Reintentar</button>
+    </div>
+  } @else {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (entry of blogsResource.value(); track entry.id) {
+        <app-blog-card [entry]="entry"></app-blog-card>
+      } @empty {
+        <div class="col-span-full text-center py-10 opacity-60">
+          <app-typography-text variant="base" align="center" extraClasses="text-3xl" >No hay artículos publicados aún.</app-typography-text>
+        </div>
+      }
+    </div>
+  }
+</app-section>

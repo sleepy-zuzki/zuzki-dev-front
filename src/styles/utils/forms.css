@@ -1,0 +1,22 @@
+@reference "./core.css";
+
+/* --- FORM UTILITIES --- */
+@utility form-input-base {
+  @apply block w-full rounded-md border-border-strong bg-surface-200 px-3 py-2 text-gray-900 shadow-sm placeholder-gray-500 dark:text-gray-100 dark:placeholder-gray-400 focus-brand;
+}
+
+@utility form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1;
+}
+
+@utility form-error {
+  @apply mt-1 text-xs text-red-600 dark:text-red-400 font-medium;
+}
+
+@utility form-checkbox {
+  @apply rounded border-border-strong text-zuzki-500 focus-brand;
+}
+
+@utility form-select-trigger {
+  @apply form-input-base cursor-pointer text-left relative;
+}

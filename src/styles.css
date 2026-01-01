@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  @apply bg-background-default text-gray-900 font-sans transition-theme;
+  @apply bg-canvas text-gray-900 font-sans transition-theme;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 

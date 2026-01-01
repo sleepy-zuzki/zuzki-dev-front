@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, input, output, viewChild, computed } from '@angular/core';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { bootstrapX } from '@ng-icons/bootstrap-icons';
 import { CommonModule } from '@angular/common';
@@ -15,14 +15,14 @@ type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
   providers: [provideIcons({ bootstrapX })],
 })
 export class ModalComponent {
-  @Input() title: string = '';
-  @Input() size: ModalSize = 'md';
-  @Output() close = new EventEmitter<void>();
+  title = input('');
+  size = input<ModalSize>('md');
+  close = output<void>();
 
-  @ViewChild('dialogRef') dialogRef!: ElementRef<HTMLDialogElement>;
+  dialogRef = viewChild.required<ElementRef<HTMLDialogElement>>('dialogRef');
 
-  get sizeClass(): string {
-    switch (this.size) {
+  sizeClass = computed(() => {
+    switch (this.size()) {
       case 'sm':
         return 'size-sm';
       case 'lg':
@@ -35,14 +35,14 @@ export class ModalComponent {
       default:
         return 'size-md';
     }
-  }
+  });
 
   openModal() {
-    this.dialogRef.nativeElement.showModal();
+    this.dialogRef().nativeElement.showModal();
   }
 
   closeModal() {
-    this.dialogRef.nativeElement.close();
+    this.dialogRef().nativeElement.close();
   }
 
   onClose() {

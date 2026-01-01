@@ -1,38 +1,72 @@
 <section class="carousel-manager-container">
   <header class="manager-header">
-    <h2 class="title">Manage Project Carousel</h2>
-    <app-button variant="secondary" size="sm" type="button" (click)="fileUpload.click()">
-      <ng-icon name="featherUpload" class="icon"></ng-icon>
-      <span>Upload Image</span>
-    </app-button>
-    <input #fileUpload id="file-upload" type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+    <h2 class="title">Gestor de Medios</h2>
+    <div class="header-actions">
+      <!-- Botón Biblioteca -->
+      <app-button variant="outline" size="sm" type="button" (click)="openGalleryModal()" class="mr-2">
+        <ng-icon name="featherGrid" class="icon"></ng-icon>
+        <span>Biblioteca</span>
+      </app-button>
+
+      <!-- Botón Upload -->
+      <app-button variant="secondary" size="sm" type="button" (click)="fileUpload.click()">
+        <ng-icon name="featherUpload" class="icon"></ng-icon>
+        <span>Subir Imagen</span>
+      </app-button>
+      <input #fileUpload id="file-upload" type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+    </div>
   </header>
 
   @switch (loadState()) {
     @case (LoadState.LOADING) {
-      <div class="feedback-message">Loading images...</div>
+      <div class="feedback-message">Cargando imágenes...</div>
     }
     @case (LoadState.ERROR) {
-      <div class="feedback-message error">Failed to load images. Please try again.</div>
+      <div class="feedback-message error">Error al cargar imágenes. Por favor intenta de nuevo.</div>
     }
     @case (LoadState.LOADED) {
       @if (images().length === 0) {
-        <div class="feedback-message">No images found for this project. Upload one to get started.</div>
+        <div class="feedback-message">No hay imágenes en este proyecto. Sube una para comenzar.</div>
       } @else {
-        <div cdkDropList class="image-list" (cdkDropListDropped)="onDrop($event)">
+        <div cdkDropList cdkDropListOrientation="mixed" class="image-grid" (cdkDropListDropped)="onDrop($event)">
           @for (image of images(); track image.id) {
-            <div class="image-item" cdkDrag>
-              <div class="drag-handle" cdkDragHandle>
-                <ng-icon name="lucideGripVertical" class="icon"></ng-icon>
+            <div class="image-card" cdkDrag>
+              
+              <!-- Drag Handle -->
+              <div class="drag-handle-overlay" cdkDragHandle title="Arrastrar para reordenar">
+                <ng-icon name="lucideGripVertical" class="icon-drag"></ng-icon>
               </div>
-              <img [src]="image.url" [alt]="'Project image'" class="image-preview">
-              <app-button variant="ghost" size="icon" (click)="onDelete(image.id)" title="Delete image">
-                <ng-icon name="featherTrash2" class="icon-delete"></ng-icon>
-              </app-button>
+
+              <!-- Image & Badge -->
+              <div class="image-wrapper">
+                <img [src]="image.url" [alt]="'Imagen del proyecto'" class="image-preview">
+                @if (image.type === 'cover') {
+                  <span class="badge-cover">Portada</span>
+                }
+              </div>
+
+              <!-- Actions -->
+              <div class="card-actions">
+                @if (image.type !== 'cover') {
+                  <app-button variant="ghost" size="sm" (click)="onSetCover(image.id)" title="Establecer como Portada">
+                    <ng-icon name="featherImage" class="icon-action"></ng-icon>
+                    <span class="sr-only sm:not-sr-only sm:ml-1 text-xs">Portada</span>
+                  </app-button>
+                }
+                
+                <app-button variant="ghost" size="icon" (click)="onDelete(image.id)" title="Eliminar imagen" class="btn-delete">
+                  <ng-icon name="featherTrash2" class="icon-delete"></ng-icon>
+                </app-button>
+              </div>
+
+              <!-- Placeholder for drag -->
+              <div *cdkDragPlaceholder class="drag-placeholder"></div>
             </div>
           }
         </div>
       }
     }
   }
+
+  <app-gallery-selector-modal (selected)="onGallerySelection($event)"></app-gallery-selector-modal>
 </section>

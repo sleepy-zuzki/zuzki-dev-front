@@ -1,0 +1,50 @@
+<div class="editor-renderer-content" [class]="customClass()">
+  @for (block of data()?.blocks; track $index) {
+    <div class="renderer-block">
+      @switch (block.type) {
+
+        @case ('header') {
+          @switch (block.data.level) {
+            @case (1) { <h1 [innerHTML]="block.data.text"></h1> }
+            @case (2) { <h2 [innerHTML]="block.data.text"></h2> }
+            @case (3) { <h3 [innerHTML]="block.data.text"></h3> }
+            @default { <h4 [innerHTML]="block.data.text"></h4> }
+          }
+        }
+
+        @case ('paragraph') {
+          <p [innerHTML]="block.data.text"></p>
+        }
+
+        @case ('list') {
+          @if (block.data.style === 'ordered') {
+            <ol class="renderer-list-ordered">
+              @for (item of block.data.items; track $index) {
+                <li [innerHTML]="item.content"></li>
+              }
+            </ol>
+          } @else {
+            <ul class="renderer-list-unordered">
+              @for (item of block.data.items; track $index) {
+                <li [innerHTML]="item.content"></li>
+              }
+            </ul>
+          }
+        }
+
+        @case ('quote') {
+          <blockquote class="renderer-quote">
+            <p [innerHTML]="block.data.text"></p>
+            @if (block.data.caption) {
+              <cite [innerHTML]="block.data.caption"></cite>
+            }
+          </blockquote>
+        }
+
+        @default {
+          <!-- Bloque no soportado o desconocido -->
+        }
+      }
+    </div>
+  }
+</div>

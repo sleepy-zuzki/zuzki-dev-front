@@ -1,0 +1,13 @@
+@reference "../../../../styles/utils/cards.css";
+@reference "../../../../styles/utils/typography.css";
+
+/* Ya no necesitamos estilos de estructura de tarjeta, app-card lo maneja. 
+   Mantenemos solo especificidades si es necesario. */
+
+/* Ajuste para que el hover del anchor dispare efectos dentro de la tarjeta si es necesario */
+a:hover app-typography-title {
+  @apply text-zuzki-500;
+}
+
+/* El componente Card usa slot projection, así que los estilos locales 
+   aplican al contenido proyectado */

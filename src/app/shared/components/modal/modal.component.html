@@ -1,6 +1,6 @@
-<dialog #dialogRef (close)="onClose()" [ngClass]="sizeClass">
+<dialog #dialogRef (close)="onClose()" [ngClass]="sizeClass()">
   <header class="modal-header">
-    <h2 class="title">{{ title }}</h2>
+    <h2 class="title">{{ title() }}</h2>
 
     <app-button variant="ghost" size="icon" type="button" (click)="closeModal()">
       <ng-icon name="bootstrapX" size="24"></ng-icon>

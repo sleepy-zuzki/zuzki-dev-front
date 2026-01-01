@@ -1,0 +1,34 @@
+@reference "../colors.css";
+
+/* --- CORE UTILITIES --- */
+/* Base utilities required by most other modules */
+
+@utility bg-zuzki-* {
+  background-color: color-mix(in srgb, theme(--color-zuzki-500) --value([percentage]), transparent);
+}
+
+/* Text gradients */
+@utility text-gradient {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Smooth transitions */
+@utility transition-theme {
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+/* Focus ring utilities */
+@utility focus-brand {
+  @apply focus:outline-none focus:ring-2 focus:ring-zuzki-500 focus:ring-offset-2 focus:ring-offset-canvas;
+}
+
+/* Recrea la utilidad ring-opacity-5 para compatibilidad */
+@utility ring-opacity-5 {
+  --tw-ring-opacity: 0.05;
+}
+
+@utility bg-gradient-brand {
+  @apply bg-gradient-to-br from-zuzki-400 to-zuzki-700;
+}

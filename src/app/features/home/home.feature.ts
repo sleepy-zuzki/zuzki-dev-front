@@ -83,7 +83,7 @@ export class HomeFeatureComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.route.fragment.subscribe((fragment: any) => {
+      this.route.fragment.subscribe((fragment: string | null) => {
         if (fragment) {
           // Pequeño delay para permitir que @defer (on idle) cargue y expanda el contenido
           setTimeout(() => {

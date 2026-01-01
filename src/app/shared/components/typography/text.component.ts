@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-type TextAs = 'p' | 'span' | 'small' | 'div';
-type TextVariant = 'base' | 'muted' | 'lead' | 'caption';
+type TextAs = 'p' | 'span' | 'small' | 'div' | 'label';
+type TextVariant = 'base' | 'muted' | 'lead' | 'caption' | 'label';
 type Align = 'left' | 'center' | 'right';
 
 @Component({
@@ -14,16 +14,16 @@ type Align = 'left' | 'center' | 'right';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TypographyTextComponent {
-  @Input() as: TextAs = 'p';
-  @Input() variant: TextVariant = 'base';
-  @Input() align: Align = 'left';
-  @Input() extraClasses = '';
+  element = input<TextAs>('p', { alias: 'as' });
+  variant = input<TextVariant>('base');
+  align = input<Align>('left');
+  extraClasses = input('');
 
-  get classes(): string {
+  classes = computed(() => {
     const baseClass = 'typography-text';
-    const alignClass = `typography-text--align-${this.align}`;
-    const variantClass = `typography-text--variant-${this.variant}`;
+    const alignClass = `typography-text--align-${this.align()}`;
+    const variantClass = `typography-text--variant-${this.variant()}`;
 
-    return [baseClass, alignClass, variantClass, this.extraClasses].filter(Boolean).join(' ');
-  }
+    return [baseClass, alignClass, variantClass, this.extraClasses()].filter(Boolean).join(' ');
+  });
 }

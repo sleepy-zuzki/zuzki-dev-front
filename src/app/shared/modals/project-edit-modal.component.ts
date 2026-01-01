@@ -1,14 +1,13 @@
 import {
   AfterViewInit,
-  ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, OnDestroy, Output, SimpleChanges,
-  ViewChild
+  ChangeDetectionStrategy, Component, effect, inject, input, InputSignal, OnDestroy, output, OutputEmitterRef,
+  Signal, viewChild
 } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
-import { ProjectEntity } from '@core/domain';
-import { UpdateProjectDto } from '@app/application';
+import { Project, UpdateProjectDto } from '@core/interfaces';
 import { toSlug } from '@shared/utils/slug.util';
 
 import { ProjectFormComponent } from '@features/admin/projects/components/project-form/project-form.component';
@@ -27,51 +26,54 @@ import { UpdateProjectForm } from '@core/interfaces/forms/project.forms';
   styleUrls: ['./project-edit-modal.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterViewInit {
-  private fb = inject(NonNullableFormBuilder);
+export class ProjectEditModalComponent implements OnDestroy, AfterViewInit {
+  private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
 
-  @Input({ required: true }) isOpen = false;
-  @Input() project: ProjectEntity | null = null;
+  isOpen: InputSignal<boolean> = input.required<boolean>();
+  project: InputSignal<Project | null> = input<Project | null>(null);
 
-  @Output() save = new EventEmitter<{ id: number; data: UpdateProjectDto }>();
-  @Output() closeModal = new EventEmitter<void>();
+  save: OutputEmitterRef<{id: string, data: UpdateProjectDto}> = output<{ id: string; data: UpdateProjectDto }>();
+  closeModal: OutputEmitterRef<void> = output<void>();
 
-  @ViewChild(ModalComponent) private modalComponent!: ModalComponent;
+  modalComponent: Signal<ModalComponent | undefined> = viewChild(ModalComponent);
 
   form!: FormGroup<UpdateProjectForm>;
   private slugSubscription?: Subscription;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.modalComponent && changes['isOpen'] && !changes['isOpen'].firstChange) {
-      if (this.isOpen) {
-        this.modalComponent.openModal();
-      } else {
-        this.modalComponent.closeModal();
-      }
-    }
+  constructor() {
+    effect(() => {
+        const modal: ModalComponent | undefined = this.modalComponent();
+        if (modal) {
+            if (this.isOpen()) {
+                modal.openModal();
+            } else {
+                modal.closeModal();
+            }
+        }
+    });
 
-    if (changes['project'] && this.project) {
-      this.form = this.fb.group({
-        name: [this.project.name, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
-        slug: [{ value: this.project.slug, disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
-        description: [this.project.description ?? null, [Validators.maxLength(1000)]],
-        details: [this.project.details ?? null, [Validators.maxLength(5000)]],
-        repoUrl: [this.project.repoUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
-        liveUrl: [this.project.liveUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
-        category: [this.project.category ?? null],
-        year: [this.project.year ?? null, [Validators.min(1900), Validators.max(2100)]],
-        isFeatured: [this.project.isFeatured ?? false],
-        technologyIds: [this.project.technologies.map(t => t.id)],
-        previewImageId: [this.project.previewImageId ?? null, [Validators.min(1)]],
-      });
-      this.setupSlugGeneration();
-    }
+    effect(() => {
+        const p: Project | null = this.project();
+        if (p) {
+            this.form = this.fb.group({
+                title: [p.title, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+                slug: [{ value: p.slug, disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
+                description: [p.description ?? null, [Validators.maxLength(1000)]],
+                content: [p.content ?? null],
+                repoUrl: [p.repoUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
+                liveUrl: [p.liveUrl ?? null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]],
+                areaId: [p.area?.id ?? ''],
+                year: [p.year ?? null, [Validators.min(1900), Validators.max(2100)]],
+                isFeatured: [p.isFeatured ?? false],
+                technologyIds: [p.technologies.map(t => t.id)],
+            });
+            this.setupSlugGeneration();
+        }
+    });
   }
 
   ngAfterViewInit(): void {
-    if (this.isOpen) {
-      this.modalComponent.openModal();
-    }
+    // Logic handled by effect
   }
 
   ngOnDestroy(): void {
@@ -80,32 +82,32 @@ export class ProjectEditModalComponent implements OnChanges, OnDestroy, AfterVie
 
   private setupSlugGeneration(): void {
     this.slugSubscription?.unsubscribe();
-    this.slugSubscription = this.form.controls.name.valueChanges
-      .subscribe(name => {
-        const slug = toSlug(name);
+    this.slugSubscription = this.form.controls.title.valueChanges
+      .subscribe(title => {
+        const slug = toSlug(title);
         this.form.controls.slug.setValue(slug, { emitEvent: false });
       });
   }
 
   onSave(): void {
-    if (!this.form.valid || !this.project) return;
+    const p = this.project();
+    if (!this.form.valid || !p) return;
 
     const raw = this.form.getRawValue();
     const payload: UpdateProjectDto = {
-      name: raw.name,
+      title: raw.title,
       slug: raw.slug,
       description: raw.description,
-      details: raw.details,
+      content: raw.content,
       repoUrl: raw.repoUrl,
       liveUrl: raw.liveUrl,
-      category: raw.category,
+      areaId: raw.areaId,
       year: this.parseNumber(raw.year),
       isFeatured: raw.isFeatured,
       technologyIds: raw.technologyIds,
-      previewImageId: this.parseNumber(raw.previewImageId),
     };
 
-    this.save.emit({ id: this.project.id, data: payload });
+    this.save.emit({ id: p.id, data: payload });
   }
 
   onClose(): void {

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { TagsListComponent } from '@components/tags-list/tags-list.component';
 
@@ -18,6 +18,6 @@ type TimelineInputItem = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AboutTimelineComponent {
-  @Input({ required: true }) items: ReadonlyArray<TimelineInputItem> = [];
-  @Input() heading = 'Mi Trayectoria';
+  items = input.required<ReadonlyArray<TimelineInputItem>>();
+  heading = input('Mi Trayectoria');
 }

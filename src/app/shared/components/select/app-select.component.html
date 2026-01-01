@@ -1,11 +1,11 @@
 <div class="select-container">
   <!-- Etiqueta del campo -->
-  <label [for]="id" class="select-label">{{ label }}</label>
+  <label [for]="id()" class="select-label">{{ label() }}</label>
 
   <!-- Botón que actúa como el campo del select -->
   <button
     type="button"
-    [id]="id"
+    [id]="id()"
     (click)="toggleDropdown()"
     [disabled]="isDisabled"
     class="select-trigger"
@@ -27,7 +27,7 @@
       class="select-panel"
       tabindex="-1"
       role="listbox"
-      [attr.aria-labelledby]="id"
+      [attr.aria-labelledby]="id()"
     >
       @for (option of processedOptions(); track option.value) {
         <li

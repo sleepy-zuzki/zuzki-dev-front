@@ -1,4 +1,4 @@
-import { Component, Input, Self, Optional } from '@angular/core';
+import { Component, input, Self, Optional } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 
 
@@ -10,8 +10,8 @@ import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/f
   styleUrls: ['./app-checkbox.component.css'],
 })
 export class AppCheckboxComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() id = '';
+  label = input('');
+  id = input('');
 
   value = false;
   isDisabled = false;

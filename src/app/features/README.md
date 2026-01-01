@@ -1,34 +1,22 @@
-# Características (Features)
+# Features (Capa de Aplicación)
 
-Este directorio contiene módulos de características específicas de la aplicación. Cada característica representa una funcionalidad completa que puede incluir múltiples componentes, servicios y modelos relacionados.
+Este directorio contiene las unidades funcionales de la aplicación. Cada feature agrupa la lógica y la UI necesaria para cumplir un objetivo específico de negocio.
 
-## Estructura
+## Estructura de una Feature
 
-Cada característica se organiza en su propio directorio:
+Cada feature es autónoma y suele organizarse de la siguiente manera:
 
-```
-features/
-├── home/                  # Funcionalidad de la página principal
-│   ├── components/        # Componentes específicos de home
-│   ├── services/          # Servicios específicos 
-│   └── models/            # Modelos de datos específicos
-└── works/                 # Funcionalidad de portafolio de trabajos
-```
-# Features (Presentation Layer)
+- **Componentes**: Componentes inteligentes (Smart Components) que se conectan a los Stores del Core y componentes de presentación (Dumb Components).
+- **Servicios locales**: (Opcional) Lógica que solo pertenece a esta feature.
+- **Modelos/Interfaces locales**: (Opcional) Definiciones de datos específicas.
 
-Esta carpeta contiene las **características/módulos** de la aplicación Angular.
+## Features Actuales
 
-## Estructura Hexagonal en Frontend
-- Cada feature representa un módulo de funcionalidad
-- Los componentes actúan como adaptadores primarios
-- Los servicios de presentación orquestan casos de uso
-- Se comunican con la capa de aplicación a través de puertos
-
-## Ejemplo de estructura:
-## Autonomía
-
-Cada módulo de características está diseñado para ser relativamente autónomo, conteniendo todos los componentes y servicios necesarios para su funcionalidad. Sin embargo, pueden depender de servicios core y componentes compartidos.
+- **admin**: Gestión interna de proyectos y tecnologías.
+- **auth**: Lógica de acceso y login.
+- **home**: Sección principal del portafolio (Hero, Sobre mí, Contacto).
+- **works**: Visualización de proyectos y detalles de trabajos.
+- **not-found**: Página de error 404.
 
 ## Integración
-
-Las características se integran en la aplicación principal a través del sistema de enrutamiento y/o importándolas en los componentes de página correspondientes.
+Las features no suelen importarse entre sí. Si dos features necesitan compartir lógica o UI, esta debe moverse a `core/` o `shared/` respectivamente. Las features son orquestadas por las **Pages**.

@@ -1,16 +1,20 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal, signal, WritableSignal } from '@angular/core';
 
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypographyTitleComponent } from '@shared/components/typography/title.component';
 import { TypographyTextComponent } from '@shared/components/typography/text.component';
-import { ProjectStore } from '@infrastructure/adapters/secondary/project/project.store';
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ProjectStore } from '@core/stores/project.store';
+import {
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import { ProjectCardComponent } from '@components/project-card/project-card.component';
 import { toSlug } from '@shared/utils/slug.util';
 import { ProjectEditModalComponent } from '@shared/modals/project-edit-modal.component';
-import { ProjectEntity } from '@core/domain';
-import { UpdateProjectDto } from '@app/application';
+import { Project, UpdateProjectDto } from '@core/interfaces';
 import { CreateProjectForm } from '@core/interfaces/forms/project.forms';
+import type { OutputData } from '@editorjs/editorjs';
 
 import { ProjectFormComponent } from '@features/admin/projects/components/project-form/project-form.component';
 
@@ -30,28 +34,27 @@ import { ProjectFormComponent } from '@features/admin/projects/components/projec
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsAdminFeatureComponent {
-  private projectStore = inject(ProjectStore);
-  private fb = inject(NonNullableFormBuilder);
+  private projectStore: ProjectStore = inject(ProjectStore);
+  private fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
 
-  projects = this.projectStore.projects;
-  loading = this.projectStore.loading;
-  error = this.projectStore.error;
+  projects: Signal<Project[]> = this.projectStore.projects;
+  loading: Signal<boolean> = this.projectStore.loading;
+  error: Signal<string | null> = this.projectStore.error;
 
-  isEditModalOpen = signal(false);
-  selectedProject = signal<ProjectEntity | null>(null);
+  isEditModalOpen: WritableSignal<boolean> = signal(false);
+  selectedProject: WritableSignal<Project | null> = signal<Project | null>(null);
 
   form: FormGroup<CreateProjectForm> = this.fb.group({
-    name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+    title: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
     slug: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[a-z0-9]+(?:-[a-z0-9]+)*$/), Validators.minLength(2), Validators.maxLength(160)]],
     description: this.fb.control<string | null>(null, [Validators.maxLength(1000)]),
-    details: this.fb.control<string | null>(null, [Validators.maxLength(5000)]),
+    content: this.fb.control<OutputData | null>(null),
     repoUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
     liveUrl: this.fb.control<string | null>(null, [Validators.pattern(/^https?:\/\/.+/i), Validators.maxLength(255)]),
-    category: this.fb.control<string | null>(null),
+    areaId: this.fb.control<string>('', [Validators.required]),
     year: this.fb.control<number | null>(null, [Validators.min(1900), Validators.max(2100)]),
     isFeatured: this.fb.control<boolean>(false),
-    technologyIds: this.fb.control<number[]>([]),
-    previewImageId: this.fb.control<number | null>(null, [Validators.min(1)]),
+    technologyIds: this.fb.control<string[]>([]),
   });
 
   constructor() {
@@ -60,10 +63,9 @@ export class ProjectsAdminFeatureComponent {
   }
 
   private setupSlugGeneration(): void {
-    this.form.controls.name.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe(name => {
-        const slug = toSlug(name);
+    this.form.controls.title.valueChanges
+      .subscribe(title => {
+        const slug = toSlug(title);
         this.form.controls.slug.setValue(slug, { emitEvent: false });
       });
   }
@@ -80,33 +82,32 @@ export class ProjectsAdminFeatureComponent {
     const raw = this.form.getRawValue();
 
     this.projectStore.createProject({
-      name: raw.name,
+      title: raw.title,
       slug: raw.slug,
       description: raw.description ?? null,
-      details: raw.details ?? null,
+      content: raw.content ?? null,
       repoUrl: raw.repoUrl ?? null,
       liveUrl: raw.liveUrl ?? null,
-      category: raw.category ?? null,
+      areaId: raw.areaId,
       year: this.parseNumber(raw.year),
       isFeatured: !!raw.isFeatured,
       technologyIds: raw.technologyIds,
-      previewImageId: this.parseNumber(raw.previewImageId),
     });
     this.form.reset();
   }
 
-  onEditProject(project: ProjectEntity): void {
+  onEditProject(project: Project): void {
     this.selectedProject.set(project);
     this.isEditModalOpen.set(true);
   }
 
-  onDeleteProject(id: number): void {
+  onDeleteProject(id: string): void {
     if (confirm('¿Estás seguro de que quieres eliminar este proyecto?')) {
       this.projectStore.deleteProject(id);
     }
   }
 
-  onSaveProject(event: { id: number; data: UpdateProjectDto }): void {
+  onSaveProject(event: { id: string; data: UpdateProjectDto }): void {
     this.projectStore.updateProject(event.id, event.data);
     this.onCloseModal();
   }

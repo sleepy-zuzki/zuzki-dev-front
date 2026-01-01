@@ -1,0 +1,111 @@
+<fieldset class="form-fieldset" [formGroup]="form()">
+  <legend class="sr-only">Detalles del Artículo</legend>
+
+  <!-- Título -->
+  <div class="form-field-group--span-3">
+    <app-input label="Título" id="title" formControlName="title" placeholder="Título del artículo">
+      Título requerido (2-150 caracteres)
+    </app-input>
+  </div>
+
+  <!-- Slug (SEO) -->
+  <div class="form-field-group--span-3">
+    <app-input label="Slug (SEO)" id="slug" formControlName="slug" placeholder="titulo-del-articulo">
+      Slug requerido (kebab-case, 2-160)
+    </app-input>
+  </div>
+
+  <!-- Imagen de Portada -->
+  @if (isEditing()) {
+    <div class="form-field-group--span-6">
+      <div class="flex flex-col gap-2">
+        <app-typography-text variant="caption" element="label">Imagen de Portada</app-typography-text>
+
+        <div class="flex items-start gap-4">
+          <!-- Preview Area -->
+          <div class="relative w-40 aspect-video bg-surface-100 rounded-lg border border-surface-200 overflow-hidden flex items-center justify-center shrink-0">
+            @if (coverImageUrl) {
+              <img [src]="coverImageUrl" alt="Cover preview" class="w-full h-full object-cover">
+              <button
+                type="button"
+                (click)="clearCoverImage()"
+                class="absolute top-1 right-1 p-1 bg-surface-900/50 text-white rounded-full hover:bg-surface-900 transition-colors"
+                title="Eliminar imagen"
+              >
+                <ng-icon name="featherX" size="12"></ng-icon>
+              </button>
+            } @else {
+              <ng-icon name="featherImage" class="text-surface-400" size="24"></ng-icon>
+            }
+          </div>
+
+          <div class="flex-1 flex flex-col gap-2">
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-2">
+              <!-- Upload Button -->
+              <input
+                #fileInput
+                type="file"
+                class="hidden"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+              >
+              <app-button
+                variant="secondary"
+                size="sm"
+                type="button"
+                (click)="fileInput.click()"
+              >
+                <ng-icon name="featherUpload" class="mr-2"></ng-icon>
+                Subir Imagen
+              </app-button>
+
+              <!-- Gallery Button -->
+              <app-button
+                variant="outline"
+                size="sm"
+                type="button"
+                (click)="openGalleryModal()"
+              >
+                <ng-icon name="featherGrid" class="mr-2"></ng-icon>
+                Biblioteca
+              </app-button>
+            </div>
+
+            <app-typography-text variant="caption" extraClasses="mt-1">
+              Sube una imagen nueva o selecciona una existente de tu biblioteca.
+            </app-typography-text>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <app-gallery-selector-modal (selected)="onGallerySelected($event)"></app-gallery-selector-modal>
+
+  <!-- Descripción -->
+  <div class="form-field-group--span-6">
+    <app-input
+      label="Descripción Corta"
+      id="description"
+      formControlName="description"
+      controlType="textarea"
+      [rows]="3"
+      placeholder="Resumen del artículo para SEO y listados"
+    >
+      Descripción requerida
+    </app-input>
+  </div>
+
+  <!-- Contenido -->
+  <div class="form-field-group--span-6">
+    <app-editor
+      label="Contenido"
+      id="content"
+      formControlName="content"
+      placeholder="Escribe tu artículo aquí..."
+    >
+      Contenido del artículo
+    </app-editor>
+  </div>
+</fieldset>

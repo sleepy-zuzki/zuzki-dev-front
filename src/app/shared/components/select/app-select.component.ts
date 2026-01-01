@@ -1,4 +1,4 @@
-import { Component, Input, Self, Optional, HostListener, ElementRef, computed, Signal, WritableSignal, signal } from '@angular/core';
+import { Component, Self, Optional, HostListener, ElementRef, computed, Signal, WritableSignal, signal, input } from '@angular/core';
 import { ControlValueAccessor, NgControl, ReactiveFormsModule } from '@angular/forms';
 
 import { bootstrapChevronExpand } from '@ng-icons/bootstrap-icons';
@@ -23,39 +23,39 @@ export interface Option {
   providers: [provideIcons({bootstrapChevronExpand})]
 })
 export class AppSelectComponent implements ControlValueAccessor {
-  @Input() label = '';
-  @Input() id = '';
-  @Input() placeholder = 'Selecciona una opción';
-  @Input() multiple = false;
-  @Input() options: Option[] = [];
-  @Input() optionValue = 'id';
-  @Input() optionLabel = 'name';
+  label = input('');
+  id = input('');
+  placeholder = input('Selecciona una opción');
+  multiple = input(false);
+  options = input<Option[]>([]);
+  optionValue = input('id');
+  optionLabel = input('name');
 
   isOpen = false;
   selectedValue: WritableSignal<string | number | (string | number)[] | null> = signal(null);
   isDisabled = false;
 
   processedOptions: Signal<SelectOption[]> = computed(() => {
-    return this.options.map((option: Option): SelectOption => ({
-      value: option[this.optionValue],
-      label: option[this.optionLabel].toString(),
+    return this.options().map((option: Option): SelectOption => ({
+      value: option[this.optionValue()],
+      label: option[this.optionLabel()].toString(),
     }));
   });
 
   displayValue: Signal<string> = computed(() => {
     const currentSelection = this.selectedValue();
-    if (this.multiple) {
+    if (this.multiple()) {
       if (!Array.isArray(currentSelection) || currentSelection.length === 0) {
-        return this.placeholder;
+        return this.placeholder();
       }
       if (currentSelection.length === 1) {
         const selectedOption = this.processedOptions().find((opt: SelectOption) => this.isOptionSelected(opt));
-        return selectedOption?.label ?? this.placeholder;
+        return selectedOption?.label ?? this.placeholder();
       }
       return `${currentSelection.length} seleccionados`;
     } else {
       const selectedOption = this.processedOptions().find((opt: SelectOption) => this.isOptionSelected(opt));
-      return selectedOption?.label ?? this.placeholder;
+      return selectedOption?.label ?? this.placeholder();
     }
   });
 
@@ -98,7 +98,7 @@ export class AppSelectComponent implements ControlValueAccessor {
   }
 
   selectOption(option: SelectOption): void {
-    if (this.multiple) {
+    if (this.multiple()) {
       this.toggleMultiSelect(option.value);
     } else {
       this.selectedValue.set(option.value);
@@ -122,7 +122,7 @@ export class AppSelectComponent implements ControlValueAccessor {
 
   isOptionSelected(option: SelectOption): boolean {
     const currentSelection = this.selectedValue();
-    if (this.multiple && Array.isArray(currentSelection)) {
+    if (this.multiple() && Array.isArray(currentSelection)) {
       return currentSelection.includes(option.value);
     }
     return currentSelection === option.value;
@@ -130,6 +130,6 @@ export class AppSelectComponent implements ControlValueAccessor {
 
   showPlaceholder(): boolean {
     const currentSelection = this.selectedValue();
-    return !this.multiple && (!currentSelection || currentSelection === '');
+    return !this.multiple() && (!currentSelection || currentSelection === '');
   }
 }

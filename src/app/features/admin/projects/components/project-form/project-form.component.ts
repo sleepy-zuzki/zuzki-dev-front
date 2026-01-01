@@ -1,10 +1,13 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, computed, InputSignal, Signal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { AppInputComponent } from '@shared/components/input/app-input.component';
 import { AppSelectComponent, Option } from '@shared/components/select/app-select.component';
 import { AppCheckboxComponent } from '@shared/components/checkbox/app-checkbox.component';
-import { TechnologyStore } from '@infrastructure/adapters/secondary/technology/technology.store';
+import EditorComponent from '@shared/components/editor/editor.component';
+import { TechnologyStore } from '@core/stores/technology.store';
+import { StackService } from '@core/services/stack.service';
+import { Stack, Technology } from '@core/interfaces';
 
 interface SelectOption {
   label: string;
@@ -18,36 +21,38 @@ interface SelectOption {
     ReactiveFormsModule,
     AppInputComponent,
     AppSelectComponent,
-    AppCheckboxComponent
+    AppCheckboxComponent,
+    EditorComponent
 ],
   templateUrl: './project-form.component.html',
   styleUrls: ['./project-form.component.css'],
 })
 export class ProjectFormComponent {
-  @Input({ required: true }) form!: FormGroup;
-  @Input() technologyOptions: SelectOption[] = [];
+  form: InputSignal<FormGroup> = input.required<FormGroup>();
+  technologyOptions: InputSignal<SelectOption[]> = input<SelectOption[]>([]);
 
-  private technologyStore = inject(TechnologyStore);
-  technologies = this.technologyStore.technologies;
+  private technologyStore: TechnologyStore = inject(TechnologyStore);
+  private stackService: StackService = inject(StackService);
+
+  technologies: Signal<Technology[]> = this.technologyStore.technologies;
+  stacks: Signal<Stack[]> = this.stackService.stacks;
 
   constructor() {
     this.technologyStore.getTechnologies();
+    this.stackService.getStacks();
   }
 
-  get categoryOptions(): Option[] {
-    return [
-      {label: 'Frontend', value: 'front'},
-      {label: 'Backend', value: 'back'},
-      {label: 'Mobile', value: 'mobile'},
-      {label: 'DevOps', value: 'devops'},
-      {label: 'Design', value: 'design'}
-    ]
-  };
+  areaOptions: Signal<Option[]> = computed((): Option[] => {
+    return this.stacks().map(stack => ({
+      label: stack.name,
+      value: stack.id
+    }));
+  });
 
-  get getTechnologyOptions(): Option[] {
+  technologyOptionsList: Signal<Option[]> = computed((): Option[] => {
     return this.technologies().map((technology): Option => ({
       label: technology.name,
-      value: technology.slug
+      value: technology.id
     }));
-  }
+  });
 }

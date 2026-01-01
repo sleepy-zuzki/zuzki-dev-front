@@ -1,11 +1,11 @@
-@reference "../../../../styles/utilities.css";
+@reference "../../../../styles/colors.css";
 
 :host {
   display: block;
 }
 
 .footer {
-  @apply bg-background-section dark:bg-coffee py-12;
+  @apply bg-surface-100 dark:bg-coffee py-12;
 }
 
 .footer-container {
@@ -33,7 +33,7 @@
 }
 
 .footer-copyright {
-  @apply border-t border-background-surface pt-6;
+  @apply border-t border-surface-200 pt-6;
 }
 
 .footer-copyright-text {
@@ -55,5 +55,3 @@
 footer {
   animation: fadeInUp 0.6s ease-out;
 }
-
-

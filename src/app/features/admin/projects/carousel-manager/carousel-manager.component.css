@@ -1,11 +1,11 @@
 @reference "../../../../../styles/utilities.css";
 
 .carousel-manager-container {
-  @apply block p-4 sm:p-6 bg-background-section rounded-lg shadow-md;
+  @apply block p-4 sm:p-6 bg-surface-100 rounded-lg shadow-md;
 }
 
 .manager-header {
-  @apply flex items-center justify-between pb-4 mb-4 border-b border-background-surface;
+  @apply flex items-center justify-between pb-4 mb-6 border-b border-surface-200;
 }
 
 .title {
@@ -16,59 +16,87 @@
   @apply hidden;
 }
 
-.upload-label {
-  @apply cursor-pointer;
-}
-
 .icon {
   @apply w-4 h-4;
 }
 
-.icon-delete {
-  @apply w-5 h-5 text-red-500;
-}
-
 .feedback-message {
-  @apply py-8 text-center text-zuzki-600 dark:text-zuzki-400;
+  @apply py-12 text-center text-zuzki-600 dark:text-zuzki-400 text-lg;
 }
 
 .feedback-message.error {
   @apply text-red-600 dark:text-red-400;
 }
 
-.image-list {
-  @apply flex flex-col gap-3;
+/* Grid Layout */
+.image-grid {
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4;
 }
 
-.image-item {
-  @apply flex items-center gap-4 p-3 rounded-md bg-background-surface border border-transparent;
-  transition: background-color 0.2s ease-in-out;
+/* Card Styles */
+.image-card {
+  @apply relative flex flex-col rounded-xl overflow-hidden bg-surface-200 border border-transparent shadow-sm hover:shadow-md transition-all duration-200;
 }
 
-.image-item.cdk-drag-preview {
-  @apply shadow-xl;
+.image-card:hover {
+  @apply border-zuzki-200 dark:border-zuzki-700;
 }
 
-.image-item.cdk-drag-placeholder {
-  @apply opacity-50;
-}
-
-.image-item:hover {
-  @apply bg-background-default;
-}
-
-.drag-handle {
-  @apply cursor-move text-zuzki-500 dark:text-zuzki-400;
+.image-wrapper {
+  @apply relative aspect-square w-full bg-canvas;
 }
 
 .image-preview {
-  @apply w-16 h-16 object-cover rounded-md bg-background-section;
+  @apply w-full h-full object-cover;
 }
 
-.image-details {
-  @apply flex-grow;
+.badge-cover {
+  @apply absolute top-2 right-2 bg-brand-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm z-10;
 }
 
-.alt-text-input {
-  @apply w-full p-2 text-sm rounded-md bg-background-default border border-background-surface focus:ring-2 focus:ring-brand-primary focus:border-transparent;
+/* Drag Handle */
+.drag-handle-overlay {
+  @apply absolute top-2 left-2 p-1.5 bg-black/40 hover:bg-black/60 text-white rounded cursor-grab z-10 backdrop-blur-sm transition-colors;
+}
+
+.drag-handle-overlay:active {
+  @apply cursor-grabbing;
+}
+
+.icon-drag {
+  @apply w-4 h-4;
+}
+
+/* Actions Footer */
+.card-actions {
+  @apply p-2 flex items-center justify-between bg-surface-200 border-t border-canvas;
+}
+
+.icon-action {
+  @apply w-4 h-4;
+}
+
+.icon-delete {
+  @apply w-4 h-4 text-red-500;
+}
+
+.btn-delete:hover {
+  @apply bg-red-50 dark:bg-red-900/20;
+}
+
+/* Drag & Drop CDK States */
+.cdk-drag-preview {
+  @apply shadow-2xl rounded-xl overflow-hidden opacity-90 scale-105 z-50;
+}
+
+.cdk-drag-placeholder {
+  @apply opacity-30 bg-gray-200 dark:bg-gray-700 border-2 border-dashed border-gray-400 rounded-xl;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.image-grid.cdk-drop-list-dragging .image-card:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

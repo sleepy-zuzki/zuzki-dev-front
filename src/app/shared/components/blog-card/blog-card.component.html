@@ -1,0 +1,109 @@
+@if (isAdmin()) {
+  <!-- MODO ADMIN -->
+  <app-card [interactive]="false">
+    <!-- Badges Slot -->
+    <div slot="badges">
+      <span class="px-2 py-1 text-xs font-bold rounded shadow-sm border cursor-default"
+            [class.bg-yellow-100]="entry().status === BlogStatus.DRAFT"
+            [class.text-yellow-800]="entry().status === BlogStatus.DRAFT"
+            [class.border-yellow-200]="entry().status === BlogStatus.DRAFT"
+            [class.bg-green-100]="entry().status === BlogStatus.PUBLISHED"
+            [class.text-green-800]="entry().status === BlogStatus.PUBLISHED"
+            [class.border-green-200]="entry().status === BlogStatus.PUBLISHED"
+            [class.bg-gray-100]="entry().status === BlogStatus.ARCHIVED"
+            [class.text-gray-800]="entry().status === BlogStatus.ARCHIVED"
+            [class.border-gray-200]="entry().status === BlogStatus.ARCHIVED">
+        {{ entry().status | uppercase }}
+      </span>
+    </div>
+
+    <!-- Image Slot -->
+    @if (coverImage()) {
+      <div slot="image" class="h-48 w-full">
+        <img [src]="coverImage()" [alt]="entry().title" class="w-full h-full object-cover" loading="lazy">
+      </div>
+    }
+
+    <!-- Content Slot (Default) -->
+    <header class="mb-4">
+      <time [dateTime]="entry().publishDate" class="block text-muted-sm mb-2">
+        {{ (entry().publishDate | date:'longDate') || (entry().createdAt | date:'longDate') }}
+      </time>
+      <app-typography-title [level]="3" variant="card">
+        {{ entry().title }}
+      </app-typography-title>
+    </header>
+
+    <app-typography-text variant="base" extraClasses="line-clamp-3 mb-4">
+      {{ entry().description }}
+    </app-typography-text>
+
+    <!-- Footer Slot -->
+    <div slot="footer" class="flex justify-between items-center gap-2 w-full">
+      <div class="flex items-center gap-2">
+        <app-button
+          variant="secondary"
+          size="sm"
+          (click)="onEdit($event)"
+          ariaLabel="Editar artículo">
+          <ng-icon name="bootstrapPencil" class="mr-1"></ng-icon> Editar
+        </app-button>
+
+        @if (entry().status === BlogStatus.DRAFT) {
+          <app-button
+            variant="secondary"
+            size="sm"
+            (click)="onPublish($event)"
+            ariaLabel="Publicar artículo"
+            class="text-green-700 dark:text-green-400">
+            <ng-icon name="bootstrapCloudUpload" class="mr-1"></ng-icon> Publicar
+          </app-button>
+        }
+      </div>
+
+      <app-button
+        variant="ghost"
+        size="icon"
+        (click)="onDelete($event)"
+        ariaLabel="Eliminar artículo"
+        class="text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">
+        <ng-icon name="bootstrapTrash"></ng-icon>
+      </app-button>
+    </div>
+  </app-card>
+
+} @else {
+  <!-- MODO USUARIO -->
+  <a [routerLink]="['/blog', entry().slug]" class="block h-full no-underline focus:outline-none focus:ring-2 focus:ring-zuzki-500 rounded-xl">
+    <app-card [interactive]="true">
+      <!-- Image Slot -->
+      @if (coverImage()) {
+        <div slot="image" class="h-48 w-full overflow-hidden">
+          <img [src]="coverImage()" [alt]="entry().title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+        </div>
+      }
+
+      <!-- Content Slot -->
+      <header class="mb-4">
+        <time [dateTime]="entry().publishDate" class="block text-muted-sm mb-2">
+          {{ entry().publishDate | date:'longDate' }}
+        </time>
+        <app-typography-title [level]="3" variant="card" class="group-hover:text-zuzki-500 transition-colors">
+          {{ entry().title }}
+        </app-typography-title>
+      </header>
+
+      <app-typography-text variant="base" extraClasses="line-clamp-3 mb-4">
+        {{ entry().description }}
+      </app-typography-text>
+
+      <!-- Footer Slot -->
+      <div slot="footer" class="flex justify-end items-center text-zuzki-600 dark:text-zuzki-400 font-medium text-sm w-full">
+        <span class="flex items-center group-hover:underline">
+          Leer artículo
+          <ng-icon name="featherArrowRight" class="ml-1 group-hover:translate-x-1 transition-transform"></ng-icon>
+        </span>
+      </div>
+    </app-card>
+  </a>
+}

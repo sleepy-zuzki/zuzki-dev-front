@@ -1,10 +1,10 @@
-<fieldset class="form-fieldset" [formGroup]="form">
+<fieldset class="form-fieldset" [formGroup]="form()">
   <legend class="sr-only">Detalles del Proyecto</legend>
 
-  <!-- Nombre -->
+  <!-- Título -->
   <div class="form-field-group--span-3">
-    <app-input label="Nombre" id="name" formControlName="name" placeholder="Mi proyecto">
-      Nombre requerido (2-150 caracteres)
+    <app-input label="Título" id="title" formControlName="title" placeholder="Mi proyecto">
+      Título requerido (2-150 caracteres)
     </app-input>
   </div>
 
@@ -21,26 +21,24 @@
       label="Descripción (opcional)"
       id="description"
       formControlName="description"
-      placeholder="Resumen del proyecto (máx. 1000)"
       controlType="textarea"
-      [rows]="3"
+      [rows]="4"
+      placeholder="Resumen del proyecto (máx. 1000)"
     >
       Máximo 1000 caracteres
     </app-input>
   </div>
 
-  <!-- Detalles -->
+  <!-- Contenido -->
   <div class="form-field-group--span-6">
-    <app-input
-      label="Detalles (opcional)"
-      id="details"
-      formControlName="details"
-      placeholder="Información detallada del proyecto (máx. 5000)"
-      controlType="textarea"
-      [rows]="6"
+    <app-editor
+      label="Contenido (opcional)"
+      id="content"
+      formControlName="content"
+      placeholder="Información detallada del proyecto"
     >
-      Máximo 5000 caracteres
-    </app-input>
+      Información del proyecto
+    </app-editor>
   </div>
 
   <!-- Live URL -->
@@ -69,16 +67,16 @@
     </app-input>
   </div>
 
-  <!-- Categoría -->
+  <!-- Área -->
   <div class="form-field-group--span-2">
     <app-select
-      label="Categoría (opcional)"
-      id="category"
-      formControlName="category"
-      [options]="categoryOptions"
+      label="Área"
+      id="areaId"
+      formControlName="areaId"
+      [options]="areaOptions()"
       optionLabel="label"
       optionValue="value"
-      placeholder="Seleccionar categoría..."
+      placeholder="Seleccionar área..."
     ></app-select>
   </div>
 
@@ -89,26 +87,13 @@
     </app-input>
   </div>
 
-  <!-- ID Imagen Previa -->
-  <div class="form-field-group--span-2">
-    <app-input
-      label="ID imagen previa (opcional)"
-      id="previewImageId"
-      type="number"
-      formControlName="previewImageId"
-      placeholder="Ej: 12"
-    >
-      Debe ser un entero >= 1
-    </app-input>
-  </div>
-
   <!-- Tecnologías -->
   <div class="form-field-group--span-4">
     <app-select
       label="Tecnologías"
       id="technologyIds"
       formControlName="technologyIds"
-      [options]="getTechnologyOptions"
+      [options]="technologyOptionsList()"
       [multiple]="true"
       optionLabel="label"
       optionValue="value"

@@ -1,0 +1,77 @@
+<main class="blog-admin">
+  <header class="blog-admin__header">
+    <app-typography-title [level]="1" variant="page">
+      Gestión de Blog
+    </app-typography-title>
+    <app-typography-text variant="muted">
+      Crea, edita y gestiona tus artículos y tutoriales.
+    </app-typography-text>
+  </header>
+
+  <section class="blog-admin__create-section" aria-label="Crear o editar artículo">
+    <app-typography-title [level]="2" variant="section" class="blog-admin__section-title">
+      {{ selectedEntryId() ? 'Editar artículo' : 'Crear nuevo artículo' }}
+    </app-typography-title>
+
+    <div class="blog-admin__form-wrapper">
+      <form [formGroup]="form" (ngSubmit)="onCreate()" novalidate>
+        <app-blog-form 
+          [form]="form" 
+          [isEditing]="!!selectedEntryId()"
+          (coverImageSelected)="onUploadCover($event)"
+          (galleryImageSelected)="onSelectFromGallery($event)"
+        ></app-blog-form>
+
+        <div class="blog-admin__submit-wrapper gap-2">
+          @if (selectedEntryId()) {
+            <app-button
+              variant="outline"
+              type="button"
+              (click)="onCancel()"
+              [disabled]="loading() || uploading()"
+            >
+              Cancelar
+            </app-button>
+          }
+          <app-button
+            type="submit"
+            [disabled]="form.invalid || loading() || uploading()"
+            class="blog-admin__submit-button"
+          >
+            @if (uploading()) {
+              Subiendo imagen...
+            } @else {
+              {{ selectedEntryId() ? 'Guardar Cambios' : 'Crear Borrador' }}
+            }
+          </app-button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="blog-admin__list-section" aria-label="Listado de artículos">
+    @if (loading() && entries().length === 0) {
+      <app-typography-text variant="muted">Cargando artículos...</app-typography-text>
+    } @else if (error()) {
+      <div class="blog-admin__alert">
+        <span class="blog-admin__alert-text">{{ error() }}</span>
+        <button type="button" (click)="reload()" class="blog-admin__reload-button">Reintentar</button>
+      </div>
+    } @else if (entries().length === 0) {
+      <app-typography-text>No hay artículos creados aún.</app-typography-text>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        @for (entry of entries(); track entry.id) {
+          <app-blog-card
+            [entry]="entry"
+            [isAdmin]="true"
+            (edit)="onEdit($event)"
+            (delete)="onDelete($event)"
+            (publish)="onPublish($event)"
+            class="h-full block"
+          ></app-blog-card>
+        }
+      </div>
+    }
+  </section>
+</main>

@@ -1,11 +1,8 @@
-@reference "../../../../../styles/utilities.css";
+@reference "../../../../../styles/utils/forms.css";
 
 /* Contenedor del formulario */
 .cf-card {
-  @apply rounded-xl border p-8;
-  @apply bg-white border-gray-200;
-  @apply dark:bg-coffee dark:border-gray-700;
-  @apply backdrop-blur-sm;
+  @apply rounded-xl border p-8 bg-white border-gray-200 dark:bg-coffee dark:border-gray-700 backdrop-blur-sm;
 }
 
 /* Estructura */
@@ -16,33 +13,28 @@
   @apply space-y-2;
 }
 
-/* Tipografía labels */
+/* Tipografía labels (Usando utilidad) */
 .cf-label {
-  @apply block text-sm font-medium;
-  @apply text-gray-700 dark:text-gray-200;
+  @apply form-label;
 }
 
-/* Campos */
+/* Campos (Usando utilidad) */
 .cf-input,
 .cf-textarea {
-  @apply w-full rounded-lg border px-4 py-3 outline-none;
-  @apply bg-white text-gray-900 placeholder-gray-400 border-gray-300;
-  @apply dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500 dark:border-gray-700;
-  @apply focus:ring-2 focus:ring-black/10 focus:border-gray-400;
-  @apply dark:focus:ring-white/20 dark:focus:border-gray-600;
+  @apply form-input-base;
 }
 
-/* Textarea */
+/* Textarea específico */
 .cf-textarea {
   @apply resize-none;
 }
 
 /* Botón */
 .cf-button {
-  @apply w-full rounded-lg font-medium px-6 py-3 hover:cursor-pointer;
-  @apply bg-zuzki-500/90 text-white hover:bg-zuzki-500;
+  @apply w-full rounded-lg font-medium px-6 py-3 hover:cursor-pointer bg-zuzki-500/90 text-white hover:bg-zuzki-500;
 }
 
+/* Errores (Usando utilidad) */
 .cf-error {
-  @apply text-red-400 dark:text-red-500;
+  @apply form-error;
 }
