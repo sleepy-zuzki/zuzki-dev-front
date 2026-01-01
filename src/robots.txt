@@ -1,8 +1,12 @@
 User-agent: *
 Disallow:
 
+User-agent:Twitterbot
+Disallow:
+
 User-agent: *
 Allow: /
+
 
 Sitemap: https://zuzki.dev/sitemap.xml
 
