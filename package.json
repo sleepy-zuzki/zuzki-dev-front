@@ -12,7 +12,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:zuzki-dev-front": "node dist/zuzki-dev-front/server/server.mjs",
-    "process": "node ./tools/copy-files.mjs && node ./tools/obfuscate.mjs && npm run generate:sitemap",
+    "process": "node ./tools/copy-files.mjs && npm run generate:sitemap",
     "generate:sitemap": "node tools/generate-sitemap.mjs",
     "deploy": "pnpm run build && wrangler pages deploy",
     "cf-typegen": "wrangler types",
