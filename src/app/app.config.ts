@@ -5,7 +5,7 @@ import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHotToastConfig } from '@ngxpert/hot-toast';
-import { provideCloudflareLoader } from '@angular/common';
+import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { authTokenInterceptor } from '@core/interceptors/auth-token.interceptor';
 import { errorInterceptor } from '@core/interceptors/error.interceptor';
 
@@ -22,7 +22,32 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideClientHydration(withEventReplay()),
-    provideCloudflareLoader('https://zuzki.dev'),
+    {
+      provide: IMAGE_LOADER,
+      useValue: (config: ImageLoaderConfig) => {
+        // Base URL for Cloudflare Image Resizing
+        const cfBase = 'https://zuzki.dev/cdn-cgi/image';
+        
+        // Build options array safely
+        const params: string[] = ['format=auto', 'quality=85'];
+        
+        if (config.width) {
+          params.push(`width=${config.width}`);
+        }
+
+        const options = params.join(',');
+
+        // Source URL logic
+        let src = config.src;
+        if (!src.startsWith('http')) {
+          // If relative, prefix with our CDN
+          const path = src.startsWith('/') ? src.slice(1) : src;
+          src = `https://cdn.zuzki.dev/${path}`;
+        }
+
+        return `${cfBase}/${options}/${src}`;
+      }
+    },
     provideHotToastConfig()
   ]
 };

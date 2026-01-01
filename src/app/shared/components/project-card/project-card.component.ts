@@ -14,7 +14,7 @@ import { TypographyTextComponent } from '@components/typography/text.component';
 import { TypographyTitleComponent } from '@components/typography/title.component';
 import { ProjectInfoModalComponent } from '@shared/modals/project-info-modal.component';
 import { ButtonComponent } from '@shared/components/button/button.component';
-import { IMAGE_LOADER, ImageLoaderConfig, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { CardComponent } from '@shared/components/card/card.component';
 
 @Component({
@@ -41,15 +41,7 @@ import { CardComponent } from '@shared/components/card/card.component';
       bootstrapGithub,
       bootstrapTrash,
       bootstrapImages
-    }),
-    {
-      provide: IMAGE_LOADER,
-      useValue: (config: ImageLoaderConfig) => {
-        // Reemplaza con la URL base de tu CDN
-        // Nota: Asegúrate de que termine con '/' si tus src no lo tienen
-        return `${config.src}`;
-      }
-    }
+    })
   ],
 })
 export class ProjectCardComponent {

@@ -10,6 +10,7 @@ import { bootstrapPencil, bootstrapTrash, bootstrapCloudUpload } from '@ng-icons
 import { ButtonComponent } from '../button/button.component';
 import { BlogStatus } from '@core/enums';
 import { CardComponent } from '../card/card.component';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-blog-card',
@@ -22,7 +23,8 @@ import { CardComponent } from '../card/card.component';
     NgIcon,
     ButtonComponent,
     UpperCasePipe,
-    CardComponent
+    CardComponent,
+    NgOptimizedImage
   ],
   providers: [provideIcons({ featherArrowRight, bootstrapPencil, bootstrapTrash, bootstrapCloudUpload })],
   templateUrl: './blog-card.component.html',

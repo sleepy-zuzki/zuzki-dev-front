@@ -1,7 +1,7 @@
 <app-section
   id="blogs"
   variant="transparent"
-  padding="none"
+  paddingY="none"
   [container]="false">
   <div class="max-w-4xl mx-auto text-center mb-12">
     <app-typography-title [level]="1" variant="page" class="mb-4">
@@ -22,7 +22,7 @@
       <button (click)="blogsResource.reload()" class="mt-4 underline text-zuzki-500">Reintentar</button>
     </div>
   } @else {
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       @for (entry of blogsResource.value(); track entry.id) {
         <app-blog-card [entry]="entry"></app-blog-card>
       } @empty {

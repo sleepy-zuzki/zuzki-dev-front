@@ -29,15 +29,7 @@ register();
   ],
   templateUrl: './project-info-modal.component.html',
   providers: [
-    provideIcons({ bootstrapChevronLeft, bootstrapChevronRight, featherGithub }),
-    {
-      provide: IMAGE_LOADER,
-      useValue: (config: ImageLoaderConfig) => {
-        // Reemplaza con la URL base de tu CDN
-        // Nota: Asegúrate de que termine con '/' si tus src no lo tienen
-        return `${config.src}`;
-      }
-    }
+    provideIcons({ bootstrapChevronLeft, bootstrapChevronRight, featherGithub })
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
