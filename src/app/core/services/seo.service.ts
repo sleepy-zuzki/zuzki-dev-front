@@ -173,7 +173,7 @@ export class SeoService {
     if (data.twitterImage) {
       twitterImageUrl = data.twitterImage.startsWith('http') ? data.twitterImage : this.getAbsoluteUrl(data.twitterImage);
     }
-    this.meta.updateTag({ name: 'twitter:image', content: twitterImageUrl });
+    this.meta.updateTag({ name: 'twitter:image:src', content: twitterImageUrl });
   }
 
   /**
