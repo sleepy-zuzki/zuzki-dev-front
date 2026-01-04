@@ -15,7 +15,7 @@
 .card-media-wrapper {
   @apply relative w-full;
   /* Altura por defecto para imágenes, puede ser sobreescrita por el hijo */
-  min-height: 1px; 
+  min-height: 1px;
 }
 
 /* Utilidad para asegurar que las imágenes ocupen el espacio correcto */
@@ -26,6 +26,7 @@
 .card-badges {
   @apply absolute top-3 left-3 right-3 flex justify-between pointer-events-none;
 }
+
 .card-badges > * {
   @apply pointer-events-auto; /* Permitir interacción con badges si son botones */
 }
@@ -34,7 +35,7 @@
   @apply flex flex-col flex-grow p-6;
 }
 
-/* El footer solo tiene padding/borde si tiene contenido. 
+/* El footer solo tiene padding/borde si tiene contenido.
    :empty es tricky con ng-content, así que usamos un wrapper que el consumidor puede controlar o estilos internos */
 .card-footer-wrapper:empty {
   display: none;

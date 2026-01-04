@@ -1,11 +1,11 @@
 <app-card [interactive]="!isAdmin()" class="h-full block">
   <!-- Badges Slot -->
-  <div slot="badges">
+  <div class="card-badges" slot="badges">
     @if (project().isFeatured) {
       <span class="project-card__badge project-card__badge--featured">Destacado</span>
     }
     <!-- Espaciador si solo hay uno -->
-    <span></span> 
+    <span></span>
     @if (project().area) {
       <span class="project-card__badge project-card__badge--category">
         {{ project().area?.name }}
