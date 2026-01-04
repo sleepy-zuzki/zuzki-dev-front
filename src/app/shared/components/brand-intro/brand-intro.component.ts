@@ -1,5 +1,4 @@
 import { Component, HostBinding, OnInit, output, OutputEmitterRef } from '@angular/core';
-import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-brand-intro',
@@ -7,7 +6,6 @@ import { NgOptimizedImage } from '@angular/common';
   styleUrls: ['./brand-intro.component.css'],
   standalone: true,
   imports: [
-    NgOptimizedImage
   ]
 })
 export class BrandIntroComponent implements OnInit {
