@@ -28,15 +28,7 @@ import { NgOptimizedImage } from '@angular/common';
     <app-section variant="transparent" paddingY="none" paddingX="none" [container]="false">
       <div class="mx-auto">
 
-        @if (store.isLoading() && !store.currentEntry()) {
-           <div class="flex justify-center py-20">
-             <ng-icon name="featherLoader" class="animate-spin text-4xl text-zuzki-500"></ng-icon>
-           </div>
-        } @else if (store.error()) {
-          <div class="text-center py-10 text-red-500">
-            Error al cargar el artículo.
-          </div>
-        } @else if (store.currentEntry(); as entry) {
+        @if (store.currentEntry(); as entry) {
           <article>
             @if (coverImage()) {
               <div class="mb-10 rounded-2xl overflow-hidden shadow-lg relative h-[300px] md:h-[500px]">
@@ -65,6 +57,14 @@ import { NgOptimizedImage } from '@angular/common';
                <app-editor-renderer [data]="entry.content || null"></app-editor-renderer>
             </div>
           </article>
+        } @else if (store.isLoading()) {
+           <div class="flex justify-center py-20">
+             <ng-icon name="featherLoader" class="animate-spin text-4xl text-zuzki-500"></ng-icon>
+           </div>
+        } @else if (store.error()) {
+          <div class="text-center py-10 text-red-500">
+            Error al cargar el artículo.
+          </div>
         }
       </div>
     </app-section>

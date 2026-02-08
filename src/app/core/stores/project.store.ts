@@ -1,4 +1,6 @@
-import { Injectable, signal, WritableSignal, Signal, inject } from '@angular/core';
+import { Injectable, signal, computed, inject } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { firstValueFrom, of } from 'rxjs';
 import { HotToastService } from '@ngxpert/hot-toast';
 
 import { 
@@ -20,232 +22,149 @@ export class ProjectStore {
   private readonly fileService = inject(FileService);
   private readonly toast = inject(HotToastService);
 
-  private _projects: WritableSignal<Project[]> = signal([]);
-  private _featuredProjects: WritableSignal<Project[]> = signal([]);
-  private _currentProject: WritableSignal<Project | null> = signal(null);
-  private _loading: WritableSignal<boolean> = signal(false);
-  private _error: WritableSignal<string | null> = signal(null);
+  // --- State ---
+  private readonly _selectedSlug = signal<string | null>(null);
 
-  public readonly projects: Signal<Project[]> = this._projects.asReadonly();
-  public readonly featuredProjects: Signal<Project[]> = this._featuredProjects.asReadonly();
-  public readonly currentProject: Signal<Project | null> = this._currentProject.asReadonly();
-  public readonly loading: Signal<boolean> = this._loading.asReadonly();
-  public readonly error: Signal<string | null> = this._error.asReadonly();
+  // --- Resources ---
+
+  readonly projectsResource = rxResource<Project[], void>({
+    stream: () => this.projectService.getProjects()
+  });
+
+  readonly featuredProjectsResource = rxResource<Project[], void>({
+    stream: () => this.projectService.getFeaturedProjects()
+  });
+
+  readonly currentProjectResource = rxResource<Project | null, { slug: string | null }>({
+    params: () => ({ slug: this._selectedSlug() }),
+    stream: ({ params }) => {
+      if (!params.slug) return of(null);
+      return this.projectService.getProjectBySlug(params.slug);
+    }
+  });
+
+  // --- Signals ---
+  
+  readonly projects = computed(() => this.projectsResource.value() ?? []);
+  readonly featuredProjects = computed(() => this.featuredProjectsResource.value() ?? []);
+  readonly currentProject = computed(() => this.currentProjectResource.value() ?? null);
+
+  readonly loading = computed(() => 
+    this.projectsResource.isLoading() || 
+    this.featuredProjectsResource.isLoading() || 
+    this.currentProjectResource.isLoading()
+  );
+
+  readonly error = computed(() => {
+    const pErr = this.projectsResource.error();
+    const fErr = this.featuredProjectsResource.error();
+    const cErr = this.currentProjectResource.error();
+    if (pErr || fErr || cErr) return 'Error al cargar datos';
+    return null;
+  });
+
+  // --- Actions ---
 
   getProjects(): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.getProjects().subscribe({
-      next: (projects) => {
-        this._projects.set(projects);
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al cargar proyectos';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+    this.projectsResource.reload();
   }
 
   getFeaturedProjects(): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.getFeaturedProjects().subscribe({
-      next: (projects) => {
-        this._featuredProjects.set(projects);
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al cargar proyectos destacados';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+    this.featuredProjectsResource.reload();
   }
 
   getProjectBySlug(slug: string): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.getProjectBySlug(slug).subscribe({
-      next: (project) => {
-        this._currentProject.set(project);
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al cargar proyecto';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+    this._selectedSlug.set(slug);
   }
 
-  createProject(request: CreateProjectDto): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.createProject(request).subscribe({
-      next: (project) => {
-        this._projects.update(currentProjects => [...currentProjects, project]);
-        this._currentProject.set(project);
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al crear proyecto';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+  async createProject(request: CreateProjectDto): Promise<void> {
+    try {
+      await firstValueFrom(this.projectService.createProject(request));
+      this.toast.success('Proyecto creado');
+      this.projectsResource.reload();
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al crear proyecto');
+    }
   }
 
-  updateProject(id: string, request: UpdateProjectDto): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.updateProject(id, request).subscribe({
-      next: (project) => {
-        this._projects.update(projects => projects.map(p => p.id === id ? project : p));
-        if (this._currentProject()?.id === id) {
-          this._currentProject.set(project);
-        }
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al actualizar proyecto';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
+  async updateProject(id: string, request: UpdateProjectDto): Promise<void> {
+    try {
+      const project = await firstValueFrom(this.projectService.updateProject(id, request));
+      this.toast.success('Proyecto actualizado');
+      this.projectsResource.reload();
+      this.featuredProjectsResource.reload();
+      
+      if (this._selectedSlug() === project.slug) {
+        this.currentProjectResource.reload();
       }
-    });
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al actualizar proyecto');
+    }
   }
 
-  deleteProject(id: string): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.deleteProject(id).subscribe({
-      next: () => {
-        this._projects.update(projects => projects.filter(p => p.id !== id));
-        if (this._currentProject()?.id === id) {
-          this._currentProject.set(null);
-        }
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al eliminar proyecto';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+  async deleteProject(id: string): Promise<void> {
+    try {
+      await firstValueFrom(this.projectService.deleteProject(id));
+      this.toast.success('Proyecto eliminado');
+      this.projectsResource.reload();
+      this.featuredProjectsResource.reload();
+      this._selectedSlug.set(null);
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al eliminar proyecto');
+    }
   }
 
-  addImageToCarousel(projectId: string, request: AddImageToProjectDto): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.addImageToCarousel(projectId, request).subscribe({
-      next: () => {
-        const currentProject = this._currentProject();
-        if (currentProject?.id === projectId) {
-          this.getProjectBySlug(currentProject.slug);
-        }
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al añadir imagen al carrusel';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+  async addImageToCarousel(projectId: string, request: AddImageToProjectDto): Promise<void> {
+    try {
+      await firstValueFrom(this.projectService.addImageToCarousel(projectId, request));
+      this.refreshAffectedProject(projectId);
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al añadir imagen');
+    }
   }
 
-  removeImageFromCarousel(projectId: string, fileId: string): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.removeImageFromCarousel(projectId, fileId).subscribe({
-      next: () => {
-        const currentProject = this._currentProject();
-        if (currentProject?.id === projectId) {
-          this.getProjectBySlug(currentProject.slug);
-        }
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al eliminar imagen del carrusel';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+  async removeImageFromCarousel(projectId: string, fileId: string): Promise<void> {
+    try {
+      await firstValueFrom(this.projectService.removeImageFromCarousel(projectId, fileId));
+      this.refreshAffectedProject(projectId);
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al eliminar imagen');
+    }
   }
 
-  reorderCarouselImages(projectId: string, request: ReorderProjectFilesDto): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.projectService.reorderCarouselImages(projectId, request).subscribe({
-      next: () => {
-        const currentProject = this._currentProject();
-        if (currentProject?.id === projectId) {
-          this.getProjectBySlug(currentProject.slug);
-        }
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al reordenar imágenes del carrusel';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+  async reorderCarouselImages(projectId: string, request: ReorderProjectFilesDto): Promise<void> {
+    try {
+      await firstValueFrom(this.projectService.reorderCarouselImages(projectId, request));
+      this.refreshAffectedProject(projectId);
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al reordenar imágenes');
+    }
   }
 
-  uploadCarouselImage(projectId: string, file: File): void {
-    this._loading.set(true);
-    this._error.set(null);
-
-    this.fileService.uploadFile(file).subscribe({
-      next: (uploadedFile) => {
-        const request: AddImageToProjectDto = { fileId: uploadedFile.id };
-        this.addImageToCarousel(projectId, request);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al subir la imagen';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+  async uploadCarouselImage(projectId: string, file: File): Promise<void> {
+    try {
+      const uploadedFile = await firstValueFrom(this.fileService.uploadFile(file));
+      await this.addImageToCarousel(projectId, { fileId: uploadedFile.id });
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al subir imagen');
+    }
   }
 
-  setCoverImage(projectId: string, fileId: string): void {
-    this._loading.set(true);
-    this._error.set(null);
+  async setCoverImage(projectId: string, fileId: string): Promise<void> {
+    try {
+      await firstValueFrom(this.projectService.setCoverImage(projectId, fileId));
+      this.refreshAffectedProject(projectId);
+    } catch (error: any) {
+      this.toast.error(error.message || 'Error al establecer portada');
+    }
+  }
 
-    this.projectService.setCoverImage(projectId, fileId).subscribe({
-      next: () => {
-        const currentProject = this._currentProject();
-        if (currentProject?.id === projectId) {
-          this.getProjectBySlug(currentProject.slug);
-        }
-        this._loading.set(false);
-      },
-      error: (error) => {
-        const errorMessage = error.message || 'Error al establecer la imagen de portada';
-        this._error.set(errorMessage);
-        
-        this._loading.set(false);
-      }
-    });
+  private refreshAffectedProject(projectId: string): void {
+    const current = this.currentProject();
+    if (current?.id === projectId) {
+      this.currentProjectResource.reload();
+    }
+    this.projectsResource.reload();
+    this.featuredProjectsResource.reload();
   }
 }

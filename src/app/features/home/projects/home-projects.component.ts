@@ -24,10 +24,6 @@ export class HomeProjectsComponent {
   loading = this.projectStore.loading;
   error = this.projectStore.error;
 
-  constructor() {
-    this.projectStore.getFeaturedProjects();
-  }
-
   reload(): void {
     this.projectStore.getFeaturedProjects();
   }

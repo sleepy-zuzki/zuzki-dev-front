@@ -39,11 +39,7 @@
                variant="base"
                paddingY="md"
                [container]="false">
-    @defer (on idle) {
-      <app-home-projects></app-home-projects>
-    } @placeholder {
-      <div class="h-[500px] w-full animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"></div>
-    }
+    <app-home-projects></app-home-projects>
   </app-section>
 
   <!-- Contacto Section -->

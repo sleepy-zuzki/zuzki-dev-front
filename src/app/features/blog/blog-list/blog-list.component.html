@@ -12,7 +12,13 @@
     </app-typography-text>
   </div>
 
-  @if (blogsResource.isLoading() && !blogsResource.value()) {
+  @if (blogsResource.value() && blogsResource.value()!.length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      @for (entry of blogsResource.value(); track entry.id) {
+        <app-blog-card [entry]="entry"></app-blog-card>
+      }
+    </div>
+  } @else if (blogsResource.isLoading()) {
     <div class="flex justify-center py-20">
       <ng-icon name="featherLoader" class="animate-spin text-4xl text-zuzki-500"></ng-icon>
     </div>
@@ -22,14 +28,8 @@
       <button (click)="blogsResource.reload()" class="mt-4 underline text-zuzki-500">Reintentar</button>
     </div>
   } @else {
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      @for (entry of blogsResource.value(); track entry.id) {
-        <app-blog-card [entry]="entry"></app-blog-card>
-      } @empty {
-        <div class="col-span-full text-center py-10 opacity-60">
-          <app-typography-text variant="base" align="center" extraClasses="text-3xl" >No hay artículos publicados aún.</app-typography-text>
-        </div>
-      }
+    <div class="col-span-full text-center py-10 opacity-60">
+      <app-typography-text variant="base" align="center" extraClasses="text-3xl" >No hay artículos publicados aún.</app-typography-text>
     </div>
   }
 </app-section>
