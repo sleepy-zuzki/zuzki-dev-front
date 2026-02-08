@@ -8,7 +8,7 @@
   "scripts": {
     "ng": "ng",
     "start": "pnpm run build && wrangler pages dev",
-    "build": "ng build && pnpm run process",
+    "build": "pnpm run process && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:zuzki-dev-front": "node dist/zuzki-dev-front/server/server.mjs",
