@@ -11,9 +11,19 @@ Reglas obligatorias para la implementación de lógica y componentes en el proye
 - **Mandato:** El estado local y la comunicación entre componentes DEBE usar Signals.
 - **Inputs/Outputs:** Usar `input()`, `output()` y `model()` en lugar de los antiguos decoradores `@Input()` y `@Output()`.
 - **Estado Derivado:** Usar `computed()` para cualquier valor que dependa de otros signals.
+- **Recursos:** Usar `rxResource` para la obtención de datos asíncronos. Esto garantiza la integración nativa con SSR y `TransferState`.
 - **Efectos:** Usar `effect()` solo para efectos secundarios (logging, sincronización con APIs externas de JS), nunca para cambiar el estado de otros signals.
 
-## 3. Control Flow
+## 3. Obtención de Datos y Caché
+- **Estrategia de Carga:** Preferir `rxResource` sobre suscripciones manuales en el `constructor` o `OnInit`.
+- **SSR y SEO:** El contenido crítico para SEO (como listas de proyectos o artículos de blog) **NO** debe envolverse en bloques `@defer` si queremos que se renderice en el servidor.
+- **Caché HTTP:** El proyecto cuenta con un `httpCacheInterceptor` que:
+  - Cachea peticiones `GET` en el navegador por 5 minutos.
+  - Se ignora automáticamente durante el SSR para asegurar datos frescos.
+  - Se invalida por completo tras cualquier petición exitosa de escritura (`POST`, `PUT`, `PATCH`, `DELETE`).
+- **Bypass de Caché:** Para forzar una petición a la red, usar el token `BYPASS_CACHE` en el contexto de la petición HTTP.
+
+## 4. Control Flow
 - Usar exclusivamente la nueva sintaxis de Angular:
   - `@if (condicion) { ... } @else { ... }`
   - `@for (item of items; track item.id) { ... }`

@@ -14,10 +14,10 @@ Originalmente el proyecto se planteó bajo una Arquitectura Hexagonal. Sin embar
 
 ### 1. Core (`src/app/core/`)
 Es el motor de la aplicación y la "fuente de la verdad".
-- **Stores**: Gestión de estado reactivo mediante `@ngrx/signals`. Sustituyen a la lógica de dominio anterior.
+- **Stores**: Gestión de estado reactivo mediante servicios `@Injectable` que utilizan Signals nativos y `rxResource`. Sustituyen a la lógica de dominio anterior y manejan el `TransferState` de forma transparente.
 - **Services**: Servicios de infraestructura y comunicación API.
 - **Interfaces**: Contratos de datos compartidos.
-- **Interceptores**: Lógica funcional para Auth y selección de API.
+- **Interceptores**: Lógica funcional para Auth, Error handling y **Caché HTTP** (en memoria para el cliente).
 
 ### 2. Features (`src/app/features/`)
 Módulos funcionales de la aplicación.
@@ -34,11 +34,12 @@ Componentes de UI puros, utilidades y servicios de soporte (notificaciones, moda
 ## 🔄 Flujo de Datos
 1. La **Page** carga y activa las **Features**.
 2. La **Feature** inyecta un **Store** del **Core**.
-3. El **Store** utiliza un **Service** para obtener datos de la API.
-4. Los datos fluyen de vuelta a la UI mediante **Signals**, asegurando una reactividad óptima sin Zone.js.
+3. El **Store** utiliza un **Resource** (vía `rxResource`) que delega en un **Service**.
+4. El **Interceptor de Caché** verifica si existe una respuesta previa válida para ahorrar peticiones de red.
+5. Los datos fluyen de vuelta a la UI mediante **Signals**, asegurando una reactividad óptima sin Zone.js.
 
 ## 🛠️ Tecnologías Clave
-- **Angular 21**: Standalone Components, Signals, `inject()`, Control Flow (`@if`, `@for`).
-- **NgRx Signals**: Para la gestión de estado ligero y reactivo.
+- **Angular 21**: Standalone Components, Signals, `inject()`, Control Flow, `rxResource`.
+- **Zoneless**: Ejecución sin Zone.js para máximo rendimiento.
 - **Tailwind CSS 4**: Sistema de diseño basado en tokens.
 - **Cloudflare Wrangler**: Para el ciclo de vida de desarrollo y despliegue.

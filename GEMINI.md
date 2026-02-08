@@ -46,6 +46,9 @@ Para obtener detalles específicos sobre cómo implementar tareas, consulta las 
 - **Standalone:** Todos los componentes, directivas y pipes **deben** ser `standalone: true`.
 - **Inyección de Dependencias:** Usar la función `inject()` en lugar del constructor siempre que sea posible.
 - **Signals:** Obligatorio para la gestión de estado y reactividad. No usar `Zone.js` (Zoneless activado).
+- **Obtención de Datos:** Usar `rxResource` para una integración nativa con SSR y TransferState.
+- **Caché:** Se utiliza un interceptor de caché HTTP global para optimizar la navegación y reducir la carga del servidor.
+- **SSR Crítico:** Evitar el uso de `@defer` en secciones fundamentales para el SEO (Proyectos, Blog) para garantizar su renderizado en el servidor.
 - **Control Flow:** Usar la nueva sintaxis de Angular (`@if`, `@for`, `@switch`).
 - **Estilos:** Seguir el sistema de diseño definido en `src/styles/` y usar clases de Tailwind CSS.
 - **Routing:** Las rutas usan `loadComponent` para Lazy Loading por defecto.
