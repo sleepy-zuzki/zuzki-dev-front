@@ -8,10 +8,18 @@ import { provideHotToastConfig } from '@ngxpert/hot-toast';
 import { IMAGE_LOADER, ImageLoaderConfig } from '@angular/common';
 import { authTokenInterceptor } from '@core/interceptors/auth-token.interceptor';
 import { errorInterceptor } from '@core/interceptors/error.interceptor';
+import { httpCacheInterceptor } from '@core/interceptors/http-cache.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withFetch(), withInterceptors([authTokenInterceptor, errorInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([
+        httpCacheInterceptor,
+        authTokenInterceptor,
+        errorInterceptor
+      ])
+    ),
     provideZonelessChangeDetection(),
     provideRouter(
       routes,
